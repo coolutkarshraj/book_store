@@ -1,0 +1,63 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+
+    </style>
+
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="FooterText" parent="AppTheme">
+        <item name="android:clickable">true</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:fontFamily">@font/exo</item>
+        <item name="android:textColor">@color/gray</item>
+        <item name="android:textSize">13dp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:gravity">center|bottom</item>
+        <item name="android:layout_gravity">center|bottom</item>
+        <item name="android:layout_marginTop">1dp</item>
+    </style>
+
+    <style name="FooterItemBox" parent="AppTheme">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:clickable">true</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="FooterIcon" parent="AppTheme">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:clickable">true</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:fontFamily">@font/fontawesome</item>
+        <item name="android:textColor">@color/light_gray</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:textSize">28dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_marginTop">2dp</item>
+
+    </style>
+
+    <style name="AppThemeSplah" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryDark">@color/white</item>
+        <item name="colorAccent">@color/white</item>
+    </style>
+
+</resources>

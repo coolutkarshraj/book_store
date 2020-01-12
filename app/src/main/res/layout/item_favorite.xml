@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:cardview="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="180dp"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/imageView19"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="8dp"
+        cardview:layout_constraintBottom_toBottomOf="parent"
+        cardview:layout_constraintEnd_toEndOf="parent"
+        cardview:layout_constraintStart_toEndOf="@+id/cardview_id_item"
+        cardview:layout_constraintTop_toTopOf="parent"
+        cardview:srcCompat="@color/blackOlive" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardview_id_item"
+        android:layout_width="130dp"
+        android:layout_height="190dp"
+        android:layout_margin="20dp"
+        android:clickable="true"
+        android:elevation="15dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        cardview:cardBackgroundColor="@color/lightMediumGrey"
+        cardview:cardCornerRadius="4dp"
+        cardview:cardElevation="10dp"
+        cardview:layout_constraintStart_toStartOf="parent"
+        cardview:layout_constraintTop_toTopOf="parent">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/iv_favorite"
+                android:layout_width="100dp"
+                android:layout_height="140dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:background="#2d2d2d"
+                android:scaleType="centerCrop"
+                cardview:layout_constraintBottom_toBottomOf="parent"
+                cardview:layout_constraintEnd_toEndOf="parent"
+                cardview:layout_constraintStart_toStartOf="parent"
+                cardview:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:id="@+id/textView31"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_marginBottom="40dp"
+        android:orientation="horizontal"
+        android:rotation="-90"
+        android:text="My Books"
+        android:textColor="#FFFFFF"
+        android:textSize="20dp"
+        cardview:fontFamily="@font/arial_bold"
+        cardview:layout_constraintBottom_toBottomOf="@+id/imageView19"
+        cardview:layout_constraintEnd_toEndOf="parent"
+        cardview:layout_constraintStart_toEndOf="@+id/cardview_id_item" />
+
+    <ImageView
+        android:id="@+id/imageView20"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="8dp"
+        android:rotation="-90"
+        cardview:layout_constraintEnd_toEndOf="parent"
+        cardview:layout_constraintTop_toTopOf="@+id/imageView19"
+        cardview:srcCompat="@drawable/ic_favorite_blue_24dp" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

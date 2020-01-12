@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.checkoutActivity.CheckoutActivity">
+
+    <include android:id="@+id/toolbar"
+        layout="@layout/common_toolbar">
+
+    </include>
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="60dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="60dp"
+                android:src="@drawable/way_delivery">
+
+            </ImageView>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/payment">
+
+            </ImageView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:text="Delivey Address"
+                android:textSize="20dp">
+
+            </TextView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <LinearLayout
+                android:id="@+id/ll_add_address"
+                android:layout_width="match_parent"
+                android:layout_height="33dp"
+                android:layout_marginBottom="@dimen/sixteen_dp"
+                android:background="@drawable/add_new_address_background">
+
+                <TextView
+                    android:id="@+id/tv_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/sixteen_dp"
+                    android:layout_marginTop="@dimen/two_dp"
+                    android:layout_marginRight="@dimen/fourteeen_dp"
+                    android:text="+ Add New Address"
+                    android:textColor="#545cd8"
+                    android:textSize="@dimen/sixteen_sp">
+
+                </TextView>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+    <Button
+        android:id="@+id/btnLoginToDashBoard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/card_view"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="@dimen/twenty_four_dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/round_corner_button_yellow"
+        android:text="@string/proc"
+        android:textAllCaps="false"
+        android:textColor="@color/white" />
+</RelativeLayout>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:visibility="visible"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_min"
+            android:visibility="gone"
+            android:layout_marginLeft="@dimen/sixteen_dp"
+            android:layout_marginTop="@dimen/ten_dp"
+            android:layout_marginRight="@dimen/sixteen_dp">
+
+        </androidx.recyclerview.widget.RecyclerView>
+        <TextView
+            android:layout_width="match_parent"
+            android:textSize="16dp"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center_vertical"
+            android:fontFamily="@font/exo_bold"
+            android:textAlignment="center"
+            android:id="@+id/loggedih"
+            android:layout_margin="20dp"
+            android:text="Please Logged In To See Your Favourite ItemLoggedIn?"
+            android:layout_height="wrap_content"/>
+
+
+    </RelativeLayout>
+
+
+
+
+</LinearLayout>

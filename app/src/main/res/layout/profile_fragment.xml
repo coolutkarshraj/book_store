@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<LinearLayout
+    android:id="@+id/ll_main_view"
+    android:visibility="gone"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_avatar"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="32dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/profile_pic"
+            android:transitionName="profile"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_editpic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="75dp"
+            android:layout_marginLeft="75dp"
+            android:layout_marginTop="75dp"
+            android:clickable="true"
+            android:src="@drawable/ic_picture"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_avatar"
+            app:layout_constraintStart_toStartOf="@+id/iv_avatar"
+            app:layout_constraintTop_toTopOf="@+id/iv_avatar" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/et_firstname"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="NaserKU"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/iv_avatar"
+        app:layout_constraintStart_toStartOf="@+id/iv_avatar"
+        app:layout_constraintTop_toBottomOf="@+id/iv_avatar" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="fill"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_firstname"
+        app:tabIndicatorColor="@color/blue">
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tab_settings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/settings" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tab_orders"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/orders" />
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewpager_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tab_profile">
+
+    </androidx.viewpager.widget.ViewPager>
+</LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:textSize="16dp"
+        android:layout_gravity="center_vertical"
+        android:fontFamily="@font/exo_bold"
+        android:textAlignment="center"
+        android:layout_centerInParent="true"
+        android:id="@+id/loggedih"
+        android:layout_margin="20dp"
+        android:text="Please Logged In To See Your Favourite ItemLoggedIn?"
+        android:layout_height="wrap_content"/>
+
+</RelativeLayout>

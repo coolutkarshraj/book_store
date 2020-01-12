@@ -1,0 +1,35 @@
+package com.io.bookstore;
+
+/**
+ * Created by Utkarsh Raj 10/12/2019.
+ */
+
+public class Config {
+    public final static String IP = "157.175.48.7";
+    public static String imageUrl ="http://157.175.48.7/api/media/render/?path=";
+
+    public static class Url {
+        public final static String registerUser = "user/register";
+        public final static String login = "user/login";
+        public static String forgotPassword ="user/forgot-password";
+        public static String registerCustomer = "user/signup";
+        public static String verifyemail = "user/email-verify";
+        public static String getCategoryModel = "category/categorylist";
+        public static String getAllBook = "book/booklist/1/1";
+        public static String editProfile = "";
+
+        public static String getStoreApi = "store/storelist";
+        public static String getAdressApi = "store/addresslist";
+        public static String getStoreApifilter = "store/filter";
+        public static String getDeliverCharge = "order/delivery-type";
+    }
+
+    public final static int splashTimeout = 3000;
+
+    public final static String serverNotResponding = "Service temporarily unavailable.";
+    public final static String backPressMessage = "double tab to minimize";
+    public final static String emptyInbox = "No message found";
+    public final static String zeroSearchResuls = "No results found\nPlease search again";
+
+    public final static int PaymentReceived = 1;
+}
