@@ -15,10 +15,17 @@ public class LocalStorage {
     public static final String LOGGEDINDATA = "LOGGEDINDATA";
     private static final String DISTRIBUTOR = "";
     public static String userId = "userId";
+    public static String isLoggedIn ="isLoggedIn";
+    public static String isCart ="isCart";
+    public static String StoreId ="StoreId";
+    public static String CategoryId ="CategoryId";
+    public static String addressId = "addressId";
+    public static String token = "Token";
     private static LocalStorage instance;
     private SharedPreferences storage;
     public static final String isFirstLaunch = "isFirstLaunch";
-    public static final String ONLINE_STATUS = "onlineStatus";
+    public static final String Dummy_Store_ID = "Dummy_ID";
+
 
     public LocalStorage(Context context) {
         storage = android.preference.PreferenceManager.getDefaultSharedPreferences(context);

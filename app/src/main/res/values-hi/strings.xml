@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">my_book_store</string>
+    <string name="recived">يستلم</string>
+    <string name="title">عنوان</string>
+    <string name="date">تاريخ</string>
+    <string name="desc">وصف الرسالة</string>
+    <string name="title_activity_welcome">الشاشة الرئيسية</string>
+    <string name="next">التالى</string>
+    <string name="skip">تخطى</string>
+    <string name="start">فهمتك</string>
+    <string name="item_name">اسم العنصر</string>
+    <string name="item_price">سعر البند</string>
+
+    <string name="orders">الطلب #٪ s</string>
+    <string name="settings">الإعدادات</string>
+    <string name="all_fav">كل ما تبذلونه المفضلة</string>
+    <string name="curse">الدورات</string>
+    <string name="proc">تقدم</string>
+    <string name="add_item">اضافة عنصر</string>
+    <string name="name">اسم العنصر</string>
+    <string name="item_description">وصف السلعة</string>
+    <string name="upload_image">تحميل الصور</string>
+    <string name="post">بريد</string>
+    <string name="profile">الملف الشخصي</string>
+    <string name="hello_blank_fragment">مرحبا شظية فارغة</string>
+    <string name="bookstores_in_one_place">مكتبات في مكان واحد</string>
+    <string name="courses_institution">الدورات</string>
+    <string name="username">اسم المستخدم</string>
+    <string name="confirm_otp">تأكيد مكتب المدعي العام</string>
+    <string name="please_enter_your_otp">
+يرجى إدخال OTP الذي تلقيته على بريدك الإلكتروني / رقم هاتفك المحمول المسجل.
+</string>
+    <string name="edit">تعديل</string>
+    <string name="browse">تصفح</string>
+    <string name="phone">هاتف</string>
+    <string name="personal_info">معلومات شخصية</string>
+    <string name="location">موقعك</string>
+    <string name="submit">إرسال</string>
+    <string name="email">البريد الإلكتروني</string>
+    <string name="resend_otp">إعادة إرسال OTP</string>
+    <string name="delivery_address">عنوان التسليم</string>
+    <string name="next_btn">التالى</string>
+    <string name="payment">دفع</string>
+    <string name="skip_btn">تخطى</string>
+    <string name="languages">اللغات</string>
+    <string name="get_started">البدء</string>
+    <string name="country">بلد</string>
+    <string name="recieve_notifications">تلقي الإخطارات</string>
+    <string name="enabled">تمكين</string>
+    <string name="sign_up">سجل</string>
+    <string name="discover_more_items_in_this_bookstore">اكتشاف المزيد من العناصر في هذه المكتبة</string>
+    <string name="don_t_worry_about_school">لا تقلق بشأن المدرسة</string>
+    <string name="favorite_items">العناصر المفضلة</string>
+    <string name="we_got_you_covered">وصلنا لك مغطاة</string>
+    <string name="thanks_for_purchasing">شكرا على الشراء</string>
+    <string name="please_logged_in_to_see_your_favourite_itemloggedin">يرجى تسجيل الدخول لرؤية البند المفضل لديك؟</string>
+    <string name="already_user_login_here">هل أنت مستخدم بالفعل؟ تسجيل الدخول هنا</string>
+    <string name="we_will_delivered_within_4_hours">سنقوم بتسليمها في غضون 4 ساعات</string>
+    <string name="details">تفاصيل</string>
+    <string name="enroll">يتسجل، يلتحق</string>
+    <string name="track">مسار</string>
+    <string name="forgot_password">هل نسيت كلمة المرور</string>
+    <string name="please_enter_your_email_or_mobile_in_order_to_reset_your_password">
+يرجى إدخال بريدك الإلكتروني أو هاتفك المحمول من أجل إعادة تعيين كلمة المرور الخاصة بك
+</string>
+    <string name="discover_more_bookstores">اكتشاف المزيد من المكتبات</string>
+    <string name="add_new_address">إضافة عنوان جديد</string>
+    <string name="mobile">التليفون المحمول</string>
+    <string name="discover_more_courses">اكتشاف المزيد من الدورات</string>
+    <string name="send_request">ارسل طلب</string>
+    <string name="checkout">الدفع</string>
+
+</resources>

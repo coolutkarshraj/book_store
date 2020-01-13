@@ -1,7 +1,11 @@
 
 package com.io.bookstore.model.bookListModel;
 
+import android.os.Build;
+
 import com.google.gson.annotations.SerializedName;
+
+import androidx.annotation.RequiresApi;
 
 @SuppressWarnings("unused")
 public class Datum {
@@ -33,7 +37,7 @@ public class Datum {
     @SerializedName("price")
     private Long mPrice;
     @SerializedName("quantity")
-    private Long mQuantity;
+    private int mQuantity;
     @SerializedName("rating")
     private Long mRating;
     @SerializedName("store")
@@ -145,11 +149,12 @@ public class Datum {
         mPrice = price;
     }
 
-    public Long getQuantity() {
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public int getQuantity() {
         return mQuantity;
     }
 
-    public void setQuantity(Long quantity) {
+    public void setQuantity(int quantity) {
         mQuantity = quantity;
     }
 

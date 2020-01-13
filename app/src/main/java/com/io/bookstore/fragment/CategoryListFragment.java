@@ -50,7 +50,7 @@ public class CategoryListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        root = inflater.inflate(R.layout.fragment_category_list, container, false);
+        root = inflater.inflate(R.layout.fragment_category_list1, container, false);
 
         initView();
         getCategoryList();

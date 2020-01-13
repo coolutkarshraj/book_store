@@ -19,6 +19,7 @@ public class DbHelper extends SQLiteOpenHelper {
     private final static String PRODUCT_IMAGE="Image";
     private final static String PRODUCT_QTY="Quantity";
     private final static String PRODUCT_PRICE="Price";
+    private final static String PRODUCT_AQTY="avalible";
 
     private SQLiteDatabase database;
 
@@ -31,6 +32,7 @@ public class DbHelper extends SQLiteOpenHelper {
             PRODUCT_PRICE +" TEXT,"+
             description +" TEXT,"+
             gstPrice +" TEXT,"+
+            PRODUCT_AQTY +" TEXT,"+
             PRODUCT_Id +" TEXT);";
 
     public DbHelper(Context context) {
@@ -53,7 +55,7 @@ public class DbHelper extends SQLiteOpenHelper {
     /* ----------------------------------------------------insert data in table -----------------------------------------------------*/
 
     public boolean insertData(String name, String avatarPath, Long bookId, int qty,
-                              Long price, String description, Long gstPrice){
+                              Long price, String description, Long gstPrice,int avalibleqty ){
         database = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("Name",name);
@@ -63,6 +65,7 @@ public class DbHelper extends SQLiteOpenHelper {
         values.put("description",description);
         values.put("gstPrice",gstPrice);
         values.put("P_ID",bookId);
+        values.put("avalible",avalibleqty);
         long result = database.insert(TABLE_NAME,null,values);
         if(result==-1){
             return false;

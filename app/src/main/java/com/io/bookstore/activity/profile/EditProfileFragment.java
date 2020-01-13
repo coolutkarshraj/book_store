@@ -1,6 +1,7 @@
 package com.io.bookstore.activity.profile;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -23,6 +24,7 @@ import com.io.bookstore.R;
 import com.io.bookstore.activity.authentication.SignUpActivity;
 import com.io.bookstore.activity.authentication.SignupVerifyActivity;
 import com.io.bookstore.apicaller.ApiCaller;
+import com.io.bookstore.model.addAddressResponseModel.GetAddressListResponseModel;
 import com.io.bookstore.model.editProfileResponseModel.EditProfileResponseModel;
 import com.io.bookstore.model.registerModel.RegisterModel;
 import com.io.bookstore.utility.NewProgressBar;
@@ -67,10 +69,37 @@ public class EditProfileFragment extends Fragment {
 
         initView();
         bindListner();
+        getaddressListApi();
         return view;
     }
 
+    private void getaddressListApi() {
+        final Activity activity = getActivity();
+        if (user.isOnline(activity)) {
+            dialog = new NewProgressBar(activity);
+            dialog.show();
+            ApiCaller.getUserSavedAddressList(activity, Config.Url.getAddressList,"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNTc4ODQ5NzQxLCJleHAiOjE1Nzg5MzYxNDF9.HiddwD9LwLH81wTxNycUnvQqAVMu7f7kepL2b2cYErg",
+                    new FutureCallback<GetAddressListResponseModel>() {
+                        @Override
+                        public void onCompleted(Exception e, GetAddressListResponseModel result) {
+                            if (e != null) {
+                                dialog.dismiss();
+                                Utils.showAlertDialog(activity, "Something Went Wrong");
+                                return;
+                            }
 
+                            dialog.dismiss();
+                            phone.setText(result.getData().getPhone());
+                            email.setText(result.getData().getEmail());
+                            address.setText(result.getData().getAddress());
+                            username.setText(result.getData().getName());
+                        }
+                    });
+
+        } else {
+            Utils.showAlertDialog(activity, "No Internet Connection");
+        }
+    }
     private void initView() {
         fNmae = view.findViewById(R.id.et_firstname);
         lName = view.findViewById(R.id.et_lastname);
@@ -97,6 +126,7 @@ public class EditProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //updateProfile();
+                Toast.makeText(getActivity(),"Profile not updated",Toast.LENGTH_SHORT).show();
                 profileFragment = new ProfileFragment();
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.content_view, profileFragment)

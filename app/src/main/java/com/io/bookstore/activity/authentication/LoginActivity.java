@@ -112,6 +112,7 @@ public class LoginActivity extends AppCompatActivity {
                                 return;
                             }
                             saveLoginData(result);
+                            localStorage.putBooleAan(LocalStorage.isLoggedIn,true);
                             navigateToHomeActivit();
                         }
                     });
@@ -124,14 +125,15 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void navigateToHomeActivit() {
-        Intent i = new Intent(activity , MainActivity.class);
-        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(i);
+             Intent i = new Intent(activity , MainActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(i);
     }
 
     private void saveLoginData(LoginModel result) {
         Gson gson = new Gson();
         String json = gson.toJson(result);
         localStorage.putDistributorProfile(result);
+        localStorage.putString(LocalStorage.token,result.getData().getToken());
     }
 }

@@ -14,6 +14,7 @@ import com.io.bookstore.Config;
 import com.io.bookstore.R;
 import com.io.bookstore.fragment.CategoryListFragment;
 import com.io.bookstore.listeners.ItemClickListner;
+import com.io.bookstore.localStorage.LocalStorage;
 import com.io.bookstore.model.InstituteModel;
 import com.io.bookstore.model.categoryModel.CategoryData;
 import com.io.bookstore.model.categoryModel.CategoryModel;
@@ -45,11 +46,24 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
 
         holder.tv_category.setText(mData.get(position).getName());
         Glide.with(mContext).load(Config.imageUrl +mData.get(position).getImagePath()).into(holder.iv_category);
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 itemClickListner = (ItemClickListner) mContext;
+                LocalStorage localStorage = new LocalStorage(mContext);
                 assert itemClickListner != null;
+                localStorage.putString(LocalStorage.CategoryId, String.valueOf(mData.get(position).getCategoryId()));
+                itemClickListner.onClick(3);
+            }
+        });
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itemClickListner = (ItemClickListner) mContext;
+                LocalStorage localStorage = new LocalStorage(mContext);
+                assert itemClickListner != null;
+                localStorage.putString(LocalStorage.CategoryId, String.valueOf(mData.get(position).getCategoryId()));
                 itemClickListner.onClick(3);
             }
         });

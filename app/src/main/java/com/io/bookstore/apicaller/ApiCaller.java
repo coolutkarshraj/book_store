@@ -1,17 +1,14 @@
 package com.io.bookstore.apicaller;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 
-import androidx.fragment.app.FragmentActivity;
-
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.io.bookstore.model.BookModel;
-import com.io.bookstore.model.FilterDetailsModel.FilterDetailsModel;
+import com.io.bookstore.model.PlaceOrderModel.OrderModel;
 import com.io.bookstore.model.addAddressResponseModel.AddAddressResponseModel;
+import com.io.bookstore.model.addAddressResponseModel.DeliveryAddress;
+import com.io.bookstore.model.addAddressResponseModel.GetAddressListResponseModel;
 import com.io.bookstore.model.bookListModel.BookListModel;
 import com.io.bookstore.model.categoryModel.CategoryModel;
 import com.io.bookstore.model.changePasswordOtpModel.ChangePasswordVerifyOtpModel;
@@ -20,9 +17,9 @@ import com.io.bookstore.model.deliveryPriceModel.DeliveryResponseModel;
 import com.io.bookstore.model.editProfileResponseModel.EditProfileResponseModel;
 import com.io.bookstore.model.filterByAddress.FilterAddressModel;
 import com.io.bookstore.model.getAddressResponseModel.AddressResponseModel;
+import com.io.bookstore.model.getAllOrder.GetAllOrder;
 import com.io.bookstore.model.getProfileResponseModel.GetProfileResponseModel;
 import com.io.bookstore.model.loginModel.LoginModel;
-import com.io.bookstore.model.orderModel.OrderModel;
 import com.io.bookstore.model.registerModel.RegisterModel;
 import com.io.bookstore.model.storeDetailsModel.StoreDetailsModel;
 import com.io.bookstore.model.storeModel.StoreModel;
@@ -34,17 +31,13 @@ import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 import com.koushikdutta.ion.ProgressCallback;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 
 public class ApiCaller {
 
     /* -----------------------------------------------------Registration api------------------------------------------------------*/
 
     public static void registerCustomer(Activity activity, String url, String name, String email,
-                                        String phone, String password,String firstname,String lastname,
+                                        String phone, String password, String firstname, String lastname,
                                         String address, final FutureCallback<RegisterModel> apiCallBack) {
         final Gson gson = new Gson();
         Ion.with(activity)
@@ -56,19 +49,17 @@ public class ApiCaller {
                     }
                 })
                 .setTimeout(60 * 60 * 1000)
-                .setMultipartParameter("username", name)
+                .setMultipartParameter("name", firstname + " " +lastname)
                 .setMultipartParameter("email", email)
                 .setMultipartParameter("phone", phone)
                 .setMultipartParameter("password", password)
-                .setMultipartParameter("firstname", firstname)
-                .setMultipartParameter("lastname", lastname)
                 .setMultipartParameter("address", address)
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
                     public void onCompleted(Exception e, JsonObject result) {
                         RegisterModel customerRegisterResponseModel = gson.fromJson(result, RegisterModel.class);
-                       apiCallBack.onCompleted(e, customerRegisterResponseModel);
+                        apiCallBack.onCompleted(e, customerRegisterResponseModel);
                     }
                 });
     }
@@ -194,17 +185,21 @@ public class ApiCaller {
     /* ------------------------------------------------------Add address api-------------------------------------------------------*/
 
 
-    public static void addAddress(Activity activity, String url, int customerId, String address1, String address2, String city, String state,
-                                  String pincode, String addressType, String token, final FutureCallback<AddAddressResponseModel> apiCallBack) {
+    public static void addAddress(Activity activity, String url, String name, String address, String addresstype, String city, String state,
+                                  int zipcode, String locality, String country, String code, String landmark, String token, final FutureCallback<AddAddressResponseModel> apiCallBack) {
 
         final JsonObject json = new JsonObject();
-        json.addProperty("customerId", customerId);
-        json.addProperty("address1", address1);
-        json.addProperty("address2", address2);
+        json.addProperty("name", name);
+        json.addProperty("address", address);
+        json.addProperty("addresstype", addresstype);
+        json.addProperty("phonenum", 980250410);
         json.addProperty("city", city);
         json.addProperty("state", state);
-        json.addProperty("postcode", pincode);
-        json.addProperty("addressType", addressType);
+        json.addProperty("country", country);
+        json.addProperty("landmark", landmark);
+        json.addProperty("zipcode", zipcode);
+        json.addProperty("locality", locality);
+        json.addProperty("code", code);
         final Gson gson = new Gson();
         Ion.with(activity)
                 .load(UrlLocator.getFinalUrl(url))
@@ -223,7 +218,7 @@ public class ApiCaller {
     /*------------------------------------------------------ get Customer Address list----------------------------------------------*/
 
     public static void getAddresssList(Activity activity, String url,
-                                          final FutureCallback<AddressResponseModel> apiCallBack) {
+                                       final FutureCallback<AddressResponseModel> apiCallBack) {
         final Gson gson = new Gson();
         Ion.with(activity)
                 .load(UrlLocator.getFinalUrl(url))
@@ -293,7 +288,7 @@ public class ApiCaller {
     /* --------------------------------------------------------ChangePasswordVerifyOtpModel--------------------------------------------------*/
 
     public static void chagePasswordOTPModel(Activity activity, String url,
-                                        final FutureCallback<ChangePasswordVerifyOtpModel> apiCallBack) {
+                                             final FutureCallback<ChangePasswordVerifyOtpModel> apiCallBack) {
 
         final Gson gson = new Gson();
         Ion.with(activity)
@@ -311,8 +306,8 @@ public class ApiCaller {
 
     /*----------------------------------------------------- verify OTP -------------------------------------------------------------*/
 
-    public static void verifyOTP(Context activity, String url, int otp,String userid,
-                                   final FutureCallback<VerifyOtpModel> apiCallBack) {
+    public static void verifyOTP(Context activity, String url, int otp, String userid,
+                                 final FutureCallback<VerifyOtpModel> apiCallBack) {
 
         final JsonObject json = new JsonObject();
         json.addProperty("otp", otp);
@@ -336,7 +331,7 @@ public class ApiCaller {
     /* ------------------------------------------------------- get category list ---------------------------------------------*/
 
     public static void getCategoryModel(Activity activity, String url, String token,
-                                       final FutureCallback<CategoryModel> apiCallBack) {
+                                        final FutureCallback<CategoryModel> apiCallBack) {
 
         final Gson gson = new Gson();
         Ion.with(activity)
@@ -373,8 +368,8 @@ public class ApiCaller {
 
     /*------------------------------------------------------ get Book Model -------------------------------------------------*/
 
-    public static void getBookModel(Activity activity, String url,String sId,String cId,String name,
-                                          final FutureCallback<BookListModel> apiCallback) {
+    public static void getBookModel(Activity activity, String url, String sId, String cId, String name,
+                                    final FutureCallback<BookListModel> apiCallback) {
         final Gson gson = new Gson();
         Ion.with(activity)
                 .load(UrlLocator.getFinalUrl(url))
@@ -391,8 +386,8 @@ public class ApiCaller {
 
     /* ------------------------------------------------------ Store detail Model ------------------------------------------------------*/
 
-    public static void getStoreDetails(Activity activity, String url,String storeId,String name,
-                                     final FutureCallback<StoreDetailsModel> apiCallBack) {
+    public static void getStoreDetails(Activity activity, String url, String storeId, String name,
+                                       final FutureCallback<StoreDetailsModel> apiCallBack) {
 
 
         final Gson gson = new Gson();
@@ -433,30 +428,14 @@ public class ApiCaller {
 
     /*-------------------------------------------------- Checkout(Proced order) --------------------------------------------------------)*/
 
-    public static void procedorder(Activity activity, String url, String productDetails, String shippingFirstName, String shippingLastName,
-                                   String shippingCompany, String shippingAddress_1, String shippingAddress_2, String shippingCity,
-                                   String shippingPostCode, String shippingCountry, String shippingZone, String shippingAddressFormat,
-                                   String phoneNumber, String emailId, String token, final FutureCallback<OrderModel> apiCallBack) {
+    public static void procedorder(Activity activity, String url, JsonObject jsonObject, String token, final FutureCallback<OrderModel> apiCallBack) {
 
-        final JsonObject json = new JsonObject();
-        json.addProperty("productDetails", productDetails);
-        json.addProperty("shippingFirstName", shippingFirstName);
-        json.addProperty("shippingLastName", shippingLastName);
-        json.addProperty("shippingCompany", shippingCompany);
-        json.addProperty("shippingAddress_1", shippingAddress_1);
-        json.addProperty("shippingAddress_2", shippingAddress_2);
-        json.addProperty("shippingCity", shippingCity);
-        json.addProperty("shippingPostCode", shippingPostCode);
-        json.addProperty("shippingCountry", shippingCountry);
-        json.addProperty("shippingZone", shippingZone);
-        json.addProperty("shippingAddressFormat", shippingAddressFormat);
-        json.addProperty("phoneNumber", phoneNumber);
-        json.addProperty("emailId", emailId);
+
         final Gson gson = new Gson();
         Ion.with(activity)
                 .load(UrlLocator.getFinalUrl(url))
                 .setHeader("Authorization", "Bearer " + token)
-                .noCache().setJsonObjectBody(json)
+                .noCache().setJsonObjectBody(jsonObject)
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
@@ -468,13 +447,31 @@ public class ApiCaller {
 
     }
 
+    /*-------------------------------------------------- (Get order) --------------------------------------------------------)*/
 
+    public static void getOrder(Activity activity, String url, String token, final FutureCallback<GetAllOrder> apiCallBack) {
+
+
+        final Gson gson = new Gson();
+        Ion.with(activity)
+                .load(UrlLocator.getFinalUrl(url))
+                .setHeader("Authorization", "Bearer " + token)
+                .noCache()
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        GetAllOrder placeOrderResponseModel = gson.fromJson(result, GetAllOrder.class);
+                        apiCallBack.onCompleted(e, placeOrderResponseModel);
+                    }
+                });
+
+    }
 
     /*------------------------------------------------------- serach product api --------------------------------------------------*/
 
-    public static void getfilterData(Activity activity, String url,String city,
-                                     final FutureCallback<FilterAddressModel> apiCallBack)  {
-
+    public static void getfilterData(Activity activity, String url, String city,
+                                     final FutureCallback<FilterAddressModel> apiCallBack) {
         final Gson gson = new Gson();
         final JsonObject json = new JsonObject();
         json.addProperty("address.city", city);
@@ -492,6 +489,22 @@ public class ApiCaller {
                 });
     }
 
+    public static void getUserSavedAddressList(Activity activity, String url, String token,
+                                               final FutureCallback<GetAddressListResponseModel> apiCallBack) {
+        final Gson gson = new Gson();
+        Ion.with(activity)
+                .load(UrlLocator.getFinalUrl(url))
+                .setHeader("Authorization", "Bearer " + token)
+                .noCache()
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        GetAddressListResponseModel deliveryAddress = gson.fromJson(result, GetAddressListResponseModel.class);
+                        apiCallBack.onCompleted(e, deliveryAddress);
+                    }
+                });
+    }
 
 
 }

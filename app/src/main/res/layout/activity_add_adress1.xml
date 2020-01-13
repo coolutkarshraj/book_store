@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center">
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:elevation="5dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="2dp">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/white">
+
+
+            <TextView
+                android:id="@+id/textView23"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:text="BookStore Details"
+                app:layout_constraintBottom_toTopOf="@+id/view4"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/view4"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:background="#f2f2f2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView23" />
+
+            <TextView
+                android:id="@+id/textView25"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="0dp"
+                android:text="Name"
+                app:layout_constraintBottom_toTopOf="@+id/et_address"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view4" />
+
+            <TextView
+                android:id="@+id/et_address"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:textSize="12sp"
+                android:padding="@dimen/five_dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/layout_bg_on_focus"
+                android:ems="10"
+                android:gravity="start|top"
+                android:inputType="textMultiLine"
+                app:layout_constraintBottom_toTopOf="@+id/textView26"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView25" />
+
+            <TextView
+                android:id="@+id/textView26"
+                android:layout_width="0dp"
+                android:layout_height="19dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="8dp"
+                android:text="Address"
+                app:layout_constraintBottom_toTopOf="@+id/et_pincode"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_address" />
+
+            <TextView
+                android:id="@+id/et_pincode"
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="16dp"
+                android:textSize="12sp"
+                android:paddingLeft="@dimen/five_dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:textColor="@color/text_color"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/layout_bg_on_focus"
+                android:ems="10"
+                android:inputType="text"
+                app:layout_constraintBottom_toTopOf="@+id/textView27"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView26" />
+
+            <TextView
+                android:id="@+id/textView27"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:text="Email"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_pincode" />
+
+            <TextView
+                android:id="@+id/et_state"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:textSize="12sp"
+                android:paddingLeft="@dimen/five_dp"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/text_color"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/layout_bg_on_focus"
+                android:ems="10"
+                android:importantForAutofill="no"
+                android:inputType="textPersonName"
+                app:layout_constraintBottom_toTopOf="@+id/textView28"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView27" />
+
+            <TextView
+                android:id="@+id/textView28"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:text="Phone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_state" />
+
+            <TextView
+                android:id="@+id/et_city"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:textColor="@color/text_color"
+                android:textSize="12sp"
+                android:paddingLeft="@dimen/five_dp"
+                android:layout_marginRight="16dp"
+                android:background="@drawable/layout_bg_on_focus"
+                android:ems="10"
+                android:importantForAutofill="no"
+                android:inputType="textPersonName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView28" />
+
+            <Button
+                android:id="@+id/btn_Add"
+                android:layout_width="116dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="17dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/round_corner_button_yellow"
+                android:text="Add"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_city" />
+
+            <Button
+                android:id="@+id/btn_cancel"
+                android:layout_width="116dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/round_corner_light_gray"
+                android:text="Cancel"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btn_Add"
+                app:layout_constraintTop_toBottomOf="@+id/et_city" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

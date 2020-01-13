@@ -22,6 +22,10 @@ public class Config {
         public static String getAdressApi = "store/addresslist";
         public static String getStoreApifilter = "store/filter";
         public static String getDeliverCharge = "order/delivery-type";
+        public static String addAddress = "order/add-address";
+        public static String getAddressList = "user/detail";
+        public static String placePrder = "order/placed";
+        public static String getAllOrder = "order/user-order";
     }
 
     public final static int splashTimeout = 3000;

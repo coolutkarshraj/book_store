@@ -1,11 +1,13 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.io.bookstore"
-        minSdkVersion 16
+        minSdkVersion 18
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -41,4 +43,8 @@ dependencies {
     implementation 'com.github.smarteist:autoimageslider:1.2.0'
     implementation 'de.hdodenhof:circleimageview:2.1.0'
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.+'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}
+repositories {
+    mavenCentral()
 }

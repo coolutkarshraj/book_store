@@ -20,7 +20,7 @@
 
 
             <TextView
-                android:id="@+id/tv_address"
+                android:id="@+id/tv_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -45,7 +45,7 @@
 
 
         <TextView
-            android:id="@+id/tv_address1"
+            android:id="@+id/tv_phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -58,7 +58,7 @@
             />
 
         <TextView
-            android:id="@+id/tv_address2"
+            android:id="@+id/tv_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"

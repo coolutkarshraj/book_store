@@ -7,7 +7,7 @@
     android:background="@android:color/white">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/login_signup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -28,7 +28,7 @@
         android:textSize="22dp"
         android:text="@string/bookstores_in_one_place"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/login_signup" />
 
     <pl.droidsonroids.gif.GifImageView
         android:id="@+id/imageView3"

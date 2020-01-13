@@ -40,7 +40,7 @@
             android:layout_marginLeft="@dimen/sixteen_dp"
             android:layout_weight="2.7"
             android:gravity="center_vertical"
-            android:text="Personal Info"></TextView>
+            android:text="@string/personal_info"></TextView>
     </LinearLayout>
 
     <LinearLayout
@@ -67,7 +67,7 @@
             android:layout_marginLeft="@dimen/sixteen_dp"
             android:layout_weight="2.7"
             android:gravity="center_vertical"
-            android:text="Delivery Address"></TextView>
+            android:text="@string/delivery_address"></TextView>
     </LinearLayout>
 
     <LinearLayout
@@ -94,7 +94,7 @@
             android:layout_marginLeft="@dimen/sixteen_dp"
             android:layout_weight="2.7"
             android:gravity="center_vertical"
-            android:text="Payment"></TextView>
+            android:text="@string/payment"></TextView>
     </LinearLayout>
 
     <LinearLayout
@@ -122,7 +122,7 @@
             android:layout_marginLeft="@dimen/sixteen_dp"
             android:layout_weight="2.7"
             android:gravity="center_vertical"
-            android:text="Languages"></TextView>
+            android:text="@string/languages"></TextView>
     </LinearLayout>
 
     <LinearLayout
@@ -149,7 +149,7 @@
             android:layout_marginLeft="@dimen/sixteen_dp"
             android:layout_weight="2.7"
             android:gravity="center_vertical"
-            android:text="Country"></TextView>
+            android:text="@string/country"></TextView>
     </LinearLayout>
 
     <LinearLayout

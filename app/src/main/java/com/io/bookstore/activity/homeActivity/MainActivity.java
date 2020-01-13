@@ -8,6 +8,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.io.bookstore.R;
 import com.io.bookstore.activity.homeActivity.ui.cart.CartFragment;
+import com.io.bookstore.activity.homeActivity.ui.deliveryAddress.DeliveryAddressFragment;
 import com.io.bookstore.activity.homeActivity.ui.home.HomeFragment;
 import com.io.bookstore.activity.homeActivity.ui.order.OrderFragment;
 import com.io.bookstore.activity.profile.EditProfileFragment;
@@ -18,6 +19,7 @@ import com.io.bookstore.fragment.BookstoresFragmentWithFilter;
 import com.io.bookstore.fragment.CategoryListFragment;
 import com.io.bookstore.fragment.FavoriteItemsFragment;
 import com.io.bookstore.listeners.ItemClickListner;
+import com.io.bookstore.localStorage.LocalStorage;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.content.res.AppCompatResources;
@@ -56,6 +58,8 @@ public class MainActivity extends AppCompatActivity implements
     BookstoresFragment bookstoresFragment;
     BookstoresFragmentWithFilter bookstoresFragmentWithFilter;
     BookListFragment bookListFragment;
+    DeliveryAddressFragment deliveryAddressFragment;
+    LocalStorage localStorage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +71,12 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private void startWorking() {
-      startHome();
+        if(localStorage.getBoolean(LocalStorage.isCart)){
+            changeFrag(cartFragment,true);
+        }else {
+
+            startHome();
+        }
     }
 
     private void startHome() {
@@ -104,6 +113,7 @@ public class MainActivity extends AppCompatActivity implements
         ll_personal_info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                    changeProfileColorIcon();
                 drawer.closeDrawer(Gravity.LEFT);
 
             }
@@ -111,6 +121,7 @@ public class MainActivity extends AppCompatActivity implements
         ll_address.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                changeFrag(deliveryAddressFragment,true);
                 drawer.closeDrawer(Gravity.LEFT);
             }
         });
@@ -299,6 +310,7 @@ public class MainActivity extends AppCompatActivity implements
 
 
     private void initView() {
+        localStorage = new LocalStorage(this);
         ivHome = findViewById(R.id.ivHome);
         ivHeart = findViewById(R.id.ivHeart);
         ivCart = findViewById(R.id.ivCart);
@@ -314,6 +326,7 @@ public class MainActivity extends AppCompatActivity implements
         cartFragment = new CartFragment();
         orderFragment = new OrderFragment();
         favoriteItemsFragment = new FavoriteItemsFragment();
+        deliveryAddressFragment = new DeliveryAddressFragment();
         navigationView = findViewById(R.id.nav_view);
         menu = findViewById(R.id.menu);
         ll_personal_info = findViewById(R.id.ll_personal_info);

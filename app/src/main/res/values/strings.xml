@@ -14,38 +14,48 @@
     <string name="item_price">Item Price</string>
     <string name="orders">Orders</string>
     <string name="settings">Settings</string>
-
-
-    <string name="slide_1_title">Hello Food!</string>
-    <string name="slide_1_desc">The easiest way to order food from your favourite restaurant!</string>
-
-    <string name="slide_2_title">Movie Tickets</string>
-    <string name="slide_2_desc">Book movie tickets for your family and friends!</string>
-
-    <string name="slide_3_title">Great Discounts</string>
-    <string name="slide_3_desc">Best discounts on every single service we offer!</string>
-
-    <string name="slide_4_title">World Travel</string>
-    <string name="slide_4_desc">Book tickets of any transportation and travel the world!</string>
-
-    <string name="play_again_desc">To see the welcome slider again, goto Settings -> apps -> welcome slider -> clear data</string>
-    <string name="play_again">Play Again</string>
     <string name="all_fav">All Your Favourite</string>
-    <string name="title_activity_main">MainActivity</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">utkarsh@android.com</string>
-    <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
-
-    <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
-    <string name="menu_tools">Tools</string>
-    <string name="menu_share">Share</string>
-    <string name="menu_send">Send</string>
-    <string name="noti">Notifications</string>
+    <string name="courses_institution"><![CDATA[Courses & Institution]]></string>
+    <string name="username">Username</string>
+    <string name="confirm_otp">Confirm OTP</string>
+    <string name="please_enter_your_otp">Please enter your OTP you have received on your registered email/ mobile number.</string>
+    <string name="edit">Edit</string>
+    <string name="browse">Browse</string>
+    <string name="phone">Phone</string>
+    <string name="personal_info">Personal Info</string>
+    <string name="location">Location</string>
+    <string name="submit">submit</string>
+    <string name="email">Email</string>
+    <string name="resend_otp">Resend OTP</string>
+    <string name="delivery_address">Delivery Address</string>
+    <string name="next_btn">Next</string>
+    <string name="payment">Payment</string>
+    <string name="skip_btn">Skip</string>
+    <string name="languages">Languages</string>
+    <string name="get_started">Get Started</string>
+    <string name="country">Country</string>
+    <string name="recieve_notifications">Recieve notifications</string>
+    <string name="enabled">Enabled</string>
+    <string name="sign_up">Sign up</string>
+    <string name="discover_more_items_in_this_bookstore">Discover more Items in this Bookstore</string>
+    <string name="don_t_worry_about_school">Don\'t Worry about school</string>
+    <string name="favorite_items">Favorite Items</string>
+    <string name="we_got_you_covered">We got you covered</string>
+    <string name="thanks_for_purchasing">Thanks For Purchasing</string>
+    <string name="please_logged_in_to_see_your_favourite_itemloggedin">Please Logged In To See Your Favourite ItemLoggedIn?</string>
+    <string name="already_user_login_here">Already User? Login Here</string>
+    <string name="we_will_delivered_within_4_hours">We Will Delivered Within 4 Hours</string>
+    <string name="details">Details</string>
+    <string name="enroll">Enroll</string>
+    <string name="track">Track</string>
+    <string name="forgot_password">Forgot Password</string>
+    <string name="please_enter_your_email_or_mobile_in_order_to_reset_your_password">Please enter your email or mobile in order to reset your password</string>
+    <string name="discover_more_bookstores">Discover More Bookstores</string>
+    <string name="add_new_address">+ Add New Address</string>
+    <string name="mobile">Mobile</string>
+    <string name="discover_more_courses">Discover More Courses</string>
+    <string name="send_request">send request</string>
+    <string name="checkout">Checkout</string>
     <string name="curse"><![CDATA[Courses & institution]]></string>
     <string name="proc">Proceed</string>
     <string name="add_item">Add Item</string>
@@ -58,6 +68,17 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="bookstores_in_one_place">BookStores in One Place</string>
+    <string name="title_activity_main">Main activity</string>
+    <string name="action_settings">Setting</string>
+    <string name="noti">Notification</string>
+    <string name="nav_header_title">Hello Guest</string>
+    <string name="nav_header_subtitle">Login or SignUp</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_tools">Tools</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_send">Send</string>
 
 
 </resources>
