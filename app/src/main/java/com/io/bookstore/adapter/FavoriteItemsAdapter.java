@@ -9,18 +9,21 @@ import android.widget.ImageView;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.io.bookstore.Config;
 import com.io.bookstore.R;
 import com.io.bookstore.model.BookModel;
+import com.io.bookstore.model.wishlistModel.GetWishListDataModel;
 
 import java.util.List;
 
 public class FavoriteItemsAdapter extends RecyclerView.Adapter<FavoriteItemsAdapter.MyViewHolder> {
 
-    private Context mContext ;
-    private List<BookModel> mData ;
+    private Context mContext;
+    private List<GetWishListDataModel> mData;
 
 
-    public FavoriteItemsAdapter(Context mContext, List<BookModel> mData) {
+    public FavoriteItemsAdapter(Context mContext, List<GetWishListDataModel> mData) {
         this.mContext = mContext;
         this.mData = mData;
     }
@@ -28,18 +31,19 @@ public class FavoriteItemsAdapter extends RecyclerView.Adapter<FavoriteItemsAdap
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        boolean flag=false;
-        View view ;
+        boolean flag = false;
+        View view;
         LayoutInflater mInflater = LayoutInflater.from(mContext);
-        view = mInflater.inflate(R.layout.item_favorite,parent,false);
+        view = mInflater.inflate(R.layout.item_favorite, parent, false);
         return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
+        GetWishListDataModel model = mData.get(position);
 
-        int i =(mData.get(position).getPrice());
-        holder.img_book_thumbnail.setImageResource(mData.get(position).getThumbnail());
+
+        Glide.with(mContext).load(Config.imageUrl +model.getAvatarPath()).into(holder.img_book_thumbnail);
      /*   holder.fav_white.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,7 +78,6 @@ public class FavoriteItemsAdapter extends RecyclerView.Adapter<FavoriteItemsAdap
         // });
 
 
-
     }
 
     @Override
@@ -84,14 +87,14 @@ public class FavoriteItemsAdapter extends RecyclerView.Adapter<FavoriteItemsAdap
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-       // TextView tv_book_price;
+        // TextView tv_book_price;
         ImageView img_book_thumbnail;
-        CardView cardView ;
+        CardView cardView;
 
         public MyViewHolder(View itemView) {
             super(itemView);
 
-          //  tv_book_price = (TextView) itemView.findViewById(R.id.tv_book_price) ;
+            //  tv_book_price = (TextView) itemView.findViewById(R.id.tv_book_price) ;
             img_book_thumbnail = (ImageView) itemView.findViewById(R.id.iv_favorite);
             cardView = (CardView) itemView.findViewById(R.id.cardview_id_item);
 

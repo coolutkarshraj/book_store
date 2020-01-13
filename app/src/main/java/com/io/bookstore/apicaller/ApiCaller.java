@@ -26,6 +26,8 @@ import com.io.bookstore.model.storeModel.StoreModel;
 import com.io.bookstore.model.updateAddResponseModel.UpdateAddResponseModel;
 import com.io.bookstore.model.updatePasswordModel.UpdatePasswordModel;
 import com.io.bookstore.model.verifyOtpModel.VerifyOtpModel;
+import com.io.bookstore.model.wishlistModel.AddorRemoveWishlistResponseModel;
+import com.io.bookstore.model.wishlistModel.GetWishlistResponseModel;
 import com.io.bookstore.utility.UrlLocator;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
@@ -501,6 +503,44 @@ public class ApiCaller {
                     @Override
                     public void onCompleted(Exception e, JsonObject result) {
                         GetAddressListResponseModel deliveryAddress = gson.fromJson(result, GetAddressListResponseModel.class);
+                        apiCallBack.onCompleted(e, deliveryAddress);
+                    }
+                });
+    }
+
+    /*------------------------------------- add or remove product wishlist ------------------------------*/
+
+    public static void addOrRemoveWishList(Context activity, String url,
+                                     String token, final FutureCallback<AddorRemoveWishlistResponseModel> apiCallBack) {
+
+
+        final Gson gson = new Gson();
+        Ion.with(activity)
+                .load("POST ", UrlLocator.getFinalUrl(url))
+                .setHeader("Authorization", "Bearer " + token)
+                .noCache()
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        AddorRemoveWishlistResponseModel updateAddResponseModel = gson.fromJson(result, AddorRemoveWishlistResponseModel.class);
+                        apiCallBack.onCompleted(e, updateAddResponseModel);
+                    }
+                });
+    }
+
+    public static void getWishList(Activity activity, String url, String token,
+                                               final FutureCallback<GetWishlistResponseModel> apiCallBack) {
+        final Gson gson = new Gson();
+        Ion.with(activity)
+                .load(UrlLocator.getFinalUrl(url))
+                .setHeader("Authorization", "Bearer " + token)
+                .noCache()
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        GetWishlistResponseModel deliveryAddress = gson.fromJson(result, GetWishlistResponseModel.class);
                         apiCallBack.onCompleted(e, deliveryAddress);
                     }
                 });

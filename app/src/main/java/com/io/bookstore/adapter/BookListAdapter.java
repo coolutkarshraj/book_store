@@ -1,7 +1,9 @@
 package com.io.bookstore.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,9 +19,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.io.bookstore.Config;
 import com.io.bookstore.R;
+import com.io.bookstore.activity.authentication.LoginActivity;
+import com.io.bookstore.apicaller.ApiCaller;
 import com.io.bookstore.localStorage.DbHelper;
 import com.io.bookstore.localStorage.LocalStorage;
+import com.io.bookstore.model.addAddressResponseModel.GetAddressListResponseModel;
 import com.io.bookstore.model.bookListModel.Datum;
+import com.io.bookstore.model.loginModel.LoginModel;
+import com.io.bookstore.model.wishlistModel.AddorRemoveWishlistResponseModel;
+import com.io.bookstore.utility.NewProgressBar;
+import com.io.bookstore.utility.Utils;
+import com.io.bookstore.utility.userOnlineInfo;
+import com.koushikdutta.async.future.FutureCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +39,10 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.MyView
 
     private Context mContext;
     private List<Datum> mData;
-
+    userOnlineInfo user;
+    NewProgressBar dialog;
+    private LocalStorage localStorage;
+    private LoginModel loginModel;
 
 
     public BookListAdapter(Context mContext, List<Datum> mData) {
@@ -41,6 +55,9 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.MyView
         View view;
         LayoutInflater mInflater = LayoutInflater.from(mContext);
         view = mInflater.inflate(R.layout.list_book_item, parent, false);
+        user = new userOnlineInfo();
+        localStorage = new LocalStorage(mContext);
+        loginModel = localStorage.getUserProfile();
         return new MyViewHolder(view);
     }
 
@@ -55,8 +72,8 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.MyView
                 LocalStorage localStorage = new LocalStorage(mContext);
                 String dummyId = localStorage.getString(LocalStorage.Dummy_Store_ID);
                 String storeId = localStorage.getString(LocalStorage.StoreId);
-                if (dummyId.equals(storeId)|| dummyId.equals("")){
-                    localStorage.putString(LocalStorage.Dummy_Store_ID,localStorage.getString(LocalStorage.StoreId));
+                if (dummyId.equals(storeId) || dummyId.equals("")) {
+                    localStorage.putString(LocalStorage.Dummy_Store_ID, localStorage.getString(LocalStorage.StoreId));
                     DbHelper dbHelper = new DbHelper(mContext);
                     boolean isInserted = dbHelper.insertData(mData.get(position).getName(),
                             mData.get(position).getAvatarPath(),
@@ -72,15 +89,78 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.MyView
                     } else {
                         Toast.makeText(mContext, "Something Went Wrong", Toast.LENGTH_SHORT).show();
                     }
-                }else {
-                    openDialogBox(mData,position);
+                } else {
+                    openDialogBox(mData, position);
                 }
 
+
+            }
+        });
+        holder.mark_fav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (loginModel == null) {
+                    Toast.makeText(mContext, "please login", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(mContext, LoginActivity.class);
+                    mContext.startActivity(intent);
+                } else {
+                    holder.mark_fav.setVisibility(View.GONE);
+                    holder.mark_fav_red.setVisibility(View.VISIBLE);
+                    addorRemomoveWishlist(mData.get(position).getBookId());
+                }
 
 
             }
         });
 
+        holder.mark_fav_red.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (loginModel == null) {
+                    Intent intent = new Intent(mContext, LoginActivity.class);
+                    mContext.startActivity(intent);
+                } else {
+                    holder.mark_fav.setVisibility(View.VISIBLE);
+                    holder.mark_fav_red.setVisibility(View.GONE);
+                    addorRemomoveWishlist(mData.get(position).getBookId());
+                }
+            }
+        });
+
+    }
+
+
+    /* ---------------------------------------------- add or remove wishlist api -----------------------------------------*/
+
+    private void addorRemomoveWishlist(Long bookId) {
+        if (user.isOnline(mContext)) {
+            dialog = new NewProgressBar(mContext);
+            dialog.show();
+            LocalStorage localStorage = new LocalStorage(mContext);
+            ApiCaller.addOrRemoveWishList((Activity) mContext, Config.Url.addorremoveWishlist + bookId, localStorage.getString(LocalStorage.token),
+                    new FutureCallback<AddorRemoveWishlistResponseModel>() {
+                        @Override
+                        public void onCompleted(Exception e, AddorRemoveWishlistResponseModel result) {
+                            if (e != null) {
+                                dialog.dismiss();
+                                Utils.showAlertDialog((Activity) mContext, "Something Went Wrong");
+                                return;
+                            }
+                            if (result.getStatus() == true) {
+                                Toast.makeText(mContext, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                                dialog.dismiss();
+                            } else {
+                                Toast.makeText(mContext, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                                dialog.dismiss();
+                            }
+
+                        }
+                    });
+
+        } else {
+            Utils.showAlertDialog((Activity) mContext, "No Internet Connection");
+        }
     }
 
     private void openDialogBox(final List<Datum> mData, final int position) {
@@ -96,9 +176,9 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.MyView
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             public void onClick(DialogInterface dialog, int id) {
-               dialog.cancel();
-               LocalStorage localStorage = new LocalStorage(mContext);
-               localStorage.putString(LocalStorage.Dummy_Store_ID,localStorage.getString(LocalStorage.StoreId));
+                dialog.cancel();
+                LocalStorage localStorage = new LocalStorage(mContext);
+                localStorage.putString(LocalStorage.Dummy_Store_ID, localStorage.getString(LocalStorage.StoreId));
                 DbHelper dbHelper = new DbHelper(mContext);
                 dbHelper.deleteAll();
                 boolean isInserted = dbHelper.insertData(mData.get(position).getName(),
@@ -138,7 +218,7 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.MyView
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView tv_price;
-        ImageView iv_favorite, mark_fav, mark_cart, mark_setting;
+        ImageView iv_favorite, mark_fav, mark_cart, mark_setting, mark_fav_red;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -147,6 +227,7 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.MyView
             mark_fav = (ImageView) itemView.findViewById(R.id.mark_fav);
             mark_cart = (ImageView) itemView.findViewById(R.id.mark_cart);
             mark_setting = (ImageView) itemView.findViewById(R.id.mark_setting);
+            mark_fav_red = (ImageView) itemView.findViewById(R.id.mark_fav_red);
 
         }
     }

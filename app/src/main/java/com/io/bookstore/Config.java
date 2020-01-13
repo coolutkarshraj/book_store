@@ -26,6 +26,8 @@ public class Config {
         public static String getAddressList = "user/detail";
         public static String placePrder = "order/placed";
         public static String getAllOrder = "order/user-order";
+        public static String addorremoveWishlist = "book/add-remove-wishlist/?id=";
+        public static String getWishList = "book/wishlist";
     }
 
     public final static int splashTimeout = 3000;

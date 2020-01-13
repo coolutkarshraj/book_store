@@ -30,9 +30,24 @@
                 android:layout_height="25dp"
                 android:layout_weight="0.3"
                 android:padding="5dp"
+
                 android:src="@drawable/heart">
 
             </ImageView>
+
+
+            <ImageView
+                android:id="@+id/mark_fav_red"
+                android:layout_width="0dp"
+                android:layout_height="25dp"
+                android:layout_weight="0.3"
+                android:padding="5dp"
+                android:visibility="gone"
+                android:backgroundTint="#f00000"
+                android:src="@drawable/heartpink">
+
+            </ImageView>
+
             <ImageView
                 android:id="@+id/mark_cart"
                 android:layout_width="0dp"

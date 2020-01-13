@@ -61,6 +61,7 @@ public class DeliveryAddressFragment extends Fragment {
     private RecyclerView recyclerView;
     private AddressAdapter addressAdapter;
     private JsonArray jsonArray;
+    LocalStorage localStorage;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -74,6 +75,7 @@ public class DeliveryAddressFragment extends Fragment {
     private void intilizeView(View root) {
         activity = getActivity();
         user = new userOnlineInfo();
+        localStorage= new LocalStorage(getActivity());
         recyclerView = root.findViewById(R.id.recyclerView);
         tv_address = root.findViewById(R.id.tv_address);
 
@@ -154,7 +156,8 @@ public class DeliveryAddressFragment extends Fragment {
         if (user.isOnline(activity)) {
             dialog = new NewProgressBar(activity);
             dialog.show();
-            ApiCaller.getUserSavedAddressList(activity, Config.Url.getAddressList,"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNTc4ODQ5NzQxLCJleHAiOjE1Nzg5MzYxNDF9.HiddwD9LwLH81wTxNycUnvQqAVMu7f7kepL2b2cYErg",
+
+            ApiCaller.getUserSavedAddressList(activity, Config.Url.getAddressList, localStorage.getString(LocalStorage.token),
                     new FutureCallback<GetAddressListResponseModel>() {
                         @Override
                         public void onCompleted(Exception e, GetAddressListResponseModel result) {
