@@ -7,8 +7,9 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.io.bookstore.model.PlaceOrderModel.OrderModel;
 import com.io.bookstore.model.addAddressResponseModel.AddAddressResponseModel;
-import com.io.bookstore.model.addAddressResponseModel.DeliveryAddress;
 import com.io.bookstore.model.addAddressResponseModel.GetAddressListResponseModel;
+import com.io.bookstore.model.adminResponseModel.AdminBookListResponseModel;
+import com.io.bookstore.model.adminResponseModel.DeleteBookResponseModel;
 import com.io.bookstore.model.bookListModel.BookListModel;
 import com.io.bookstore.model.categoryModel.CategoryModel;
 import com.io.bookstore.model.changePasswordOtpModel.ChangePasswordVerifyOtpModel;
@@ -545,6 +546,42 @@ public class ApiCaller {
                     }
                 });
     }
+
+
+    public static void getAdminBookList(Activity activity, String url, int sId, int cId, String name,
+                                    final FutureCallback<AdminBookListResponseModel> apiCallback) {
+        final Gson gson = new Gson();
+        Ion.with(activity)
+                .load(UrlLocator.getFinalUrl(url))
+                .noCache()
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        AdminBookListResponseModel featuredProductResponseModel = gson.fromJson(result, AdminBookListResponseModel.class);
+                        apiCallback.onCompleted(e, featuredProductResponseModel);
+                    }
+                });
+    }
+
+    public static void deleteBook(Context activity, String url, String token,
+                                  final FutureCallback<DeleteBookResponseModel> apiCallback) {
+        final Gson gson = new Gson();
+        Ion.with(activity)
+                .load(UrlLocator.getFinalUrl(url))
+                .setHeader("Authorization", "Bearer " + token)
+                .setHeader("Role", "store")
+                .noCache()
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        DeleteBookResponseModel featuredProductResponseModel = gson.fromJson(result, DeleteBookResponseModel.class);
+                        apiCallback.onCompleted(e, featuredProductResponseModel);
+                    }
+                });
+    }
+
 
 
 }

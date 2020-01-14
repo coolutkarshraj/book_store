@@ -32,6 +32,9 @@ import com.io.bookstore.fragment.BookstoresFragment;
 import com.io.bookstore.fragment.BookstoresFragmentWithFilter;
 import com.io.bookstore.fragment.CategoryListFragment;
 import com.io.bookstore.fragment.FavoriteItemsFragment;
+import com.io.bookstore.fragment.bookStoreFragment.HomeBookFragment;
+import com.io.bookstore.fragment.bookStoreFragment.OrderListBookFragment;
+import com.io.bookstore.fragment.bookStoreFragment.ProfileAdminFragment;
 import com.io.bookstore.listeners.ItemClickListner;
 import com.io.bookstore.localStorage.LocalStorage;
 
@@ -45,6 +48,10 @@ public class BookStoreMainActivity extends AppCompatActivity implements
     HomeFragment homeFragment;
     CartFragment cartFragment;
     OrderFragment orderFragment;
+     HomeBookFragment homeBookFragment;
+     OrderListBookFragment orderListBookFragment;
+     ProfileAdminFragment profileAdminFragment;
+
     CategoryListFragment categoryListFragment;
     FavoriteItemsFragment favoriteItemsFragment;
     FloatingActionButton fabSave;
@@ -97,7 +104,11 @@ public class BookStoreMainActivity extends AppCompatActivity implements
         iv_profile.setImageResource(R.drawable.profile);
         changeIconColor(BookStoreMainActivity.this, R.drawable.ic_home,0);
 
-        changeFrag(homeFragment, true);
+        if(localStorage.getInt(LocalStorage.role) ==0){
+            changeFrag(homeBookFragment, true);
+        }else {
+            changeFrag(homeFragment, true);
+        }
     }
 
     private void bindListner() {
@@ -285,7 +296,12 @@ public class BookStoreMainActivity extends AppCompatActivity implements
         iv_profile.setImageResource(R.drawable.profile);
         changeIconColor(BookStoreMainActivity.this, R.drawable.ic_home,0);
 
-        changeFrag(homeFragment,true);
+
+        if(localStorage.getInt(LocalStorage.role) ==0){
+            changeFrag(homeBookFragment, true);
+        }else {
+            changeFrag(homeFragment, true);
+        }
     }
 
     private void changeIconColor(Context context, int drawable, int i){
@@ -325,6 +341,11 @@ public class BookStoreMainActivity extends AppCompatActivity implements
         orderFragment = new OrderFragment();
         favoriteItemsFragment = new FavoriteItemsFragment();
         deliveryAddressFragment = new DeliveryAddressFragment();
+
+
+        homeBookFragment = new HomeBookFragment();
+        orderListBookFragment = new OrderListBookFragment();
+        profileAdminFragment = new ProfileAdminFragment();
         navigationView = findViewById(R.id.nav_view);
         menu = findViewById(R.id.menu);
         ll_personal_info = findViewById(R.id.ll_personal_info);

@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -126,8 +127,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void navigateToHomeActivit(LoginModel result) {
+        Toast.makeText(this, ""+result.getRole(), Toast.LENGTH_SHORT).show();
         localStorage.putInt(LocalStorage.role,result.getRole());
-        if(result.getRole() == 1){
+        if(result.getRole() == 0){
             Intent i = new Intent(activity , BookStoreMainActivity.class);
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(i);

@@ -1,0 +1,143 @@
+package com.io.bookstore.adapter;
+
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.Dialog;
+import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
+import android.util.DisplayMetrics;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+import com.io.bookstore.Config;
+import com.io.bookstore.R;
+import com.io.bookstore.apicaller.ApiCaller;
+import com.io.bookstore.listeners.ItemClickListner;
+import com.io.bookstore.localStorage.LocalStorage;
+import com.io.bookstore.model.addAddressResponseModel.GetAddressListResponseModel;
+import com.io.bookstore.model.adminResponseModel.AdminBookDataModel;
+import com.io.bookstore.model.adminResponseModel.AdminBookListResponseModel;
+import com.io.bookstore.model.adminResponseModel.DeleteBookResponseModel;
+import com.io.bookstore.model.storeModel.Datum;
+import com.io.bookstore.utility.NewProgressBar;
+import com.io.bookstore.utility.Utils;
+import com.io.bookstore.utility.userOnlineInfo;
+import com.koushikdutta.async.future.FutureCallback;
+
+import java.util.List;
+
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
+
+public class AdminBookListAdapter extends RecyclerView.Adapter<AdminBookListAdapter.MyViewHolder> {
+
+    private Context mContext;
+    private List<AdminBookDataModel> mData;
+    LocalStorage localStorage;
+    userOnlineInfo user;
+    NewProgressBar dialog;
+
+    public AdminBookListAdapter(Context mContext, List<AdminBookDataModel> mData) {
+        this.mContext = mContext;
+        this.mData = mData;
+    }
+
+    @Override
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+        boolean flag = false;
+        View view;
+        LayoutInflater mInflater = LayoutInflater.from(mContext);
+        view = mInflater.inflate(R.layout.book_list_item, parent, false);
+        localStorage = new LocalStorage(mContext);
+        user = new userOnlineInfo();
+        return new MyViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(final MyViewHolder holder, final int position) {
+
+        final AdminBookDataModel model = mData.get(position);
+
+        holder.tv_BookName.setText(model.getName());
+        holder.tv_book_desc.setText(model.getDescription());
+        // holder.tv_bookstore_desc.setText(mData.get(position).getDescription());
+        Glide.with(mContext).load(Config.imageUrl + model.getAvatarPath()).into(holder.iv_bookstore_thumbnail);
+        holder.btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteBookApiCall(localStorage.getString(LocalStorage.token),model.getBookId(),position);
+            }
+        });
+    }
+
+
+
+    @Override
+    public int getItemCount() {
+        return mData.size();
+    }
+
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
+
+        TextView tv_BookName, tv_book_desc;
+        ImageView iv_bookstore_thumbnail;
+        CardView cardView;
+        Button btnEdit, btnDelete;
+
+        public MyViewHolder(View itemView) {
+            super(itemView);
+
+            tv_BookName = (TextView) itemView.findViewById(R.id.tv_bookName);
+            tv_book_desc = (TextView) itemView.findViewById(R.id.tv_bookDesc);
+            iv_bookstore_thumbnail = (ImageView) itemView.findViewById(R.id.iv_bookstore_thumbnail);
+            cardView = (CardView) itemView.findViewById(R.id.cardview_item_bookstore);
+            btnEdit = (Button) itemView.findViewById(R.id.btnEdit);
+            btnDelete = (Button) itemView.findViewById(R.id.button4);
+
+        }
+    }
+
+    private void deleteBookApiCall(String token, Integer bookId, final int position) {
+
+            if (user.isOnline(mContext)) {
+                dialog = new NewProgressBar(mContext);
+                dialog.show();
+
+                ApiCaller.deleteBook(mContext, Config.Url.adminDeleteBook +bookId, localStorage.getString(LocalStorage.token),
+                        new FutureCallback<DeleteBookResponseModel>() {
+                            @Override
+                            public void onCompleted(Exception e, DeleteBookResponseModel result) {
+                                if (e != null) {
+                                    dialog.dismiss();
+                                    Utils.showAlertDialog((Activity) mContext, "Something Went Wrong");
+                                    return;
+                                }
+
+                               if (result.getStatus() ==true){
+                                   dialog.dismiss();
+                                   Toast.makeText(mContext, ""+result.getMessage(), Toast.LENGTH_SHORT).show();
+                                   mData.remove(position);
+                                   notifyItemRemoved(position);
+                                   notifyItemRangeRemoved(position, mData.size());
+                               }else {
+                                   Toast.makeText(mContext, ""+result.getMessage(), Toast.LENGTH_SHORT).show();
+                                   dialog.dismiss();
+                               }
+                            }
+                        });
+
+            } else {
+                Utils.showAlertDialog((Activity) mContext, "No Internet Connection");
+
+    }}
+
+
+}
