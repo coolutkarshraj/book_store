@@ -21,6 +21,7 @@ public class LocalStorage {
     public static String CategoryId ="CategoryId";
     public static String addressId = "addressId";
     public static String token = "Token";
+    public static String role ="ROLE";
     private static LocalStorage instance;
     private SharedPreferences storage;
     public static final String isFirstLaunch = "isFirstLaunch";

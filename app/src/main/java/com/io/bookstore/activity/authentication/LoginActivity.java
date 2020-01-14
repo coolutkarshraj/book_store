@@ -17,6 +17,7 @@ import com.io.bookstore.R;
 import com.io.bookstore.activity.homeActivity.MainActivity;
 import com.io.bookstore.apicaller.ApiCaller;
 import com.io.bookstore.apicaller.LoginAPICaller;
+import com.io.bookstore.bookStore.BookStoreMainActivity;
 import com.io.bookstore.localStorage.LocalStorage;
 import com.io.bookstore.model.UserModel;
 import com.io.bookstore.model.loginModel.LoginModel;
@@ -113,7 +114,7 @@ public class LoginActivity extends AppCompatActivity {
                             }
                             saveLoginData(result);
                             localStorage.putBooleAan(LocalStorage.isLoggedIn,true);
-                            navigateToHomeActivit();
+                            navigateToHomeActivit(result);
                         }
                     });
 
@@ -124,10 +125,18 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void navigateToHomeActivit() {
-             Intent i = new Intent(activity , MainActivity.class);
+    private void navigateToHomeActivit(LoginModel result) {
+        localStorage.putInt(LocalStorage.role,result.getRole());
+        if(result.getRole() == 1){
+            Intent i = new Intent(activity , BookStoreMainActivity.class);
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(i);
+        }else {
+            Intent i = new Intent(activity , MainActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(i);
+        }
+
     }
 
     private void saveLoginData(LoginModel result) {

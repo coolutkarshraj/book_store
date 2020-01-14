@@ -14,6 +14,19 @@ public class LoginModel {
     @Expose
     private LoginData data;
 
+    @SerializedName("role")
+    @Expose
+    private int role;
+
+
+    public int getRole() {
+        return role;
+    }
+
+    public void setRole(int role) {
+        this.role = role;
+    }
+
     public Boolean getStatus() {
         return status;
     }

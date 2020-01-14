@@ -14,6 +14,7 @@ import android.widget.VideoView;
 import com.io.bookstore.R;
 import com.io.bookstore.activity.homeActivity.MainActivity;
 import com.io.bookstore.activity.homeActivity.ui.home.BookstoreBooksActivity;
+import com.io.bookstore.bookStore.BookStoreMainActivity;
 import com.io.bookstore.localStorage.LocalStorage;
 
 /**
@@ -58,9 +59,16 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(localStorage.getBoolean(LocalStorage.isFirstLaunch)){
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(intent);
-                    finish();
+                    if(localStorage.getInt(LocalStorage.role)== 1){
+                        Intent i = new Intent(SplashActivity.this , BookStoreMainActivity.class);
+                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(i);
+                    }else {
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+
                 }else {
                     Intent intent = new Intent(getApplicationContext(), AppDescriptionSplashActivity.class);
                     startActivity(intent);
