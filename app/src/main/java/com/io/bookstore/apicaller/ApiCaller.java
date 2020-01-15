@@ -8,6 +8,7 @@ import com.google.gson.JsonObject;
 import com.io.bookstore.model.PlaceOrderModel.OrderModel;
 import com.io.bookstore.model.addAddressResponseModel.AddAddressResponseModel;
 import com.io.bookstore.model.addAddressResponseModel.GetAddressListResponseModel;
+import com.io.bookstore.model.adminResponseModel.AddBookResponseModel;
 import com.io.bookstore.model.adminResponseModel.AdminBookListResponseModel;
 import com.io.bookstore.model.adminResponseModel.DeleteBookResponseModel;
 import com.io.bookstore.model.bookListModel.BookListModel;
@@ -33,6 +34,8 @@ import com.io.bookstore.utility.UrlLocator;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 import com.koushikdutta.ion.ProgressCallback;
+
+import java.io.File;
 
 
 public class ApiCaller {
@@ -582,6 +585,29 @@ public class ApiCaller {
                 });
     }
 
+    public static void upload(Activity activity, String url, String bookname, String bookdesc,
+                              String catId, String Quantity, String amount, String token, String image,
+                               final FutureCallback<AddBookResponseModel> apiCallBack) {
+        final Gson gson = new Gson();
+        Ion.with(activity)
+                .load(UrlLocator.getFinalUrl(url))
+                .setHeader("Authorization", "Bearer " + token)
+                .setHeader("Role", "store")
+                .setMultipartParameter("avatar", String.valueOf(new File(image)))
+                .setMultipartParameter("name", bookname)
+                .setMultipartParameter("categoryId", catId)
+                .setMultipartParameter("description", bookdesc)
+                .setMultipartParameter("price", amount)
+                .setMultipartParameter("quantity", Quantity)
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        AddBookResponseModel customerRegisterResponseModel = gson.fromJson(result, AddBookResponseModel.class);
+                        apiCallBack.onCompleted(e, customerRegisterResponseModel);
+                    }
+                });
+    }
 
 
 }

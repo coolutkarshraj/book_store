@@ -29,6 +29,7 @@ public class Config {
         public static String addorremoveWishlist = "book/add-remove-wishlist/?id=";
         public static String getWishList = "book/wishlist";
         public static String adminDeleteBook = "book/delete/";
+        public static String addbook = "book/add/";
     }
 
     public final static int splashTimeout = 3000;
