@@ -31,7 +31,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <EditText
+            <androidx.appcompat.widget.SearchView
                 android:id="@+id/searchView2"
                 android:layout_width="300dp"
                 android:layout_height="40dp"

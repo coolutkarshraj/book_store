@@ -24,6 +24,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,6 +39,7 @@ import com.io.bookstore.listeners.ApiImage;
 import com.io.bookstore.listeners.ServiceGenerator;
 import com.io.bookstore.localStorage.LocalStorage;
 import com.io.bookstore.model.adminResponseModel.AddBookResponseModel;
+import com.io.bookstore.model.adminResponseModel.AdminBookDataModel;
 import com.io.bookstore.model.adminResponseModel.AdminBookListResponseModel;
 import com.io.bookstore.model.bookListModel.BookListModel;
 import com.io.bookstore.model.bookListModel.Datum;
@@ -50,10 +52,12 @@ import com.io.bookstore.utility.userOnlineInfo;
 import com.koushikdutta.async.future.FutureCallback;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
@@ -77,7 +81,9 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener {
     private Activity activity;
     private RecyclerView rvBookStore;
     private AdminBookListAdapter adapter;
+    private  List<AdminBookDataModel> item;
     private NewProgressBar dialog;
+    SearchView searchView;
     private userOnlineInfo user;
     private Dialog dialogs;
     private static final int REQUEST_WRITE_STORAGE = 1004;
@@ -118,6 +124,8 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener {
     private void intializeViews(View view) {
         activity = getActivity();
         user = new userOnlineInfo();
+        item = new ArrayList<>();
+        searchView = view.findViewById(R.id.searchView2);
         localStorage = new LocalStorage(activity);
         permissionFile = new PermissionFile(activity);
         imageUtility = new ImageUtility(activity);
@@ -144,6 +152,7 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener {
 
     private void startWorking() {
         getBookList();
+        searchViewSetUp();
 
     }
 
@@ -171,6 +180,7 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener {
     private void setRecyclerViewData(AdminBookListResponseModel result) {
         rvBookStore.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false));
         adapter = new AdminBookListAdapter(activity, result.getData());
+        item = result.getData();
         rvBookStore.setAdapter(adapter);
 
     }
@@ -367,6 +377,31 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener {
             public void onFailure(Call<AddBookResponseModel> call, Throwable t) {
 
             }
+        });
+
+
+    }
+
+    private void searchViewSetUp() {
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                List<AdminBookDataModel> newlist = new ArrayList<>();
+                for (AdminBookDataModel productList : item) {
+                    String name = productList.getName();
+                    if (name.contains(s))
+                        newlist.add(productList);
+                }
+                adapter.setFilter(newlist);
+                return true;
+            }
+
+
         });
     }
 

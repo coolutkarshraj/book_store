@@ -46,6 +46,7 @@ import com.io.bookstore.utility.userOnlineInfo;
 import com.koushikdutta.async.future.FutureCallback;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.cardview.widget.CardView;
@@ -113,7 +114,7 @@ public class AdminBookListAdapter extends RecyclerView.Adapter<AdminBookListAdap
         holder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                deleteBookApiCall(localStorage.getString(LocalStorage.token),model.getBookId(),position);
+                deleteBookApiCall(localStorage.getString(LocalStorage.token), model.getBookId(), position);
             }
         });
 
@@ -124,8 +125,11 @@ public class AdminBookListAdapter extends RecyclerView.Adapter<AdminBookListAdap
             }
         });
     }
-
-
+    public void setFilter(List<AdminBookDataModel> newlist){
+        mData=new ArrayList<>();
+        mData.addAll(newlist);
+        notifyDataSetChanged();
+    }
 
     @Override
     public int getItemCount() {
@@ -154,43 +158,44 @@ public class AdminBookListAdapter extends RecyclerView.Adapter<AdminBookListAdap
 
     private void deleteBookApiCall(String token, Integer bookId, final int position) {
 
-            if (user.isOnline(mContext)) {
-                dialog = new NewProgressBar(mContext);
-                dialog.show();
+        if (user.isOnline(mContext)) {
+            dialog = new NewProgressBar(mContext);
+            dialog.show();
 
-                ApiCaller.deleteBook(mContext, Config.Url.adminDeleteBook +bookId, localStorage.getString(LocalStorage.token),
-                        new FutureCallback<DeleteBookResponseModel>() {
-                            @Override
-                            public void onCompleted(Exception e, DeleteBookResponseModel result) {
-                                if (e != null) {
-                                    dialog.dismiss();
-                                    Utils.showAlertDialog((Activity) mContext, "Something Went Wrong");
-                                    return;
-                                }
-
-                               if (result.getStatus() ==true){
-                                   dialog.dismiss();
-                                   Toast.makeText(mContext, ""+result.getMessage(), Toast.LENGTH_SHORT).show();
-                                   mData.remove(position);
-                                   notifyItemRemoved(position);
-                                   notifyItemRangeRemoved(position, mData.size());
-                               }else {
-                                   Toast.makeText(mContext, ""+result.getMessage(), Toast.LENGTH_SHORT).show();
-                                   dialog.dismiss();
-                               }
+            ApiCaller.deleteBook(mContext, Config.Url.adminDeleteBook + bookId, localStorage.getString(LocalStorage.token),
+                    new FutureCallback<DeleteBookResponseModel>() {
+                        @Override
+                        public void onCompleted(Exception e, DeleteBookResponseModel result) {
+                            if (e != null) {
+                                dialog.dismiss();
+                                Utils.showAlertDialog((Activity) mContext, "Something Went Wrong");
+                                return;
                             }
-                        });
 
-            } else {
-                Utils.showAlertDialog((Activity) mContext, "No Internet Connection");
+                            if (result.getStatus() == true) {
+                                dialog.dismiss();
+                                Toast.makeText(mContext, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                                mData.remove(position);
+                                notifyItemRemoved(position);
+                                notifyItemRangeRemoved(position, mData.size());
+                            } else {
+                                Toast.makeText(mContext, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                                dialog.dismiss();
+                            }
+                        }
+                    });
 
-    }}
+        } else {
+            Utils.showAlertDialog((Activity) mContext, "No Internet Connection");
+
+        }
+    }
 
 
     private void dialogOpenForAddBook(AdminBookDataModel adminBookDataModel) {
         dialogs = new Dialog(mContext);
         dialogs.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        DisplayMetrics metrics =mContext.getResources().getDisplayMetrics();
+        DisplayMetrics metrics = mContext.getResources().getDisplayMetrics();
         int width = metrics.widthPixels;
         int height = metrics.heightPixels;
         dialogs.getWindow().setLayout((6 * width) / 7, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -240,10 +245,10 @@ public class AdminBookListAdapter extends RecyclerView.Adapter<AdminBookListAdap
         Yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String  name = tvName.getText().toString().trim();
-                String  descrption = tvDesc.getText().toString().trim();
-                String  Price = price.getText().toString().trim();
-                String  Quantity = quantity.getText().toString().trim();
+                String name = tvName.getText().toString().trim();
+                String descrption = tvDesc.getText().toString().trim();
+                String Price = price.getText().toString().trim();
+                String Quantity = quantity.getText().toString().trim();
                 addBook(name, descrption, Price, Quantity, imageView, licenseFile, spindata);
             }
         });
@@ -262,7 +267,7 @@ public class AdminBookListAdapter extends RecyclerView.Adapter<AdminBookListAdap
     private void addBook(String strBookName, String strDescrpition, String strPrice, String strQuantity, ImageView imageView,
                          String licenseFile, String spindata) {
 
-        if (strBookName.isEmpty() || strDescrpition.isEmpty() || strPrice.isEmpty() || strQuantity.isEmpty() || spindata.equals(" ") ) {
+        if (strBookName.isEmpty() || strDescrpition.isEmpty() || strPrice.isEmpty() || strQuantity.isEmpty() || spindata.equals(" ")) {
             Toast.makeText(mContext, "please enter data", Toast.LENGTH_SHORT).show();
         } else {
             addDataIntoApi(strBookName, strDescrpition, strPrice, strQuantity, licenseFile, spindata);
@@ -295,7 +300,7 @@ public class AdminBookListAdapter extends RecyclerView.Adapter<AdminBookListAdap
     private void galleryIntent() {
         Intent pickIntent = new Intent(Intent.ACTION_PICK);
         pickIntent.setType("image/*");
-        ((Activity) mContext).startActivityForResult(pickIntent,GalleryPicker);
+        ((Activity) mContext).startActivityForResult(pickIntent, GalleryPicker);
 
     }
 
@@ -331,7 +336,6 @@ public class AdminBookListAdapter extends RecyclerView.Adapter<AdminBookListAdap
 
     private void addDataIntoApi(String strBookName, String strDescrpition, String strPrice, String strQuantity, String licenseFile, String spindata) {
     }
-
 
 
 }
