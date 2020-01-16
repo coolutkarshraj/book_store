@@ -96,7 +96,7 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener {
     private File destination;
     private Uri outputFileUri;
     int CameraPicker = 124;
-    ImageView imageView;
+    ImageView imageView,ivFilter;
     Spinner spin;
     String spindata;
     LocalStorage localStorage;
@@ -131,10 +131,12 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener {
         imageUtility = new ImageUtility(activity);
         rvBookStore = view.findViewById(R.id.recyclerView_bookstore);
         floatingActionButton = view.findViewById(R.id.floating);
+        ivFilter = view.findViewById(R.id.iv_filter);
     }
 
     private void bindListner() {
         floatingActionButton.setOnClickListener(this);
+        ivFilter.setOnClickListener(this);
     }
 
 
@@ -145,9 +147,15 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener {
                 Toast.makeText(activity, "click", Toast.LENGTH_SHORT).show();
                 dialogOpenForAddBook();
                 return;
+
+            case R.id.iv_filter:
+                dialogOfFilter();
+            return;
         }
 
     }
+
+
 
 
     private void startWorking() {
@@ -401,8 +409,83 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener {
                 return true;
             }
 
-
         });
+
+
+    }
+
+    private void dialogOfFilter() {
+        final Dialog dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        int width = metrics.widthPixels;
+        int height = metrics.heightPixels;
+        dialog.getWindow().setLayout((6 * width) / 7, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.setContentView(R.layout.admin_filter);
+        dialog.setTitle("");
+        final Button Yes = (Button) dialog.findViewById(R.id.yes);
+        final Button No = (Button) dialog.findViewById(R.id.no);
+    final  ImageView image =(ImageView)dialog.findViewById(R.id.clear);
+        spin = (Spinner) dialog.findViewById(R.id.category_spinner);
+
+
+
+        image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+              dialog.dismiss();
+            }
+        });
+        ArrayAdapter aa = new ArrayAdapter(activity, layout.simple_list_item_1, items);
+        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spin.setAdapter(aa);
+        spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                spindata = categoryId[i];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        Yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getBookListFilter(spindata);
+                dialog.dismiss();
+            }
+        });
+        No.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("ResourceAsColor")
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+
+    }
+    private void getBookListFilter(String spindata) {
+        if (user.isOnline(getActivity())) {
+            dialog = new NewProgressBar(getActivity());
+            dialog.show();
+            ApiCaller.getAdminBookList(getActivity(), Config.Url.bookFilter+spindata, 1, 1, "",
+                    new FutureCallback<AdminBookListResponseModel>() {
+
+                        @Override
+                        public void onCompleted(Exception e, AdminBookListResponseModel result) {
+                            dialog.dismiss();
+                            setRecyclerViewData(result);
+
+                        }
+                    });
+        } else {
+            Utils.showAlertDialog(getActivity(), "No Internet Connection");
+        }
     }
 
 }
