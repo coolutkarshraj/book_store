@@ -61,6 +61,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 import static android.R.layout.*;
@@ -93,6 +98,7 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener {
             "Kids", "Office", "Art", "Smartphones"};
     String[] categoryId = {" ", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
     private FloatingActionButton floatingActionButton;
+    File imagefile;
 
     public HomeBookFragment() {
     }
@@ -204,7 +210,6 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 spindata = categoryId[i];
-                Toast.makeText(activity, "spindata " + spindata + " spinpos" + categoryId[i], Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -238,7 +243,7 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener {
     private void addBook(String strBookName, String strDescrpition, String strPrice, String strQuantity, ImageView imageView,
                          String licenseFile, String spindata) {
 
-        if (strBookName.isEmpty() || strDescrpition.isEmpty() || strPrice.isEmpty() || strQuantity.isEmpty() || spindata.equals(" ") || licenseFile.equals("")) {
+        if (strBookName.isEmpty() || strDescrpition.isEmpty() || strPrice.isEmpty() || strQuantity.isEmpty() || spindata.equals(" ") ) {
             Toast.makeText(activity, "please enter data", Toast.LENGTH_SHORT).show();
         } else {
             addDataIntoApi(strBookName, strDescrpition, strPrice, strQuantity, licenseFile, spindata);
@@ -273,21 +278,6 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener {
         startActivityForResult(pickIntent, GalleryPicker);
     }
 
-    /* ---------------------------------------------pick image from the Camera using intent -----------------------------------------*/
-
-    private void cameraIntent() {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        final File root = permissionFile.getFile();
-        root.mkdirs();
-        String filename = permissionFile.getUniqueImageFilename();
-        destination = new File(root, filename);
-        outputFileUri = FileProvider.getUriForFile(
-                activity,
-                activity
-                        .getPackageName() + ".provider", destination);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
-        startActivityForResult(intent, CameraPicker);
-    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -309,9 +299,9 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener {
             licenseFile = imageUtility.compressImage(destination.getPath());
             Toast.makeText(activity, "submit", Toast.LENGTH_SHORT).show();
             Log.e("camerapic", licenseFile);
-            File imgFile = new File(licenseFile);
-            if (imgFile.exists()) {
-                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+             imagefile = new File(licenseFile);
+            if (imagefile.exists()) {
+                Bitmap myBitmap = BitmapFactory.decodeFile(imagefile.getAbsolutePath());
                 imageView.setImageBitmap(myBitmap);
             }
 
@@ -330,36 +320,11 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener {
     }
 
 
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        switch (requestCode) {
-
-            case REQUEST_WRITE_STORAGE: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                } else {
-                    Toast.makeText(activity, "The app was not allowed to write to your storage. Hence, it cannot function properly. Please consider granting it this permission", Toast.LENGTH_LONG).show();
-                }
-            }
-            case REQUEST_CODE_LOCATION:
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                }
-                break;
-
-            case REQUEST_CODE_STORAGE:
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-                }
-                break;
-
-        }
-    }
 
 
     private void addDataIntoApi(String strBookName, String strDescrpition, String strPrice, String strQuantity, String licenseFile, String spindata) {
-        if (user.isOnline(getActivity())) {
+  /*      if (user.isOnline(getActivity())) {
             dialog = new NewProgressBar(getActivity());
             dialog.show();
             ApiCaller.upload(activity, Config.Url.addbook, strBookName, strDescrpition, spindata, strQuantity, strPrice, localStorage.getString(LocalStorage.token), licenseFile, new FutureCallback<AddBookResponseModel>() {
@@ -378,6 +343,31 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener {
         } else {
             Utils.showAlertDialog(getActivity(), "No Internet Connection");
         }
+*/
+        ApiImage jsonPostService = ServiceGenerator.createService(ApiImage.class, "http://157.175.48.7/api/");
+
+        RequestBody bookname = RequestBody.create(MediaType.parse("text/plain"), strBookName);
+        RequestBody desc = RequestBody.create(MediaType.parse("text/plain"), strDescrpition);
+        RequestBody price = RequestBody.create(MediaType.parse("text/plain"), strPrice);
+        RequestBody quantity = RequestBody.create(MediaType.parse("text/plain"), strQuantity);
+        RequestBody image = RequestBody.create(MediaType.parse("image/*"), licenseFile);
+        RequestBody catId = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(categoryId));
+
+
+        Callback<AddBookResponseModel> call =
+                jsonPostService.uploadImage("Bearer " + localStorage.getString(LocalStorage.token),
+                "store",image,bookname,catId,desc,price,quantity);
+        call.equals(new Callback<AddBookResponseModel>() {
+            @Override
+            public void onResponse(Call<AddBookResponseModel> call, Response<AddBookResponseModel> response) {
+                Toast.makeText(activity, "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<AddBookResponseModel> call, Throwable t) {
+
+            }
+        });
     }
 
 }

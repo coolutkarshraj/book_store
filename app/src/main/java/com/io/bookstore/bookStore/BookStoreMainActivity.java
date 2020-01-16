@@ -250,7 +250,13 @@ public class BookStoreMainActivity extends AppCompatActivity implements
         DrawableCompat.setTint(wrappedDrawable2, getResources().getColor(R.color.gray));
         iv_profile.setImageResource(R.drawable.profile);
         changeIconColor(BookStoreMainActivity.this, R.drawable.cart,2);
-        changeFrag(orderFragment,true);
+
+
+        if(localStorage.getInt(LocalStorage.role) ==0){
+            changeFrag(orderListBookFragment, true);
+        }else {
+            changeFrag(orderFragment,true);
+        }
     }
 
     private void changeFavouriteColorIcon() {

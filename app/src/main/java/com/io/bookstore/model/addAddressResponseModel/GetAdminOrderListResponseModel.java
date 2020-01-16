@@ -1,9 +1,12 @@
-package com.io.bookstore.model.loginModel;
+package com.io.bookstore.model.addAddressResponseModel;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class LoginModel {
+import java.util.List;
+
+public class GetAdminOrderListResponseModel {
+
     @SerializedName("status")
     @Expose
     private Boolean status;
@@ -12,20 +15,7 @@ public class LoginModel {
     private String message;
     @SerializedName("data")
     @Expose
-    private LoginData data;
-
-    @SerializedName("role")
-    @Expose
-    private int  role;
-
-
-    public int  getRole() {
-        return role;
-    }
-
-    public void setRole(int  role) {
-        this.role = role;
-    }
+    private List<GetAdminOrderListDataModel> data = null;
 
     public Boolean getStatus() {
         return status;
@@ -43,11 +33,12 @@ public class LoginModel {
         this.message = message;
     }
 
-    public LoginData getData() {
+    public List<GetAdminOrderListDataModel> getData() {
         return data;
     }
 
-    public void setData(LoginData data) {
+    public void setData(List<GetAdminOrderListDataModel> data) {
         this.data = data;
     }
+
 }

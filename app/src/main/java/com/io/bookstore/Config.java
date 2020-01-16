@@ -30,6 +30,7 @@ public class Config {
         public static String getWishList = "book/wishlist";
         public static String adminDeleteBook = "book/delete/";
         public static String addbook = "book/add/";
+        public static String adminOrders = "store/orders/";
     }
 
     public final static int splashTimeout = 3000;

@@ -2,6 +2,7 @@ package com.io.bookstore.holder;
 
 
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,6 +16,7 @@ public class OrderHolder extends RecyclerView.ViewHolder
     public TextView textView11;
     public TextView textView12;
     public TextView textView9;
+    public ImageView imageView10;
 
 
     public OrderHolder(View view) {
@@ -24,6 +26,7 @@ public class OrderHolder extends RecyclerView.ViewHolder
         textView11 = view.findViewById(R.id.textView11);
         textView12 = view.findViewById(R.id.textView12);
         textView9 = view.findViewById(R.id.textView9);
+        imageView10 = view.findViewById(R.id.imageView10);
 
     }
 

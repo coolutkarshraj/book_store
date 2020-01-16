@@ -8,6 +8,7 @@ import com.google.gson.JsonObject;
 import com.io.bookstore.model.PlaceOrderModel.OrderModel;
 import com.io.bookstore.model.addAddressResponseModel.AddAddressResponseModel;
 import com.io.bookstore.model.addAddressResponseModel.GetAddressListResponseModel;
+import com.io.bookstore.model.addAddressResponseModel.GetAdminOrderListResponseModel;
 import com.io.bookstore.model.adminResponseModel.AddBookResponseModel;
 import com.io.bookstore.model.adminResponseModel.AdminBookListResponseModel;
 import com.io.bookstore.model.adminResponseModel.DeleteBookResponseModel;
@@ -587,7 +588,7 @@ public class ApiCaller {
 
     public static void upload(Activity activity, String url, String bookname, String bookdesc,
                               String catId, String Quantity, String amount, String token, String image,
-                               final FutureCallback<AddBookResponseModel> apiCallBack) {
+                              final FutureCallback<AddBookResponseModel> apiCallBack) {
         final Gson gson = new Gson();
         Ion.with(activity)
                 .load(UrlLocator.getFinalUrl(url))
@@ -607,6 +608,29 @@ public class ApiCaller {
                         apiCallBack.onCompleted(e, customerRegisterResponseModel);
                     }
                 });
+    }
+
+
+    /* get admin order*/
+
+    public static void getAdminOrder(Activity activity, String url, String token, final FutureCallback<GetAdminOrderListResponseModel> apiCallBack) {
+
+
+        final Gson gson = new Gson();
+        Ion.with(activity)
+                .load(UrlLocator.getFinalUrl(url))
+                .setHeader("Authorization", "Bearer " + token)
+                .setHeader("Role", "store")
+                .noCache()
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        GetAdminOrderListResponseModel placeOrderResponseModel = gson.fromJson(result, GetAdminOrderListResponseModel.class);
+                        apiCallBack.onCompleted(e, placeOrderResponseModel);
+                    }
+                });
+
     }
 
 
