@@ -52,7 +52,7 @@
 
 
             <RelativeLayout
-
+                android:background="@drawable/search_view_background"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="25dp"
@@ -101,7 +101,7 @@
                     <EditText
                         android:id="@+id/tv_book_quantity"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="60dp"
                         android:layout_marginEnd="10dp"
                         android:layout_marginTop="10dp"
                         android:background="@drawable/layout_bg_on_focus"
@@ -112,8 +112,7 @@
 
                     <Spinner
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
+                        android:layout_height="40dp"
                         android:id="@+id/category_spinner"
                         ></Spinner>
                 </LinearLayout>
@@ -146,13 +145,20 @@
                     android:id="@+id/no"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/gray_background"
                     android:layout_marginRight="20dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:textColor="@android:color/white"
                     android:text="No"
                     android:textSize="@dimen/h2" />
 
                 <Button
                     android:id="@+id/yes"
+                    android:background="@drawable/btn_yellow_back"
                     android:layout_width="wrap_content"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
                     android:layout_height="wrap_content"
                     android:text="Yes"
 

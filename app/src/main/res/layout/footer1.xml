@@ -30,6 +30,7 @@
     <LinearLayout
         android:id="@+id/favfourite"
         android:layout_width="20dp"
+        android:visibility="gone"
         android:layout_height="match_parent"
         android:layout_marginLeft="20dp"
 

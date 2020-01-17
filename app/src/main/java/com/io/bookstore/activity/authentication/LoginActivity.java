@@ -113,9 +113,11 @@ public class LoginActivity extends AppCompatActivity {
                                 Utils.showAlertDialog(activity, "Something Went Wrong");
                                 return;
                             }
-                            saveLoginData(result);
-                            localStorage.putBooleAan(LocalStorage.isLoggedIn,true);
-                            navigateToHomeActivit(result);
+                            if(result.getStatus()){
+                                saveLoginData(result);
+                                localStorage.putBooleAan(LocalStorage.isLoggedIn,true);
+                                navigateToHomeActivit(result);
+                            }
                         }
                     });
 
@@ -146,5 +148,12 @@ public class LoginActivity extends AppCompatActivity {
         String json = gson.toJson(result);
         localStorage.putDistributorProfile(result);
         localStorage.putString(LocalStorage.token,result.getData().getToken());
+        localStorage.putInt(LocalStorage.role,result.getRole());
+        if(result.getRole() ==1){
+            localStorage.putInt(LocalStorage.userId,result.getData().getUser().getUserId());
+        }else {
+            localStorage.putInt(LocalStorage.userId,result.getData().getUser().getStoreId());
+        }
+
     }
 }

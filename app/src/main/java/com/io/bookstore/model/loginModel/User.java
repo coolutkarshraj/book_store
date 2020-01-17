@@ -35,6 +35,10 @@ public class User {
     @Expose
     private Object otp;
 
+    @SerializedName("storeId")
+    @Expose
+    private Integer storeId;
+
     public String getCreatedDate() {
         return createdDate;
     }
@@ -45,6 +49,14 @@ public class User {
 
     public Integer getUserId() {
         return userId;
+    }
+
+    public Integer getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(Integer storeId) {
+        this.storeId = storeId;
     }
 
     public void setUserId(Integer userId) {

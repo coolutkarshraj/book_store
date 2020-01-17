@@ -33,10 +33,14 @@ import com.io.bookstore.model.wishlistModel.AddorRemoveWishlistResponseModel;
 import com.io.bookstore.model.wishlistModel.GetWishlistResponseModel;
 import com.io.bookstore.utility.UrlLocator;
 import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.async.http.body.FilePart;
+import com.koushikdutta.async.http.body.Part;
 import com.koushikdutta.ion.Ion;
 import com.koushikdutta.ion.ProgressCallback;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class ApiCaller {
@@ -587,14 +591,16 @@ public class ApiCaller {
     }
 
     public static void upload(Activity activity, String url, String bookname, String bookdesc,
-                              String catId, String Quantity, String amount, String token, String image,
+                              String catId, String Quantity, String amount, String token, File image,
                               final FutureCallback<AddBookResponseModel> apiCallBack) {
         final Gson gson = new Gson();
+        List<Part> files = new ArrayList();
+        files.add(new FilePart("avatar",image));
         Ion.with(activity)
                 .load(UrlLocator.getFinalUrl(url))
                 .setHeader("Authorization", "Bearer " + token)
                 .setHeader("Role", "store")
-                .setMultipartParameter("avatar", String.valueOf(new File(image)))
+                .addMultipartParts(files)
                 .setMultipartParameter("name", bookname)
                 .setMultipartParameter("categoryId", catId)
                 .setMultipartParameter("description", bookdesc)
@@ -611,6 +617,33 @@ public class ApiCaller {
     }
 
 
+
+    public static void edit(Activity activity, String url, String bookname, String bookdesc,
+                            String catId, String Quantity, String amount, String token, File image,
+                            Integer bookId, final FutureCallback<AddBookResponseModel> apiCallBack) {
+        final Gson gson = new Gson();
+        List<Part> files = new ArrayList();
+        files.add(new FilePart("avatar",image));
+        Ion.with(activity)
+                .load(UrlLocator.getFinalUrl(url))
+                .setHeader("Authorization", "Bearer " + token)
+                .setHeader("Role", "store")
+                .addMultipartParts(files)
+                .setMultipartParameter("name", bookname)
+                .setMultipartParameter("categoryId", catId)
+                .setMultipartParameter("description", bookdesc)
+                .setMultipartParameter("price", amount)
+                .setMultipartParameter("quantity", Quantity)
+                .setMultipartParameter("bookId", String.valueOf(bookId))
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        AddBookResponseModel customerRegisterResponseModel = gson.fromJson(result, AddBookResponseModel.class);
+                        apiCallBack.onCompleted(e, customerRegisterResponseModel);
+                    }
+                });
+    }
     /* get admin order*/
 
     public static void getAdminOrder(Activity activity, String url, String token, final FutureCallback<GetAdminOrderListResponseModel> apiCallBack) {

@@ -28,7 +28,7 @@ public class Config {
         public static String getAllOrder = "order/user-order";
         public static String addorremoveWishlist = "book/add-remove-wishlist/?id=";
         public static String getWishList = "book/wishlist";
-        public static String adminDeleteBook = "book/delete/";
+        public static String adminDeleteBook = "book/delete";
         public static String addbook = "book/add/";
         public static String adminOrders = "store/orders/";
         public static String bookFilter = "book/booklist/-1/";

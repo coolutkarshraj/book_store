@@ -12,7 +12,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,24 +25,18 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.io.bookstore.Config;
 import com.io.bookstore.R;
 import com.io.bookstore.adapter.AdminBookListAdapter;
-import com.io.bookstore.adapter.BookListAdapter;
 import com.io.bookstore.apicaller.ApiCaller;
-import com.io.bookstore.listeners.ApiImage;
-import com.io.bookstore.listeners.ServiceGenerator;
+import com.io.bookstore.listeners.RecyclerViewClickListener;
 import com.io.bookstore.localStorage.LocalStorage;
 import com.io.bookstore.model.adminResponseModel.AddBookResponseModel;
 import com.io.bookstore.model.adminResponseModel.AdminBookDataModel;
 import com.io.bookstore.model.adminResponseModel.AdminBookListResponseModel;
-import com.io.bookstore.model.bookListModel.BookListModel;
-import com.io.bookstore.model.bookListModel.Datum;
-import com.io.bookstore.model.editProfileResponseModel.EditProfileResponseModel;
 import com.io.bookstore.utility.ImageUtility;
 import com.io.bookstore.utility.NewProgressBar;
 import com.io.bookstore.utility.PermissionFile;
@@ -60,22 +53,14 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 
-import static android.R.layout.*;
 import static android.app.Activity.RESULT_OK;
 
-public class HomeBookFragment extends Fragment implements View.OnClickListener {
+public class HomeBookFragment extends Fragment implements View.OnClickListener, RecyclerViewClickListener {
 
 
     private Activity activity;
@@ -87,8 +72,6 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener {
     private userOnlineInfo user;
     private Dialog dialogs;
     private static final int REQUEST_WRITE_STORAGE = 1004;
-    private static final int REQUEST_CODE_LOCATION = 1000;
-    private static final int REQUEST_CODE_STORAGE = 1003;
     private static int GalleryPicker = 123;
     private PermissionFile permissionFile;
     private String licenseFile = "";
@@ -105,6 +88,7 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener {
     String[] categoryId = {" ", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
     private FloatingActionButton floatingActionButton;
     File imagefile;
+    private File imgFile;
 
     public HomeBookFragment() {
     }
@@ -187,7 +171,7 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener {
     @SuppressLint("WrongConstant")
     private void setRecyclerViewData(AdminBookListResponseModel result) {
         rvBookStore.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false));
-        adapter = new AdminBookListAdapter(activity, result.getData());
+        adapter = new AdminBookListAdapter(activity, result.getData() , this);
         item = result.getData();
         rvBookStore.setAdapter(adapter);
 
@@ -328,7 +312,7 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener {
             Toast.makeText(activity, "submit", Toast.LENGTH_SHORT).show();
             Log.e("gallerypic", licenseFile);
 
-            File imgFile = new File(licenseFile);
+            imgFile = new File(licenseFile);
             if (imgFile.exists()) {
                 Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                 imageView.setImageBitmap(myBitmap);
@@ -342,10 +326,10 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener {
 
 
     private void addDataIntoApi(String strBookName, String strDescrpition, String strPrice, String strQuantity, String licenseFile, String spindata) {
-  /*      if (user.isOnline(getActivity())) {
+     if (user.isOnline(getActivity())) {
             dialog = new NewProgressBar(getActivity());
             dialog.show();
-            ApiCaller.upload(activity, Config.Url.addbook, strBookName, strDescrpition, spindata, strQuantity, strPrice, localStorage.getString(LocalStorage.token), licenseFile, new FutureCallback<AddBookResponseModel>() {
+            ApiCaller.upload(activity, Config.Url.addbook, strBookName, strDescrpition, spindata, strQuantity, strPrice, localStorage.getString(LocalStorage.token), imgFile, new FutureCallback<AddBookResponseModel>() {
                 @Override
                 public void onCompleted(Exception e, AddBookResponseModel result) {
                     if (result.getStatus() == true) {
@@ -361,31 +345,8 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener {
         } else {
             Utils.showAlertDialog(getActivity(), "No Internet Connection");
         }
-*/
-        ApiImage jsonPostService = ServiceGenerator.createService(ApiImage.class, "http://157.175.48.7/api/");
-
-        RequestBody bookname = RequestBody.create(MediaType.parse("text/plain"), strBookName);
-        RequestBody desc = RequestBody.create(MediaType.parse("text/plain"), strDescrpition);
-        RequestBody price = RequestBody.create(MediaType.parse("text/plain"), strPrice);
-        RequestBody quantity = RequestBody.create(MediaType.parse("text/plain"), strQuantity);
-        RequestBody image = RequestBody.create(MediaType.parse("image/*"), licenseFile);
-        RequestBody catId = RequestBody.create(MediaType.parse("text/plain"), String.valueOf(categoryId));
 
 
-        Callback<AddBookResponseModel> call =
-                jsonPostService.uploadImage("Bearer " + localStorage.getString(LocalStorage.token),
-                "store",image,bookname,catId,desc,price,quantity);
-        call.equals(new Callback<AddBookResponseModel>() {
-            @Override
-            public void onResponse(Call<AddBookResponseModel> call, Response<AddBookResponseModel> response) {
-                Toast.makeText(activity, "" + response.body().getMessage(), Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onFailure(Call<AddBookResponseModel> call, Throwable t) {
-
-            }
-        });
 
 
     }
@@ -488,4 +449,116 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    private void dialogOpenForAddBook1(final int position) {
+        dialogs = new Dialog(activity);
+        dialogs.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        int width = metrics.widthPixels;
+        int height = metrics.heightPixels;
+        dialogs.getWindow().setLayout((6 * width) / 7, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialogs.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialogs.setContentView(R.layout.add_book_card_design);
+        dialogs.setTitle("");
+        final Button Yes = (Button) dialogs.findViewById(R.id.yes);
+        final Button No = (Button) dialogs.findViewById(R.id.no);
+        final EditText tvName = (EditText) dialogs.findViewById(R.id.tv_book_name);
+        final EditText tvDesc = (EditText) dialogs.findViewById(R.id.tv_book_Descrption);
+        final EditText price = (EditText) dialogs.findViewById(R.id.tv_book_price);
+        final EditText quantity = (EditText) dialogs.findViewById(R.id.tv_book_quantity);
+        spin = (Spinner) dialogs.findViewById(R.id.category_spinner);
+        tvName.setText(item.get(position).getName());
+        tvDesc.setText(item.get(position).getDescription());
+        price.setText(String.valueOf(item.get(position).getPrice()));
+        quantity.setText(""+item.get(position).getQuantity());
+        for (int i =0;i< items.length;i++){
+            if(items[i].toLowerCase().equals(item.get(position).getCategory().getName().toLowerCase())){
+                spin.setSelection(i);
+                break;
+            }
+        }
+
+
+        imageView = (ImageView) dialogs.findViewById(R.id.image);
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                readWritePermission();
+                multiplePermission();
+                galleryIntent();
+            }
+        });
+        ArrayAdapter aa = new ArrayAdapter(activity, layout.simple_list_item_1, items);
+        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spin.setAdapter(aa);
+        spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                spindata = categoryId[i];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        Yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String  name = tvName.getText().toString().trim();
+                String  descrption = tvDesc.getText().toString().trim();
+                String  Price = price.getText().toString().trim();
+                String  Quantity = quantity.getText().toString().trim();
+                editBook(name, descrption, Price, Quantity, imageView, licenseFile, spindata,item.get(position).getBookId());
+            }
+        });
+        No.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("ResourceAsColor")
+            @Override
+            public void onClick(View v) {
+                dialogs.dismiss();
+            }
+        });
+        dialogs.show();
+
+
+    }
+
+    private void editBook(String name, String descrption, String price, String quantity, ImageView imageView, String licenseFile, String spindata, Integer bookId) {
+        if (name.isEmpty() || descrption.isEmpty() || price.isEmpty() || quantity.isEmpty() || spindata.equals(" ") ) {
+            Toast.makeText(activity, "please enter data", Toast.LENGTH_SHORT).show();
+        } else {
+            editDataIntoApi(name, descrption, price, quantity, licenseFile, spindata,bookId);
+
+        }
+    }
+
+    private void editDataIntoApi(String name, String descrption, String price, String quantity, String licenseFile, String spindata, Integer bookId) {
+        if (user.isOnline(getActivity())) {
+            dialog = new NewProgressBar(getActivity());
+            dialog.show();
+            ApiCaller.edit(activity, Config.Url.addbook, name, descrption, spindata, quantity, price, localStorage.getString(LocalStorage.token), imgFile, bookId,new FutureCallback<AddBookResponseModel>() {
+                @Override
+                public void onCompleted(Exception e, AddBookResponseModel result) {
+                    if (result.getStatus() == true) {
+                        dialog.dismiss();
+                        Toast.makeText(activity, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                    } else {
+                        dialog.dismiss();
+                        Toast.makeText(activity, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
+        } else {
+            Utils.showAlertDialog(getActivity(), "No Internet Connection");
+        }
+    }
+
+    @Override
+    public void onClickPosition(int position) {
+        dialogOpenForAddBook1(position);
+
+    }
 }
