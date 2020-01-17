@@ -184,6 +184,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView27" />
 
+        <TextView
+            android:id="@+id/changepassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/blue"
+            android:text="Change Password"
+            android:textSize="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/switch2"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="32dp" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

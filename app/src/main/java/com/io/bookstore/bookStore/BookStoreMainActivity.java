@@ -45,12 +45,10 @@ public class BookStoreMainActivity extends AppCompatActivity implements
     private NavigationView navigationView;
     private ImageView menu;
     Fragment currFrag;
-    HomeFragment homeFragment;
-    CartFragment cartFragment;
-    OrderFragment orderFragment;
-     HomeBookFragment homeBookFragment;
-     OrderListBookFragment orderListBookFragment;
-     ProfileAdminFragment profileAdminFragment;
+
+    HomeBookFragment homeBookFragment;
+    OrderListBookFragment orderListBookFragment;
+    ProfileAdminFragment profileAdminFragment;
 
     CategoryListFragment categoryListFragment;
     FavoriteItemsFragment favoriteItemsFragment;
@@ -76,12 +74,12 @@ public class BookStoreMainActivity extends AppCompatActivity implements
     }
 
     private void startWorking() {
-        if(localStorage.getBoolean(LocalStorage.isCart)){
+      /*  if(localStorage.getBoolean(LocalStorage.isCart)){
             changeFrag(cartFragment,true);
-        }else {
+        }else {*/
 
             startHome();
-        }
+        //}
     }
 
     private void startHome() {
@@ -104,11 +102,11 @@ public class BookStoreMainActivity extends AppCompatActivity implements
         iv_profile.setImageResource(R.drawable.profile);
         changeIconColor(BookStoreMainActivity.this, R.drawable.ic_home,0);
 
-        if(localStorage.getInt(LocalStorage.role) ==0){
+       /* if(localStorage.getInt(LocalStorage.role) ==0){
             changeFrag(homeBookFragment, true);
-        }else {
-            changeFrag(homeFragment, true);
-        }
+        }else {*/
+        changeFrag(homeBookFragment, true);
+        // }
     }
 
     private void bindListner() {
@@ -122,7 +120,7 @@ public class BookStoreMainActivity extends AppCompatActivity implements
         ll_personal_info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    changeProfileColorIcon();
+                changeProfileColorIcon();
                 drawer.closeDrawer(Gravity.LEFT);
 
             }
@@ -158,10 +156,11 @@ public class BookStoreMainActivity extends AppCompatActivity implements
 
             }
         });
+
         iv_cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                changeFrag(cartFragment,true);
+               // changeFrag(cartFragment,true);
             }
         });
 
@@ -180,7 +179,7 @@ public class BookStoreMainActivity extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
 
-              changeFavouriteColorIcon();
+                changeFavouriteColorIcon();
 
 
             }
@@ -189,14 +188,14 @@ public class BookStoreMainActivity extends AppCompatActivity implements
         order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               changeOrderColorIcon();
+                changeOrderColorIcon();
             }
         });
 
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-             changeProfileColorIcon();
+                changeProfileColorIcon();
 
             }
         });
@@ -224,11 +223,11 @@ public class BookStoreMainActivity extends AppCompatActivity implements
         DrawableCompat.setTint(wrappedDrawable2, getResources().getColor(R.color.gray));
         ivHome.setImageResource(R.drawable.ic_home);
         changeIconColor(BookStoreMainActivity.this, R.drawable.profile,3);
-       // changeFrag(profileFragment,true);
-        this.getSupportFragmentManager().beginTransaction()
+        changeFrag(profileAdminFragment,true);
+       /* this.getSupportFragmentManager().beginTransaction()
                 .replace(R.id.content_view, profileFragment)
                 .addToBackStack(null)
-                .commit();
+                .commit();*/
     }
 
     private void changeOrderColorIcon() {
@@ -252,11 +251,11 @@ public class BookStoreMainActivity extends AppCompatActivity implements
         changeIconColor(BookStoreMainActivity.this, R.drawable.cart,2);
 
 
-        if(localStorage.getInt(LocalStorage.role) ==0){
+      /*  if(localStorage.getInt(LocalStorage.role) ==0){
             changeFrag(orderListBookFragment, true);
-        }else {
-            changeFrag(orderFragment,true);
-        }
+        }else {*/
+        changeFrag(orderListBookFragment,true);
+        // }
     }
 
     private void changeFavouriteColorIcon() {
@@ -303,11 +302,11 @@ public class BookStoreMainActivity extends AppCompatActivity implements
         changeIconColor(BookStoreMainActivity.this, R.drawable.ic_home,0);
 
 
-        if(localStorage.getInt(LocalStorage.role) ==0){
+     /*   if(localStorage.getInt(LocalStorage.role) ==0){
             changeFrag(homeBookFragment, true);
-        }else {
-            changeFrag(homeFragment, true);
-        }
+        }else {*/
+            changeFrag(homeBookFragment, true);
+       // }
     }
 
     private void changeIconColor(Context context, int drawable, int i){
@@ -318,11 +317,11 @@ public class BookStoreMainActivity extends AppCompatActivity implements
         if(i == 0 ){
             ivHome.setImageResource(drawable);
         }else  if( i == 1){
-           ivHeart.setImageResource(drawable);
+            ivHeart.setImageResource(drawable);
         }else  if(i ==2){
             ivCart.setImageResource(drawable);
         }else  if( i == 3){
-           iv_profile.setImageResource(drawable);
+            iv_profile.setImageResource(drawable);
         }
 
     }
@@ -342,9 +341,9 @@ public class BookStoreMainActivity extends AppCompatActivity implements
         order = findViewById(R.id.order);
         profile = findViewById(R.id.profile);
         fabSave = findViewById(R.id.fabSave);
-        homeFragment = new HomeFragment();
+       /* homeFragment = new HomeFragment();
         cartFragment = new CartFragment();
-        orderFragment = new OrderFragment();
+        orderFragment = new OrderFragment();*/
         favoriteItemsFragment = new FavoriteItemsFragment();
         deliveryAddressFragment = new DeliveryAddressFragment();
 

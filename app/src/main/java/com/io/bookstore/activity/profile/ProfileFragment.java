@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
@@ -30,6 +31,7 @@ public class ProfileFragment extends Fragment {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    public static CircleImageView iv_avatar;
     EditProfileFragment editProfileFragment;
     FloatingActionButton fabEditProfile;
     private TextView loggedih;
@@ -99,6 +101,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private void initView(View view) {
+        iv_avatar = (CircleImageView) view.findViewById(R.id.iv_avatar);
         tabLayout = (TabLayout) view.findViewById(R.id.tab_profile);
         loggedih = (TextView) view.findViewById(R.id.loggedih);
         ll_main_view = (LinearLayout) view.findViewById(R.id.ll_main_view);

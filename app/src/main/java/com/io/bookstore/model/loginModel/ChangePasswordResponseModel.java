@@ -1,18 +1,15 @@
-package com.io.bookstore.model.editProfileResponseModel;
+package com.io.bookstore.model.loginModel;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class EditProfileResponseModel {
+public class ChangePasswordResponseModel {
     @SerializedName("status")
     @Expose
     private Boolean status;
     @SerializedName("message")
     @Expose
     private String message;
-    @SerializedName("data")
-    @Expose
-    private EditProfileDataModel data;
 
     public Boolean getStatus() {
         return status;
@@ -30,11 +27,4 @@ public class EditProfileResponseModel {
         this.message = message;
     }
 
-    public EditProfileDataModel getData() {
-        return data;
-    }
-
-    public void setData(EditProfileDataModel data) {
-        this.data = data;
-    }
 }

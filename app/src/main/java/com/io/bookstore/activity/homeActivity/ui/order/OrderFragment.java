@@ -70,6 +70,10 @@ public class OrderFragment extends Fragment {
                         @Override
                         public void onCompleted(Exception e, GetAllOrder result) {
                             dialog.dismiss();
+                            if(e!=null){
+                                Utils.showAlertDialog(getActivity(), "Something Went Wrong");
+                                return;
+                            }
                             if(result.getData() == null || result.getData().size() == 0){
                                 recyclerView.setVisibility(View.GONE);
                                 loggedih.setVisibility(View.VISIBLE);

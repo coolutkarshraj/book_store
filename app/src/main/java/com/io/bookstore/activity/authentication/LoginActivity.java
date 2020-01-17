@@ -125,13 +125,12 @@ public class LoginActivity extends AppCompatActivity {
             Utils.showAlertDialog(activity, "No Internet Connection");
         }
 
-
     }
 
     private void navigateToHomeActivit(LoginModel result) {
         Toast.makeText(this, ""+result.getRole(), Toast.LENGTH_SHORT).show();
         localStorage.putInt(LocalStorage.role,result.getRole());
-        if(result.getRole() == 0){
+        if(result.getRole() == 1){
             Intent i = new Intent(activity , BookStoreMainActivity.class);
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(i);
@@ -149,7 +148,7 @@ public class LoginActivity extends AppCompatActivity {
         localStorage.putDistributorProfile(result);
         localStorage.putString(LocalStorage.token,result.getData().getToken());
         localStorage.putInt(LocalStorage.role,result.getRole());
-        if(result.getRole() ==1){
+        if(result.getRole() ==0){
             localStorage.putInt(LocalStorage.userId,result.getData().getUser().getUserId());
         }else {
             localStorage.putInt(LocalStorage.userId,result.getData().getUser().getStoreId());

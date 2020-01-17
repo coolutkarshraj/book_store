@@ -1,15 +1,21 @@
 package com.io.bookstore.activity.profile;
 
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,20 +24,25 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.io.bookstore.Config;
 import com.io.bookstore.R;
 import com.io.bookstore.activity.authentication.SignUpActivity;
 import com.io.bookstore.activity.authentication.SignupVerifyActivity;
 import com.io.bookstore.apicaller.ApiCaller;
+import com.io.bookstore.localStorage.LocalStorage;
 import com.io.bookstore.model.addAddressResponseModel.GetAddressListResponseModel;
 import com.io.bookstore.model.editProfileResponseModel.EditProfileResponseModel;
 import com.io.bookstore.model.registerModel.RegisterModel;
+import com.io.bookstore.utility.ImageUtility;
 import com.io.bookstore.utility.NewProgressBar;
+import com.io.bookstore.utility.PermissionFile;
 import com.io.bookstore.utility.Utils;
 import com.io.bookstore.utility.userOnlineInfo;
 import com.koushikdutta.async.future.FutureCallback;
 
+import java.io.File;
 import java.io.IOException;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -45,13 +56,25 @@ public class EditProfileFragment extends Fragment {
 
     View view;
     EditText fNmae, lName, username, phone, email, address;
-    CircleImageView avatar;
+     public static CircleImageView avatar;
     private Bitmap bitmap;
     Button btnSave;
     private NewProgressBar dialog;
     private userOnlineInfo user;
     ProfileFragment profileFragment;
     FloatingActionButton fabChooseImage;
+    private static final int REQUEST_WRITE_STORAGE = 1004;
+    private static int GalleryPicker = 123;
+    private PermissionFile permissionFile;
+    private String licenseFile = "";
+    private ImageUtility imageUtility;
+    private File destination;
+    private Uri outputFileUri;
+    int CameraPicker = 124;
+    File imagefile;
+    private File imgFile;
+    LocalStorage localStorage;
+
 
 
 
@@ -78,7 +101,8 @@ public class EditProfileFragment extends Fragment {
         if (user.isOnline(activity)) {
             dialog = new NewProgressBar(activity);
             dialog.show();
-            ApiCaller.getUserSavedAddressList(activity, Config.Url.getAddressList,"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNTc4ODQ5NzQxLCJleHAiOjE1Nzg5MzYxNDF9.HiddwD9LwLH81wTxNycUnvQqAVMu7f7kepL2b2cYErg",
+            LocalStorage localStorage = new LocalStorage(activity);
+            ApiCaller.getUserSavedAddressList(activity, Config.Url.getAddressList,localStorage.getString(LocalStorage.token),
                     new FutureCallback<GetAddressListResponseModel>() {
                         @Override
                         public void onCompleted(Exception e, GetAddressListResponseModel result) {
@@ -93,6 +117,7 @@ public class EditProfileFragment extends Fragment {
                             email.setText(result.getData().getEmail());
                             address.setText(result.getData().getAddress());
                             username.setText(result.getData().getName());
+                            Glide.with(getActivity()).load(Config.imageUrl +result.getData().getAvatarPath()).into(avatar);
                         }
                     });
 
@@ -111,6 +136,11 @@ public class EditProfileFragment extends Fragment {
         fabChooseImage = view.findViewById(R.id.fab_chooseimage);
         btnSave = view.findViewById(R.id.btn_save);
         user = new userOnlineInfo();
+        localStorage = new LocalStorage(getActivity());
+        permissionFile = new PermissionFile(getActivity());
+        imageUtility = new ImageUtility(getActivity());
+        readWritePermission();
+        multiplePermission();
     }
 
     private void bindListner() {
@@ -118,15 +148,14 @@ public class EditProfileFragment extends Fragment {
         fabChooseImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                chooseFile();
+                galleryIntent();
             }
         });
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //updateProfile();
-                Toast.makeText(getActivity(),"Profile not updated",Toast.LENGTH_SHORT).show();
+                ediProilevalidate();
                 profileFragment = new ProfileFragment();
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.content_view, profileFragment)
@@ -136,6 +165,24 @@ public class EditProfileFragment extends Fragment {
         });
 
 
+    }
+
+
+
+    private void readWritePermission() {
+        boolean hasPermission = (ContextCompat.checkSelfPermission(getActivity(),
+                Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED);
+        if (!hasPermission) {
+            ActivityCompat.requestPermissions(getActivity(),
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    REQUEST_WRITE_STORAGE);
+        }
+    }
+
+    private void multiplePermission() {
+        if (!permissionFile.checkLocStorgePermission(getActivity())) {
+            permissionFile.checkLocStorgePermission(getActivity());
+        }
     }
 
 
@@ -177,28 +224,89 @@ public class EditProfileFragment extends Fragment {
 
      */
 
-    private void chooseFile() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), 1);
+    private void galleryIntent() {
+        Intent pickIntent = new Intent(Intent.ACTION_PICK);
+        pickIntent.setType("image/*");
+        startActivityForResult(pickIntent, GalleryPicker);
     }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            Uri filePath = data.getData();
-            try {
+        if (resultCode == RESULT_OK && data != null && data.getData() != null) {
+            if (requestCode == GalleryPicker) {
+                onCaptureImageResult(data, "gallery");
+            }
+        } else if (resultCode == RESULT_OK && requestCode == CameraPicker) {
+            onCaptureImageResult(data, "camera");
 
-                bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), filePath);
+        }
+    }
 
-                avatar.setImageBitmap(bitmap);
+    /* --------------------------------- get the actual storage path of image (Camera an dgallery) ----------------------------------*/
 
-            } catch (IOException e) {
-                e.printStackTrace();
+    void onCaptureImageResult(Intent data, String imageType) {
+        if (imageType.equals("camera")) {
+            licenseFile = imageUtility.compressImage(destination.getPath());
+            Log.e("camerapic", licenseFile);
+            imagefile = new File(licenseFile);
+            if (imagefile.exists()) {
+                Bitmap myBitmap = BitmapFactory.decodeFile(imagefile.getAbsolutePath());
+                avatar.setImageBitmap(myBitmap);
             }
 
+        } else {
+            licenseFile = imageUtility.compressImage(imageUtility.getRealPathFromURI(getActivity(), data.getData()));
+
+            Log.e("gallerypic", licenseFile);
+
+            imgFile = new File(licenseFile);
+            if (imgFile.exists()) {
+                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                avatar.setImageBitmap(myBitmap);
+            }
+        }
+    }
+
+    private void ediProilevalidate() {
+        String Name = username.getText().toString();
+        String Address = address.getText().toString();
+        String Phone = phone.getText().toString();
+        if(Phone.equals("") || Address.equals("")|| Name.equals("")){
+
+        }else {
+            editProfile(Name,Address,Phone);
+        }
+
+    }
+
+    private void editProfile(String name, String address, String phone){
+        if (user.isOnline(getActivity())) {
+            dialog = new NewProgressBar(getActivity());
+            dialog.show();
+            LocalStorage localStorage = new LocalStorage(getActivity());
+            ApiCaller.editProfileUser(getActivity(), Config.Url.editProfile,name,address,phone, localStorage.getString(LocalStorage.token),imgFile,
+                    new FutureCallback<EditProfileResponseModel>() {
+                        @Override
+                        public void onCompleted(Exception e, EditProfileResponseModel result) {
+                            if (e != null) {
+                                dialog.dismiss();
+                                Utils.showAlertDialog(getActivity(), "Something Went Wrong");
+                                return;
+                            }
+                            dialog.dismiss();
+                            if(result.getStatus() == true){
+                                Toast.makeText(getActivity(), ""+result.getMessage(), Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(getActivity(), ""+result.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+
+                        }
+                    });
+
+        } else {
+            Utils.showAlertDialog(getActivity(), "No Internet Connection");
         }
     }
 

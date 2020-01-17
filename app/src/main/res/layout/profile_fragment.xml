@@ -24,7 +24,6 @@
             android:layout_gravity="center"
             android:layout_marginTop="32dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/profile_pic"
             android:transitionName="profile"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -42,6 +42,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.io.bookstore.localStorage.LocalStorage.token;
+
 
 public class ApiCaller {
 
@@ -666,5 +668,64 @@ public class ApiCaller {
 
     }
 
+    public static void editProfileUser(Activity activity, String url, String name, String address,
+                              String phone, String token, File image,
+                              final FutureCallback<EditProfileResponseModel> apiCallBack) {
+        final Gson gson = new Gson();
+        List<Part> files = new ArrayList();
+        if (image == null) {
+            image = new File("");
+            files.add(new FilePart("avatar", image));
+            Ion.with(activity)
+                    .load(UrlLocator.getFinalUrl(url))
+                    .setHeader("Authorization", "Bearer " + token)
+                    .setMultipartParameter("name", name)
+                    .setMultipartParameter("address", address)
+                    .setMultipartParameter("phone", phone)
+                    .asJsonObject()
+                    .setCallback(new FutureCallback<JsonObject>() {
+                        @Override
+                        public void onCompleted(Exception e, JsonObject result) {
+                            EditProfileResponseModel editProfileResponseModel = gson.fromJson(result, EditProfileResponseModel.class);
+                            apiCallBack.onCompleted(e, editProfileResponseModel);
+                        }
+                    });
+        } else {
+            files.add(new FilePart("avatar", image));
+            Ion.with(activity)
+                    .load(UrlLocator.getFinalUrl(url))
+                    .setHeader("Authorization", "Bearer " + token)
+                    .addMultipartParts(files)
+                    .setMultipartParameter("name", name)
+                    .setMultipartParameter("address", address)
+                    .setMultipartParameter("phone", phone)
+                    .asJsonObject()
+                    .setCallback(new FutureCallback<JsonObject>() {
+                        @Override
+                        public void onCompleted(Exception e, JsonObject result) {
+                            EditProfileResponseModel editProfileResponseModel = gson.fromJson(result, EditProfileResponseModel.class);
+                            apiCallBack.onCompleted(e, editProfileResponseModel);
+                        }
+                    });
+        }
+
+       /* Ion.with(activity)
+                .load(UrlLocator.getFinalUrl(url))
+                .setHeader("Authorization", "Bearer " + token)
+                .addMultipartParts(files)
+                .setMultipartParameter("name", name)
+                .setMultipartParameter("address", address)
+                .setMultipartParameter("phone", phone)
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        EditProfileResponseModel editProfileResponseModel = gson.fromJson(result, EditProfileResponseModel.class);
+                        apiCallBack.onCompleted(e, editProfileResponseModel);
+                    }
+                });*/
+
+
+    }
 
 }

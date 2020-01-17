@@ -1,12 +1,9 @@
-package com.io.bookstore.model.addAddressResponseModel;
+package com.io.bookstore.model.editProfileResponseModel;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-
-public class GetAddressListDataModel {
-
+public class EditProfileDataModel {
     @SerializedName("createdDate")
     @Expose
     private String createdDate;
@@ -30,13 +27,10 @@ public class GetAddressListDataModel {
     private String address;
     @SerializedName("phone")
     @Expose
-    private String phone;
+    private Integer phone;
     @SerializedName("otp")
     @Expose
     private Object otp;
-    @SerializedName("deliveryAddresses")
-    @Expose
-    private List<DeliveryAddress> deliveryAddresses = null;
 
     public String getCreatedDate() {
         return createdDate;
@@ -54,7 +48,7 @@ public class GetAddressListDataModel {
         this.userId = userId;
     }
 
-    public Object getAvatarPath() {
+    public String getAvatarPath() {
         return avatarPath;
     }
 
@@ -62,7 +56,7 @@ public class GetAddressListDataModel {
         this.avatarPath = avatarPath;
     }
 
-    public Object getAvatarName() {
+    public String getAvatarName() {
         return avatarName;
     }
 
@@ -94,11 +88,11 @@ public class GetAddressListDataModel {
         this.address = address;
     }
 
-    public String getPhone() {
+    public Integer getPhone() {
         return phone;
     }
 
-    public void setPhone(String phone) {
+    public void setPhone(Integer phone) {
         this.phone = phone;
     }
 
@@ -109,14 +103,5 @@ public class GetAddressListDataModel {
     public void setOtp(Object otp) {
         this.otp = otp;
     }
-
-    public List<DeliveryAddress> getDeliveryAddresses() {
-        return deliveryAddresses;
-    }
-
-    public void setDeliveryAddresses(List<DeliveryAddress> deliveryAddresses) {
-        this.deliveryAddresses = deliveryAddresses;
-    }
-
 
 }

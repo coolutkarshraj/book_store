@@ -4,8 +4,10 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.io.bookstore.Config;
 import com.io.bookstore.R;
 import com.io.bookstore.activity.homeActivity.ui.cart.CartFragment;
 import com.io.bookstore.activity.homeActivity.ui.deliveryAddress.DeliveryAddressFragment;
@@ -30,16 +32,18 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener, ItemClickListner {
-    LinearLayout ll_personal_info,ll_address,ll_payment,language,country;
+    LinearLayout ll_personal_info, ll_address, ll_payment, language, country;
     private DrawerLayout drawer;
     private NavigationView navigationView;
     private ImageView menu;
@@ -51,8 +55,8 @@ public class MainActivity extends AppCompatActivity implements
     FavoriteItemsFragment favoriteItemsFragment;
     FloatingActionButton fabSave;
     ImageView iv_cart;
-    LinearLayout home,favfourite,order,profile;
-    ImageView ivHome,ivHeart,ivCart,iv_profile;
+    LinearLayout home, favfourite, order, profile;
+    ImageView ivHome, ivHeart, ivCart, iv_profile;
     ProfileFragment profileFragment;
     EditProfileFragment editProfileFragment;
     BookstoresFragment bookstoresFragment;
@@ -60,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements
     BookListFragment bookListFragment;
     DeliveryAddressFragment deliveryAddressFragment;
     LocalStorage localStorage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,9 +76,9 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private void startWorking() {
-        if(localStorage.getBoolean(LocalStorage.isCart)){
-            changeFrag(cartFragment,true);
-        }else {
+        if (localStorage.getBoolean(LocalStorage.isCart)) {
+            changeFrag(cartFragment, true);
+        } else {
 
             startHome();
         }
@@ -97,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements
         Drawable wrappedDrawable2 = DrawableCompat.wrap(unwrappedDrawable2);
         DrawableCompat.setTint(wrappedDrawable2, getResources().getColor(R.color.gray));
         iv_profile.setImageResource(R.drawable.profile);
-        changeIconColor(MainActivity.this,R.drawable.ic_home,0);
+        changeIconColor(MainActivity.this, R.drawable.ic_home, 0);
 
         changeFrag(homeFragment, true);
     }
@@ -113,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements
         ll_personal_info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    changeProfileColorIcon();
+                changeProfileColorIcon();
                 drawer.closeDrawer(Gravity.LEFT);
 
             }
@@ -121,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements
         ll_address.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                changeFrag(deliveryAddressFragment,true);
+                changeFrag(deliveryAddressFragment, true);
                 drawer.closeDrawer(Gravity.LEFT);
             }
         });
@@ -152,7 +157,7 @@ public class MainActivity extends AppCompatActivity implements
         iv_cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                changeFrag(cartFragment,true);
+                changeFrag(cartFragment, true);
             }
         });
 
@@ -171,7 +176,7 @@ public class MainActivity extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
 
-              changeFavouriteColorIcon();
+                changeFavouriteColorIcon();
 
 
             }
@@ -180,18 +185,17 @@ public class MainActivity extends AppCompatActivity implements
         order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               changeOrderColorIcon();
+                changeOrderColorIcon();
             }
         });
 
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-             changeProfileColorIcon();
+                changeProfileColorIcon();
 
             }
         });
-
 
 
     }
@@ -214,8 +218,8 @@ public class MainActivity extends AppCompatActivity implements
         Drawable wrappedDrawable2 = DrawableCompat.wrap(unwrappedDrawable2);
         DrawableCompat.setTint(wrappedDrawable2, getResources().getColor(R.color.gray));
         ivHome.setImageResource(R.drawable.ic_home);
-        changeIconColor(MainActivity.this,R.drawable.profile,3);
-       // changeFrag(profileFragment,true);
+        changeIconColor(MainActivity.this, R.drawable.profile, 3);
+        // changeFrag(profileFragment,true);
         this.getSupportFragmentManager().beginTransaction()
                 .replace(R.id.content_view, profileFragment)
                 .addToBackStack(null)
@@ -240,8 +244,8 @@ public class MainActivity extends AppCompatActivity implements
         Drawable wrappedDrawable2 = DrawableCompat.wrap(unwrappedDrawable2);
         DrawableCompat.setTint(wrappedDrawable2, getResources().getColor(R.color.gray));
         iv_profile.setImageResource(R.drawable.profile);
-        changeIconColor(MainActivity.this,R.drawable.cart,2);
-        changeFrag(orderFragment,true);
+        changeIconColor(MainActivity.this, R.drawable.cart, 2);
+        changeFrag(orderFragment, true);
     }
 
     private void changeFavouriteColorIcon() {
@@ -263,8 +267,8 @@ public class MainActivity extends AppCompatActivity implements
         DrawableCompat.setTint(wrappedDrawable2, getResources().getColor(R.color.gray));
         iv_profile.setImageResource(R.drawable.profile);
 
-        changeIconColor(MainActivity.this,R.drawable.heart,1);
-        changeFrag(favoriteItemsFragment,true);
+        changeIconColor(MainActivity.this, R.drawable.heart, 1);
+        changeFrag(favoriteItemsFragment, true);
     }
 
     private void changeHomeColorIcon() {
@@ -285,28 +289,27 @@ public class MainActivity extends AppCompatActivity implements
         Drawable wrappedDrawable2 = DrawableCompat.wrap(unwrappedDrawable2);
         DrawableCompat.setTint(wrappedDrawable2, getResources().getColor(R.color.gray));
         iv_profile.setImageResource(R.drawable.profile);
-        changeIconColor(MainActivity.this,R.drawable.ic_home,0);
+        changeIconColor(MainActivity.this, R.drawable.ic_home, 0);
 
-        changeFrag(homeFragment,true);
+        changeFrag(homeFragment, true);
     }
 
-    private void changeIconColor(Context context, int drawable, int i){
+    private void changeIconColor(Context context, int drawable, int i) {
         Drawable unwrappedDrawable = AppCompatResources.getDrawable(context, drawable);
         assert unwrappedDrawable != null;
         Drawable wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable);
         DrawableCompat.setTint(wrappedDrawable, getResources().getColor(R.color.colorAccent));
-        if(i == 0 ){
+        if (i == 0) {
             ivHome.setImageResource(drawable);
-        }else  if( i == 1){
-           ivHeart.setImageResource(drawable);
-        }else  if(i ==2){
+        } else if (i == 1) {
+            ivHeart.setImageResource(drawable);
+        } else if (i == 2) {
             ivCart.setImageResource(drawable);
-        }else  if( i == 3){
-           iv_profile.setImageResource(drawable);
+        } else if (i == 3) {
+            iv_profile.setImageResource(drawable);
         }
 
     }
-
 
 
     private void initView() {
@@ -322,7 +325,7 @@ public class MainActivity extends AppCompatActivity implements
         order = findViewById(R.id.order);
         profile = findViewById(R.id.profile);
         fabSave = findViewById(R.id.fabSave);
-        homeFragment = new  HomeFragment();
+        homeFragment = new HomeFragment();
         cartFragment = new CartFragment();
         orderFragment = new OrderFragment();
         favoriteItemsFragment = new FavoriteItemsFragment();
@@ -335,13 +338,14 @@ public class MainActivity extends AppCompatActivity implements
         language = findViewById(R.id.language);
         country = findViewById(R.id.country);
         profileFragment = new ProfileFragment();
-        categoryListFragment = new  CategoryListFragment();
+        categoryListFragment = new CategoryListFragment();
         bookListFragment = new BookListFragment();
         bookstoresFragmentWithFilter = new BookstoresFragmentWithFilter();
+        //navigationHeader();
     }
 
 
-    public void editProfile(View v){
+    public void editProfile(View v) {
         editProfileFragment = new EditProfileFragment();
         this.getSupportFragmentManager().beginTransaction()
                 .replace(R.id.content_view, editProfileFragment)
@@ -356,6 +360,7 @@ public class MainActivity extends AppCompatActivity implements
 
         return true;
     }
+
     private void changeFrag(Fragment fragment, boolean addToBack) {
 
         currFrag = fragment;
@@ -371,26 +376,26 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onClick(int position) {
-        if(position == 1){
+        if (position == 1) {
             bookstoresFragment = new BookstoresFragment();
             MainActivity.this.getSupportFragmentManager().beginTransaction()
                     .replace(R.id.content_view, bookstoresFragment)
                     .addToBackStack(null)
                     .commit();
         }
-        if(position ==2 ){
+        if (position == 2) {
             MainActivity.this.getSupportFragmentManager().beginTransaction()
                     .replace(R.id.content_view, categoryListFragment)
                     .addToBackStack(null)
                     .commit();
         }
-        if(position ==3 ){
+        if (position == 3) {
             MainActivity.this.getSupportFragmentManager().beginTransaction()
                     .replace(R.id.content_view, bookListFragment)
                     .addToBackStack(null)
                     .commit();
         }
-        if(position ==4 ){
+        if (position == 4) {
             MainActivity.this.getSupportFragmentManager().beginTransaction()
                     .replace(R.id.content_view, bookstoresFragmentWithFilter)
                     .addToBackStack(null)
@@ -398,12 +403,22 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
+    private void navigationHeader() {
+        NavigationView hView = (NavigationView) navigationView.getHeaderView(0);
+        TextView nav_user = (TextView) hView.findViewById(R.id.nav_username);
+        TextView nav_Email = (TextView) hView.findViewById(R.id.nav_email);
+        CircleImageView imageView = (CircleImageView) hView.findViewById(R.id.nav_profile_iv);
+        nav_user.setText(localStorage.getUserProfile().getData().getUser().getName());
+        nav_Email.setText(localStorage.getUserProfile().getData().getUser().getEmail());
+        Glide.with(getApplicationContext()).load(Config.imageUrl + localStorage.getUserProfile().getData().getUser().getAvatarPath()).into(imageView);
+
+    }
+
     @Override
     public void onBackPressed() {
-        if(drawer.isDrawerOpen(GravityCompat.START)){
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        }
-        else {
+        } else {
             super.onBackPressed();
         }
 
