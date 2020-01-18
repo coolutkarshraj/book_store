@@ -274,7 +274,7 @@ public class EditProfileFragment extends Fragment {
         String Address = address.getText().toString();
         String Phone = phone.getText().toString();
         if(Phone.equals("") || Address.equals("")|| Name.equals("")){
-
+            Toast.makeText(getActivity(), "please enter all fields", Toast.LENGTH_SHORT).show();
         }else {
             editProfile(Name,Address,Phone);
         }

@@ -33,6 +33,9 @@ public class Config {
         public static String addbook = "book/add/";
         public static String adminOrders = "store/orders/";
         public static String bookFilter = "book/booklist/-1/";
+        public static String getStoreDetail = "store/detail?storeId=";
+        public static String storePasswordChange = "store/change-password";
+        public static String storeEdit = "store/edit";
     }
 
     public final static int splashTimeout = 3000;

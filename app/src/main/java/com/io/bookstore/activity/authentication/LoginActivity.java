@@ -131,11 +131,14 @@ public class LoginActivity extends AppCompatActivity {
         Toast.makeText(this, ""+result.getRole(), Toast.LENGTH_SHORT).show();
         localStorage.putInt(LocalStorage.role,result.getRole());
         if(result.getRole() == 1){
-            Intent i = new Intent(activity , BookStoreMainActivity.class);
+           /* Intent i = new Intent(activity , BookStoreMainActivity.class);
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(i);
+            startActivity(i);*/
         }else {
-            Intent i = new Intent(activity , MainActivity.class);
+         /*   Intent i = new Intent(activity , MainActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(i);*/
+            Intent i = new Intent(activity , BookStoreMainActivity.class);
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(i);
         }
@@ -149,9 +152,11 @@ public class LoginActivity extends AppCompatActivity {
         localStorage.putString(LocalStorage.token,result.getData().getToken());
         localStorage.putInt(LocalStorage.role,result.getRole());
         if(result.getRole() ==0){
-            localStorage.putInt(LocalStorage.userId,result.getData().getUser().getUserId());
-        }else {
             localStorage.putInt(LocalStorage.userId,result.getData().getUser().getStoreId());
+           // localStorage.putInt(LocalStorage.userId,result.getData().getUser().getUserId());
+        }else {
+           // localStorage.putInt(LocalStorage.userId,result.getData().getUser().getStoreId());
+            localStorage.putInt(LocalStorage.userId,result.getData().getUser().getUserId());
         }
 
     }

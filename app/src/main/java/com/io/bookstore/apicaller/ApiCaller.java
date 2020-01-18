@@ -24,6 +24,8 @@ import com.io.bookstore.model.getAllOrder.GetAllOrder;
 import com.io.bookstore.model.getProfileResponseModel.GetProfileResponseModel;
 import com.io.bookstore.model.loginModel.LoginModel;
 import com.io.bookstore.model.registerModel.RegisterModel;
+import com.io.bookstore.model.store.EditStoreDetialResponseModel;
+import com.io.bookstore.model.store.StoreDetailResponseModel;
 import com.io.bookstore.model.storeDetailsModel.StoreDetailsModel;
 import com.io.bookstore.model.storeModel.StoreModel;
 import com.io.bookstore.model.updateAddResponseModel.UpdateAddResponseModel;
@@ -673,7 +675,7 @@ public class ApiCaller {
                               final FutureCallback<EditProfileResponseModel> apiCallBack) {
         final Gson gson = new Gson();
         List<Part> files = new ArrayList();
-        if (image == null) {
+        if (image == null ) {
             image = new File("");
             files.add(new FilePart("avatar", image));
             Ion.with(activity)
@@ -709,23 +711,72 @@ public class ApiCaller {
                     });
         }
 
-       /* Ion.with(activity)
+
+    }
+    public static void getStoreDetial(Activity activity, String url,
+                                      final FutureCallback<StoreDetailResponseModel> apiCallBack) {
+        final Gson gson = new Gson();
+        Ion.with(activity)
                 .load(UrlLocator.getFinalUrl(url))
-                .setHeader("Authorization", "Bearer " + token)
-                .addMultipartParts(files)
-                .setMultipartParameter("name", name)
-                .setMultipartParameter("address", address)
-                .setMultipartParameter("phone", phone)
+                .noCache()
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
                     public void onCompleted(Exception e, JsonObject result) {
-                        EditProfileResponseModel editProfileResponseModel = gson.fromJson(result, EditProfileResponseModel.class);
-                        apiCallBack.onCompleted(e, editProfileResponseModel);
+                        StoreDetailResponseModel storeDetailResponseModel = gson.fromJson(result, StoreDetailResponseModel.class);
+                        apiCallBack.onCompleted(e, storeDetailResponseModel);
                     }
-                });*/
-
+                });
 
     }
+
+    public static void editstoreDetial(Activity activity, String url, String name, String des,
+                                       String phone, String token, File image,String address,
+                                       final FutureCallback<EditStoreDetialResponseModel> apiCallBack) {
+        final Gson gson = new Gson();
+        List<Part> files = new ArrayList();
+        if (image == null ) {
+                Ion.with(activity)
+                        .load(UrlLocator.getFinalUrl(url))
+                        .setHeader("Authorization", "Bearer " + token)
+                        .setHeader("Role", "store")
+                        .setMultipartParameter("name", name)
+                        .setMultipartParameter("description", des)
+                        .setMultipartParameter("phone", phone)
+                        .setMultipartParameter("address", address)
+                        .asJsonObject()
+                        .setCallback(new FutureCallback<JsonObject>() {
+                            @Override
+                            public void onCompleted(Exception e, JsonObject result) {
+                                EditStoreDetialResponseModel editStoreDetialResponseModel = gson.fromJson(result, EditStoreDetialResponseModel.class);
+                                apiCallBack.onCompleted(e, editStoreDetialResponseModel);
+                            }
+                        });
+            }else {
+            files.add(new FilePart("avatar", image));
+                Ion.with(activity)
+                        .load(UrlLocator.getFinalUrl(url))
+                        .setHeader("Authorization", "Bearer " + token)
+                        .setHeader("Role", "store")
+                        .addMultipartParts(files)
+                        .setMultipartParameter("name", name)
+                        .setMultipartParameter("description", des)
+                        .setMultipartParameter("phone", phone)
+                        .setMultipartParameter("address", address)
+                        .asJsonObject()
+                        .setCallback(new FutureCallback<JsonObject>() {
+                            @Override
+                            public void onCompleted(Exception e, JsonObject result) {
+                                EditStoreDetialResponseModel editStoreDetialResponseModel = gson.fromJson(result, EditStoreDetialResponseModel.class);
+                                apiCallBack.onCompleted(e, editStoreDetialResponseModel);
+                            }
+                        });
+            }
+
+
+        }
+
+
+
 
 }
