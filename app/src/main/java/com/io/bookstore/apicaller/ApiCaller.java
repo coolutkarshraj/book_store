@@ -2,6 +2,7 @@ package com.io.bookstore.apicaller;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -594,7 +595,7 @@ public class ApiCaller {
                 });
     }
 
-    public static void upload(Activity activity, String url, String bookname, String bookdesc,
+    public static void upload(Activity activity, String url, String author,String bookname, String bookdesc,
                               String catId, String Quantity, String amount, String token, File image,
                               final FutureCallback<AddBookResponseModel> apiCallBack) {
         final Gson gson = new Gson();
@@ -606,6 +607,7 @@ public class ApiCaller {
                 .setHeader("Role", "store")
                 .addMultipartParts(files)
                 .setMultipartParameter("name", bookname)
+                .setMultipartParameter("author", author)
                 .setMultipartParameter("categoryId", catId)
                 .setMultipartParameter("description", bookdesc)
                 .setMultipartParameter("price", amount)
@@ -614,6 +616,7 @@ public class ApiCaller {
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
                     public void onCompleted(Exception e, JsonObject result) {
+                        Log.d("Respnse is",result.toString());
                         AddBookResponseModel customerRegisterResponseModel = gson.fromJson(result, AddBookResponseModel.class);
                         apiCallBack.onCompleted(e, customerRegisterResponseModel);
                     }

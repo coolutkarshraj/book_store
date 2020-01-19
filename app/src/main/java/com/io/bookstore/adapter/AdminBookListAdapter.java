@@ -66,8 +66,11 @@ public class AdminBookListAdapter extends
 
         final AdminBookDataModel model = mData.get(position);
 
-        holder.tv_BookName.setText(model.getStore().getName());
+        holder.tv_BookName.setText(mData.get(position).getName());
         holder.tv_book_desc.setText(mData.get(position).getDescription());
+        holder.tv_price.setText("Price-:"+String.valueOf(mData.get(position).getPrice())+"KD");
+        holder.tv_author.setText("Author-:"+mData.get(position).getAuthor());
+
         Glide.with(mContext).load(Config.imageUrl + model.getAvatarPath()).into(holder.iv_bookstore_thumbnail);
         holder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,7 +99,7 @@ public class AdminBookListAdapter extends
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tv_BookName, tv_book_desc;
+        TextView tv_BookName, tv_book_desc,tv_price,tv_author;
         ImageView iv_bookstore_thumbnail;
         CardView cardView;
         Button btnEdit, btnDelete;
@@ -105,6 +108,8 @@ public class AdminBookListAdapter extends
             super(itemView);
 
             tv_BookName = (TextView) itemView.findViewById(R.id.tv_bookName);
+            tv_author = (TextView) itemView.findViewById(R.id.tv_author);
+            tv_price = (TextView) itemView.findViewById(R.id.tv_price);
             tv_book_desc = (TextView) itemView.findViewById(R.id.tv_bookDesc);
             iv_bookstore_thumbnail = (ImageView) itemView.findViewById(R.id.iv_bookstore_thumbnail);
             cardView = (CardView) itemView.findViewById(R.id.cardview_item_bookstore);

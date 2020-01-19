@@ -10,6 +10,18 @@ public class LoginData {
     @SerializedName("user")
     @Expose
     private User user;
+    @SerializedName("role")
+    @Expose
+    private int  role;
+
+
+    public int  getRole() {
+        return role;
+    }
+
+    public void setRole(int  role) {
+        this.role = role;
+    }
 
     public String getToken() {
         return token;

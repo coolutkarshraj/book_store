@@ -81,6 +81,7 @@
     <string name="menu_send">Send</string>
     <string name="order">Orders</string>
     <string name="login">Login</string>
+    <string name="user_id">Bookname</string>
 
 
 </resources>

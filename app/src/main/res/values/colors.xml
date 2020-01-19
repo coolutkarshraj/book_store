@@ -57,6 +57,7 @@
     <color name="gradient_start_color">#4c84ff</color>
     <color name="gradient_end_color">#18a3fe</color>
     <color name="button_back">#57adee</color>
+    <color name="dark_gray_text_color">#495057</color>
 
     <array name="dot_on_page_active">
         <item>#B71C1C</item>

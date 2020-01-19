@@ -14,6 +14,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -83,7 +85,7 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
     Spinner spin;
     String spindata;
     LocalStorage localStorage;
-    private String[] items = {" --Select Category-- ", "Arabic Books", "English Books", "Computer Supplies", "Games toys", "School Supplies",
+    private String[] items = {" Select Category ", "Arabic Books", "English Books", "Computer Supplies", "Games toys", "School Supplies",
             "Kids", "Office", "Art", "Smartphones"};
     String[] categoryId = {" ", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
     private FloatingActionButton floatingActionButton;
@@ -178,21 +180,21 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
     }
 
     private void dialogOpenForAddBook() {
-        dialogs = new Dialog(activity);
+        dialogs = new Dialog(activity,R.style.dialogTheme);
         dialogs.requestWindowFeature(Window.FEATURE_NO_TITLE);
         DisplayMetrics metrics = getResources().getDisplayMetrics();
         int width = metrics.widthPixels;
         int height = metrics.heightPixels;
-        dialogs.getWindow().setLayout((6 * width) / 7, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialogs.getWindow().setLayout((6 * width) , ViewGroup.LayoutParams.MATCH_PARENT);
         dialogs.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialogs.setContentView(R.layout.add_book_card_design);
-        dialogs.setTitle("");
         final Button Yes = (Button) dialogs.findViewById(R.id.yes);
         final Button No = (Button) dialogs.findViewById(R.id.no);
         final EditText tvName = (EditText) dialogs.findViewById(R.id.tv_book_name);
         final EditText tvDesc = (EditText) dialogs.findViewById(R.id.tv_book_Descrption);
         final EditText price = (EditText) dialogs.findViewById(R.id.tv_book_price);
         final EditText quantity = (EditText) dialogs.findViewById(R.id.tv_book_quantity);
+        final EditText tv_book_author = (EditText) dialogs.findViewById(R.id.tv_book_author);
         spin = (Spinner) dialogs.findViewById(R.id.category_spinner);
 
         imageView = (ImageView) dialogs.findViewById(R.id.image);
@@ -227,7 +229,8 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
                 String  descrption = tvDesc.getText().toString().trim();
                 String  Price = price.getText().toString().trim();
                 String  Quantity = quantity.getText().toString().trim();
-                addBook(name, descrption, Price, Quantity, imageView, licenseFile, spindata);
+                String  author = tv_book_author.getText().toString().trim();
+                addBook(name, descrption, Price, Quantity, imageView, licenseFile, spindata,author);
             }
         });
         No.setOnClickListener(new View.OnClickListener() {
@@ -243,12 +246,12 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
     }
 
     private void addBook(String strBookName, String strDescrpition, String strPrice, String strQuantity, ImageView imageView,
-                         String licenseFile, String spindata) {
+                         String file, String licenseFile, String author) {
 
-        if (strBookName.isEmpty() || strDescrpition.isEmpty() || strPrice.isEmpty() || strQuantity.isEmpty() || spindata.equals(" ") ) {
-            Toast.makeText(activity, "please enter data", Toast.LENGTH_SHORT).show();
+        if (author.isEmpty()||strBookName.isEmpty() || strDescrpition.isEmpty() || strPrice.isEmpty() || strQuantity.isEmpty() || spindata.equals(" ") ) {
+            Toast.makeText(activity, "Please Fill All Information Properly", Toast.LENGTH_SHORT).show();
         } else {
-            addDataIntoApi(strBookName, strDescrpition, strPrice, strQuantity, licenseFile, spindata);
+            addDataIntoApi(strBookName, strDescrpition, strPrice, strQuantity, licenseFile, spindata,author);
 
         }
     }
@@ -325,15 +328,18 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
 
 
 
-    private void addDataIntoApi(String strBookName, String strDescrpition, String strPrice, String strQuantity, String licenseFile, String spindata) {
+    private void addDataIntoApi(String strBookName, String strDescrpition, String strPrice,
+                                String strQuantity, String licenseFile, String spindata,
+                                String author                                ) {
      if (user.isOnline(getActivity())) {
             dialog = new NewProgressBar(getActivity());
             dialog.show();
-            ApiCaller.upload(activity, Config.Url.addbook, strBookName, strDescrpition, spindata, strQuantity, strPrice, localStorage.getString(LocalStorage.token), imgFile, new FutureCallback<AddBookResponseModel>() {
+            ApiCaller.upload(activity, Config.Url.addbook, author,strBookName, strDescrpition, spindata, strQuantity, strPrice, localStorage.getString(LocalStorage.token), imgFile, new FutureCallback<AddBookResponseModel>() {
                 @Override
                 public void onCompleted(Exception e, AddBookResponseModel result) {
                     if (result.getStatus() == true) {
                         dialog.dismiss();
+                        dialogs.dismiss();
                         Toast.makeText(activity, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
                     } else {
                         dialog.dismiss();
@@ -450,15 +456,14 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
     }
 
     private void dialogOpenForAddBook1(final int position) {
-        dialogs = new Dialog(activity);
+        dialogs = new Dialog(activity,R.style.dialogTheme);
         dialogs.requestWindowFeature(Window.FEATURE_NO_TITLE);
         DisplayMetrics metrics = getResources().getDisplayMetrics();
         int width = metrics.widthPixels;
         int height = metrics.heightPixels;
-        dialogs.getWindow().setLayout((6 * width) / 7, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialogs.getWindow().setLayout((6 * width) , ViewGroup.LayoutParams.MATCH_PARENT);
         dialogs.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialogs.setContentView(R.layout.add_book_card_design);
-        dialogs.setTitle("");
         final Button Yes = (Button) dialogs.findViewById(R.id.yes);
         final Button No = (Button) dialogs.findViewById(R.id.no);
         final EditText tvName = (EditText) dialogs.findViewById(R.id.tv_book_name);

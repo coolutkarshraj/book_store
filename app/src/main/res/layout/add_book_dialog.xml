@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:weightSum="2"
+        android:layout_height="90dp">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1.5"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/twenty_four_dp"
+                android:layout_marginTop="@dimen/ten_dp"
+                android:text="@string/user_id"
+                android:textColor="@color/dark_gray_text_color"
+
+
+                android:textSize="@dimen/sixteen_sp" />
+
+            <EditText
+                android:id="@+id/tv_book_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/twenty_four_dp"
+                android:layout_marginTop="@dimen/eight_dp"
+                android:layout_marginRight="@dimen/twenty_four_dp"
+                android:background="@drawable/layout_bg_onfocus"
+                android:padding="8dip"
+                android:singleLine="true" />
+        </LinearLayout>
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_marginRight="10dp"
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="100dp"
+                android:layout_centerInParent="true"
+                android:layout_height="80dp"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/layout_bg_on_focus"
+                android:contentDescription="@null"
+                android:scaleType="centerCrop"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="0dp" />
+            <ImageView
+                android:id="@+id/image1"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginRight="3dp"
+                android:layout_alignParentEnd="true"
+                android:layout_weight="1.4"
+                android:background="@drawable/ic_edit_black_24dp"
+                android:contentDescription="@null"
+                android:scaleType="centerCrop"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="0dp" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/twenty_four_dp"
+        android:layout_marginTop="@dimen/twenty_four_dp"
+        android:text="Category"
+        android:textColor="@color/dark_gray_text_color"
+        android:textSize="@dimen/sixteen_sp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginRight="@dimen/twenty_four_dp"
+        android:layout_marginLeft="@dimen/twenty_four_dp"
+        android:background="@drawable/layout_bg_on_focus">
+
+        <Spinner
+            android:id="@+id/category_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </Spinner>
+    </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/twenty_four_dp"
+        android:layout_marginTop="@dimen/twenty_four_dp"
+        android:text="Description"
+        android:textColor="@color/dark_gray_text_color"
+        android:textSize="@dimen/sixteen_sp" />
+
+    <EditText
+        android:id="@+id/tv_book_Descrption"
+        android:layout_width="match_parent"
+        android:layout_height="85dp"
+        android:layout_marginLeft="@dimen/twenty_four_dp"
+        android:layout_marginTop="@dimen/eight_dp"
+        android:layout_marginRight="@dimen/twenty_four_dp"
+        android:background="@drawable/layout_bg_onfocus"
+        android:padding="8dip"
+        android:singleLine="true" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/twenty_four_dp"
+        android:layout_marginTop="@dimen/twenty_four_dp"
+        android:text="Price"
+        android:textColor="@color/dark_gray_text_color"
+        android:textSize="@dimen/sixteen_sp" />
+
+    <EditText
+        android:id="@+id/tv_book_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/twenty_four_dp"
+        android:layout_marginLeft="@dimen/twenty_four_dp"
+        android:layout_marginTop="@dimen/eight_dp"
+        android:inputType="number"
+        android:background="@drawable/layout_bg_onfocus"
+        android:padding="8dip"
+        android:singleLine="true" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/twenty_four_dp"
+        android:layout_marginTop="@dimen/twenty_four_dp"
+        android:text="Quantity"
+        android:textColor="@color/dark_gray_text_color"
+        android:textSize="@dimen/sixteen_sp" />
+
+    <EditText
+        android:id="@+id/tv_book_quantity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:layout_marginLeft="@dimen/twenty_four_dp"
+        android:layout_marginTop="@dimen/eight_dp"
+        android:layout_marginRight="@dimen/twenty_four_dp"
+        android:background="@drawable/layout_bg_onfocus"
+        android:padding="8dip"
+        android:singleLine="true" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/twenty_four_dp"
+        android:layout_marginTop="@dimen/twenty_four_dp"
+        android:text="Author Name"
+        android:textColor="@color/dark_gray_text_color"
+        android:inputType="number"
+        android:textSize="@dimen/sixteen_sp" />
+
+    <EditText
+        android:id="@+id/tv_book_author"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/twenty_four_dp"
+        android:layout_marginTop="@dimen/eight_dp"
+        android:layout_marginRight="@dimen/twenty_four_dp"
+        android:background="@drawable/layout_bg_onfocus"
+        android:padding="8dip"
+        android:singleLine="true" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="25dp"
+        android:orientation="horizontal">
+
+        <Button
+          android:layout_toLeftOf="@+id/yes"
+            android:id="@+id/no"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:paddingRight="20dp"
+            android:paddingLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/gray_background"
+            android:text="Cancel"
+            android:textSize="@dimen/h2" />
+
+        <Button
+            android:layout_alignParentRight="true"
+            android:id="@+id/yes"
+            android:paddingRight="20dp"
+            android:paddingLeft="20dp"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Save"
+            android:background="@drawable/btn_yellow_back"
+            android:textSize="@dimen/h2" />
+    </RelativeLayout>
+</LinearLayout>
