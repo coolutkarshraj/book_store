@@ -16,7 +16,7 @@ public class Config {
         public static String verifyemail = "user/email-verify";
         public static String changepassword = "user/change-password";
         public static String getCategoryModel = "category/categorylist";
-        public static String getAllBook = "book/booklist/1/1";
+        public static String getAllBook = "book/booklist/";
         public static String editProfile = "user/update/";
 
         public static String getStoreApi = "store/storelist";

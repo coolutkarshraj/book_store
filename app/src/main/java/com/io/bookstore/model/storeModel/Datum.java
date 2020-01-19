@@ -24,7 +24,7 @@ public class Datum {
     public String email;
     @SerializedName("phone")
     @Expose
-    public Integer phone;
+    public String phone;
     @SerializedName("address")
     @Expose
     public Address address;
@@ -77,11 +77,11 @@ public class Datum {
         this.email = email;
     }
 
-    public Integer getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(Integer phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 

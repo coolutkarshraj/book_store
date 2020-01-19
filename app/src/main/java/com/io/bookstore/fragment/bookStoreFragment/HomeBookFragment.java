@@ -83,7 +83,7 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
     int CameraPicker = 124;
     ImageView imageView,ivFilter;
     Spinner spin;
-    String spindata;
+    String spindata = "-1";
     LocalStorage localStorage;
     private String[] items = {" Select Category ", "Arabic Books", "English Books", "Computer Supplies", "Games toys", "School Supplies",
             "Kids", "Office", "Art", "Smartphones"};
@@ -99,6 +99,7 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.home_book_layout, container, false);
+        spindata = "-1";
         intializeViews(view);
         bindListner();
         startWorking();
@@ -154,12 +155,16 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
         if (user.isOnline(getActivity())) {
             dialog = new NewProgressBar(getActivity());
             dialog.show();
-            ApiCaller.getAdminBookList(getActivity(), Config.Url.getAllBook, 1, 1, "",
+            ApiCaller.getAdminBookList(getActivity(), Config.Url.getAllBook+localStorage.getInt(LocalStorage.userId)+"/"+spindata, 1, 1, "",
                     new FutureCallback<AdminBookListResponseModel>() {
 
                         @Override
                         public void onCompleted(Exception e, AdminBookListResponseModel result) {
                             dialog.dismiss();
+                            if(result== null){
+                                Toast.makeText(getActivity(),"No Data Found",Toast.LENGTH_SHORT).show();
+                                return;
+                            }
                             setRecyclerViewData(result);
 
                         }
@@ -440,7 +445,7 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
         if (user.isOnline(getActivity())) {
             dialog = new NewProgressBar(getActivity());
             dialog.show();
-            ApiCaller.getAdminBookList(getActivity(), Config.Url.bookFilter+spindata, 1, 1, "",
+            ApiCaller.getAdminBookList(getActivity(), Config.Url.getAllBook+localStorage.getInt(LocalStorage.userId)+"/"+spindata, 1, 1, "",
                     new FutureCallback<AdminBookListResponseModel>() {
 
                         @Override

@@ -117,7 +117,7 @@ public class BookListFragment extends Fragment {
         if (user.isOnline(getActivity())) {
             dialog = new NewProgressBar(getActivity());
             dialog.show();
-            ApiCaller.getBookModel(getActivity(), Config.Url.getAllBook, sId, Cid, name,
+            ApiCaller.getBookModel(getActivity(), Config.Url.getAllBook+sId+"/"+Cid+"/", sId, Cid, name,
                     new FutureCallback<BookListModel>() {
 
                         @Override
