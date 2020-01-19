@@ -25,6 +25,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:text="Add Book"
+        android:id="@+id/heading"
         android:textColor="@color/dark_gray_text_color"
         android:textSize="16sp"
         android:gravity="center_vertical"

@@ -71,6 +71,7 @@ public class AdminBookListAdapter extends
         holder.tv_price.setText("Price-:"+String.valueOf(mData.get(position).getPrice())+"KD");
         holder.tv_author.setText("Author-:"+mData.get(position).getAuthor());
 
+
         Glide.with(mContext).load(Config.imageUrl + model.getAvatarPath()).into(holder.iv_bookstore_thumbnail);
         holder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override

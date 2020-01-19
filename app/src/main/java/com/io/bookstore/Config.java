@@ -31,6 +31,7 @@ public class Config {
         public static String getWishList = "book/wishlist";
         public static String adminDeleteBook = "book/delete";
         public static String addbook = "book/add/";
+        public static String editBookDetial = "book/edit/";
         public static String adminOrders = "store/orders/";
         public static String bookFilter = "book/booklist/-1/";
         public static String getStoreDetail = "store/detail?storeId=";

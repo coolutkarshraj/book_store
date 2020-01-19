@@ -8,6 +8,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.io.bookstore.model.PlaceOrderModel.OrderModel;
 import com.io.bookstore.model.addAddressResponseModel.AddAddressResponseModel;
+import com.io.bookstore.model.addAddressResponseModel.EditBookDataModel;
+import com.io.bookstore.model.addAddressResponseModel.EditBookResponseModel;
 import com.io.bookstore.model.addAddressResponseModel.GetAddressListResponseModel;
 import com.io.bookstore.model.addAddressResponseModel.GetAdminOrderListResponseModel;
 import com.io.bookstore.model.adminResponseModel.AddBookResponseModel;
@@ -625,31 +627,53 @@ public class ApiCaller {
 
 
 
-    public static void edit(Activity activity, String url, String bookname, String bookdesc,
+    public static void editBookDetial(Activity activity, String url, String bookname, String bookdesc,
                             String catId, String Quantity, String amount, String token, File image,
-                            Integer bookId, final FutureCallback<AddBookResponseModel> apiCallBack) {
+                            Integer bookId, final FutureCallback<EditBookResponseModel> apiCallBack) {
         final Gson gson = new Gson();
         List<Part> files = new ArrayList();
-        files.add(new FilePart("avatar",image));
-        Ion.with(activity)
-                .load(UrlLocator.getFinalUrl(url))
-                .setHeader("Authorization", "Bearer " + token)
-                .setHeader("Role", "store")
-                .addMultipartParts(files)
-                .setMultipartParameter("name", bookname)
-                .setMultipartParameter("categoryId", catId)
-                .setMultipartParameter("description", bookdesc)
-                .setMultipartParameter("price", amount)
-                .setMultipartParameter("quantity", Quantity)
-                .setMultipartParameter("bookId", String.valueOf(bookId))
-                .asJsonObject()
-                .setCallback(new FutureCallback<JsonObject>() {
-                    @Override
-                    public void onCompleted(Exception e, JsonObject result) {
-                        AddBookResponseModel customerRegisterResponseModel = gson.fromJson(result, AddBookResponseModel.class);
-                        apiCallBack.onCompleted(e, customerRegisterResponseModel);
-                    }
-                });
+        if(image ==null){
+            Ion.with(activity)
+                    .load(UrlLocator.getFinalUrl(url))
+                    .setHeader("Authorization", "Bearer " + token)
+                    .setHeader("Role", "store")
+                    .setMultipartParameter("name", bookname)
+                    .setMultipartParameter("categoryId", catId)
+                    .setMultipartParameter("description", bookdesc)
+                    .setMultipartParameter("price", amount)
+                    .setMultipartParameter("quantity", Quantity)
+                    .setMultipartParameter("bookId", String.valueOf(bookId))
+                    .asJsonObject()
+                    .setCallback(new FutureCallback<JsonObject>() {
+                        @Override
+                        public void onCompleted(Exception e, JsonObject result) {
+                            EditBookResponseModel editBookResponseModel = gson.fromJson(result, EditBookResponseModel.class);
+                            apiCallBack.onCompleted(e, editBookResponseModel);
+                        }
+                    });
+        }else {
+            files.add(new FilePart("avatar",image));
+            Ion.with(activity)
+                    .load(UrlLocator.getFinalUrl(url))
+                    .setHeader("Authorization", "Bearer " + token)
+                    .setHeader("Role", "store")
+                    .addMultipartParts(files)
+                    .setMultipartParameter("name", bookname)
+                    .setMultipartParameter("categoryId", catId)
+                    .setMultipartParameter("description", bookdesc)
+                    .setMultipartParameter("price", amount)
+                    .setMultipartParameter("quantity", Quantity)
+                    .setMultipartParameter("bookId", String.valueOf(bookId))
+                    .asJsonObject()
+                    .setCallback(new FutureCallback<JsonObject>() {
+                        @Override
+                        public void onCompleted(Exception e, JsonObject result) {
+                            EditBookResponseModel editBookResponseModel = gson.fromJson(result, EditBookResponseModel.class);
+                            apiCallBack.onCompleted(e, editBookResponseModel);
+                        }
+                    });
+        }
+
     }
     /* get admin order*/
 
