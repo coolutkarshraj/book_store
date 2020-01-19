@@ -30,8 +30,8 @@ public class OrderListBookFragment extends Fragment {
 
     Activity activity;
     LocalStorage localStorage;
-    RecyclerView recyclerView;
-    AdminOrderAdapter orderAdapter;
+    public static RecyclerView recyclerView;
+    public static AdminOrderAdapter orderAdapter;
 
     public OrderListBookFragment() {
     }

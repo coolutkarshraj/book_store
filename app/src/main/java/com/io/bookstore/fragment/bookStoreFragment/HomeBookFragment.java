@@ -519,6 +519,8 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
         ArrayAdapter aa = new ArrayAdapter(activity, layout.simple_list_item_1, items);
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spin.setAdapter(aa);
+        spin.setSelection(item.get(position).getCategoryId());
+
         spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -538,6 +540,8 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
                 strDesc = tvDesc.getText().toString().trim();
                 strPrice = price.getText().toString().trim();
                 strQuantity = quantity.getText().toString().trim();
+                Toast.makeText(activity, "postionspiner " +spindata, Toast.LENGTH_SHORT).show();
+
                 editBook(strName, strDesc, strPrice, strQuantity, imageView, licenseFile, spindata, item.get(position).getBookId(), dialogs);
             }
         });

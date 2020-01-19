@@ -26,6 +26,7 @@ import com.io.bookstore.model.getAddressResponseModel.AddressResponseModel;
 import com.io.bookstore.model.getAllOrder.GetAllOrder;
 import com.io.bookstore.model.getProfileResponseModel.GetProfileResponseModel;
 import com.io.bookstore.model.loginModel.LoginModel;
+import com.io.bookstore.model.orderModel.OrderStatusChangeResponseModel;
 import com.io.bookstore.model.registerModel.RegisterModel;
 import com.io.bookstore.model.store.EditStoreDetialResponseModel;
 import com.io.bookstore.model.store.StoreDetailResponseModel;
@@ -802,6 +803,29 @@ public class ApiCaller {
 
 
         }
+
+    public static void updateOrderStaus(Activity activity, String url,
+                                        int orderId,String status,String token,
+                                        final FutureCallback<OrderStatusChangeResponseModel> apiCallBack) {
+
+        final JsonObject json = new JsonObject();
+        json.addProperty("orderId", orderId);
+        json.addProperty("status", status);
+        final Gson gson = new Gson();
+        Ion.with(activity)
+                .load(UrlLocator.getFinalUrl(url))
+                .setHeader("Authorization", "Bearer " + token)
+                .setHeader("Role", "store")
+                .noCache().setJsonObjectBody(json)
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        OrderStatusChangeResponseModel orderStatusChangeResponseModel = gson.fromJson(result, OrderStatusChangeResponseModel.class);
+                        apiCallBack.onCompleted(e, orderStatusChangeResponseModel);
+                    }
+                });
+    }
 
 
 

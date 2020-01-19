@@ -17,6 +17,7 @@ public class OrderHolder extends RecyclerView.ViewHolder
     public TextView textView12;
     public TextView textView9;
     public ImageView imageView10;
+    public ImageView iv_editOrder;
 
 
     public OrderHolder(View view) {
@@ -27,6 +28,7 @@ public class OrderHolder extends RecyclerView.ViewHolder
         textView12 = view.findViewById(R.id.textView12);
         textView9 = view.findViewById(R.id.textView9);
         imageView10 = view.findViewById(R.id.imageView10);
+        iv_editOrder = view.findViewById(R.id.iv_editOrder);
 
     }
 

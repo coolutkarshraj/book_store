@@ -7,17 +7,16 @@
     android:layout_marginTop="5dp"
     app:cardCornerRadius="5dp"
     app:cardElevation="3dp">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="16dp">
+        android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/textView9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
             android:layout_marginTop="16dp"
             android:fontFamily="@font/exo_bold"
             android:text="Order -#4217"
@@ -30,7 +29,6 @@
             android:layout_width="135dp"
             android:layout_height="19dp"
             android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/exo"
             android:text="Pilot Paint , Color mix"
@@ -43,10 +41,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
             android:fontFamily="@font/exo"
             android:text="Order Date : Friday 13th dec 2019"
             android:textSize="14sp"
@@ -59,10 +55,9 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="30dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
+
             android:background="@color/light_gray"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
@@ -77,35 +72,57 @@
                 app:srcCompat="@drawable/booksteo2"
                 tools:layout_editor_absoluteX="258dp"
                 tools:layout_editor_absoluteY="20dp" />
+
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/textView12"
-            android:layout_width="wrap_content"
+
+        <RelativeLayout
+            android:layout_width="279dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
-            android:fontFamily="@font/exo"
-            android:text="Details"
-            android:textColor="@android:color/holo_blue_light"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView11" />
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/textView11"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="14dp">
 
-        <TextView
-            android:id="@+id/textView13"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="25dp"
+                android:fontFamily="@font/exo"
+                android:text="Details"
+                android:textColor="@android:color/holo_blue_light"
+                android:textSize="@dimen/h2"
+                app:layout_constraintStart_toStartOf="parent" />
 
-            android:layout_marginTop="24dp"
-            android:fontFamily="@font/exo"
-            android:text="Track"
-            android:textColor="@android:color/holo_blue_light"
-            android:textSize="20sp"
-            app:layout_constraintStart_toEndOf="@+id/textView12"
-            app:layout_constraintTop_toBottomOf="@+id/textView11" />
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:layout_toEndOf="@+id/textView12"
+                android:fontFamily="@font/exo"
+                android:text="Track"
+                android:textColor="@android:color/holo_blue_light"
+                android:textSize="@dimen/h2" />
 
+
+        </RelativeLayout>
+        <ImageView
+            android:id="@+id/iv_editOrder"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="3dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/editorder"
+            android:backgroundTint="@color/colorPrimary"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:ignore="MissingConstraints" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

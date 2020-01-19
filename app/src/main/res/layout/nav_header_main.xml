@@ -15,9 +15,7 @@
         android:id="@+id/nav_profile_iv"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:background="@drawable/person_logo"
-        android:paddingTop="30dp"
-        app:srcCompat="@drawable/person_logo" />
+        android:paddingTop="30dp" />
 
     <TextView
         android:id="@+id/nav_username"

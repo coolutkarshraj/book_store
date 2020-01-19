@@ -231,19 +231,17 @@ public class CartFragment extends Fragment {
                     shoppingBagModel.setPID(json_data.getString("P_ID"));
                     shoppingBagModel.setGst(json_data.getString("gstPrice"));
                     list.add(shoppingBagModel);
-                    price = price + Integer.parseInt( json_data.getString("Price")) ;
-                    gst = gst + Integer.parseInt( json_data.getString("gstPrice")) ;
+                 /*   price = price + Integer.parseInt( json_data.getString("Price")) ;
+                    gst = Integer.parseInt(gst + json_data.getString("gstPrice"));*/
                 }
 
-                tv_gst.setText(String.valueOf(gst));
-                total_cost.setText(String.valueOf(price));
+              /*  tv_gst.setText(String.valueOf(gst));
+                total_cost.setText(String.valueOf(price));*/
                 LinearLayoutManager gridLayoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
                 recyclerView.setLayoutManager(gridLayoutManager);
                 cartAdapter = new CartAdapter(getActivity(), list);
                 recyclerView.setAdapter(cartAdapter);
-
             }
-
 
         } catch (JSONException e) {
             e.printStackTrace();

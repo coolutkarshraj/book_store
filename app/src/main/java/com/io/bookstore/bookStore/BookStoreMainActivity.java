@@ -1,13 +1,16 @@
 package com.io.bookstore.bookStore;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,10 +20,14 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import de.hdodenhof.circleimageview.CircleImageView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.io.bookstore.Config;
 import com.io.bookstore.R;
+import com.io.bookstore.activity.authentication.LoginActivity;
 import com.io.bookstore.activity.homeActivity.ui.cart.CartFragment;
 import com.io.bookstore.activity.homeActivity.ui.deliveryAddress.DeliveryAddressFragment;
 import com.io.bookstore.activity.homeActivity.ui.home.HomeFragment;
@@ -40,11 +47,13 @@ import com.io.bookstore.localStorage.LocalStorage;
 
 public class BookStoreMainActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener, ItemClickListner {
-    LinearLayout ll_personal_info,ll_address,ll_payment,language,country;
+    LinearLayout ll_personal_info, ll_address, ll_payment, language, country;
     private DrawerLayout drawer;
     private NavigationView navigationView;
     private ImageView menu;
     Fragment currFrag;
+    TextView nav_user, nav_Email;
+    CircleImageView imageView;
 
     HomeBookFragment homeBookFragment;
     OrderListBookFragment orderListBookFragment;
@@ -54,8 +63,8 @@ public class BookStoreMainActivity extends AppCompatActivity implements
     FavoriteItemsFragment favoriteItemsFragment;
     FloatingActionButton fabSave;
     ImageView iv_cart;
-    LinearLayout home,favfourite,order,profile;
-    ImageView ivHome,ivHeart,ivCart,iv_profile;
+    LinearLayout home, favfourite, order, profile, logout;
+    ImageView ivHome, ivHeart, ivCart, iv_profile;
     ProfileFragment profileFragment;
     EditProfileFragment editProfileFragment;
     BookstoresFragment bookstoresFragment;
@@ -63,6 +72,7 @@ public class BookStoreMainActivity extends AppCompatActivity implements
     BookListFragment bookListFragment;
     DeliveryAddressFragment deliveryAddressFragment;
     LocalStorage localStorage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,7 +88,7 @@ public class BookStoreMainActivity extends AppCompatActivity implements
             changeFrag(cartFragment,true);
         }else {*/
 
-            startHome();
+        startHome();
         //}
     }
 
@@ -100,7 +110,7 @@ public class BookStoreMainActivity extends AppCompatActivity implements
         Drawable wrappedDrawable2 = DrawableCompat.wrap(unwrappedDrawable2);
         DrawableCompat.setTint(wrappedDrawable2, getResources().getColor(R.color.gray));
         iv_profile.setImageResource(R.drawable.profile);
-        changeIconColor(BookStoreMainActivity.this, R.drawable.ic_home,0);
+        changeIconColor(BookStoreMainActivity.this, R.drawable.ic_home, 0);
 
        /* if(localStorage.getInt(LocalStorage.role) ==0){
             changeFrag(homeBookFragment, true);
@@ -128,7 +138,7 @@ public class BookStoreMainActivity extends AppCompatActivity implements
         ll_address.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                changeFrag(deliveryAddressFragment,true);
+                changeFrag(orderListBookFragment, true);
                 drawer.closeDrawer(Gravity.LEFT);
             }
         });
@@ -160,7 +170,7 @@ public class BookStoreMainActivity extends AppCompatActivity implements
         iv_cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // changeFrag(cartFragment,true);
+                // changeFrag(cartFragment,true);
             }
         });
 
@@ -200,7 +210,16 @@ public class BookStoreMainActivity extends AppCompatActivity implements
             }
         });
 
-
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                localStorage.putBooleAan(LocalStorage.isLoggedIn, false);
+                localStorage.putString(LocalStorage.token, "");
+                Intent i = new Intent(BookStoreMainActivity.this, LoginActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(i);
+            }
+        });
 
     }
 
@@ -222,8 +241,8 @@ public class BookStoreMainActivity extends AppCompatActivity implements
         Drawable wrappedDrawable2 = DrawableCompat.wrap(unwrappedDrawable2);
         DrawableCompat.setTint(wrappedDrawable2, getResources().getColor(R.color.gray));
         ivHome.setImageResource(R.drawable.ic_home);
-        changeIconColor(BookStoreMainActivity.this, R.drawable.profile,3);
-        changeFrag(profileAdminFragment,true);
+        changeIconColor(BookStoreMainActivity.this, R.drawable.profile, 3);
+        changeFrag(profileAdminFragment, true);
        /* this.getSupportFragmentManager().beginTransaction()
                 .replace(R.id.content_view, profileFragment)
                 .addToBackStack(null)
@@ -248,13 +267,13 @@ public class BookStoreMainActivity extends AppCompatActivity implements
         Drawable wrappedDrawable2 = DrawableCompat.wrap(unwrappedDrawable2);
         DrawableCompat.setTint(wrappedDrawable2, getResources().getColor(R.color.gray));
         iv_profile.setImageResource(R.drawable.profile);
-        changeIconColor(BookStoreMainActivity.this, R.drawable.cart,2);
+        changeIconColor(BookStoreMainActivity.this, R.drawable.cart, 2);
 
 
       /*  if(localStorage.getInt(LocalStorage.role) ==0){
             changeFrag(orderListBookFragment, true);
         }else {*/
-        changeFrag(orderListBookFragment,true);
+        changeFrag(orderListBookFragment, true);
         // }
     }
 
@@ -277,8 +296,8 @@ public class BookStoreMainActivity extends AppCompatActivity implements
         DrawableCompat.setTint(wrappedDrawable2, getResources().getColor(R.color.gray));
         iv_profile.setImageResource(R.drawable.profile);
 
-        changeIconColor(BookStoreMainActivity.this, R.drawable.heart,1);
-        changeFrag(favoriteItemsFragment,true);
+        changeIconColor(BookStoreMainActivity.this, R.drawable.heart, 1);
+        changeFrag(favoriteItemsFragment, true);
     }
 
     private void changeHomeColorIcon() {
@@ -299,33 +318,32 @@ public class BookStoreMainActivity extends AppCompatActivity implements
         Drawable wrappedDrawable2 = DrawableCompat.wrap(unwrappedDrawable2);
         DrawableCompat.setTint(wrappedDrawable2, getResources().getColor(R.color.gray));
         iv_profile.setImageResource(R.drawable.profile);
-        changeIconColor(BookStoreMainActivity.this, R.drawable.ic_home,0);
+        changeIconColor(BookStoreMainActivity.this, R.drawable.ic_home, 0);
 
 
      /*   if(localStorage.getInt(LocalStorage.role) ==0){
             changeFrag(homeBookFragment, true);
         }else {*/
-            changeFrag(homeBookFragment, true);
-       // }
+        changeFrag(homeBookFragment, true);
+        // }
     }
 
-    private void changeIconColor(Context context, int drawable, int i){
+    private void changeIconColor(Context context, int drawable, int i) {
         Drawable unwrappedDrawable = AppCompatResources.getDrawable(context, drawable);
         assert unwrappedDrawable != null;
         Drawable wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable);
         DrawableCompat.setTint(wrappedDrawable, getResources().getColor(R.color.colorAccent));
-        if(i == 0 ){
+        if (i == 0) {
             ivHome.setImageResource(drawable);
-        }else  if( i == 1){
+        } else if (i == 1) {
             ivHeart.setImageResource(drawable);
-        }else  if(i ==2){
+        } else if (i == 2) {
             ivCart.setImageResource(drawable);
-        }else  if( i == 3){
+        } else if (i == 3) {
             iv_profile.setImageResource(drawable);
         }
 
     }
-
 
 
     private void initView() {
@@ -344,15 +362,17 @@ public class BookStoreMainActivity extends AppCompatActivity implements
        /* homeFragment = new HomeFragment();
         cartFragment = new CartFragment();
         orderFragment = new OrderFragment();*/
+        nav_user = (TextView) findViewById(R.id.nav_username);
+        nav_Email = (TextView) findViewById(R.id.nav_email);
+        imageView = (CircleImageView) findViewById(R.id.nav_profile_iv);
         favoriteItemsFragment = new FavoriteItemsFragment();
         deliveryAddressFragment = new DeliveryAddressFragment();
-
-
         homeBookFragment = new HomeBookFragment();
         orderListBookFragment = new OrderListBookFragment();
         profileAdminFragment = new ProfileAdminFragment();
         navigationView = findViewById(R.id.nav_view);
         menu = findViewById(R.id.menu);
+        logout = findViewById(R.id.logout);
         ll_personal_info = findViewById(R.id.ll_personal_info);
         ll_address = findViewById(R.id.ll_address);
         ll_payment = findViewById(R.id.ll_payment);
@@ -362,10 +382,11 @@ public class BookStoreMainActivity extends AppCompatActivity implements
         categoryListFragment = new CategoryListFragment();
         bookListFragment = new BookListFragment();
         bookstoresFragmentWithFilter = new BookstoresFragmentWithFilter();
+        navigationHeader();
     }
 
 
-    public void editProfile(View v){
+    public void editProfile(View v) {
         editProfileFragment = new EditProfileFragment();
         this.getSupportFragmentManager().beginTransaction()
                 .replace(R.id.content_view, editProfileFragment)
@@ -380,6 +401,7 @@ public class BookStoreMainActivity extends AppCompatActivity implements
 
         return true;
     }
+
     private void changeFrag(Fragment fragment, boolean addToBack) {
 
         currFrag = fragment;
@@ -395,26 +417,26 @@ public class BookStoreMainActivity extends AppCompatActivity implements
 
     @Override
     public void onClick(int position) {
-        if(position == 1){
+        if (position == 1) {
             bookstoresFragment = new BookstoresFragment();
             BookStoreMainActivity.this.getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.content_view, bookstoresFragment)
+                    .replace(R.id.content_view, homeBookFragment)
                     .addToBackStack(null)
                     .commit();
         }
-        if(position ==2 ){
+        if (position == 2) {
             BookStoreMainActivity.this.getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.content_view, categoryListFragment)
+                    .replace(R.id.content_view, orderListBookFragment)
                     .addToBackStack(null)
                     .commit();
         }
-        if(position ==3 ){
+        if (position == 3) {
             BookStoreMainActivity.this.getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.content_view, bookListFragment)
+                    .replace(R.id.content_view, profileAdminFragment)
                     .addToBackStack(null)
                     .commit();
         }
-        if(position ==4 ){
+        if (position == 4) {
             BookStoreMainActivity.this.getSupportFragmentManager().beginTransaction()
                     .replace(R.id.content_view, bookstoresFragmentWithFilter)
                     .addToBackStack(null)
@@ -422,12 +444,26 @@ public class BookStoreMainActivity extends AppCompatActivity implements
         }
     }
 
+    private void navigationHeader() {
+        if(localStorage ==null){
+            nav_user.setText("");
+            nav_Email.setText("");
+            Glide.with(getApplicationContext()).load(R.drawable.person_logo).into(imageView);
+        }else {
+            nav_user.setText(localStorage.getUserProfile().getData().getUser().getName());
+            nav_Email.setText(localStorage.getUserProfile().getData().getUser().getEmail());
+            Glide.with(getApplicationContext()).load(Config.imageUrl + localStorage.getUserProfile().getData().getUser().getAvatarPath()).into(imageView);
+
+        }
+
+
+    }
+
     @Override
     public void onBackPressed() {
-        if(drawer.isDrawerOpen(GravityCompat.START)){
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        }
-        else {
+        } else {
             super.onBackPressed();
         }
 

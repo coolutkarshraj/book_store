@@ -76,7 +76,7 @@ public class CheckoutActivity extends AppCompatActivity {
 
     private void intilizeView() {
         deliveryType = getIntent().getStringExtra("deliveryType");
-        totalprice = getIntent().getIntExtra("totalprice",0);
+        totalprice = getIntent().getIntExtra("totalprice", 0);
         activity = CheckoutActivity.this;
         user = new userOnlineInfo();
         recyclerView = findViewById(R.id.recyclerView);
@@ -90,7 +90,7 @@ public class CheckoutActivity extends AppCompatActivity {
         btnLoginToDashBoard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              callApiToPlaceOrder();
+                callApiToPlaceOrder();
             }
         });
         iv_back.setOnClickListener(new View.OnClickListener() {
@@ -111,24 +111,24 @@ public class CheckoutActivity extends AppCompatActivity {
         LocalStorage localStorage = new LocalStorage(this);
         JsonObject jsonObject = new JsonObject();
         jsonArray = new JsonArray();
-        jsonObject.addProperty("storeid",localStorage.getString(LocalStorage.Dummy_Store_ID));
-        jsonObject.addProperty("deliverytype",deliveryType);
-        jsonObject.addProperty("deliveryaddressid",localStorage.getString(LocalStorage.addressId));
-        jsonObject.addProperty("totalprice",totalprice);
+        jsonObject.addProperty("storeid", localStorage.getString(LocalStorage.Dummy_Store_ID));
+        jsonObject.addProperty("deliverytype", deliveryType);
+        jsonObject.addProperty("deliveryaddressid", localStorage.getString(LocalStorage.addressId));
+        jsonObject.addProperty("totalprice", totalprice);
         getSqliteData1();
-        jsonObject.add("items",jsonArray);
+        jsonObject.add("items", jsonArray);
 
 
         if (user.isOnline(this)) {
             dialog = new NewProgressBar(this);
             dialog.show();
-            ApiCaller.procedorder(this, Config.Url.placePrder,jsonObject,localStorage.getString(LocalStorage.token),
+            ApiCaller.procedorder(this, Config.Url.placePrder, jsonObject, localStorage.getString(LocalStorage.token),
                     new FutureCallback<OrderModel>() {
 
                         @Override
                         public void onCompleted(Exception e, OrderModel result) {
                             dialog.dismiss();
-                            Intent intent = new Intent(CheckoutActivity.this,ProcessingActivity.class);
+                            Intent intent = new Intent(CheckoutActivity.this, ProcessingActivity.class);
                             startActivity(intent);
                             finish();
 
@@ -139,6 +139,7 @@ public class CheckoutActivity extends AppCompatActivity {
             Utils.showAlertDialog(this, "No Internet Connection");
         }
     }
+
     private void getSqliteData1() {
         DbHelper dbHelper;
         dbHelper = new DbHelper(this);
@@ -182,13 +183,13 @@ public class CheckoutActivity extends AppCompatActivity {
 
         try {
             jArray = new JSONArray(datajson);
-                for (int i = 0; i < jArray.length(); i++) {
-                    JSONObject json_data = jArray.getJSONObject(i);
-                    JsonObject jsonObject = new JsonObject();
-                    jsonObject.addProperty("bookid",json_data.getString("P_ID"));
-                    jsonObject.addProperty("count",json_data.getString("Quantity"));
-                    jsonArray.add(jsonObject);
-                }
+            for (int i = 0; i < jArray.length(); i++) {
+                JSONObject json_data = jArray.getJSONObject(i);
+                JsonObject jsonObject = new JsonObject();
+                jsonObject.addProperty("bookid", json_data.getString("P_ID"));
+                jsonObject.addProperty("count", json_data.getString("Quantity"));
+                jsonArray.add(jsonObject);
+            }
 
 
         } catch (JSONException e) {
@@ -205,7 +206,7 @@ public class CheckoutActivity extends AppCompatActivity {
         if (user.isOnline(activity)) {
             dialog = new NewProgressBar(activity);
             dialog.show();
-            ApiCaller.getUserSavedAddressList(activity, Config.Url.getAddressList,"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNTc4ODQ5NzQxLCJleHAiOjE1Nzg5MzYxNDF9.HiddwD9LwLH81wTxNycUnvQqAVMu7f7kepL2b2cYErg",
+            ApiCaller.getUserSavedAddressList(activity, Config.Url.getAddressList, "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNTc4ODQ5NzQxLCJleHAiOjE1Nzg5MzYxNDF9.HiddwD9LwLH81wTxNycUnvQqAVMu7f7kepL2b2cYErg",
                     new FutureCallback<GetAddressListResponseModel>() {
                         @Override
                         public void onCompleted(Exception e, GetAddressListResponseModel result) {
@@ -228,13 +229,13 @@ public class CheckoutActivity extends AppCompatActivity {
     private void setRecyclerViewData(GetAddressListResponseModel result) {
         LinearLayoutManager gridLayoutManager = new LinearLayoutManager(CheckoutActivity.this, RecyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(gridLayoutManager);
-        for (int i = 0; i < result.getData().getDeliveryAddresses().size(); i ++){
+        for (int i = 0; i < result.getData().getDeliveryAddresses().size(); i++) {
             result.getData().getDeliveryAddresses().get(i).setChecked(false);
+
         }
         addressAdapter = new AddressAdapter(CheckoutActivity.this, result.getData().getDeliveryAddresses());
         recyclerView.setAdapter(addressAdapter);
     }
-
 
     private void dialogOpen() {
         final Dialog dialog = new Dialog(activity);

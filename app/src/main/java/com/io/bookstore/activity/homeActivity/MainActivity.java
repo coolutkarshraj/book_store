@@ -1,6 +1,7 @@
 package com.io.bookstore.activity.homeActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
@@ -9,12 +10,14 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.io.bookstore.Config;
 import com.io.bookstore.R;
+import com.io.bookstore.activity.authentication.LoginActivity;
 import com.io.bookstore.activity.homeActivity.ui.cart.CartFragment;
 import com.io.bookstore.activity.homeActivity.ui.deliveryAddress.DeliveryAddressFragment;
 import com.io.bookstore.activity.homeActivity.ui.home.HomeFragment;
 import com.io.bookstore.activity.homeActivity.ui.order.OrderFragment;
 import com.io.bookstore.activity.profile.EditProfileFragment;
 import com.io.bookstore.activity.profile.ProfileFragment;
+import com.io.bookstore.bookStore.BookStoreMainActivity;
 import com.io.bookstore.fragment.BookListFragment;
 import com.io.bookstore.fragment.BookstoresFragment;
 import com.io.bookstore.fragment.BookstoresFragmentWithFilter;
@@ -22,6 +25,7 @@ import com.io.bookstore.fragment.CategoryListFragment;
 import com.io.bookstore.fragment.FavoriteItemsFragment;
 import com.io.bookstore.listeners.ItemClickListner;
 import com.io.bookstore.localStorage.LocalStorage;
+import com.io.bookstore.model.loginModel.LoginModel;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.content.res.AppCompatResources;
@@ -55,7 +59,9 @@ public class MainActivity extends AppCompatActivity implements
     FavoriteItemsFragment favoriteItemsFragment;
     FloatingActionButton fabSave;
     ImageView iv_cart;
-    LinearLayout home, favfourite, order, profile;
+    TextView nav_user,nav_Email;
+    CircleImageView imageView;
+    LinearLayout home, favfourite, order, profile,logout;
     ImageView ivHome, ivHeart, ivCart, iv_profile;
     ProfileFragment profileFragment;
     EditProfileFragment editProfileFragment;
@@ -161,6 +167,17 @@ public class MainActivity extends AppCompatActivity implements
             }
         });
 
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                localStorage.putBooleAan(LocalStorage.isLoggedIn, false);
+                localStorage.putString(LocalStorage.token, "");
+                localStorage.clearAll();
+                Intent i = new Intent(MainActivity.this, LoginActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(i);
+            }
+        });
         footerClick();
     }
 
@@ -332,6 +349,10 @@ public class MainActivity extends AppCompatActivity implements
         deliveryAddressFragment = new DeliveryAddressFragment();
         navigationView = findViewById(R.id.nav_view);
         menu = findViewById(R.id.menu);
+        logout = (LinearLayout) findViewById(R.id.logout);
+        nav_user = (TextView) findViewById(R.id.nav_username);
+        nav_Email = (TextView) findViewById(R.id.nav_email);
+        imageView = (CircleImageView) findViewById(R.id.nav_profile_iv);
         ll_personal_info = findViewById(R.id.ll_personal_info);
         ll_address = findViewById(R.id.ll_address);
         ll_payment = findViewById(R.id.ll_payment);
@@ -341,7 +362,7 @@ public class MainActivity extends AppCompatActivity implements
         categoryListFragment = new CategoryListFragment();
         bookListFragment = new BookListFragment();
         bookstoresFragmentWithFilter = new BookstoresFragmentWithFilter();
-        //navigationHeader();
+        navigationHeader();
     }
 
 
@@ -404,14 +425,17 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private void navigationHeader() {
-        NavigationView hView = (NavigationView) navigationView.getHeaderView(0);
-        TextView nav_user = (TextView) hView.findViewById(R.id.nav_username);
-        TextView nav_Email = (TextView) hView.findViewById(R.id.nav_email);
-        CircleImageView imageView = (CircleImageView) hView.findViewById(R.id.nav_profile_iv);
-        nav_user.setText(localStorage.getUserProfile().getData().getUser().getName());
-        nav_Email.setText(localStorage.getUserProfile().getData().getUser().getEmail());
-        Glide.with(getApplicationContext()).load(Config.imageUrl + localStorage.getUserProfile().getData().getUser().getAvatarPath()).into(imageView);
+        LoginModel loginModel =  localStorage.getUserProfile() ;
+        if(loginModel ==null){
+            nav_user.setText("Hello Guest");
+            nav_Email.setText("Login or SignUp");
+            Glide.with(getApplicationContext()).load(R.drawable.person_logo).into(imageView);
+        }else {
+            nav_user.setText(localStorage.getUserProfile().getData().getUser().getName());
+            nav_Email.setText(localStorage.getUserProfile().getData().getUser().getEmail());
+            Glide.with(getApplicationContext()).load(Config.imageUrl + localStorage.getUserProfile().getData().getUser().getAvatarPath()).into(imageView);
 
+        }
     }
 
     @Override

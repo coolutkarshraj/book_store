@@ -50,7 +50,9 @@
             layout="@layout/main_menu_book_store"
             android:layout_width="260dp"
             android:layout_height="match_parent"
-            android:layout_gravity="start"></include>
+            android:layout_gravity="start">
+
+        </include>
 
     </com.google.android.material.navigation.NavigationView>
 
