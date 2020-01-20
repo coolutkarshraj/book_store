@@ -47,7 +47,8 @@ public class ProfileFragment extends Fragment {
         localStorage = new LocalStorage(getActivity());
         LoginModel loginModel =  localStorage.getUserProfile() ;
         System.out.println(loginModel);
-        if(loginModel == null){
+        if(localStorage.getString(LocalStorage.token) == null ||
+                localStorage.getString(LocalStorage.token).equals("")){
             ll_main_view.setVisibility(View.GONE);
             loggedih.setVisibility(View.VISIBLE);
         }else {

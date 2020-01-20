@@ -57,7 +57,8 @@ public class FavoriteItemsFragment extends Fragment {
         localStorage = new LocalStorage(getActivity());
         LoginModel loginModel = localStorage.getUserProfile();
         System.out.println(loginModel);
-        if (loginModel == null) {
+        if(localStorage.getString(LocalStorage.token) == null ||
+                localStorage.getString(LocalStorage.token).equals("")){
             nested_c_view.setVisibility(View.GONE);
             loggedih.setVisibility(View.VISIBLE);
         } else {

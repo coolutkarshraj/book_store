@@ -54,6 +54,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         view = inflater.inflate(R.layout.fragment_settings, container, false);
         initView();
         bindListner();
+
         getaddressListApi();
         return view;
     }
