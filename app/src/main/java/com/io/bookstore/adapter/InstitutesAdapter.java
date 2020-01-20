@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,6 +16,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.io.bookstore.Config;
 import com.io.bookstore.R;
+import com.io.bookstore.fragment.CoursesFragment;
+import com.io.bookstore.fragment.InstituteFragment;
+import com.io.bookstore.listeners.ItemClickListner;
+import com.io.bookstore.listeners.RecyclerViewClickListener;
 import com.io.bookstore.model.InstituteModel;
 import com.io.bookstore.model.insituteModel.InsituiteDataModel;
 import com.io.bookstore.model.insituteModel.InsituiteResponseModel;
@@ -25,11 +30,15 @@ public class InstitutesAdapter extends RecyclerView.Adapter<InstitutesAdapter.My
 
     private Context mContext ;
     private List<InsituiteDataModel> mData ;
+    private ItemClickListner itemClickListner;
+    CoursesFragment coursesFragment;
+    private RecyclerViewClickListener item;
 
 
-    public InstitutesAdapter(Context mContext, List<InsituiteDataModel> mData) {
+    public InstitutesAdapter(Context mContext, List<InsituiteDataModel> mData, RecyclerViewClickListener item) {
         this.mContext = mContext;
         this.mData = mData;
+        this.item = item;
     }
 
     @Override
@@ -47,44 +56,15 @@ public class InstitutesAdapter extends RecyclerView.Adapter<InstitutesAdapter.My
         InsituiteDataModel model = mData.get(position);
         holder.cardView.setAnimation(AnimationUtils.loadAnimation(mContext,R.anim.fade_scale_animation));
         holder.tv_institute_title.setText(model.getInstituteName());
-     /*   holder.tv_institute_desc.setText(mData.get(position).getDescription());
-        holder.iv_institute_thumbnail.setImageResource(mData.get(position).getThumbnail());*/
 
-        Glide.with(mContext).load(Config.imageUrl + model.getAvatarPath()).into(holder.iv_institute_thumbnail);
-     /*   holder.fav_white.setOnClickListener(new View.OnClickListener() {
+        holder.bv_institute_browse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (holder.fav_white.getId())
-                {
-                    case R.id.iv_fav_white:
-                        holder.fav_white.setImageResource(R.drawable.ic_favorite_blue_24dp);
-                        holder.fav_white.setId(R.id.book_title_id);
-                        break;
-                    default:
-                        holder.fav_white.setImageResource(R.drawable.ic_favorite_border_black_24dp);
-                        holder.fav_white.setId(R.id.iv_fav_white);
-                }
+                item.onClickPosition(position);
+
             }
         });
-        /*
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(mContext,Book_Activity.class);
-
-                // passing data to the book activity
-                intent.putExtra("Title",mData.get(position).getTitle());
-                intent.putExtra("Description",mData.get(position).getDescription());
-                intent.putExtra("Thumbnail",mData.get(position).getThumbnail());
-                // start the activity
-                mContext.startActivity(intent);
-
-            }
-            */
-        // });
-
-
+        Glide.with(mContext).load(Config.imageUrl + model.getAvatarPath()).into(holder.iv_institute_thumbnail);
 
     }
 
@@ -97,6 +77,7 @@ public class InstitutesAdapter extends RecyclerView.Adapter<InstitutesAdapter.My
 
         TextView tv_institute_title,tv_institute_desc;
         ImageView iv_institute_thumbnail;
+        Button bv_institute_browse;
         CardView cardView ;
 
         public MyViewHolder(View itemView) {
@@ -106,6 +87,7 @@ public class InstitutesAdapter extends RecyclerView.Adapter<InstitutesAdapter.My
             tv_institute_desc =  (TextView) itemView.findViewById(R.id.tv_institute_desc) ;
             iv_institute_thumbnail = (ImageView) itemView.findViewById(R.id.iv_institute_thumbnail);
             cardView = (CardView) itemView.findViewById(R.id.cardview_item_institute);
+            bv_institute_browse = (Button) itemView.findViewById(R.id.bv_institute_browse);
 
         }
     }

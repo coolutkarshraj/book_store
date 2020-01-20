@@ -40,6 +40,7 @@ public class Config {
         public static String statusUpdate = "store/orders-status";
 
         public static String insituitelist = "institute/list";
+        public static String courseList = "course/list/";
     }
 
     public final static int splashTimeout = 3000;

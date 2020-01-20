@@ -18,6 +18,7 @@ import com.io.bookstore.model.adminResponseModel.DeleteBookResponseModel;
 import com.io.bookstore.model.bookListModel.BookListModel;
 import com.io.bookstore.model.categoryModel.CategoryModel;
 import com.io.bookstore.model.changePasswordOtpModel.ChangePasswordVerifyOtpModel;
+import com.io.bookstore.model.courseModel.CourseResponseModel;
 import com.io.bookstore.model.deleteAddressResponseModel.DeleteAddressResponseModel;
 import com.io.bookstore.model.deliveryPriceModel.DeliveryResponseModel;
 import com.io.bookstore.model.editProfileResponseModel.EditProfileResponseModel;
@@ -849,6 +850,21 @@ public class ApiCaller {
                 });
     }
 
+    public static void getCourseList(Activity activity, String url,
+                                        final FutureCallback<CourseResponseModel> apiCallback) {
+        final Gson gson = new Gson();
+        Ion.with(activity)
+                .load(UrlLocator.getFinalUrl(url))
+                .noCache()
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        CourseResponseModel courseResponseModel = gson.fromJson(result, CourseResponseModel.class);
+                        apiCallback.onCompleted(e, courseResponseModel);
+                    }
+                });
+    }
 
 
 }

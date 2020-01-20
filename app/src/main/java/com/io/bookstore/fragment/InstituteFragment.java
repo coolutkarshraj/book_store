@@ -16,8 +16,10 @@ import com.io.bookstore.Config;
 import com.io.bookstore.R;
 import com.io.bookstore.adapter.InstitutesAdapter;
 import com.io.bookstore.apicaller.ApiCaller;
+import com.io.bookstore.listeners.RecyclerViewClickListener;
 import com.io.bookstore.model.BookstoreModel;
 import com.io.bookstore.listeners.ItemClickListner;
+import com.io.bookstore.model.insituteModel.InsituiteDataModel;
 import com.io.bookstore.model.insituteModel.InsituiteResponseModel;
 import com.io.bookstore.model.storeModel.StoreModel;
 import com.io.bookstore.utility.NewProgressBar;
@@ -27,24 +29,23 @@ import com.koushikdutta.async.future.FutureCallback;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class InstituteFragment extends Fragment implements View.OnClickListener {
+public class InstituteFragment extends Fragment implements  RecyclerViewClickListener {
 
     private Activity activity;
-    private ArrayList lstBook;
     private RecyclerView recyclerView;
     private InstitutesAdapter institutesAdapter;
     private CoursesFragment coursesFragment;
-    private Button bv_browse_institute;
-    private ItemClickListner itemClickListner;
     private userOnlineInfo user;
     private NewProgressBar dialog;
+    private List<InsituiteDataModel> item = new ArrayList<>();
+    RecyclerViewClickListener recyclerViewClickListener;
 
     public InstituteFragment() {
-        // Required empty public constructor
     }
 
 
@@ -52,9 +53,7 @@ public class InstituteFragment extends Fragment implements View.OnClickListener 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_institute, container, false);
-
         intializeViews(root);
-        bindListner();
         startWorking();
         return root;
     }
@@ -63,37 +62,12 @@ public class InstituteFragment extends Fragment implements View.OnClickListener 
     private void intializeViews(View root) {
         activity = getActivity();
         user = new userOnlineInfo();
+        recyclerViewClickListener = this;
         dialog = new NewProgressBar(getActivity());
         recyclerView = root.findViewById(R.id.recyclerView_institute);
-        bv_browse_institute = (Button) root.findViewById(R.id.bv_institute_browse);
-    }
-
-    private void bindListner() {
-       /*bv_browse_institute.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                itemClickListner = (ItemClickListner) getActivity();
-                itemClickListner.onClick(1);
-
-                coursesFragment= new CoursesFragment();
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_view, coursesFragment)
-                        .addToBackStack(null)
-                        .commit();
-
-
-            }
-        }); */
-    }
-
-    @Override
-    public void onClick(View view) {
-
     }
 
     private void startWorking() {
-        setRecyclerViewData();
         getInstituiteList();
     }
 
@@ -126,47 +100,19 @@ public class InstituteFragment extends Fragment implements View.OnClickListener 
     private void setRecyclerView(InsituiteResponseModel result) {
         LinearLayoutManager gridLayoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(gridLayoutManager);
-        institutesAdapter = new InstitutesAdapter(getActivity(), result.getData());
+        institutesAdapter = new InstitutesAdapter(getActivity(), result.getData(),recyclerViewClickListener);
+        item = result.getData();
         recyclerView.setAdapter(institutesAdapter);
     }
 
-    private void setRecyclerViewData() {
 
-        lstBook = new ArrayList<>();
-
-        lstBook.add(new BookstoreModel("NewYork Store", "From outside, this place looks small, but when you come inside, it was like a shop at the front",
-                R.drawable.test3));
-
-        lstBook.add(new BookstoreModel("Obekan BookS", "Good atmosphere Most moving books available thank you spectrawide for the hound of the baskes",
-                R.drawable.bookstore2));
-
-
-        lstBook.add(new BookstoreModel("The Jarir Store", "Nice collection of items for. School and also good. Mobile accessories collections and. Cheap price",
-                R.drawable.bookstore4));
-
-        lstBook.add(new BookstoreModel("Al-ajeeri", "Excellent bookstore full of very old books which are mostly arabic. Very diverse genres.",
-                R.drawable.test4));
-
-        lstBook.add(new BookstoreModel("NewYork Store", "From outside, this place looks small, but when you come inside, it was like a shop at the front",
-                R.drawable.bookstore2));
-
-        lstBook.add(new BookstoreModel("The Jashnimal", "Shop for Arabic & English books, Jarir publications books, office supplies, school supplies, arts",
-                R.drawable.test1));
-
-        lstBook.add(new BookstoreModel("Sakina BookModel Shop", "Best place to buy all kind of books. You will find almost everything you are searching for. Offers ",
-                R.drawable.bookstore3));
-
-
-        lstBook.add(new BookstoreModel("Better Books", "Better Books is located in the heart of Salmiya, Kuwait. There are over 10,000 pre-owned books ",
-                R.drawable.test5));
-
-
-        lstBook.add(new BookstoreModel("Rakan BookModel store", "Possibly the best book supply store on Qutaiba Street. Plenty of options and even some rare finds",
-                R.drawable.test2));
-
-
+    @Override
+    public void onClickPosition(int position) {
+        coursesFragment= new CoursesFragment(item.get(position).getInstituteId());
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.content_view, coursesFragment)
+                .addToBackStack(null)
+                .commit();
 
     }
-
-
 }
