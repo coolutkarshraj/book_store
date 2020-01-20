@@ -26,6 +26,7 @@ import com.io.bookstore.apicaller.ApiCaller;
 import com.io.bookstore.fragment.BookstoresFragment;
 import com.io.bookstore.fragment.CategoryListFragment;
 import com.io.bookstore.fragment.CourseEnrollmentFragment;
+import com.io.bookstore.fragment.InstituteFragment;
 import com.io.bookstore.listeners.ItemClickListner;
 import com.io.bookstore.model.getAddressResponseModel.AddressResponseModel;
 import com.io.bookstore.model.storeModel.StoreModel;
@@ -55,6 +56,7 @@ public class HomeFragment extends Fragment {
     private BookstoresFragment bookstoresFragment;
     private CategoryListFragment categoryListFragment;
     private CourseEnrollmentFragment courseEnrollmentFragment;
+    InstituteFragment instituteFragment;
     private ImageView iv_view_all_stores,iv_viewall_instutues;
     private ItemClickListner itemClickListner;
     SliderLayout sliderLayout;
@@ -120,9 +122,9 @@ public class HomeFragment extends Fragment {
        iv_viewall_instutues.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                courseEnrollmentFragment= new CourseEnrollmentFragment();
+                instituteFragment= new InstituteFragment();
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_view, courseEnrollmentFragment)
+                        .replace(R.id.content_view, instituteFragment)
                         .addToBackStack(null)
                         .commit();
             }

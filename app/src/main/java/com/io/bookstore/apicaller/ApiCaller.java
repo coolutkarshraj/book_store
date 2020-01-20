@@ -25,6 +25,7 @@ import com.io.bookstore.model.filterByAddress.FilterAddressModel;
 import com.io.bookstore.model.getAddressResponseModel.AddressResponseModel;
 import com.io.bookstore.model.getAllOrder.GetAllOrder;
 import com.io.bookstore.model.getProfileResponseModel.GetProfileResponseModel;
+import com.io.bookstore.model.insituteModel.InsituiteResponseModel;
 import com.io.bookstore.model.loginModel.LoginModel;
 import com.io.bookstore.model.orderModel.OrderStatusChangeResponseModel;
 import com.io.bookstore.model.registerModel.RegisterModel;
@@ -831,6 +832,22 @@ public class ApiCaller {
                 });
     }
 
+
+    public static void getInstiuiteList(Activity activity, String url,
+                                        final FutureCallback<InsituiteResponseModel> apiCallback) {
+        final Gson gson = new Gson();
+        Ion.with(activity)
+                .load(UrlLocator.getFinalUrl(url))
+                .noCache()
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        InsituiteResponseModel insituiteResponseModel = gson.fromJson(result, InsituiteResponseModel.class);
+                        apiCallback.onCompleted(e, insituiteResponseModel);
+                    }
+                });
+    }
 
 
 

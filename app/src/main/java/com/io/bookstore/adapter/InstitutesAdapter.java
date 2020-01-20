@@ -4,24 +4,30 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.io.bookstore.Config;
 import com.io.bookstore.R;
 import com.io.bookstore.model.InstituteModel;
+import com.io.bookstore.model.insituteModel.InsituiteDataModel;
+import com.io.bookstore.model.insituteModel.InsituiteResponseModel;
 
 import java.util.List;
 
 public class InstitutesAdapter extends RecyclerView.Adapter<InstitutesAdapter.MyViewHolder> {
 
     private Context mContext ;
-    private List<InstituteModel> mData ;
+    private List<InsituiteDataModel> mData ;
 
 
-    public InstitutesAdapter(Context mContext, List<InstituteModel> mData) {
+    public InstitutesAdapter(Context mContext, List<InsituiteDataModel> mData) {
         this.mContext = mContext;
         this.mData = mData;
     }
@@ -38,10 +44,13 @@ public class InstitutesAdapter extends RecyclerView.Adapter<InstitutesAdapter.My
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
+        InsituiteDataModel model = mData.get(position);
+        holder.cardView.setAnimation(AnimationUtils.loadAnimation(mContext,R.anim.fade_scale_animation));
+        holder.tv_institute_title.setText(model.getInstituteName());
+     /*   holder.tv_institute_desc.setText(mData.get(position).getDescription());
+        holder.iv_institute_thumbnail.setImageResource(mData.get(position).getThumbnail());*/
 
-        holder.tv_bookstore_tilte.setText(mData.get(position).getTitle());
-        holder.tv_bookstore_desc.setText(mData.get(position).getDescription());
-        holder.iv_bookstore_thumbnail.setImageResource(mData.get(position).getThumbnail());
+        Glide.with(mContext).load(Config.imageUrl + model.getAvatarPath()).into(holder.iv_institute_thumbnail);
      /*   holder.fav_white.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,16 +95,16 @@ public class InstitutesAdapter extends RecyclerView.Adapter<InstitutesAdapter.My
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tv_bookstore_tilte,tv_bookstore_desc;
-        ImageView iv_bookstore_thumbnail;
+        TextView tv_institute_title,tv_institute_desc;
+        ImageView iv_institute_thumbnail;
         CardView cardView ;
 
         public MyViewHolder(View itemView) {
             super(itemView);
 
-            tv_bookstore_tilte = (TextView) itemView.findViewById(R.id.tv_institute_title);
-            tv_bookstore_desc =  (TextView) itemView.findViewById(R.id.tv_institute_desc) ;
-            iv_bookstore_thumbnail = (ImageView) itemView.findViewById(R.id.iv_institute_thumbnail);
+            tv_institute_title = (TextView) itemView.findViewById(R.id.tv_institute_title);
+            tv_institute_desc =  (TextView) itemView.findViewById(R.id.tv_institute_desc) ;
+            iv_institute_thumbnail = (ImageView) itemView.findViewById(R.id.iv_institute_thumbnail);
             cardView = (CardView) itemView.findViewById(R.id.cardview_item_institute);
 
         }

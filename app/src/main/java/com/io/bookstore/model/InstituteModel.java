@@ -1,6 +1,7 @@
 package com.io.bookstore.model;
 
 public class InstituteModel {
+
     private String Title;
     //  private String Category ;
     private String Description ;

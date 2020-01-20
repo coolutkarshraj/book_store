@@ -38,6 +38,8 @@ public class Config {
         public static String storePasswordChange = "store/change-password";
         public static String storeEdit = "store/edit";
         public static String statusUpdate = "store/orders-status";
+
+        public static String insituitelist = "institute/list";
     }
 
     public final static int splashTimeout = 3000;
