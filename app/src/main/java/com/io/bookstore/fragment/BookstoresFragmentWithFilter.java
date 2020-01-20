@@ -1,9 +1,11 @@
 package com.io.bookstore.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -13,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.io.bookstore.Config;
 import com.io.bookstore.R;
 import com.io.bookstore.StaticData;
+import com.io.bookstore.activity.checkoutActivity.CheckoutActivity;
+import com.io.bookstore.activity.checkoutActivity.ProcessingActivity;
 import com.io.bookstore.adapter.BookstoresAdapter;
 import com.io.bookstore.adapter.BookstoresFilterAdapter;
 import com.io.bookstore.apicaller.ApiCaller;
@@ -70,8 +74,19 @@ public class BookstoresFragmentWithFilter extends Fragment {
 
                         @Override
                         public void onCompleted(Exception e, FilterAddressModel result) {
-                            dialog.dismiss();
-                            setRecyclerViewData(result);
+                            if (e != null) {
+                                dialog.dismiss();
+                                Utils.showAlertDialog(getActivity(), "Something Went Wrong");
+                                return;
+                            }
+                            if (result.getStatus() == true) {
+                                dialog.dismiss();
+                                setRecyclerViewData(result);
+                            } else {
+                                dialog.dismiss();
+                                Toast.makeText(getActivity(), "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+
 
                         }
                     });

@@ -166,7 +166,6 @@ public class DeliveryAddressFragment extends Fragment {
                                 Utils.showAlertDialog(activity, "Something Went Wrong");
                                 return;
                             }
-
                             setRecyclerViewData(result);
                             dialog.dismiss();
                         }

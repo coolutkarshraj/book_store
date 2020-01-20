@@ -439,6 +439,10 @@ public class ApiCaller {
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
                     public void onCompleted(Exception e, JsonObject result) {
+                        if(e!= null){
+
+                            return;
+                        }
                         StoreModel ourBrandsResponseModel = gson.fromJson(result, StoreModel.class);
                         apiCallBack.onCompleted(e, ourBrandsResponseModel);
                     }

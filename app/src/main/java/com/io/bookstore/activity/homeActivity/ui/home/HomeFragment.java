@@ -174,8 +174,16 @@ public class HomeFragment extends Fragment {
 
                         @Override
                         public void onCompleted(Exception e, StoreModel result) {
+                            if(e!= null){
+                                Utils.showAlertDialog(getActivity(), "Something Went Wrong");
+                            }
+                            if(result != null){
+                                if(result.getStatus()){
+                                    setRecyclerView(result);
+                                }
+                            }
                             dialog.dismiss();
-                            setRecyclerView(result);
+
 
                         }
                     });
@@ -199,8 +207,20 @@ public class HomeFragment extends Fragment {
 
                         @Override
                         public void onCompleted(Exception e, AddressResponseModel result) {
-                           // dialog.dismiss();
-                            makaAddressListScrollView(result);
+                           dialog.dismiss();
+                            if (e != null) {
+                                dialog.dismiss();
+                                Utils.showAlertDialog(getActivity(), "Something Went Wrong");
+                                return;
+                            }
+                            if (result.getStatus() == true) {
+                                dialog.dismiss();
+                                Toast.makeText(getActivity(), "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                                makaAddressListScrollView(result);
+                            } else {
+                                dialog.dismiss();
+                                Toast.makeText(getContext(), "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
 
                         }
                     });

@@ -103,14 +103,27 @@ public class CartFragment extends Fragment {
 
                         @Override
                         public void onCompleted(Exception e, DeliveryResponseModel result) {
-                            deliveryModel = result;
-                            dialog.dismiss();
-                            tv_name_1.setText(result.getData().get(0).getType() + " Delivery");
-                            rb_1st.setText(result.getData().get(0).getPrice() + result.getData().get(0).getUnit());
-                            rb_2nd.setText(result.getData().get(1).getPrice() + result.getData().get(1).getUnit());
-                            tv_name_2.setText(result.getData().get(1).getType() + " Delivery");
-                            deliv_charge.setText(deliveryModel.getData().get(1).getPrice() + deliveryModel.getData().get(1).getUnit());
-                        }
+                            if (e != null) {
+                                dialog.dismiss();
+                                Utils.showAlertDialog(getActivity(), "Something Went Wrong");
+                                return;
+                            }
+                            if (result.getStatus() == true) {
+                                dialog.dismiss();
+                                deliveryModel = result;
+                                dialog.dismiss();
+                                tv_name_1.setText(result.getData().get(0).getType() + " Delivery");
+                                rb_1st.setText(result.getData().get(0).getPrice() + result.getData().get(0).getUnit());
+                                rb_2nd.setText(result.getData().get(1).getPrice() + result.getData().get(1).getUnit());
+                                tv_name_2.setText(result.getData().get(1).getType() + " Delivery");
+                                deliv_charge.setText(deliveryModel.getData().get(1).getPrice() + deliveryModel.getData().get(1).getUnit());
+
+                            } else {
+                                dialog.dismiss();
+                                Toast.makeText(getActivity(), "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+
+                                 }
                     });
         } else {
             Utils.showAlertDialog(getActivity(), "No Internet Connection");

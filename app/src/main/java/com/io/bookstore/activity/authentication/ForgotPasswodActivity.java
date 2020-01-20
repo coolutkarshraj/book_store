@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.io.bookstore.Config;
 import com.io.bookstore.R;
 import com.io.bookstore.apicaller.ApiCaller;
+import com.io.bookstore.localStorage.LocalStorage;
 import com.io.bookstore.model.changePasswordOtpModel.ChangePasswordVerifyOtpModel;
 import com.io.bookstore.utility.NewProgressBar;
 import com.io.bookstore.utility.Utils;
@@ -99,10 +100,16 @@ public class ForgotPasswodActivity extends AppCompatActivity implements View.OnC
                         @Override
                         public void onCompleted(Exception e, ChangePasswordVerifyOtpModel result) {
                             if(e!=null){
+                                Utils.showAlertDialog(activity, "Something Went Wrong");
                                 return;
                             }
-                            Intent i =new Intent(activity, LoginActivity.class);
-                            startActivity(i);
+
+                            if(result != null){
+                                if(result.getStatus()){
+                                    Intent i =new Intent(activity, LoginActivity.class);
+                                    startActivity(i);
+                                }
+                            }
                         }
                     });
 

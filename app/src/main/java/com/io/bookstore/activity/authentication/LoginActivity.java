@@ -113,11 +113,15 @@ public class LoginActivity extends AppCompatActivity {
                                 Utils.showAlertDialog(activity, "Something Went Wrong");
                                 return;
                             }
-                            if(result.getStatus()){
-                                saveLoginData(result);
-                                localStorage.putBooleAan(LocalStorage.isLoggedIn,true);
-                                navigateToHomeActivit(result);
+
+                            if(result != null){
+                                if(result.getStatus()){
+                                    saveLoginData(result);
+                                    localStorage.putBooleAan(LocalStorage.isLoggedIn,true);
+                                    navigateToHomeActivit(result);
+                                }
                             }
+
                         }
                     });
 

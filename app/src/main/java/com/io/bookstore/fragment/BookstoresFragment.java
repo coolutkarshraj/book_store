@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -115,9 +116,19 @@ public class BookstoresFragment extends Fragment {
 
                         @Override
                         public void onCompleted(Exception e, StoreModel result) {
-                            dialog.dismiss();
-                            data = result;
-                            setRecyclerViewData(result.getData());
+                            if (e != null) {
+                                dialog.dismiss();
+                                Utils.showAlertDialog(getActivity(), "Something Went Wrong");
+                                return;
+                            }
+                            if (result.getStatus() == true) {
+                                dialog.dismiss();
+                                data = result;
+                                setRecyclerViewData(result.getData());
+                            } else {
+                                dialog.dismiss();
+                                Toast.makeText(getActivity(), "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
 
                         }
                     });

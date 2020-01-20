@@ -12,7 +12,7 @@ public class FilterAddressModel {
     @SerializedName("message")
     private String mMessage;
     @SerializedName("status")
-    private Long mStatus;
+    private Boolean mStatus;
 
     public List<Datum> getData() {
         return mData;
@@ -30,11 +30,11 @@ public class FilterAddressModel {
         mMessage = message;
     }
 
-    public Long getStatus() {
+    public Boolean getStatus() {
         return mStatus;
     }
 
-    public void setStatus(Long status) {
+    public void setStatus(Boolean status) {
         mStatus = status;
     }
 

@@ -5,8 +5,8 @@ package com.io.bookstore;
  */
 
 public class Config {
-    public final static String IP = "157.175.48.7";
-    public static String imageUrl ="http://157.175.48.7/api/media/render/?path=";
+    public final static String IP = "15.185.106.133";
+    public static String imageUrl ="http://15.185.106.133/api/media/render/?path=";
 
     public static class Url {
         public final static String registerUser = "user/register";
@@ -26,7 +26,7 @@ public class Config {
         public static String addAddress = "order/add-address";
         public static String getAddressList = "user/detail";
         public static String placePrder = "order/placed";
-        public static String getAllOrder = "order/user-order";
+        public static String getAllOrder = "user/orders/";
         public static String addorremoveWishlist = "book/add-remove-wishlist/?id=";
         public static String getWishList = "book/wishlist";
         public static String adminDeleteBook = "book/delete";

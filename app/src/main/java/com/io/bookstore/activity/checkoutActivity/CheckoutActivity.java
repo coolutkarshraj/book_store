@@ -128,9 +128,20 @@ public class CheckoutActivity extends AppCompatActivity {
                         @Override
                         public void onCompleted(Exception e, OrderModel result) {
                             dialog.dismiss();
-                            Intent intent = new Intent(CheckoutActivity.this, ProcessingActivity.class);
-                            startActivity(intent);
-                            finish();
+                            if (e != null) {
+                                dialog.dismiss();
+                                Utils.showAlertDialog(CheckoutActivity.this, "Something Went Wrong");
+                                return;
+                            }
+                            if (result.getStatus() == true) {
+                                Intent intent = new Intent(CheckoutActivity.this, ProcessingActivity.class);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                dialog.dismiss();
+                                Toast.makeText(CheckoutActivity.this, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+
 
 
                         }
@@ -308,13 +319,17 @@ public class CheckoutActivity extends AppCompatActivity {
                                 Utils.showAlertDialog(activity, "Something Went Wrong");
                                 return;
                             }
-                            if (result.getStatus() == true) {
-                                dialog.dismiss();
-                                Toast.makeText(activity, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
-                                getaddressListApi();
-                            } else {
-                                dialog.dismiss();
-                                Toast.makeText(activity, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                            if(e!=null){
+                                Utils.showAlertDialog(activity, "Something Went Wrong");
+                                return;
+                            }
+
+                            if(result != null){
+                                if(result.getStatus()){
+                                    dialog.dismiss();
+                                    Toast.makeText(activity, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                                    getaddressListApi();
+                                }
                             }
 
                         }

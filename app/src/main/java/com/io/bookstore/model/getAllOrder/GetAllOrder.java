@@ -12,7 +12,7 @@ public class GetAllOrder {
     @SerializedName("message")
     private String mMessage;
     @SerializedName("status")
-    private Boolean mStatus;
+    private Integer mStatus;
 
     public List<Datum> getData() {
         return mData;
@@ -30,11 +30,11 @@ public class GetAllOrder {
         mMessage = message;
     }
 
-    public Boolean getStatus() {
+    public Integer getStatus() {
         return mStatus;
     }
 
-    public void setStatus(Boolean status) {
+    public void setStatus(Integer status) {
         mStatus = status;
     }
 

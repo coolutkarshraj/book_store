@@ -246,12 +246,18 @@ public class ProfileAdminFragment extends Fragment implements View.OnClickListen
                     new FutureCallback<UpdatePasswordModel>() {
                         @Override
                         public void onCompleted(Exception e, UpdatePasswordModel result) {
-                            if (e != null) {
+                            if(e!=null){
+                                Utils.showAlertDialog(activity, "Something Went Wrong");
                                 return;
                             }
-                            ProfileAdminFragment.this.dialog.dismiss();
-                            dialog.dismiss();
-                            changePasswordData(result);
+
+                            if(result != null){
+                                if(result.getStatus()){
+                                    ProfileAdminFragment.this.dialog.dismiss();
+                                    dialog.dismiss();
+                                    changePasswordData(result);
+                                }
+                            }
                         }
                     });
         } else {

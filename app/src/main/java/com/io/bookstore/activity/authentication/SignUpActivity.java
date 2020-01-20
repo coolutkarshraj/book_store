@@ -131,20 +131,27 @@ public class SignUpActivity extends AppCompatActivity {
                         @Override
                         public void onCompleted(Exception e, RegisterModel result) {
                             LocalStorage localStorage = new LocalStorage(SignUpActivity.this);
-                            if(e!=null){
+
+                            if(e!= null){
+                                Utils.showAlertDialog(SignUpActivity.this, "Something Went Wrong");
                                 return;
                             }
-                            if(result.getData()!= null){
-                                try {
-                                     localStorage.putString(LocalStorage.userId,result.getData().getUserId().toString());
-                                }catch (Exception excep){
+                            if(result != null){
+                                if(result.getStatus()){
+                                    if(result.getData()!= null){
+                                        try {
+                                            localStorage.putString(LocalStorage.userId,result.getData().getUserId().toString());
+                                        }catch (Exception excep){
 
+                                        }
+                                    }
+
+                                    Intent intent = new Intent(SignUpActivity.this,SignupVerifyActivity.class);
+                                    intent.putExtra("userId",localStorage.getString(LocalStorage.userId));
+                                    startActivity(intent);
                                 }
                             }
 
-                            Intent intent = new Intent(SignUpActivity.this,SignupVerifyActivity.class);
-                            intent.putExtra("userId",localStorage.getString(LocalStorage.userId));
-                            startActivity(intent);
                         }
                     });
         }else {

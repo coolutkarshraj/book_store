@@ -180,12 +180,18 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                     new FutureCallback<UpdatePasswordModel>() {
                         @Override
                         public void onCompleted(Exception e, UpdatePasswordModel result) {
-                            if (e != null) {
+                            if(e!=null){
+                                Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                                 return;
                             }
-                            SettingsFragment.this.dialog.dismiss();
-                            dialog.dismiss();
-                            changePasswordData(result);
+
+                            if(result != null){
+                                if(result.getStatus()){
+                                    SettingsFragment.this.dialog.dismiss();
+                                    dialog.dismiss();
+                                    changePasswordData(result);
+                                }
+                            }
                         }
                     });
         } else {
