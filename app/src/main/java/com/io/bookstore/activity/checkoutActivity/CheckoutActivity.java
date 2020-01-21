@@ -143,7 +143,6 @@ public class CheckoutActivity extends AppCompatActivity {
                             }
 
 
-
                         }
                     });
         } else {
@@ -217,7 +216,8 @@ public class CheckoutActivity extends AppCompatActivity {
         if (user.isOnline(activity)) {
             dialog = new NewProgressBar(activity);
             dialog.show();
-            ApiCaller.getUserSavedAddressList(activity, Config.Url.getAddressList, "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNTc4ODQ5NzQxLCJleHAiOjE1Nzg5MzYxNDF9.HiddwD9LwLH81wTxNycUnvQqAVMu7f7kepL2b2cYErg",
+            LocalStorage localStorage = new LocalStorage(activity);
+            ApiCaller.getUserSavedAddressList(activity, Config.Url.getAddressList, localStorage.getString(LocalStorage.token),
                     new FutureCallback<GetAddressListResponseModel>() {
                         @Override
                         public void onCompleted(Exception e, GetAddressListResponseModel result) {
@@ -238,14 +238,21 @@ public class CheckoutActivity extends AppCompatActivity {
     }
 
     private void setRecyclerViewData(GetAddressListResponseModel result) {
-        LinearLayoutManager gridLayoutManager = new LinearLayoutManager(CheckoutActivity.this, RecyclerView.VERTICAL, false);
+        LinearLayoutManager gridLayoutManager = new LinearLayoutManager(CheckoutActivity.this,
+                RecyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(gridLayoutManager);
-        for (int i = 0; i < result.getData().getDeliveryAddresses().size(); i++) {
-            result.getData().getDeliveryAddresses().get(i).setChecked(false);
+        if (result.getData().getDeliveryAddresses() == null) {
 
+        } else {
+            for (int i = 0; i < result.getData().getDeliveryAddresses().size(); i++) {
+                result.getData().getDeliveryAddresses().get(i).setChecked(false);
+
+            }
+            addressAdapter = new AddressAdapter(CheckoutActivity.this, result.getData().getDeliveryAddresses());
+            recyclerView.setAdapter(addressAdapter);
         }
-        addressAdapter = new AddressAdapter(CheckoutActivity.this, result.getData().getDeliveryAddresses());
-        recyclerView.setAdapter(addressAdapter);
+
+
     }
 
     private void dialogOpen() {
@@ -319,13 +326,13 @@ public class CheckoutActivity extends AppCompatActivity {
                                 Utils.showAlertDialog(activity, "Something Went Wrong");
                                 return;
                             }
-                            if(e!=null){
+                            if (e != null) {
                                 Utils.showAlertDialog(activity, "Something Went Wrong");
                                 return;
                             }
 
-                            if(result != null){
-                                if(result.getStatus()){
+                            if (result != null) {
+                                if (result.getStatus()) {
                                     dialog.dismiss();
                                     Toast.makeText(activity, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
                                     getaddressListApi();

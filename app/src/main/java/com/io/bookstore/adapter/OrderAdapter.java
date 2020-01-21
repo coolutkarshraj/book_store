@@ -37,6 +37,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderHolder> {
         holder.textView11.setText(courseicon.get(position).getCreatedDate());
         holder.textView12.setText("Status-" + " "+courseicon.get(position).getOrderStatus());
         holder.textView9.setText("Order -#" + " "+courseicon.get(position).getOrderId());
+        holder.iv_editOrder.setVisibility(View.GONE);
     }
     @Override
     public int getItemCount() {

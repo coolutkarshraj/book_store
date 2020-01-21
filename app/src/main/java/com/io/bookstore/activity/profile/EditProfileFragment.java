@@ -127,7 +127,6 @@ public class EditProfileFragment extends Fragment {
     }
     private void initView() {
         fNmae = view.findViewById(R.id.et_firstname);
-        lName = view.findViewById(R.id.et_lastname);
         email = view.findViewById(R.id.et_email);
         username = view.findViewById(R.id.et_username);
         phone = view.findViewById(R.id.et_phone);

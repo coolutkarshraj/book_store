@@ -5,24 +5,31 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.io.bookstore.Config;
 import com.io.bookstore.R;
 import com.io.bookstore.holder.CoursesHolder;
+import com.io.bookstore.listeners.RecyclerViewClickListener;
+import com.io.bookstore.model.insituteModel.InsituiteDataModel;
 import com.io.bookstore.utility.Utils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class CourseAdapter extends RecyclerView.Adapter<CoursesHolder> {
     private Activity activity;
-    private ArrayList coursename;
-    private ArrayList courseicon;
+    private List<InsituiteDataModel> list;
+    private RecyclerViewClickListener item;
 
-    public CourseAdapter(Activity activity, ArrayList coursename, ArrayList courseicon) {
+
+    public CourseAdapter(FragmentActivity activity, List<InsituiteDataModel> list, RecyclerViewClickListener item) {
         this.activity = activity;
-        this.courseicon = courseicon;
-        this.coursename = coursename;
+        this.list = list;
+        this.item = item;
     }
 
     @Override
@@ -32,12 +39,27 @@ public class CourseAdapter extends RecyclerView.Adapter<CoursesHolder> {
     }
 
     @Override
-    public void onBindViewHolder(CoursesHolder holder, int position) {
-        holder.name.setText(coursename.get(position).toString());
-        holder.image.setImageResource((Integer) courseicon.get(position));
+    public void onBindViewHolder(CoursesHolder holder, final int position) {
+        InsituiteDataModel model = list.get(position);
+        holder.name.setText(model.getInstituteName());
+        Glide.with(activity).load(Config.imageUrl + model.getAvatarPath()).into(holder.image);
+        holder.ll_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                item.onClickPosition(position);
+            }
+        });
+
     }
+
     @Override
     public int getItemCount() {
-        return courseicon.size();
+        int count = 0;
+        if (list.size() > 4) {
+            count = 4;
+        } else {
+            count = list.size();
+        }
+        return count;
     }
 }

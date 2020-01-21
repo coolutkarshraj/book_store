@@ -32,6 +32,7 @@ public class ProfileFragment extends Fragment {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     public static CircleImageView iv_avatar;
+    public static TextView et_firstname;
     EditProfileFragment editProfileFragment;
     FloatingActionButton fabEditProfile;
     private TextView loggedih;
@@ -108,6 +109,7 @@ public class ProfileFragment extends Fragment {
         ll_main_view = (LinearLayout) view.findViewById(R.id.ll_main_view);
         viewPager = (ViewPager) view.findViewById(R.id.viewpager_profile);
         fabEditProfile = (FloatingActionButton) view.findViewById(R.id.fab_editpic);
+        et_firstname = (TextView) view.findViewById(R.id.et_firstname);
         ProfilePagerAdapter pfadapter = new ProfilePagerAdapter(getChildFragmentManager());
         pfadapter.addFragment(new SettingsFragment());
         pfadapter.addFragment(new OrderFragment());

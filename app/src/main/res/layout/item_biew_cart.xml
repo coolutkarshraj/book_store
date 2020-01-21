@@ -124,7 +124,8 @@
                         android:layout_height="20dp"
                         android:layout_above="@+id/rl_addremove"
                         android:layout_marginTop="2dp"
-                        android:background="@drawable/azure"
+                        android:background="@drawable/substract"
+                        android:backgroundTint="@color/black"
                         android:gravity="center_vertical" />
 
                     <TextView

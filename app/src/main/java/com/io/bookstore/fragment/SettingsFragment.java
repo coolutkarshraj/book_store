@@ -109,6 +109,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                             et_email.setText(result.getData().getEmail());
                             et_address.setText(result.getData().getAddress());
                             et_username.setText(result.getData().getName());
+                            ProfileFragment.et_firstname.setText(result.getData().getName());
                          Glide.with(getActivity()).load(Config.imageUrl + result.getData().getAvatarPath()).into(ProfileFragment.iv_avatar);
 
                         }

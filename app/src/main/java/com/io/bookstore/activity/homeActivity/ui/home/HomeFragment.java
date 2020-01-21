@@ -26,9 +26,14 @@ import com.io.bookstore.apicaller.ApiCaller;
 import com.io.bookstore.fragment.BookstoresFragment;
 import com.io.bookstore.fragment.CategoryListFragment;
 import com.io.bookstore.fragment.CourseEnrollmentFragment;
+import com.io.bookstore.fragment.CoursesFragment;
 import com.io.bookstore.fragment.InstituteFragment;
 import com.io.bookstore.listeners.ItemClickListner;
+import com.io.bookstore.listeners.RecyclerViewClickListener;
+import com.io.bookstore.model.InstituteModel;
 import com.io.bookstore.model.getAddressResponseModel.AddressResponseModel;
+import com.io.bookstore.model.insituteModel.InsituiteDataModel;
+import com.io.bookstore.model.insituteModel.InsituiteResponseModel;
 import com.io.bookstore.model.storeModel.StoreModel;
 import com.io.bookstore.utility.NewProgressBar;
 import com.io.bookstore.utility.Utils;
@@ -38,27 +43,29 @@ import com.smarteist.autoimageslider.DefaultSliderView;
 import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.SliderLayout;
 import com.smarteist.autoimageslider.SliderView;
+
 import java.util.ArrayList;
+import java.util.List;
 
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements RecyclerViewClickListener {
     private ArrayList<Integer> item;
     private ArrayList<String> item1;
-
     private ArrayList<String> staoreName;
     private ArrayList<Integer> storeIcon;
-
+    private List<InsituiteDataModel> list ;
     private ArrayList<String> coursename;
     private ArrayList<Integer> courseicon;
-    private RecyclerView recycler_view_store,reccycler_ciew_course,recyclerView_courses;
+    private RecyclerView recycler_view_store, reccycler_ciew_course, recyclerView_courses;
     private CourseAdapter courseAdapter;
     private SToreAdapter sToreAdapter;
     private BookstoresFragment bookstoresFragment;
-    private CategoryListFragment categoryListFragment;
+    private CoursesFragment coursesFragment;
     private CourseEnrollmentFragment courseEnrollmentFragment;
     InstituteFragment instituteFragment;
-    private ImageView iv_view_all_stores,iv_viewall_instutues;
+    private ImageView iv_view_all_stores, iv_viewall_instutues;
     private ItemClickListner itemClickListner;
+    RecyclerViewClickListener recyclerViewClickListener;
     SliderLayout sliderLayout;
     TextView tvSliderName;
     private userOnlineInfo user;
@@ -68,11 +75,12 @@ public class HomeFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-      View root = inflater.inflate(R.layout.fragment_home, container, false);
-      createArray();
-      user = new userOnlineInfo();
+        View root = inflater.inflate(R.layout.fragment_home, container, false);
+        createArray();
+        recyclerViewClickListener = this;
+        user = new userOnlineInfo();
         dialog = new NewProgressBar(getActivity());
-      tvSliderName = root.findViewById(R.id.tv_slider_name);
+        tvSliderName = root.findViewById(R.id.tv_slider_name);
         ll_sub_child = root.findViewById(R.id.ll_sub_child);
         sliderLayout = root.findViewById(R.id.image);
         sliderLayout.setIndicatorAnimation(IndicatorAnimations.FILL); //set indicator animation by using SliderLayout.Animations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
@@ -84,14 +92,14 @@ public class HomeFragment extends Fragment {
         reccycler_ciew_course = root.findViewById(R.id.reccycler_ciew_course);
         recyclerView_courses = root.findViewById(R.id.recyclerView_courses);
         getStoreList();
-        setRecyclerViewData();
+        getInstituiteList();
         bindListner();
         getStoreAddressList();
         return root;
     }
 
     private void setImageTOAddPart() {
-        for (int i =0;i<= item.size() -1 ;i++) {
+        for (int i = 0; i <= item.size() - 1; i++) {
             SliderView sliderView = new DefaultSliderView(getActivity());
             sliderView.setImageDrawable(item.get(i));
             sliderView.setImageScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -119,10 +127,10 @@ public class HomeFragment extends Fragment {
             }
         });
 
-       iv_viewall_instutues.setOnClickListener(new View.OnClickListener() {
+        iv_viewall_instutues.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                instituteFragment= new InstituteFragment();
+                instituteFragment = new InstituteFragment();
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.content_view, instituteFragment)
                         .addToBackStack(null)
@@ -131,16 +139,11 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    private void setRecyclerViewData() {
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
-        reccycler_ciew_course.setLayoutManager(gridLayoutManager);
-        courseAdapter = new CourseAdapter(getActivity(),coursename,courseicon);
-        reccycler_ciew_course.setAdapter(courseAdapter);
-}
 
     private void createArray() {
         item = new ArrayList<>();
         item1 = new ArrayList<>();
+        list = new ArrayList<>();
         courseicon = new ArrayList<>();
         coursename = new ArrayList<>();
         staoreName = new ArrayList<>();
@@ -176,11 +179,11 @@ public class HomeFragment extends Fragment {
 
                         @Override
                         public void onCompleted(Exception e, StoreModel result) {
-                            if(e!= null){
+                            if (e != null) {
                                 Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                             }
-                            if(result != null){
-                                if(result.getStatus()){
+                            if (result != null) {
+                                if (result.getStatus()) {
                                     setRecyclerView(result);
                                 }
                             }
@@ -197,19 +200,65 @@ public class HomeFragment extends Fragment {
     private void setRecyclerView(StoreModel result) {
         GridLayoutManager gridLayoutManager1 = new GridLayoutManager(getActivity(), 2);
         recycler_view_store.setLayoutManager(gridLayoutManager1);
-        sToreAdapter = new SToreAdapter(getActivity(),result.getData());
+        sToreAdapter = new SToreAdapter(getActivity(), result.getData());
         recycler_view_store.setAdapter(sToreAdapter);
+    }
+
+    private void getInstituiteList() {
+        if (user.isOnline(getActivity())) {
+            ApiCaller.getInstiuiteList(getActivity(), Config.Url.insituitelist,
+                    new FutureCallback<InsituiteResponseModel>() {
+
+                        @Override
+                        public void onCompleted(Exception e, InsituiteResponseModel result) {
+                            if (e != null) {
+                                Utils.showAlertDialog(getActivity(), "Something Went Wrong");
+                            }
+                            if (result != null) {
+                                if (result.getStatus()) {
+
+                                    setRecyclerViewData(result);
+                                }
+
+                            }
+                            dialog.dismiss();
+
+
+                        }
+                    });
+        } else {
+            Utils.showAlertDialog(getActivity(), "No Internet Connection");
+        }
+    }
+
+    private void setRecyclerViewData(InsituiteResponseModel result) {
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
+        reccycler_ciew_course.setLayoutManager(gridLayoutManager);
+//        for(int i =0;i<result.getData().size();i++){
+//            if(result.getData().get(i).getAvatarPath().equals("true")){
+//                InsituiteDataModel model =new InsituiteDataModel();
+//                model.setInstituteId(result.getData().get(i).getInstituteId());
+//                model.setInstituteName(result.getData().get(i).getInstituteName());
+//                model.setAvatarName(result.getData().get(i).getAvatarName());
+//                model.setAvatarPath(result.getData().get(i).getAvatarPath());
+//                model.setAddedById(result.getData().get(i).getAddedById());
+//                list.add(model);
+//            }
+//        }
+        courseAdapter = new CourseAdapter(getActivity(), result.getData(),recyclerViewClickListener);
+        list = result.getData();
+        reccycler_ciew_course.setAdapter(courseAdapter);
     }
 
     private void getStoreAddressList() {
         if (user.isOnline(getActivity())) {
-          //  dialog.show();
+            //  dialog.show();
             ApiCaller.getAddresssList(getActivity(), Config.Url.getAdressApi,
                     new FutureCallback<AddressResponseModel>() {
 
                         @Override
                         public void onCompleted(Exception e, AddressResponseModel result) {
-                           dialog.dismiss();
+                            dialog.dismiss();
                             if (e != null) {
                                 dialog.dismiss();
                                 Utils.showAlertDialog(getActivity(), "Something Went Wrong");
@@ -244,8 +293,7 @@ public class HomeFragment extends Fragment {
         horizontalScrollView.addView(linearLayout);
 
         int i;
-        for(i =0;i<result.getData().size();i++)
-        {
+        for (i = 0; i < result.getData().size(); i++) {
 
             TextView textView = new TextView(getActivity());//create textview dynamically
             textView.setText(result.getData().get(i).getCity());
@@ -261,17 +309,27 @@ public class HomeFragment extends Fragment {
             textView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getActivity(),result.getData().get(finalI).getCity(),Toast.LENGTH_SHORT).show();
-                    StaticData.address = result.getData().get(finalI).getCity() ;
-                itemClickListner = (ItemClickListner) getActivity();
+                    Toast.makeText(getActivity(), result.getData().get(finalI).getCity(), Toast.LENGTH_SHORT).show();
+                    StaticData.address = result.getData().get(finalI).getCity();
+                    itemClickListner = (ItemClickListner) getActivity();
                     assert itemClickListner != null;
                     itemClickListner.onClick(4);
                 }
             });
- }
+        }
         if (ll_sub_child != null) {
             ll_sub_child.addView(horizontalScrollView);
         }
+
+    }
+
+    @Override
+    public void onClickPosition(int position) {
+        coursesFragment = new CoursesFragment(list.get(position).getInstituteId());
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.content_view, coursesFragment)
+                .addToBackStack(null)
+                .commit();
 
     }
 }
