@@ -22,6 +22,7 @@ import com.io.bookstore.fragment.BookListFragment;
 import com.io.bookstore.fragment.BookstoresFragment;
 import com.io.bookstore.fragment.BookstoresFragmentWithFilter;
 import com.io.bookstore.fragment.CategoryListFragment;
+import com.io.bookstore.fragment.EnrollCourseListFragment;
 import com.io.bookstore.fragment.FavoriteItemsFragment;
 import com.io.bookstore.listeners.ItemClickListner;
 import com.io.bookstore.localStorage.LocalStorage;
@@ -61,13 +62,14 @@ public class MainActivity extends AppCompatActivity implements
     ImageView iv_cart;
     TextView nav_user,nav_Email;
     CircleImageView imageView;
-    LinearLayout home, favfourite, order, profile,logout;
+    LinearLayout home, favfourite, order, profile,logout,ll_enroll_course;
     ImageView ivHome, ivHeart, ivCart, iv_profile;
     ProfileFragment profileFragment;
     EditProfileFragment editProfileFragment;
     BookstoresFragment bookstoresFragment;
     BookstoresFragmentWithFilter bookstoresFragmentWithFilter;
     BookListFragment bookListFragment;
+    EnrollCourseListFragment enrollCourseListFragment;
     DeliveryAddressFragment deliveryAddressFragment;
     LocalStorage localStorage;
 
@@ -177,6 +179,14 @@ public class MainActivity extends AppCompatActivity implements
                 Intent i = new Intent(MainActivity.this, LoginActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(i);
+            }
+        });
+        ll_enroll_course.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                changeFrag(enrollCourseListFragment, true);
+                drawer.closeDrawer(Gravity.LEFT);
             }
         });
         footerClick();
@@ -348,7 +358,9 @@ public class MainActivity extends AppCompatActivity implements
         orderFragment = new OrderFragment();
         favoriteItemsFragment = new FavoriteItemsFragment();
         deliveryAddressFragment = new DeliveryAddressFragment();
+
         navigationView = findViewById(R.id.nav_view);
+        ll_enroll_course = findViewById(R.id.ll_course);
         menu = findViewById(R.id.menu);
         logout = (LinearLayout) findViewById(R.id.logout);
         nav_user = (TextView) findViewById(R.id.nav_username);
@@ -359,6 +371,7 @@ public class MainActivity extends AppCompatActivity implements
         ll_payment = findViewById(R.id.ll_payment);
         language = findViewById(R.id.language);
         country = findViewById(R.id.country);
+        enrollCourseListFragment = new EnrollCourseListFragment();
         profileFragment = new ProfileFragment();
         categoryListFragment = new CategoryListFragment();
         bookListFragment = new BookListFragment();

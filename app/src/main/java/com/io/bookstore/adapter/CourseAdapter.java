@@ -14,6 +14,7 @@ import com.io.bookstore.R;
 import com.io.bookstore.holder.CoursesHolder;
 import com.io.bookstore.listeners.RecyclerViewClickListener;
 import com.io.bookstore.model.insituteModel.InsituiteDataModel;
+import com.io.bookstore.model.insituteModel.TrendingInstituteDataModel;
 import com.io.bookstore.utility.Utils;
 
 import java.util.ArrayList;
@@ -22,11 +23,11 @@ import java.util.List;
 
 public class CourseAdapter extends RecyclerView.Adapter<CoursesHolder> {
     private Activity activity;
-    private List<InsituiteDataModel> list;
+    private List<TrendingInstituteDataModel> list;
     private RecyclerViewClickListener item;
 
 
-    public CourseAdapter(FragmentActivity activity, List<InsituiteDataModel> list, RecyclerViewClickListener item) {
+    public CourseAdapter(FragmentActivity activity, List<TrendingInstituteDataModel> list, RecyclerViewClickListener item) {
         this.activity = activity;
         this.list = list;
         this.item = item;
@@ -40,7 +41,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CoursesHolder> {
 
     @Override
     public void onBindViewHolder(CoursesHolder holder, final int position) {
-        InsituiteDataModel model = list.get(position);
+        TrendingInstituteDataModel model = list.get(position);
         holder.name.setText(model.getInstituteName());
         Glide.with(activity).load(Config.imageUrl + model.getAvatarPath()).into(holder.image);
         holder.ll_view.setOnClickListener(new View.OnClickListener() {

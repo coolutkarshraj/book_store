@@ -16,12 +16,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.io.bookstore.Config;
 import com.io.bookstore.R;
 import com.io.bookstore.activity.authentication.LoginActivity;
 import com.io.bookstore.apicaller.ApiCaller;
 import com.io.bookstore.localStorage.LocalStorage;
 import com.io.bookstore.model.courseModel.CourseDataModel;
+import com.io.bookstore.model.courseModel.EnrollCourseResponseModel;
 import com.io.bookstore.model.insituteModel.InsituiteResponseModel;
 import com.io.bookstore.utility.NewProgressBar;
 import com.io.bookstore.utility.Utils;
@@ -36,6 +38,7 @@ public class CourseEnrollmentFragment extends Fragment implements View.OnClickLi
     private Activity activity;
     private CourseDataModel courseDataModel;
     private TextView tvCourseTitile, tvCourseDescription;
+    private ImageView imageView;
     private Button btnEnroll;
     private String token;
     private LocalStorage localStorage;
@@ -64,6 +67,7 @@ public class CourseEnrollmentFragment extends Fragment implements View.OnClickLi
         dialog = new NewProgressBar(activity);
         localStorage = new LocalStorage(activity);
         token = localStorage.getString(LocalStorage.token);
+        imageView = (ImageView) view.findViewById(R.id.imageView21);
         tvCourseTitile = (TextView) view.findViewById(R.id.tv_bookstore_tilte);
         tvCourseDescription = (TextView) view.findViewById(R.id.textView36);
         btnEnroll = (Button) view.findViewById(R.id.btn_enrolll_now);
@@ -80,7 +84,7 @@ public class CourseEnrollmentFragment extends Fragment implements View.OnClickLi
 
                 if (token.equals("") || token == null) {
                     Toast.makeText(activity, "please login", Toast.LENGTH_SHORT).show();
-                    Intent i =new  Intent(activity, LoginActivity.class);
+                    Intent i = new Intent(activity, LoginActivity.class);
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(i);
                 } else {
@@ -100,23 +104,26 @@ public class CourseEnrollmentFragment extends Fragment implements View.OnClickLi
     private void corseDetialSetIntViews() {
         tvCourseTitile.setText(courseDataModel.getCourseName());
         tvCourseDescription.setText(courseDataModel.getCourseDescription());
+        Glide.with(activity).load(Config.imageUrl + courseDataModel.getAvatarPath()).into(imageView);
     }
 
     private void enrollApiCall() {
-        Toast.makeText(activity, "enroll done", Toast.LENGTH_SHORT).show();
-        /*if (user.isOnline(getActivity())) {
+
+        if (user.isOnline(getActivity())) {
             dialog.show();
-            ApiCaller.getInstiuiteList(getActivity(), Config.Url.insituitelist,
-                    new FutureCallback<InsituiteResponseModel>() {
+            ApiCaller.enrollCourse(getActivity(), Config.Url.courseEnroll + courseDataModel.getCourseId(), token,
+                    new FutureCallback<EnrollCourseResponseModel>() {
 
                         @Override
-                        public void onCompleted(Exception e, InsituiteResponseModel result) {
+                        public void onCompleted(Exception e, EnrollCourseResponseModel result) {
                             if (e != null) {
                                 Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                             }
                             if (result != null) {
+                                dialog.dismiss();
                                 if (result.getStatus()) {
-
+                                    Toast.makeText(activity, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                                    dialog.dismiss();
                                 }
                             }
                             dialog.dismiss();
@@ -126,7 +133,7 @@ public class CourseEnrollmentFragment extends Fragment implements View.OnClickLi
                     });
         } else {
             Utils.showAlertDialog(getActivity(), "No Internet Connection");
-        }*/
+        }
     }
 
 }

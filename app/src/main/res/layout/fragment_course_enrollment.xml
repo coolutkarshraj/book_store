@@ -78,7 +78,7 @@
                             android:layout_width="170dp"
                             android:layout_height="100dp"
                             android:scaleType="centerCrop"
-                            app:srcCompat="@drawable/bookstore2" />
+                             />
                     </androidx.cardview.widget.CardView>
 
 

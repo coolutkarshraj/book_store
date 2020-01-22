@@ -34,6 +34,8 @@ import com.io.bookstore.model.InstituteModel;
 import com.io.bookstore.model.getAddressResponseModel.AddressResponseModel;
 import com.io.bookstore.model.insituteModel.InsituiteDataModel;
 import com.io.bookstore.model.insituteModel.InsituiteResponseModel;
+import com.io.bookstore.model.insituteModel.TrendingInstituteDataModel;
+import com.io.bookstore.model.insituteModel.TrendingInstituteResponseModel;
 import com.io.bookstore.model.storeModel.StoreModel;
 import com.io.bookstore.utility.NewProgressBar;
 import com.io.bookstore.utility.Utils;
@@ -53,7 +55,7 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener 
     private ArrayList<String> item1;
     private ArrayList<String> staoreName;
     private ArrayList<Integer> storeIcon;
-    private List<InsituiteDataModel> list ;
+    private List<TrendingInstituteDataModel> list ;
     private ArrayList<String> coursename;
     private ArrayList<Integer> courseicon;
     private RecyclerView recycler_view_store, reccycler_ciew_course, recyclerView_courses;
@@ -206,11 +208,11 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener 
 
     private void getInstituiteList() {
         if (user.isOnline(getActivity())) {
-            ApiCaller.getInstiuiteList(getActivity(), Config.Url.insituitelist,
-                    new FutureCallback<InsituiteResponseModel>() {
+            ApiCaller.getTrendingInstiuiteList(getActivity(), Config.Url.insituitelist,
+                    new FutureCallback<TrendingInstituteResponseModel>() {
 
                         @Override
-                        public void onCompleted(Exception e, InsituiteResponseModel result) {
+                        public void onCompleted(Exception e, TrendingInstituteResponseModel result) {
                             if (e != null) {
                                 Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                             }
@@ -231,20 +233,10 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener 
         }
     }
 
-    private void setRecyclerViewData(InsituiteResponseModel result) {
+    private void setRecyclerViewData(TrendingInstituteResponseModel result) {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
         reccycler_ciew_course.setLayoutManager(gridLayoutManager);
-//        for(int i =0;i<result.getData().size();i++){
-//            if(result.getData().get(i).getAvatarPath().equals("true")){
-//                InsituiteDataModel model =new InsituiteDataModel();
-//                model.setInstituteId(result.getData().get(i).getInstituteId());
-//                model.setInstituteName(result.getData().get(i).getInstituteName());
-//                model.setAvatarName(result.getData().get(i).getAvatarName());
-//                model.setAvatarPath(result.getData().get(i).getAvatarPath());
-//                model.setAddedById(result.getData().get(i).getAddedById());
-//                list.add(model);
-//            }
-//        }
+
         courseAdapter = new CourseAdapter(getActivity(), result.getData(),recyclerViewClickListener);
         list = result.getData();
         reccycler_ciew_course.setAdapter(courseAdapter);

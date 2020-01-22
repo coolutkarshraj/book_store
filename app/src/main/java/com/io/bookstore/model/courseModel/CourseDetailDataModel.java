@@ -3,8 +3,7 @@ package com.io.bookstore.model.courseModel;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class CourseDataModel {
-
+public class CourseDetailDataModel {
     @SerializedName("createdDate")
     @Expose
     private String createdDate;

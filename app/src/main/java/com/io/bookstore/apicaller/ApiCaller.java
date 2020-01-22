@@ -18,7 +18,10 @@ import com.io.bookstore.model.adminResponseModel.DeleteBookResponseModel;
 import com.io.bookstore.model.bookListModel.BookListModel;
 import com.io.bookstore.model.categoryModel.CategoryModel;
 import com.io.bookstore.model.changePasswordOtpModel.ChangePasswordVerifyOtpModel;
+import com.io.bookstore.model.courseModel.CourseDetialResponseModel;
 import com.io.bookstore.model.courseModel.CourseResponseModel;
+import com.io.bookstore.model.courseModel.EnrollCourseResponseModel;
+import com.io.bookstore.model.courseModel.EnrolledCourseListResponseModel;
 import com.io.bookstore.model.deleteAddressResponseModel.DeleteAddressResponseModel;
 import com.io.bookstore.model.deliveryPriceModel.DeliveryResponseModel;
 import com.io.bookstore.model.editProfileResponseModel.EditProfileResponseModel;
@@ -27,6 +30,7 @@ import com.io.bookstore.model.getAddressResponseModel.AddressResponseModel;
 import com.io.bookstore.model.getAllOrder.GetAllOrder;
 import com.io.bookstore.model.getProfileResponseModel.GetProfileResponseModel;
 import com.io.bookstore.model.insituteModel.InsituiteResponseModel;
+import com.io.bookstore.model.insituteModel.TrendingInstituteResponseModel;
 import com.io.bookstore.model.loginModel.LoginModel;
 import com.io.bookstore.model.orderModel.OrderStatusChangeResponseModel;
 import com.io.bookstore.model.registerModel.RegisterModel;
@@ -70,7 +74,7 @@ public class ApiCaller {
                     }
                 })
                 .setTimeout(60 * 60 * 1000)
-                .setMultipartParameter("name", firstname + " " +lastname)
+                .setMultipartParameter("name", firstname + " " + lastname)
                 .setMultipartParameter("email", email)
                 .setMultipartParameter("phone", phone)
                 .setMultipartParameter("password", password)
@@ -441,7 +445,7 @@ public class ApiCaller {
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
                     public void onCompleted(Exception e, JsonObject result) {
-                        if(e!= null){
+                        if (e != null) {
 
                             return;
                         }
@@ -534,7 +538,7 @@ public class ApiCaller {
     /*------------------------------------- add or remove product wishlist ------------------------------*/
 
     public static void addOrRemoveWishList(Context activity, String url,
-                                     String token, final FutureCallback<AddorRemoveWishlistResponseModel> apiCallBack) {
+                                           String token, final FutureCallback<AddorRemoveWishlistResponseModel> apiCallBack) {
 
 
         final Gson gson = new Gson();
@@ -553,7 +557,7 @@ public class ApiCaller {
     }
 
     public static void getWishList(Activity activity, String url, String token,
-                                               final FutureCallback<GetWishlistResponseModel> apiCallBack) {
+                                   final FutureCallback<GetWishlistResponseModel> apiCallBack) {
         final Gson gson = new Gson();
         Ion.with(activity)
                 .load(UrlLocator.getFinalUrl(url))
@@ -571,7 +575,7 @@ public class ApiCaller {
 
 
     public static void getAdminBookList(Activity activity, String url, int sId, int cId, String name,
-                                    final FutureCallback<AdminBookListResponseModel> apiCallback) {
+                                        final FutureCallback<AdminBookListResponseModel> apiCallback) {
         final Gson gson = new Gson();
         Ion.with(activity)
                 .load(UrlLocator.getFinalUrl(url))
@@ -604,12 +608,12 @@ public class ApiCaller {
                 });
     }
 
-    public static void upload(Activity activity, String url, String author,String bookname, String bookdesc,
+    public static void upload(Activity activity, String url, String author, String bookname, String bookdesc,
                               String catId, String Quantity, String amount, String token, File image,
                               final FutureCallback<AddBookResponseModel> apiCallBack) {
         final Gson gson = new Gson();
         List<Part> files = new ArrayList();
-        files.add(new FilePart("avatar",image));
+        files.add(new FilePart("avatar", image));
         Ion.with(activity)
                 .load(UrlLocator.getFinalUrl(url))
                 .setHeader("Authorization", "Bearer " + token)
@@ -625,7 +629,7 @@ public class ApiCaller {
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
                     public void onCompleted(Exception e, JsonObject result) {
-                        Log.d("Respnse is",result.toString());
+                        Log.d("Respnse is", result.toString());
                         AddBookResponseModel customerRegisterResponseModel = gson.fromJson(result, AddBookResponseModel.class);
                         apiCallBack.onCompleted(e, customerRegisterResponseModel);
                     }
@@ -633,13 +637,12 @@ public class ApiCaller {
     }
 
 
-
     public static void editBookDetial(Activity activity, String url, String bookname, String bookdesc,
-                            String catId, String Quantity, String amount, String token, File image,
-                            Integer bookId, final FutureCallback<EditBookResponseModel> apiCallBack) {
+                                      String catId, String Quantity, String amount, String token, File image,
+                                      Integer bookId, final FutureCallback<EditBookResponseModel> apiCallBack) {
         final Gson gson = new Gson();
         List<Part> files = new ArrayList();
-        if(image ==null){
+        if (image == null) {
             Ion.with(activity)
                     .load(UrlLocator.getFinalUrl(url))
                     .setHeader("Authorization", "Bearer " + token)
@@ -658,8 +661,8 @@ public class ApiCaller {
                             apiCallBack.onCompleted(e, editBookResponseModel);
                         }
                     });
-        }else {
-            files.add(new FilePart("avatar",image));
+        } else {
+            files.add(new FilePart("avatar", image));
             Ion.with(activity)
                     .load(UrlLocator.getFinalUrl(url))
                     .setHeader("Authorization", "Bearer " + token)
@@ -705,11 +708,11 @@ public class ApiCaller {
     }
 
     public static void editProfileUser(Activity activity, String url, String name, String address,
-                              String phone, String token, File image,
-                              final FutureCallback<EditProfileResponseModel> apiCallBack) {
+                                       String phone, String token, File image,
+                                       final FutureCallback<EditProfileResponseModel> apiCallBack) {
         final Gson gson = new Gson();
         List<Part> files = new ArrayList();
-        if (image == null ) {
+        if (image == null) {
             image = new File("");
             files.add(new FilePart("avatar", image));
             Ion.with(activity)
@@ -747,6 +750,7 @@ public class ApiCaller {
 
 
     }
+
     public static void getStoreDetial(Activity activity, String url,
                                       final FutureCallback<StoreDetailResponseModel> apiCallBack) {
         final Gson gson = new Gson();
@@ -765,53 +769,53 @@ public class ApiCaller {
     }
 
     public static void editstoreDetial(Activity activity, String url, String name, String des,
-                                       String phone, String token, File image,String address,
+                                       String phone, String token, File image, String address,
                                        final FutureCallback<EditStoreDetialResponseModel> apiCallBack) {
         final Gson gson = new Gson();
         List<Part> files = new ArrayList();
-        if (image == null ) {
-                Ion.with(activity)
-                        .load(UrlLocator.getFinalUrl(url))
-                        .setHeader("Authorization", "Bearer " + token)
-                        .setHeader("Role", "store")
-                        .setMultipartParameter("name", name)
-                        .setMultipartParameter("description", des)
-                        .setMultipartParameter("phone", phone)
-                        .setMultipartParameter("address", address)
-                        .asJsonObject()
-                        .setCallback(new FutureCallback<JsonObject>() {
-                            @Override
-                            public void onCompleted(Exception e, JsonObject result) {
-                                EditStoreDetialResponseModel editStoreDetialResponseModel = gson.fromJson(result, EditStoreDetialResponseModel.class);
-                                apiCallBack.onCompleted(e, editStoreDetialResponseModel);
-                            }
-                        });
-            }else {
+        if (image == null) {
+            Ion.with(activity)
+                    .load(UrlLocator.getFinalUrl(url))
+                    .setHeader("Authorization", "Bearer " + token)
+                    .setHeader("Role", "store")
+                    .setMultipartParameter("name", name)
+                    .setMultipartParameter("description", des)
+                    .setMultipartParameter("phone", phone)
+                    .setMultipartParameter("address", address)
+                    .asJsonObject()
+                    .setCallback(new FutureCallback<JsonObject>() {
+                        @Override
+                        public void onCompleted(Exception e, JsonObject result) {
+                            EditStoreDetialResponseModel editStoreDetialResponseModel = gson.fromJson(result, EditStoreDetialResponseModel.class);
+                            apiCallBack.onCompleted(e, editStoreDetialResponseModel);
+                        }
+                    });
+        } else {
             files.add(new FilePart("avatar", image));
-                Ion.with(activity)
-                        .load(UrlLocator.getFinalUrl(url))
-                        .setHeader("Authorization", "Bearer " + token)
-                        .setHeader("Role", "store")
-                        .addMultipartParts(files)
-                        .setMultipartParameter("name", name)
-                        .setMultipartParameter("description", des)
-                        .setMultipartParameter("phone", phone)
-                        .setMultipartParameter("address", address)
-                        .asJsonObject()
-                        .setCallback(new FutureCallback<JsonObject>() {
-                            @Override
-                            public void onCompleted(Exception e, JsonObject result) {
-                                EditStoreDetialResponseModel editStoreDetialResponseModel = gson.fromJson(result, EditStoreDetialResponseModel.class);
-                                apiCallBack.onCompleted(e, editStoreDetialResponseModel);
-                            }
-                        });
-            }
-
-
+            Ion.with(activity)
+                    .load(UrlLocator.getFinalUrl(url))
+                    .setHeader("Authorization", "Bearer " + token)
+                    .setHeader("Role", "store")
+                    .addMultipartParts(files)
+                    .setMultipartParameter("name", name)
+                    .setMultipartParameter("description", des)
+                    .setMultipartParameter("phone", phone)
+                    .setMultipartParameter("address", address)
+                    .asJsonObject()
+                    .setCallback(new FutureCallback<JsonObject>() {
+                        @Override
+                        public void onCompleted(Exception e, JsonObject result) {
+                            EditStoreDetialResponseModel editStoreDetialResponseModel = gson.fromJson(result, EditStoreDetialResponseModel.class);
+                            apiCallBack.onCompleted(e, editStoreDetialResponseModel);
+                        }
+                    });
         }
 
+
+    }
+
     public static void updateOrderStaus(Activity activity, String url,
-                                        int orderId,String status,String token,
+                                        int orderId, String status, String token,
                                         final FutureCallback<OrderStatusChangeResponseModel> apiCallBack) {
 
         final JsonObject json = new JsonObject();
@@ -850,8 +854,23 @@ public class ApiCaller {
                 });
     }
 
+    public static void getTrendingInstiuiteList(Activity activity, String url,
+                                        final FutureCallback<TrendingInstituteResponseModel> apiCallback) {
+        final Gson gson = new Gson();
+        Ion.with(activity)
+                .load(UrlLocator.getFinalUrl(url))
+                .noCache()
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        TrendingInstituteResponseModel trendingInstituteResponseModel = gson.fromJson(result, TrendingInstituteResponseModel.class);
+                        apiCallback.onCompleted(e, trendingInstituteResponseModel);
+                    }
+                });
+    }
     public static void getCourseList(Activity activity, String url,
-                                        final FutureCallback<CourseResponseModel> apiCallback) {
+                                     final FutureCallback<CourseResponseModel> apiCallback) {
         final Gson gson = new Gson();
         Ion.with(activity)
                 .load(UrlLocator.getFinalUrl(url))
@@ -862,6 +881,58 @@ public class ApiCaller {
                     public void onCompleted(Exception e, JsonObject result) {
                         CourseResponseModel courseResponseModel = gson.fromJson(result, CourseResponseModel.class);
                         apiCallback.onCompleted(e, courseResponseModel);
+                    }
+                });
+    }
+
+    public static void enrollCourse(Activity activity, String url, String token,
+                                    final FutureCallback<EnrollCourseResponseModel> apiCallback) {
+        final JsonObject json = new JsonObject();
+        final Gson gson = new Gson();
+        Ion.with(activity)
+                .load("POST", UrlLocator.getFinalUrl(url))
+                .setHeader("Authorization", "Bearer " + token)
+                .noCache().setJsonObjectBody(json)
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        EnrollCourseResponseModel enrollCourseResponseModel = gson.fromJson(result, EnrollCourseResponseModel.class);
+                        apiCallback.onCompleted(e, enrollCourseResponseModel);
+                    }
+                });
+    }
+
+    public static void enrollCourseList(Activity activity, String url, String token,
+                                        final FutureCallback<EnrolledCourseListResponseModel> apiCallback) {
+        final Gson gson = new Gson();
+        Ion.with(activity)
+                .load(UrlLocator.getFinalUrl(url))
+                .setHeader("Authorization", "Bearer " + token)
+                .noCache()
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        EnrolledCourseListResponseModel enrolledCourseListResponseModel = gson.fromJson(result, EnrolledCourseListResponseModel.class);
+                        apiCallback.onCompleted(e, enrolledCourseListResponseModel);
+                    }
+                });
+    }
+
+    public static void courseDetial(Activity activity, String url,
+                                    final FutureCallback<CourseDetialResponseModel> apiCallback) {
+        final Gson gson = new Gson();
+        Ion.with(activity)
+                .load(UrlLocator.getFinalUrl(url))
+                .setHeader("Authorization", "Bearer " + token)
+                .noCache()
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        CourseDetialResponseModel courseDetialResponseModel = gson.fromJson(result, CourseDetialResponseModel.class);
+                        apiCallback.onCompleted(e, courseDetialResponseModel);
                     }
                 });
     }
