@@ -51,6 +51,8 @@ public class OrderFragment extends Fragment {
             recyclerView.setVisibility(View.GONE);
             loggedih.setVisibility(View.VISIBLE);
         }else {
+            loggedih.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
             callApiToGetOrder();
         }
 

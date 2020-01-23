@@ -141,6 +141,7 @@ public class BookstoresFragment extends Fragment {
 
 
     private void setRecyclerViewData(List<Datum> result) {
+        dialog.dismiss();
         LinearLayoutManager gridLayoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL,false);
         recyclerView.setLayoutManager(gridLayoutManager);
         bookstoresAdapter = new BookstoresAdapter(getActivity(),result);

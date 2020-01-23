@@ -30,6 +30,8 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
+                android:textSize="20dp"
+                android:textColor="@color/blue"
                 android:text="BookStore Details"
                 app:layout_constraintBottom_toTopOf="@+id/view4"
                 app:layout_constraintStart_toStartOf="parent"
@@ -187,7 +189,7 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="8dp"
                 android:background="@drawable/round_corner_button_yellow"
-                android:text="Add"
+                android:text="Dismiss"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/et_city" />
@@ -195,6 +197,7 @@
             <Button
                 android:id="@+id/btn_cancel"
                 android:layout_width="116dp"
+                android:visibility="gone"
                 android:layout_height="0dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"

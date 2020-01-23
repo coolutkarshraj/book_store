@@ -27,6 +27,7 @@
             android:layout_gravity="center_vertical"
             android:fontFamily="@font/exo_bold"
             android:textAlignment="center"
+            android:visibility="gone"
             android:id="@+id/loggedih"
             android:layout_margin="20dp"
             android:text="Please Logged In To See Your Order Details?"

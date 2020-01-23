@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.io.bookstore.Config;
 import com.io.bookstore.R;
@@ -138,17 +139,22 @@ public class SignUpActivity extends AppCompatActivity {
                             }
                             if(result != null){
                                 if(result.getStatus()){
-                                    if(result.getData()!= null){
-                                        try {
+
+                                    Toast.makeText(SignUpActivity.this, ""+result.getMessage(), Toast.LENGTH_LONG).show();
+                                    Intent intent = new Intent(SignUpActivity.this,LoginActivity.class);
+                                    startActivity(intent);
+                                  /*  if(result.getData()!= null){
+
+                                       *//* try {
                                             localStorage.putString(LocalStorage.userId,result.getData().getUserId().toString());
                                         }catch (Exception excep){
 
-                                        }
-                                    }
+                                        }*//*
+                                    }*/
 
-                                    Intent intent = new Intent(SignUpActivity.this,SignupVerifyActivity.class);
+                                   /* Intent intent = new Intent(SignUpActivity.this,Lo.class);
                                     intent.putExtra("userId",localStorage.getString(LocalStorage.userId));
-                                    startActivity(intent);
+                                    startActivity(intent);*/
                                 }
                             }
 
