@@ -16,11 +16,13 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -32,6 +34,7 @@ import com.google.gson.JsonObject;
 import com.io.bookstore.Config;
 import com.io.bookstore.R;
 import com.io.bookstore.StaticData;
+import com.io.bookstore.activity.authentication.LoginActivity;
 import com.io.bookstore.activity.checkoutActivity.CheckoutActivity;
 import com.io.bookstore.activity.checkoutActivity.ProcessingActivity;
 import com.io.bookstore.adapter.AddressAdapter;
@@ -62,10 +65,12 @@ public class DeliveryAddressFragment extends Fragment {
     private AddressAdapter addressAdapter;
     private JsonArray jsonArray;
     LocalStorage localStorage;
+    private LinearLayout nestedScrollView;
+    private TextView loggdin;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-       View root = inflater.inflate(R.layout.fragment_send, container, false);
+        View root = inflater.inflate(R.layout.fragment_send, container, false);
         intilizeView(root);
         bindListner();
         startWork();
@@ -75,7 +80,9 @@ public class DeliveryAddressFragment extends Fragment {
     private void intilizeView(View root) {
         activity = getActivity();
         user = new userOnlineInfo();
-        localStorage= new LocalStorage(getActivity());
+        localStorage = new LocalStorage(getActivity());
+        nestedScrollView = root.findViewById(R.id.nested_c_view);
+        loggdin = root.findViewById(R.id.loggedih);
         recyclerView = root.findViewById(R.id.recyclerView);
         tv_address = root.findViewById(R.id.tv_address);
 
@@ -86,6 +93,13 @@ public class DeliveryAddressFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 dialogOpen();
+            }
+        });
+        loggdin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(activity, LoginActivity.class);
+                startActivity(i);
             }
         });
     }
@@ -136,8 +150,8 @@ public class DeliveryAddressFragment extends Fragment {
             for (int i = 0; i < jArray.length(); i++) {
                 JSONObject json_data = jArray.getJSONObject(i);
                 JsonObject jsonObject = new JsonObject();
-                jsonObject.addProperty("bookid",json_data.getString("P_ID"));
-                jsonObject.addProperty("count",json_data.getString("Quantity"));
+                jsonObject.addProperty("bookid", json_data.getString("P_ID"));
+                jsonObject.addProperty("count", json_data.getString("Quantity"));
                 jsonArray.add(jsonObject);
             }
 
@@ -148,8 +162,20 @@ public class DeliveryAddressFragment extends Fragment {
     }
 
     private void startWork() {
-        getaddressListApi();
+        checkLoggedin();
 
+
+    }
+
+    private void checkLoggedin() {
+        if (localStorage.getString(LocalStorage.token).equals("") ||
+                localStorage.getString(LocalStorage.token) == null) {
+            loggdin.setVisibility(View.VISIBLE);
+
+        } else {
+            nestedScrollView.setVisibility(View.VISIBLE);
+            getaddressListApi();
+        }
     }
 
     private void getaddressListApi() {
@@ -179,7 +205,7 @@ public class DeliveryAddressFragment extends Fragment {
     private void setRecyclerViewData(GetAddressListResponseModel result) {
         LinearLayoutManager gridLayoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(gridLayoutManager);
-        for (int i = 0; i < result.getData().getDeliveryAddresses().size(); i ++){
+        for (int i = 0; i < result.getData().getDeliveryAddresses().size(); i++) {
             result.getData().getDeliveryAddresses().get(i).setChecked(false);
         }
         addressAdapter = new AddressAdapter(getActivity(), result.getData().getDeliveryAddresses());

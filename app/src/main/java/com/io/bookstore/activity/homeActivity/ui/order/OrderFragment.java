@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -37,6 +38,7 @@ public class OrderFragment extends Fragment {
     private RecyclerView recyclerView;
     private OrderAdapter orderAdapter;
     private TextView loggedih;
+    private LinearLayout hide;
     private LocalStorage localStorage;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -44,15 +46,16 @@ public class OrderFragment extends Fragment {
       View root = inflater.inflate(R.layout.order_fragment, container, false);
         recyclerView = root.findViewById(R.id.recyclerView);
         loggedih = root.findViewById(R.id.loggedih);
+        hide = root.findViewById(R.id.hide);
         localStorage = new LocalStorage(getActivity());
         LoginModel loginModel =  localStorage.getUserProfile() ;
         System.out.println(loginModel);
         if(localStorage.getString(LocalStorage.token) == null || localStorage.getString(LocalStorage.token).equals("")){
-            recyclerView.setVisibility(View.GONE);
+            hide.setVisibility(View.GONE);
             loggedih.setVisibility(View.VISIBLE);
         }else {
             loggedih.setVisibility(View.GONE);
-            recyclerView.setVisibility(View.VISIBLE);
+            hide.setVisibility(View.VISIBLE);
             callApiToGetOrder();
         }
 

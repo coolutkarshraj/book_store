@@ -24,6 +24,7 @@ import com.io.bookstore.model.courseModel.EnrolledCourseListResponseModel;
 import com.io.bookstore.utility.Utils;
 import com.koushikdutta.async.future.FutureCallback;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.cardview.widget.CardView;
@@ -82,6 +83,12 @@ public class EnrolledCourseRvAdapter extends RecyclerView.Adapter<EnrolledCourse
                     }
                 });
     }
+    public void setFilter(List<EnrolledCourseListDataModel> newlist){
+        item=new ArrayList<>();
+        item.addAll(newlist);
+        notifyDataSetChanged();
+    }
+
 
     @Override
     public int getItemCount() {

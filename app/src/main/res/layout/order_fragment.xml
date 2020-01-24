@@ -1,42 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal">
 
-    <RelativeLayout
-        android:visibility="visible"
+    <LinearLayout
+
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:id="@+id/hide"
+android:visibility="gone"
+        android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/tv_courses_heading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_gravity="center"
+                android:text="Your Order History"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <SearchView
+                android:id="@+id/sv_courses"
+                android:layout_width="300dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_searchview"
+                android:elevation="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_courses_heading" />
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_min"
-            android:visibility="gone"
+
             android:layout_marginLeft="@dimen/sixteen_dp"
             android:layout_marginTop="@dimen/ten_dp"
             android:layout_marginRight="@dimen/sixteen_dp">
 
         </androidx.recyclerview.widget.RecyclerView>
-        <TextView
-            android:layout_width="match_parent"
-            android:textSize="16dp"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center_vertical"
-            android:fontFamily="@font/exo_bold"
-            android:textAlignment="center"
-            android:visibility="gone"
-            android:id="@+id/loggedih"
-            android:layout_margin="20dp"
-            android:text="Please Logged In To See Your Order Details?"
-            android:layout_height="wrap_content"/>
 
 
-    </RelativeLayout>
 
+    </LinearLayout>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:textSize="16dp"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center_vertical"
+        android:fontFamily="@font/exo_bold"
+        android:textAlignment="center"
+        android:visibility="gone"
+        android:id="@+id/loggedih"
+        android:layout_margin="20dp"
+        android:text="Please Logged In To See Your Order Details?"
+        android:layout_height="wrap_content"/>
 
 
 </LinearLayout>

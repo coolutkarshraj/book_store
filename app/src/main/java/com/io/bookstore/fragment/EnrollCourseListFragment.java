@@ -18,14 +18,19 @@ import com.io.bookstore.apicaller.ApiCaller;
 import com.io.bookstore.localStorage.LocalStorage;
 import com.io.bookstore.model.courseModel.CourseResponseModel;
 import com.io.bookstore.model.courseModel.EnrollCourseResponseModel;
+import com.io.bookstore.model.courseModel.EnrolledCourseListDataModel;
 import com.io.bookstore.model.courseModel.EnrolledCourseListResponseModel;
 import com.io.bookstore.utility.NewProgressBar;
 import com.io.bookstore.utility.Utils;
 import com.io.bookstore.utility.userOnlineInfo;
 import com.koushikdutta.async.future.FutureCallback;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -40,8 +45,10 @@ public class EnrollCourseListFragment extends Fragment implements View.OnClickLi
     private NewProgressBar dialog;
     private LocalStorage localStorage;
     private TextView tv_login;
+    private SearchView searchView;
     private EnrolledCourseRvAdapter adapter;
     private NestedScrollView nestedScrollView;
+    private List<EnrolledCourseListDataModel> item;
 
     public EnrollCourseListFragment() {
 
@@ -61,8 +68,10 @@ public class EnrollCourseListFragment extends Fragment implements View.OnClickLi
     private void intializeViews(View view) {
         activity = getActivity();
         user = new userOnlineInfo();
+        item = new ArrayList<>();
         dialog = new NewProgressBar(activity);
         localStorage = new LocalStorage(activity);
+        searchView = view.findViewById(R.id.sv_courses);
         recyclerView = view.findViewById(R.id.recyclerView_courses);
         nestedScrollView = view.findViewById(R.id.nested_view);
         tv_login = view.findViewById(R.id.tv_login);
@@ -86,7 +95,9 @@ public class EnrollCourseListFragment extends Fragment implements View.OnClickLi
     private void startWorking() {
         getdataFromLocalStorage();
         getEnrolledCourseListApi();
+        searchViewSetUp();
     }
+
 
     private void getdataFromLocalStorage() {
         if (localStorage.getString(LocalStorage.token) == null ||
@@ -108,13 +119,6 @@ public class EnrollCourseListFragment extends Fragment implements View.OnClickLi
                             if (e != null) {
                                 Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                             }
-                           /* if (result != null) {
-                                dialog.dismiss();
-                                if (result.getStatus()) {
-                                   datasetToRecyclerView(result);
-                                    dialog.dismiss();
-                                }
-                            }*/
                             datasetToRecyclerView(result);
                             dialog.dismiss();
 
@@ -133,6 +137,12 @@ public class EnrollCourseListFragment extends Fragment implements View.OnClickLi
             recyclerView.setAdapter(adapter);
 
     }
+
+    private void searchViewSetUp() {
+
+
+    }
+
 
 
 }

@@ -18,51 +18,57 @@
             android:layout_width="match_parent"
             android:orientation="vertical"
             android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/clear"
+                android:layout_alignParentRight="true"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:scaleType="centerCrop"
+                android:layout_gravity="end"
+                android:layout_marginTop="7dp"
+                android:layout_marginEnd="7dp"
+                android:background="@drawable/cross" />
    <RelativeLayout
        android:layout_marginLeft="@dimen/twenty_four_dp"
     android:layout_width="match_parent"
+
     android:layout_height="35dp">
     <TextView
         android:layout_width="wrap_content"
         android:text="Add Book"
         android:id="@+id/heading"
-        android:textColor="@color/dark_gray_text_color"
-        android:textSize="16sp"
+
+        android:textColor="@color/colorPrimary"
+        android:textSize="20dp"
         android:gravity="center_vertical"
         android:layout_height="match_parent">
 
     </TextView>
-    <ImageView
-        android:id="@+id/clear"
-        android:layout_alignParentRight="true"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:scaleType="centerCrop"
-        android:layout_gravity="end"
-        android:layout_marginTop="7dp"
-        android:layout_marginEnd="7dp"
-        android:background="@drawable/cross" />
+
 </RelativeLayout>
             <View
                 android:layout_width="match_parent"
                 android:background="@color/light_gray"
+               android:visibility="gone"
                 android:layout_height="1dp">
 
             </View>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:weightSum="2"
-                android:layout_marginTop="@dimen/ten_dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
                 android:layout_height="90dp">
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_weight="1.5"
+                    android:layout_weight="1.55"
                     android:orientation="vertical"
                     android:layout_height="match_parent">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/twenty_four_dp"
+
                         android:layout_marginTop="@dimen/ten_dp"
                         android:text="@string/user_id"
                         android:textColor="@color/dark_gray_text_color"
@@ -74,7 +80,6 @@
                         android:id="@+id/tv_book_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/twenty_four_dp"
                         android:layout_marginTop="@dimen/eight_dp"
                         android:layout_marginRight="@dimen/twenty_four_dp"
                         android:background="@drawable/layout_bg_onfocus"
@@ -83,14 +88,14 @@
                 </LinearLayout>
                 <RelativeLayout
                     android:layout_width="0dp"
-                    android:layout_weight="0.5"
-                    android:layout_marginRight="10dp"
+                    android:layout_weight="0.45"
+
                     android:layout_height="match_parent">
                     <ImageView
                         android:id="@+id/image"
-                        android:layout_width="100dp"
-                        android:layout_centerInParent="true"
-                        android:layout_height="80dp"
+                        android:layout_width="95dp"
+
+                        android:layout_height="100dp"
                         android:layout_alignParentEnd="true"
                         android:background="@drawable/layout_bg_on_focus"
                         android:contentDescription="@null"
@@ -107,6 +112,7 @@
                         android:layout_weight="1.4"
                         android:background="@drawable/ic_edit_black_24dp"
                         android:contentDescription="@null"
+                        android:backgroundTint="@color/colorPrimary"
                         android:scaleType="centerCrop"
                         tools:layout_editor_absoluteX="0dp"
                         tools:layout_editor_absoluteY="0dp" />
@@ -131,7 +137,8 @@
                 <Spinner
                     android:id="@+id/category_spinner"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="8dp">
 
                 </Spinner>
             </LinearLayout>
@@ -156,7 +163,6 @@
                 android:layout_marginRight="@dimen/twenty_four_dp"
                 android:background="@drawable/layout_bg_onfocus"
                 android:padding="8dip"
-                android:text="Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 4 ."
                 android:singleLine="true" />
             <TextView
                 android:layout_width="wrap_content"
@@ -203,6 +209,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/twenty_four_dp"
                 android:layout_marginTop="@dimen/twenty_four_dp"
+                android:visibility="gone"
                 android:text="Author Name"
                 android:textColor="@color/dark_gray_text_color"
                 android:inputType="number"
@@ -214,6 +221,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/twenty_four_dp"
                 android:layout_marginTop="@dimen/eight_dp"
+                android:visibility="gone"
                 android:layout_marginRight="@dimen/twenty_four_dp"
                 android:background="@drawable/layout_bg_onfocus"
                 android:padding="8dip"
@@ -232,13 +240,13 @@
                 <Button
                     android:layout_toLeftOf="@+id/yes"
                     android:id="@+id/no"
-                    android:layout_width="150dp"
+                    android:layout_width="120dp"
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/white"
                     android:paddingRight="20dp"
                     android:paddingLeft="20dp"
                     android:layout_marginRight="20dp"
-                    android:background="@drawable/gray_background"
+                    android:background="@drawable/round_corner_light_gray"
                     android:text="Cancel"
                     android:textSize="@dimen/h2" />
 
@@ -247,10 +255,10 @@
                     android:id="@+id/yes"
                     android:paddingRight="20dp"
                     android:paddingLeft="20dp"
-                    android:layout_width="150dp"
+                    android:layout_width="120dp"
                     android:layout_height="wrap_content"
                     android:text="Save"
-                    android:background="@drawable/btn_yellow_back"
+                    android:background="@drawable/round_corner_button_yellow"
                     android:textSize="@dimen/h2" />
             </RelativeLayout>
         </LinearLayout>

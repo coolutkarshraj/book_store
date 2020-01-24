@@ -1,6 +1,7 @@
 package com.io.bookstore.activity.homeActivity.ui.home;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.io.bookstore.Config;
 import com.io.bookstore.R;
@@ -32,6 +34,7 @@ import com.io.bookstore.listeners.ItemClickListner;
 import com.io.bookstore.listeners.RecyclerViewClickListener;
 import com.io.bookstore.model.InstituteModel;
 import com.io.bookstore.model.getAddressResponseModel.AddressResponseModel;
+import com.io.bookstore.model.getAddressResponseModel.Datum;
 import com.io.bookstore.model.insituteModel.InsituiteDataModel;
 import com.io.bookstore.model.insituteModel.InsituiteResponseModel;
 import com.io.bookstore.model.insituteModel.TrendingInstituteDataModel;
@@ -50,14 +53,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class HomeFragment extends Fragment implements RecyclerViewClickListener {
-    private ArrayList<Integer> item;
-    private ArrayList<String> item1;
-    private ArrayList<String> staoreName;
-    private ArrayList<Integer> storeIcon;
-    private List<TrendingInstituteDataModel> list ;
-    private ArrayList<String> coursename;
-    private ArrayList<Integer> courseicon;
+public class HomeFragment extends Fragment implements RecyclerViewClickListener, SwipeRefreshLayout.OnRefreshListener {
+    private ArrayList<Integer> item = new ArrayList<>();
+    private ArrayList<String> item1 = new ArrayList<>();
+    private ArrayList<String> staoreName = new ArrayList<>();
+    private ArrayList<Integer> storeIcon = new ArrayList<>();
+    private List<TrendingInstituteDataModel> list= new ArrayList<>();
+    private ArrayList<String> coursename = new ArrayList<>();
+    private ArrayList<Integer> courseicon = new ArrayList<>();
     private RecyclerView recycler_view_store, reccycler_ciew_course, recyclerView_courses;
     private CourseAdapter courseAdapter;
     private SToreAdapter sToreAdapter;
@@ -68,16 +71,26 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener 
     private ImageView iv_view_all_stores, iv_viewall_instutues;
     private ItemClickListner itemClickListner;
     RecyclerViewClickListener recyclerViewClickListener;
+    AddressResponseModel result;
     SliderLayout sliderLayout;
     TextView tvSliderName;
     private userOnlineInfo user;
     private NewProgressBar dialog;
     private RelativeLayout rl_main_child;
     private LinearLayout ll_sub_child;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private View root;
+    private List<Datum> listd= new ArrayList();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
+        root = inflater.inflate(R.layout.fragment_home, container, false);
+        intializeViews(root);
+        getStoreAddressList();
+        return root;
+    }
+
+    private void intializeViews(View root) {
         createArray();
         recyclerViewClickListener = this;
         user = new userOnlineInfo();
@@ -89,6 +102,7 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener 
         sliderLayout.setScrollTimeInSec(2);
         setImageTOAddPart();
         iv_view_all_stores = root.findViewById(R.id.iv_view_all_stores);
+        swipeRefreshLayout = root.findViewById(R.id.swipe_refresh);
         iv_viewall_instutues = root.findViewById(R.id.iv_viewall_instutues);
         recycler_view_store = root.findViewById(R.id.recycler_view_store);
         reccycler_ciew_course = root.findViewById(R.id.reccycler_ciew_course);
@@ -96,8 +110,7 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener 
         getStoreList();
         getInstituiteList();
         bindListner();
-        getStoreAddressList();
-        return root;
+
     }
 
     private void setImageTOAddPart() {
@@ -118,7 +131,7 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener 
     }
 
     private void bindListner() {
-
+        swipeRefreshLayout.setOnRefreshListener(this);
         iv_view_all_stores.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -143,9 +156,17 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener 
 
 
     private void createArray() {
+        item.clear();
+        item1.clear();
+        coursename.clear();
+        courseicon.clear();
+        storeIcon.clear();
+        staoreName.clear();
+
         item = new ArrayList<>();
         item1 = new ArrayList<>();
         list = new ArrayList<>();
+
         courseicon = new ArrayList<>();
         coursename = new ArrayList<>();
         staoreName = new ArrayList<>();
@@ -208,7 +229,7 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener 
 
     private void getInstituiteList() {
         if (user.isOnline(getActivity())) {
-            ApiCaller.getTrendingInstiuiteList(getActivity(), Config.Url.insituitelist,
+            ApiCaller.getTrendingInstiuiteList(getActivity(), Config.Url.trendingInstitute,
                     new FutureCallback<TrendingInstituteResponseModel>() {
 
                         @Override
@@ -237,7 +258,7 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
         reccycler_ciew_course.setLayoutManager(gridLayoutManager);
 
-        courseAdapter = new CourseAdapter(getActivity(), result.getData(),recyclerViewClickListener);
+        courseAdapter = new CourseAdapter(getActivity(), result.getData(), recyclerViewClickListener);
         list = result.getData();
         reccycler_ciew_course.setAdapter(courseAdapter);
     }
@@ -258,7 +279,7 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener 
                             }
                             if (result.getStatus() == true) {
                                 dialog.dismiss();
-                                Toast.makeText(getActivity(), "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                                // Toast.makeText(getActivity(), "" + result.getMessage(), Toast.LENGTH_SHORT).show();
                                 makaAddressListScrollView(result);
                             } else {
                                 dialog.dismiss();
@@ -272,7 +293,8 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener 
         }
     }
 
-    private void makaAddressListScrollView(final AddressResponseModel result) {
+    private void makaAddressListScrollView(AddressResponseModel resultt) {
+        listd = resultt.getData();
         HorizontalScrollView horizontalScrollView = new HorizontalScrollView(getActivity());
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         horizontalScrollView.setLayoutParams(layoutParams);
@@ -285,10 +307,13 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener 
         horizontalScrollView.addView(linearLayout);
 
         int i;
-        for (i = 0; i < result.getData().size(); i++) {
+
+        for (i = 0; i < listd.size(); i++) {
 
             TextView textView = new TextView(getActivity());//create textview dynamically
-            textView.setText(result.getData().get(i).getCity());
+
+            textView.setText(listd.get(i).getCity());
+
             LinearLayout.LayoutParams params6 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             params6.setMargins(10, 5, 10, 5);
             params6.gravity = Gravity.CENTER;
@@ -301,8 +326,8 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener 
             textView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getActivity(), result.getData().get(finalI).getCity(), Toast.LENGTH_SHORT).show();
-                    StaticData.address = result.getData().get(finalI).getCity();
+                    Toast.makeText(getActivity(), listd.get(finalI).getCity(), Toast.LENGTH_SHORT).show();
+                    StaticData.address = listd.get(finalI).getCity();
                     itemClickListner = (ItemClickListner) getActivity();
                     assert itemClickListner != null;
                     itemClickListner.onClick(4);
@@ -322,6 +347,19 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener 
                 .replace(R.id.content_view, coursesFragment)
                 .addToBackStack(null)
                 .commit();
+
+    }
+
+    @Override
+    public void onRefresh() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                swipeRefreshLayout.setRefreshing(false);
+                intializeViews(root);
+            }
+        }, 1000);
+
 
     }
 }

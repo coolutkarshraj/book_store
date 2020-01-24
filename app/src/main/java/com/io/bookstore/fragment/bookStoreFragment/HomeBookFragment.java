@@ -12,6 +12,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
@@ -61,11 +62,12 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 
 import static android.app.Activity.RESULT_OK;
 
-public class HomeBookFragment extends Fragment implements View.OnClickListener, RecyclerViewClickListener {
+public class HomeBookFragment extends Fragment implements View.OnClickListener, RecyclerViewClickListener, SwipeRefreshLayout.OnRefreshListener {
 
 
     private Activity activity;
@@ -96,6 +98,7 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
     private FloatingActionButton floatingActionButton;
     File imagefile;
     private File imgFile;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     public HomeBookFragment() {
     }
@@ -117,6 +120,7 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
         activity = getActivity();
         user = new userOnlineInfo();
         item = new ArrayList<>();
+        swipeRefreshLayout = view.findViewById(R.id.swipe_refresh);
         searchView = view.findViewById(R.id.searchView2);
         localStorage = new LocalStorage(activity);
         permissionFile = new PermissionFile(activity);
@@ -129,6 +133,7 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
     private void bindListner() {
         floatingActionButton.setOnClickListener(this);
         ivFilter.setOnClickListener(this);
+        swipeRefreshLayout.setOnRefreshListener(this);
     }
 
 
@@ -540,7 +545,7 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
                 strDesc = tvDesc.getText().toString().trim();
                 strPrice = price.getText().toString().trim();
                 strQuantity = quantity.getText().toString().trim();
-                Toast.makeText(activity, "postionspiner " +spindata, Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity, "postionspiner " + spindata, Toast.LENGTH_SHORT).show();
 
                 editBook(strName, strDesc, strPrice, strQuantity, imageView, licenseFile, spindata, item.get(position).getBookId(), dialogs);
             }
@@ -603,5 +608,16 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
     public void onClickPosition(int position) {
         dialogOpenForAddBook1(position);
 
+    }
+
+    @Override
+    public void onRefresh() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                getBookList();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        }, 1000);
     }
 }

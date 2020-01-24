@@ -5,7 +5,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fillViewport="true">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -33,6 +34,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="32dp"
+            android:visibility="gone"
             android:defaultFocusHighlightEnabled="true"
             android:gravity="center"
             android:inputType="text"
@@ -160,10 +162,10 @@
 
         <Button
             android:id="@+id/btn_save"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:background="#2196F3"
+            android:background="@drawable/round_corner_button_yellow"
             android:text="Save"
             android:textColor="#FFFFFF"
             android:textSize="18sp"
@@ -180,6 +182,7 @@
             android:layout_marginTop="75dp"
             android:clickable="true"
             android:src="@drawable/ic_picture"
+            android:backgroundTint="@color/colorPrimary"
             app:layout_constraintBottom_toBottomOf="@+id/iv_avatar"
             app:layout_constraintStart_toStartOf="@+id/iv_avatar"
             app:layout_constraintTop_toTopOf="@+id/iv_avatar" />
