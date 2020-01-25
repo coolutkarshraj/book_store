@@ -223,7 +223,7 @@
             android:cursorVisible="true"
             android:ems="10"
             android:gravity="center_vertical"
-            android:hint="@string/noti"
+            android:hint="Notification"
             android:paddingLeft="10dp"
             android:textColor="@color/black">
             <!--                        <requestFocus />-->

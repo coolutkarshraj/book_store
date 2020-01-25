@@ -83,14 +83,14 @@ public class LoginActivity extends AppCompatActivity {
 
     private void initView() {
         tvSignUp = findViewById(R.id.tvSignUp);
-        tv_forgotpassword = findViewById(R.id.tv_forgotpassword);
-        tv_tnc = findViewById(R.id.tv_tnc);
-        login_btn = findViewById(R.id.login_btn);
+        tv_forgotpassword = findViewById(R.id.tvForgotPass);
+        tv_tnc = findViewById(R.id.tvSkip);
+        login_btn = findViewById(R.id.btnSignIn);
         activity = this;
         user = new userOnlineInfo();
         localStorage = new LocalStorage(activity);
-        email = findViewById(R.id.email);
-        pass = findViewById(R.id.pass);
+        email = findViewById(R.id.etEmailLogin);
+        pass = findViewById(R.id.etPassLogin);
     }
 
     private void loginApi() {

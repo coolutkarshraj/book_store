@@ -41,4 +41,8 @@
     <dimen name="app_bar_height">180dp</dimen>
     <dimen name="text_margin">16dp</dimen>
     <dimen name="fifteen_dp">15dp</dimen>
+
+
+    <dimen name="font_10">15sp</dimen>
+    <dimen name="value_8">12dp</dimen>
 </resources>

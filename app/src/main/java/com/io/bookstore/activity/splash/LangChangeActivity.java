@@ -24,8 +24,7 @@ public class LangChangeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_lang_change);
         getSupportActionBar().hide();
         initView();
@@ -47,7 +46,7 @@ public class LangChangeActivity extends AppCompatActivity {
                 Configuration config = new Configuration();
                 config.locale = locale;
                 getBaseContext().getResources().updateConfiguration(config, null);
-                Toast.makeText(LangChangeActivity.this, "اللغة العربية المختارة!", Toast.LENGTH_LONG).show();
+               // Toast.makeText(LangChangeActivity.this, "اللغة العربية المختارة!", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(getApplicationContext(), IntroActivity.class);
                 startActivity(intent);
                 finish();
@@ -64,7 +63,7 @@ public class LangChangeActivity extends AppCompatActivity {
                 Configuration config = new Configuration();
                 config.locale = locale;
                 getBaseContext().getResources().updateConfiguration(config, null);
-                Toast.makeText(LangChangeActivity.this, "English Language Selected!", Toast.LENGTH_LONG).show();
+               // Toast.makeText(LangChangeActivity.this, "English Language Selected!", Toast.LENGTH_LONG).show();
 
                 Intent intent = new Intent(getApplicationContext(), IntroActivity.class);
                 startActivity(intent);

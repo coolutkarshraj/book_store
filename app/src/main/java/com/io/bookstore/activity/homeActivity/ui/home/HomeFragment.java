@@ -86,12 +86,13 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener,
                              ViewGroup container, Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_home, container, false);
         intializeViews(root);
+        createArray();
         getStoreAddressList();
         return root;
     }
 
     private void intializeViews(View root) {
-        createArray();
+
         recyclerViewClickListener = this;
         user = new userOnlineInfo();
         dialog = new NewProgressBar(getActivity());
@@ -239,7 +240,6 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener,
                             }
                             if (result != null) {
                                 if (result.getStatus()) {
-
                                     setRecyclerViewData(result);
                                 }
 

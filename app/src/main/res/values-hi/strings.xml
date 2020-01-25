@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">my_book_store</string>
+    <string name="app_name">My BookStores</string>
     <string name="recived">يستلم</string>
     <string name="title">عنوان</string>
     <string name="date">تاريخ</string>
@@ -11,12 +11,13 @@
     <string name="start">فهمتك</string>
     <string name="item_name">اسم العنصر</string>
     <string name="item_price">سعر البند</string>
-
     <string name="orders">الطلب #٪ s</string>
     <string name="settings">الإعدادات</string>
+
     <string name="all_fav">كل ما تبذلونه المفضلة</string>
+    <string name="notifications">إشعارات</string>
     <string name="curse">الدورات</string>
-    <string name="proc">تقدم</string>
+    <string name="proceed">تقدم</string>
     <string name="add_item">اضافة عنصر</string>
     <string name="name">اسم العنصر</string>
     <string name="item_description">وصف السلعة</string>
@@ -60,7 +61,7 @@
     <string name="details">تفاصيل</string>
     <string name="enroll">يتسجل، يلتحق</string>
     <string name="track">مسار</string>
-    <string name="forgot_password">هل نسيت كلمة المرور</string>
+    <string name="forgot_password">هل نسيت كلمة المرور؟</string>
     <string name="please_enter_your_email_or_mobile_in_order_to_reset_your_password">
 يرجى إدخال بريدك الإلكتروني أو هاتفك المحمول من أجل إعادة تعيين كلمة المرور الخاصة بك
 </string>
@@ -70,5 +71,62 @@
     <string name="discover_more_courses">اكتشاف المزيد من الدورات</string>
     <string name="send_request">ارسل طلب</string>
     <string name="checkout">الدفع</string>
+    <string name="toast_lang_change">اللغة العربية المختارة</string>
+    <string name="intro1">جميع متاجر الكتب في الكويت</string>
+    <string name="intro2">ونعم .. سوف نسلم إلى باب منزلك</string>
+    <string name="intro3">لا تقلق بشأن المدرسة .. لقد جعلناك مغطاة</string>
+    <string name="intro11">متاجر الكتب</string>
+    <string name="intro22">توصيل سريع</string>
+    <string name="intro33">دروس مباشرة على الإنترنت</string>
+    <string name="view_all">عرض الكل</string>
+    <string name="pincode">الرقم السري</string>
+    <string name="landmark">معلم معروف</string>
+    <string name="city">مدينة</string>
+    <string name="add">إضافة</string>
+    <string name="cancel">إلغاء</string>
+    <string name="express_delivery">تسليم سريع</string>
+    <string name="within_2_hours">في غضون 2 ساعة</string>
+    <string name="standard_delivery">التسليم القياسية</string>
+    <string name="bookstore_details">تفاصيل BookStore</string>
+    <string name="address">عنوان</string>
+    <string name="total_cost">التكلفة الإجمالية</string>
+    <string name="no_items_added_in_the_cart">لا توجد عناصر مضافة في السلة</string>
+    <string name="stores">مخازن</string>
+    <string name="looks_up_through_all_bookstores">يبحث عن طريق جميع متاجر الكتب</string>
+    <string name="in_kuwait">في الكويت</string>
+    <string name="search_by_bookstorename">البحث حسب BookStoreName</string>
+    <string name="password">كلمه السر</string>
+    <string name="full_name">الاسم الكامل</string>
+    <string name="mobile_number">رقم الهاتف المحمول</string>
+    <string name="enter_address">أدخل العنوان</string>
+    <string name="phone_number">رقم الهاتف</string>
+    <string name="select_category_to_browse_bookstore">اختر الفئة لتصفح المكتبة</string>
+    <string name="order">الطلب #٪ s</string>
+    <string name="login">تسجيل الدخول</string>
+    <string name="user_id">اسم الكتاب</string>
+    <string name="sign_in_now">
+<u>Sign In Now</u>
+</string>
+    <string name="sign_up_now">
+<u>Sign Up Now</u>
+</string>
+    <string name="a_list_of_items_add_or_delete_any">قائمة العناصر ، إضافة أو حذف أي</string>
+    <string name="save">حفظ</string>
+    <string name="please_logged_in_to_see_your_order_details">يرجى تسجيل الدخول لمعرفة تفاصيل طلبك؟</string>
+    <string name="please_logged_in_to_see_your_profile">الرجاء تسجيل الدخول لمشاهدة ملف التعريف الخاص بك؟</string>
+    <string name="sign_in">تسجيل الدخول</string>
+    <string name="new_user">مستخدم جديد؟</string>
+    <string name="already_have_an_account">هل لديك حساب؟</string>
+    <string name="and_yes_we_delivered">ونعم نحن تسليمها</string>
+    <string name="to_your_door_step">إلى الباب الخاص بك الخطوة</string>
+    <string name="book_stores">متاجر الكتب</string>
+    <string name="all_the_book_stores_in">جميع متاجر الكتب في الكويت</string>
+    <string name="fast_delivery">توصيل سريع</string>
+    <string name="andyeswedeli">ونعم .. سوف نسلم إلى باب منزلك</string>
+    <string name="dontworryaboutschoool">لا تقلق بشأن المدرسة .. لقد جعلناك مغطاة</string>
+    <string name="onlinecourses">دروس مباشرة على الإنترنت</string>
+    <string name="log_out">تسجيل خروج</string>
+    <string name="home">الصفحة الرئيسية</string>
+    <string name="favorite">مفضل</string>
 
 </resources>

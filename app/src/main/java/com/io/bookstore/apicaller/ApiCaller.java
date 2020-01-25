@@ -61,8 +61,8 @@ public class ApiCaller {
 
     /* -----------------------------------------------------Registration api------------------------------------------------------*/
 
-    public static void registerCustomer(Activity activity, String url, String name, String email,
-                                        String phone, String password, String firstname, String lastname,
+    public static void registerCustomer(Activity activity, String url, String email,
+                                        String phone, String password, String firstname,
                                         String address, final FutureCallback<RegisterModel> apiCallBack) {
         final Gson gson = new Gson();
         Ion.with(activity)
@@ -74,7 +74,7 @@ public class ApiCaller {
                     }
                 })
                 .setTimeout(60 * 60 * 1000)
-                .setMultipartParameter("name", firstname + " " + lastname)
+                .setMultipartParameter("name", firstname)
                 .setMultipartParameter("email", email)
                 .setMultipartParameter("phone", phone)
                 .setMultipartParameter("password", password)

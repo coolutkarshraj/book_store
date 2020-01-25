@@ -220,7 +220,7 @@
                     android:layout_marginTop="@dimen/twenty_four_dp"
                     android:layout_marginRight="40dp"
                     android:background="@drawable/round_corner_button_yellow"
-                    android:text="@string/proc"
+                    android:text="Procced"
                     android:textAllCaps="false"
                     android:textColor="@color/white" />
 

@@ -81,16 +81,16 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        firstname = findViewById(R.id.firstname);
-        lastName = findViewById(R.id.lastName);
-        email = findViewById(R.id.email);
-        username = findViewById(R.id.username);
-        number = findViewById(R.id.number);
-        pass = findViewById(R.id.pass);
-        et_address = findViewById(R.id.et_address);
-        tvLogin = findViewById(R.id.tvLogin);
-        tv_tnc = findViewById(R.id.tv_tnc);
-        signup_btn = findViewById(R.id.signup_btn);
+        firstname = findViewById(R.id.etFullName);
+       // lastName = findViewById(R.id.lastName);
+        email = findViewById(R.id.etEmail);
+      //  username = findViewById(R.id.username);
+        number = findViewById(R.id.etPhoneSignUp);
+        pass = findViewById(R.id.etPassLogin);
+        et_address = findViewById(R.id.etAddressSignUp);
+        tvLogin = findViewById(R.id.tvSignIn);
+        tv_tnc = findViewById(R.id.tvSkipp);
+        signup_btn = findViewById(R.id.btnSignUp);
         user = new userOnlineInfo();
     }
 
@@ -99,20 +99,20 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void registrationValidation() {
         String f_name = firstname.getText().toString().trim();
-        String l_name = lastName.getText().toString().trim();
+       // String l_name = lastName.getText().toString().trim();
         String u_emael = email.getText().toString().trim();
-        String et_userName = username.getText().toString().trim();
+       // String et_userName = username.getText().toString().trim();
         String et_number = number.getText().toString().trim();
         String password = pass.getText().toString().trim();
         String address = et_address.getText().toString().trim();
 
-        if(f_name.equals("") || l_name.equals("") || u_emael.equals("") ||et_userName.equals("")
+        if(f_name.equals("") ||  u_emael.equals("")
                     || password.equals("") || et_number.equals("") ||address.equals("")){
             Utils.showAlertDialog(SignUpActivity.this, "Please Enter Your Information Properly");
             return;
         }
         else {
-            registrationApi(f_name,l_name,u_emael,et_userName,et_number,password,address);
+            registrationApi(f_name,u_emael,et_number,password,address);
         }
     }
 
@@ -120,14 +120,13 @@ public class SignUpActivity extends AppCompatActivity {
 
     /*----------------------------------------------- Registration Api------------------------------------------------------*/
 
-    private void registrationApi(String f_name, String l_name, String u_emael,
-                                 String et_userName, String et_number, String password,
+    private void registrationApi(String f_name, String u_emael, String et_number, String password,
                                  String address) {
         if (user.isOnline(this)) {
             dialog = new NewProgressBar(this);
             dialog.show();
-            ApiCaller.registerCustomer(this, Config.Url.registerCustomer,et_userName
-                    , u_emael, et_number, password, f_name,l_name,address,
+            ApiCaller.registerCustomer(this, Config.Url.registerCustomer
+                    , u_emael, et_number, password, f_name,address,
                     new FutureCallback<RegisterModel>() {
                         @Override
                         public void onCompleted(Exception e, RegisterModel result) {
@@ -143,18 +142,6 @@ public class SignUpActivity extends AppCompatActivity {
                                     Toast.makeText(SignUpActivity.this, ""+result.getMessage(), Toast.LENGTH_LONG).show();
                                     Intent intent = new Intent(SignUpActivity.this,LoginActivity.class);
                                     startActivity(intent);
-                                  /*  if(result.getData()!= null){
-
-                                       *//* try {
-                                            localStorage.putString(LocalStorage.userId,result.getData().getUserId().toString());
-                                        }catch (Exception excep){
-
-                                        }*//*
-                                    }*/
-
-                                   /* Intent intent = new Intent(SignUpActivity.this,Lo.class);
-                                    intent.putExtra("userId",localStorage.getString(LocalStorage.userId));
-                                    startActivity(intent);*/
                                 }
                             }
 
