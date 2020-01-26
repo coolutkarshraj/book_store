@@ -18,7 +18,6 @@ import com.google.android.material.tabs.TabLayout;
 import com.io.bookstore.R;
 import com.io.bookstore.activity.authentication.LoginActivity;
 import com.io.bookstore.activity.authentication.SignUpActivity;
-import com.io.bookstore.activity.homeActivity.MainActivity;
 import com.io.bookstore.adapter.IntroViewPagerAdapter;
 import com.io.bookstore.model.ScreenItem;
 
@@ -77,9 +76,9 @@ public class IntroActivity extends AppCompatActivity {
         // fill list screen
 
         final List<ScreenItem> mList = new ArrayList<>();
-        mList.add(new ScreenItem("Book Stores","All the Book Stores In Kuwait",R.drawable.intro1,R.drawable.logo_transparent));
-        mList.add(new ScreenItem("Fast Delivery","And yes..\nWe will Deliver To your Door Step ",R.drawable.intro2,R.drawable.logo_transparent));
-        mList.add(new ScreenItem("Online Courses","Don’t worry about School..\nWe got you Covered",R.drawable.intro3,R.drawable.logo_transparent));
+        mList.add(new ScreenItem(getString(R.string.book_stores),getString(R.string.all_the_book_stores_in),R.drawable.intro1,R.drawable.logo_transparent));
+        mList.add(new ScreenItem(getString(R.string.fast_delivery),getString(R.string.andyeswedeli),R.drawable.intro2,R.drawable.logo_transparent));
+        mList.add(new ScreenItem(getString(R.string.onlinecourses),getString(R.string.dontworryaboutschoool),R.drawable.intro3,R.drawable.logo_transparent));
 
         // setup viewpager
         screenPager =findViewById(R.id.screen_viewpager);
@@ -158,6 +157,7 @@ public class IntroActivity extends AppCompatActivity {
                 //open main activity
 
                 Intent mainActivity = new Intent(getApplicationContext(), LoginActivity.class);
+                overridePendingTransition(R.anim.slide_in_from_right,R.anim.slide_out_from_left);
                 startActivity(mainActivity);
                 // also we need to save a boolean value to storage so next time when the user run the app
                 // we could know that he is already checked the intro screen activity
@@ -176,9 +176,10 @@ public class IntroActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(IntroActivity.this, MainActivity.class);
-                startActivity(intent);
+                Intent intent = new Intent(IntroActivity.this, LoginActivity.class);
                 overridePendingTransition(R.anim.slide_in_from_right,R.anim.slide_out_from_left);
+
+                startActivity(intent);
 
             }
         });

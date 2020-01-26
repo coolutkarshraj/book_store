@@ -22,6 +22,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.io.bookstore.Config;
 import com.io.bookstore.R;
 import com.io.bookstore.StaticData;
+import com.io.bookstore.adapter.AdSliderAdapter;
 import com.io.bookstore.adapter.CourseAdapter;
 import com.io.bookstore.adapter.SToreAdapter;
 import com.io.bookstore.apicaller.ApiCaller;
@@ -39,14 +40,16 @@ import com.io.bookstore.model.insituteModel.InsituiteDataModel;
 import com.io.bookstore.model.insituteModel.InsituiteResponseModel;
 import com.io.bookstore.model.insituteModel.TrendingInstituteDataModel;
 import com.io.bookstore.model.insituteModel.TrendingInstituteResponseModel;
+import com.io.bookstore.model.sliderAdModel.AdModel;
 import com.io.bookstore.model.storeModel.StoreModel;
 import com.io.bookstore.utility.NewProgressBar;
 import com.io.bookstore.utility.Utils;
 import com.io.bookstore.utility.userOnlineInfo;
 import com.koushikdutta.async.future.FutureCallback;
-import com.smarteist.autoimageslider.DefaultSliderView;
+
 import com.smarteist.autoimageslider.IndicatorAnimations;
-import com.smarteist.autoimageslider.SliderLayout;
+import com.smarteist.autoimageslider.SliderAnimations;
+
 import com.smarteist.autoimageslider.SliderView;
 
 import java.util.ArrayList;
@@ -72,7 +75,7 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener,
     private ItemClickListner itemClickListner;
     RecyclerViewClickListener recyclerViewClickListener;
     AddressResponseModel result;
-    SliderLayout sliderLayout;
+    SliderView sliderView;
     TextView tvSliderName;
     private userOnlineInfo user;
     private NewProgressBar dialog;
@@ -86,22 +89,18 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener,
                              ViewGroup container, Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_home, container, false);
         intializeViews(root);
-        createArray();
         getStoreAddressList();
         return root;
     }
 
     private void intializeViews(View root) {
-
         recyclerViewClickListener = this;
         user = new userOnlineInfo();
         dialog = new NewProgressBar(getActivity());
-        tvSliderName = root.findViewById(R.id.tv_slider_name);
         ll_sub_child = root.findViewById(R.id.ll_sub_child);
-        sliderLayout = root.findViewById(R.id.image);
-        sliderLayout.setIndicatorAnimation(IndicatorAnimations.FILL); //set indicator animation by using SliderLayout.Animations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
-        sliderLayout.setScrollTimeInSec(2);
-        setImageTOAddPart();
+        sliderView = root.findViewById(R.id.imageSlider);
+        getSliderAdList();
+
         iv_view_all_stores = root.findViewById(R.id.iv_view_all_stores);
         swipeRefreshLayout = root.findViewById(R.id.swipe_refresh);
         iv_viewall_instutues = root.findViewById(R.id.iv_viewall_instutues);
@@ -114,21 +113,45 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener,
 
     }
 
-    private void setImageTOAddPart() {
-        for (int i = 0; i <= item.size() - 1; i++) {
-            SliderView sliderView = new DefaultSliderView(getActivity());
-            sliderView.setImageDrawable(item.get(i));
-            sliderView.setImageScaleType(ImageView.ScaleType.CENTER_CROP);
-            sliderView.setDescription(String.valueOf(item1.get(i)));
-            ((DefaultSliderView) sliderView).setDescriptionTextSize(20);
-            sliderView.setOnSliderClickListener(new SliderView.OnSliderClickListener() {
-                @Override
-                public void onSliderClick(SliderView sliderView) {
+    private void getSliderAdList() {
 
-                }
-            });
-            sliderLayout.addSliderView(sliderView);
+        if (user.isOnline(getActivity())) {
+            ApiCaller.getAdModel(getActivity(), Config.Url.discountList,
+                    new FutureCallback<AdModel>() {
+
+                        @Override
+                        public void onCompleted(Exception e, AdModel result) {
+                            if(e!= null){
+                                Utils.showAlertDialog(getActivity(), "Something Went Wrong");
+                            }
+                            if(result != null){
+                                if(result.getStatus()){
+                                    setSliderAdsAdapter(result);
+                                }
+                            }
+
+
+                        }
+                    });
+        } else {
+            Utils.showAlertDialog(getActivity(), "No Internet Connection");
         }
+
+    }
+
+    private void setSliderAdsAdapter(AdModel result) {
+
+        AdSliderAdapter adapter = new AdSliderAdapter(getActivity(),result.getData());
+        sliderView.setSliderAdapter(adapter);
+
+        sliderView.setIndicatorAnimation(IndicatorAnimations.WORM); //set indicator animation by using SliderLayout.IndicatorAnimations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
+        sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
+        sliderView.setAutoCycleDirection(SliderView.AUTO_CYCLE_DIRECTION_BACK_AND_FORTH);
+
+        sliderView.setScrollTimeInSec(2); //set scroll delay in seconds :
+        sliderView.startAutoCycle();
+
+
     }
 
     private void bindListner() {
@@ -155,45 +178,6 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener,
         });
     }
 
-
-    private void createArray() {
-        item.clear();
-        item1.clear();
-        coursename.clear();
-        courseicon.clear();
-        storeIcon.clear();
-        staoreName.clear();
-
-        item = new ArrayList<>();
-        item1 = new ArrayList<>();
-        list = new ArrayList<>();
-
-        courseicon = new ArrayList<>();
-        coursename = new ArrayList<>();
-        staoreName = new ArrayList<>();
-        storeIcon = new ArrayList<>();
-        item.add(R.drawable.offer2);
-        item.add(R.drawable.offer3);
-        item.add(R.drawable.offer4);
-        item.add(R.drawable.offer5);
-        item.add(R.drawable.offer6);
-
-        item1.add("Get Flat 20% Off");
-        item1.add("Get Flat 30% off");
-        item1.add("Buy One Get One Free");
-        item1.add("Combo Pack Offer");
-        item1.add("New Arrival Offer");
-
-        courseicon.add(R.drawable.horizon);
-        courseicon.add(R.drawable.azure);
-        courseicon.add(R.drawable.ielts);
-        courseicon.add(R.drawable.ielts);
-
-        coursename.add("Microsoft Office,Cisco,More");
-        coursename.add("CPA,LeaderShip,etc");
-        coursename.add("IELTS,CPA,OtherCourse");
-        coursename.add("IELTS - CPA - Arabic courses");
-    }
 
     private void getStoreList() {
         if (user.isOnline(getActivity())) {
@@ -315,11 +299,11 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener,
             textView.setText(listd.get(i).getCity());
 
             LinearLayout.LayoutParams params6 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            params6.setMargins(10, 5, 10, 5);
+            params6.setMargins(10, 10, 0, 10);
             params6.gravity = Gravity.CENTER;
             textView.setLayoutParams(params6);
             textView.setBackgroundResource(R.drawable.background_rounded_theme_address);
-            textView.setPadding(10, 10, 10, 10);
+            textView.setPadding(20, 10, 20, 10);
             textView.setTextColor(this.getResources().getColor(R.color.white));
             linearLayout.addView(textView);
             final int finalI = i;

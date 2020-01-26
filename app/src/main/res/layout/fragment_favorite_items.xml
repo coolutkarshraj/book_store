@@ -50,7 +50,7 @@
     android:textAlignment="center"
     android:id="@+id/loggedih"
     android:layout_margin="20dp"
-    android:text="Please Logged In To See Your Favourite ItemLoggedIn?"
+    android:text="@string/please_logged_in_to_see_your_favourite_itemloggedin"
     android:layout_height="wrap_content">
 
 </TextView>

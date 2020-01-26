@@ -65,7 +65,7 @@
         android:id="@+id/tv_login"
         android:visibility="gone"
         android:layout_margin="20dp"
-        android:text="Please Logged In To See Your Enrolled Course LoggedIn?"
+        android:text="@string/please_logged_in_to_see_your_enrolled_courseloggedin"
         android:layout_height="wrap_content">
 
     </TextView>

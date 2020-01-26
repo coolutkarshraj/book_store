@@ -59,7 +59,7 @@
                                 android:layout_width="0dp"
                                 android:layout_weight="0.6"
                                 android:layout_height="wrap_content"
-                                android:text="Express Delivery">
+                                android:text="@string/express_delivery">
 
 
                             </TextView>
@@ -72,7 +72,7 @@
                                 android:layout_marginLeft="14dp"
                                 android:fontFamily="@font/exo"
                                 android:layoutDirection="rtl"
-                                android:text="Within 2 hours"
+                                android:text="@string/within_2_hours"
                                 android:textAlignment="textStart"
                                 android:textStyle="normal">
 
@@ -91,7 +91,7 @@
                                 android:layout_width="0dp"
                                 android:layout_weight="0.6"
                                 android:layout_height="wrap_content"
-                                android:text="Standard Delivery"
+                                android:text="@string/standard_delivery"
                                 android:textStyle="bold">
 
 
@@ -106,7 +106,7 @@
                                 android:checked="true"
                                 android:fontFamily="@font/exo"
                                 android:layoutDirection="rtl"
-                                android:text="Within 2 hours"
+                                android:text="@string/within_2_hours"
                                 android:textAlignment="textStart"
                                 android:textStyle="normal">
 
@@ -145,7 +145,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentLeft="true"
-                                android:text="Standard Delivery">
+                                android:text="@string/standard_delivery">
 
                             </TextView>
 
@@ -193,7 +193,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentLeft="true"
-                                android:text="Total Cost">
+                                android:text="@string/total_cost">
 
                             </TextView>
 
@@ -220,7 +220,7 @@
                     android:layout_marginTop="@dimen/twenty_four_dp"
                     android:layout_marginRight="40dp"
                     android:background="@drawable/round_corner_button_yellow"
-                    android:text="Procced"
+                    android:text="@string/proceed"
                     android:textAllCaps="false"
                     android:textColor="@color/white" />
 
@@ -234,7 +234,7 @@
         android:textAlignment="center"
         android:layout_centerInParent="true"
         android:layout_width="wrap_content"
-        android:text="No Items Added in The Cart"
+        android:text="@string/no_items_added_in_the_cart"
         android:layout_height="wrap_content">
 
     </TextView>

@@ -34,6 +34,7 @@ import com.io.bookstore.model.insituteModel.TrendingInstituteResponseModel;
 import com.io.bookstore.model.loginModel.LoginModel;
 import com.io.bookstore.model.orderModel.OrderStatusChangeResponseModel;
 import com.io.bookstore.model.registerModel.RegisterModel;
+import com.io.bookstore.model.sliderAdModel.AdModel;
 import com.io.bookstore.model.store.EditStoreDetialResponseModel;
 import com.io.bookstore.model.store.StoreDetailResponseModel;
 import com.io.bookstore.model.storeDetailsModel.StoreDetailsModel;
@@ -933,6 +934,22 @@ public class ApiCaller {
                     public void onCompleted(Exception e, JsonObject result) {
                         CourseDetialResponseModel courseDetialResponseModel = gson.fromJson(result, CourseDetialResponseModel.class);
                         apiCallback.onCompleted(e, courseDetialResponseModel);
+                    }
+                });
+    }
+
+    public static void getAdModel(Activity activity, String url,
+                                  final FutureCallback<AdModel> apiCallBack) {
+        final Gson gson = new Gson();
+        Ion.with(activity)
+                .load(UrlLocator.getFinalUrl(url))
+                .noCache()
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        AdModel getSliderAd = gson.fromJson(result, AdModel.class);
+                        apiCallBack.onCompleted(e, getSliderAd);
                     }
                 });
     }

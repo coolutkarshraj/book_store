@@ -32,7 +32,7 @@
         android:layout_marginBottom="16dp"
         android:background="#fff"
         android:drawableTint="@color/gradient_start_color"
-        android:text="Next"
+        android:text="@string/next_btn"
         android:textColor="@color/gradient_start_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -46,7 +46,7 @@
         android:layout_marginBottom="16dp"
         android:background="#fff"
         android:drawableTint="@color/gradient_start_color"
-        android:text="Skip"
+        android:text="@string/skip_btn"
         android:textColor="@color/gradient_start_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -74,7 +74,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="64dp"
         android:background="@drawable/btn_gradient_style"
-        android:text="Get Started"
+        android:text="@string/get_started"
         android:textColor="#fff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

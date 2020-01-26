@@ -65,7 +65,7 @@ android:visibility="gone"
         android:visibility="gone"
         android:id="@+id/loggedih"
         android:layout_margin="20dp"
-        android:text="Please Logged In To See Your Order Details?"
+        android:text="@string/please_logged_in_to_see_your_order_details"
         android:layout_height="wrap_content"/>
 
 

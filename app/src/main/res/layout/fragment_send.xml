@@ -80,6 +80,6 @@
      android:visibility="gone"
         android:id="@+id/loggedih"
         android:layout_margin="20dp"
-        android:text="Please Logged In To See Your Saved Address?"
+        android:text="@string/savedadd"
         android:layout_height="wrap_content"/>
 </RelativeLayout>

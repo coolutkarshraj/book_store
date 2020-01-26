@@ -45,6 +45,7 @@ public class Config {
         public static String courseEnrolledList = "course/enrolled";
         public static String trendingInstitute = "institute/trending";
         public static String coursedetial = "course/detail?id=";
+        public static String discountList = "discount/list";
     }
 
     public final static int splashTimeout = 3000;

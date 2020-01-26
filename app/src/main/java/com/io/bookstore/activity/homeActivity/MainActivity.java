@@ -181,6 +181,16 @@ public class MainActivity extends AppCompatActivity implements
                 startActivity(i);
             }
         });
+
+        nav_user.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(nav_user.getText().toString().trim().equals("Hello Guest")){
+                    Intent i = new Intent(MainActivity.this,LoginActivity.class);
+                    startActivity(i);
+                }
+            }
+        });
         ll_enroll_course.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

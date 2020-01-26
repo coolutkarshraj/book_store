@@ -103,7 +103,7 @@
         android:layout_centerInParent="true"
         android:id="@+id/loggedih"
         android:layout_margin="20dp"
-        android:text="Please Logged In To See Your Profile?"
+        android:text="@string/please_logged_in_to_see_your_profile"
         android:layout_height="wrap_content"/>
 
 </RelativeLayout>

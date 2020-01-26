@@ -79,6 +79,7 @@
     <string name="details">Details</string>
     <string name="enroll">Enroll</string>
     <string name="track">Track</string>
+    <string name="notifification">Notification</string>
     <string name="forgot_password">Forgot Password?</string>
     <string name="please_enter_your_email_or_mobile_in_order_to_reset_your_password">Please enter your email or mobile in order to reset your password</string>
     <string name="discover_more_bookstores">Discover More Bookstores</string>
@@ -142,6 +143,11 @@
     <string name="log_out">Log Out</string>
     <string name="home">Home</string>
     <string name="favorite">Favorite</string>
+    <string name="enrolledcourse">Enrolled Cousre</string>
+    <string name="logout">Logout</string>
+    <string name="savedadd">Please Logged In To See Your Saved Address?</string>
+    <string name="please_logged_in_to_see_your_enrolled_courseloggedin">Please Logged In To See Your Enrolled Course LoggedIn?</string>
+
 
 
 </resources>

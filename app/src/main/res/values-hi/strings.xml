@@ -128,5 +128,10 @@
     <string name="log_out">تسجيل خروج</string>
     <string name="home">الصفحة الرئيسية</string>
     <string name="favorite">مفضل</string>
+    <string name="notifification">تنبيه</string>
+    <string name="enrolledcourse">بالطبع المسجلين</string>
+    <string name="logout">تسجيل خروج</string>
+    <string name="savedadd">عنوانك المحفوظ؟ الرجاء تسجيل الدخول لمشاهدة</string>
+    <string name="please_logged_in_to_see_your_enrolled_courseloggedin">مسجّل التسجيل الخاص بك؟ الرجاء تسجيل الدخول لمشاهدة </string>
 
 </resources>
