@@ -1,13 +1,20 @@
 package com.io.bookstore.adapter;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +31,7 @@ import com.io.bookstore.apicaller.ApiCaller;
 import com.io.bookstore.localStorage.DbHelper;
 import com.io.bookstore.localStorage.LocalStorage;
 import com.io.bookstore.model.addAddressResponseModel.GetAddressListResponseModel;
+import com.io.bookstore.model.adminResponseModel.AdminBookDataModel;
 import com.io.bookstore.model.bookListModel.Datum;
 import com.io.bookstore.model.loginModel.LoginModel;
 import com.io.bookstore.model.wishlistModel.AddorRemoveWishlistResponseModel;
@@ -63,7 +71,8 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.MyView
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        //  holder.tv_price.setText(mData.get(position).getName());
+         holder.tv_price.setText(""+mData.get(position).getPrice()+"KD");
+         holder.tv_bookName.setText(""+mData.get(position).getName());
         Glide.with(mContext).load(Config.imageUrl + mData.get(position).getAvatarPath()).into(holder.iv_favorite);
         holder.mark_cart.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -128,7 +137,15 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.MyView
             }
         });
 
+        holder.mark_setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+             showBookDetila(mData.get(position));
+            }
+        });
+
     }
+
 
 
     /* ---------------------------------------------- add or remove wishlist api -----------------------------------------*/
@@ -210,6 +227,53 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.MyView
         alert.show();
     }
 
+    private void showBookDetila(Datum datum) {
+        final Dialog dialog = new Dialog(mContext);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        DisplayMetrics metrics = mContext.getResources().getDisplayMetrics();
+        int width = metrics.widthPixels;
+        int height = metrics.heightPixels;
+        dialog.getWindow().setLayout((6 * width) / 7, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.setContentView(R.layout.book_detial_dialog);
+        dialog.setTitle("");
+        final Button Yes = (Button) dialog.findViewById(R.id.yes);
+        final Button No = (Button) dialog.findViewById(R.id.no);
+        final TextView oldPassword = (TextView) dialog.findViewById(R.id.et_old_password);
+        final TextView newPassword = (TextView) dialog.findViewById(R.id.et_new_password);
+        final ImageView Clear = (ImageView) dialog.findViewById(R.id.clear);
+
+        oldPassword.setText(datum.getName());
+        newPassword.setText(datum.getDescription());
+        Yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        No.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        Clear.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("ResourceAsColor")
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+
+    public void setFilter(List<Datum> newlist){
+        mData=new ArrayList<>();
+        mData.addAll(newlist);
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getItemCount() {
         return mData.size();
@@ -217,12 +281,13 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.MyView
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tv_price;
+        TextView tv_price,tv_bookName;
         ImageView iv_favorite, mark_fav, mark_cart, mark_setting, mark_fav_red;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             tv_price = (TextView) itemView.findViewById(R.id.tv_price);
+            tv_bookName= (TextView) itemView.findViewById(R.id.bookName);
             iv_favorite = (ImageView) itemView.findViewById(R.id.iv_favorite);
             mark_fav = (ImageView) itemView.findViewById(R.id.mark_fav);
             mark_cart = (ImageView) itemView.findViewById(R.id.mark_cart);

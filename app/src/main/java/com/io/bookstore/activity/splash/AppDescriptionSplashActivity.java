@@ -98,6 +98,7 @@ public class AppDescriptionSplashActivity extends AppCompatActivity {
         tv_skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                localStorage.putBooleAan(LocalStorage.isFirstLaunch,true);
                 Intent intent = new Intent(AppDescriptionSplashActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
@@ -108,6 +109,7 @@ public class AppDescriptionSplashActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(selPosition == 2){
+                    localStorage.putBooleAan(LocalStorage.isFirstLaunch,true);
                     String data = localStorage.getString(LocalStorage.LOGGEDINDATA);
                     Intent intent = new Intent(AppDescriptionSplashActivity.this, LoginActivity.class);
                     startActivity(intent);

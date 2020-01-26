@@ -17,7 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activity.splash.SplashVideoActivity">
+        <activity android:name=".activity.splash.SplashVideoActivity"
+            android:screenOrientation="portrait"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,8 +28,10 @@
         </activity>
         <activity
             android:name=".activity.splash.IntroActivity"
-            android:theme="@style/AppThemeSplah"></activity>
-        <activity android:name=".activity.splash.LangChangeActivity" />
+            android:theme="@style/AppThemeSplah"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.splash.LangChangeActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.homeActivity.ui.home.BookstoreBooksActivity"
             android:screenOrientation="portrait"

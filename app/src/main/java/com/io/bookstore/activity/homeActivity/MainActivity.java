@@ -174,8 +174,7 @@ public class MainActivity extends AppCompatActivity implements
             public void onClick(View view) {
                 localStorage.putBooleAan(LocalStorage.isLoggedIn, false);
                 localStorage.putString(LocalStorage.token, "");
-                localStorage.putInt(LocalStorage.role, 0);
-                localStorage.clearAll();
+                localStorage.putDistributorProfile(null);
                 Intent i = new Intent(MainActivity.this, LoginActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(i);
@@ -450,7 +449,7 @@ public class MainActivity extends AppCompatActivity implements
 
     private void navigationHeader() {
         LoginModel loginModel =  localStorage.getUserProfile() ;
-        if(loginModel ==null){
+        if(loginModel == null){
             nav_user.setText("Hello Guest");
             nav_Email.setText("Login or SignUp");
             Glide.with(getApplicationContext()).load(R.drawable.person_logo).into(imageView);

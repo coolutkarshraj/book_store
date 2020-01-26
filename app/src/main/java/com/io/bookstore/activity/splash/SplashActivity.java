@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.io.bookstore.R;
@@ -43,7 +44,8 @@ public class SplashActivity extends AppCompatActivity {
         btn_kuw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(localStorage.getBoolean(LocalStorage.isFirstLaunch)){
+                Toast.makeText(SplashActivity.this, "hello", Toast.LENGTH_SHORT).show();
+                if(localStorage.getBoolean(LocalStorage.isFirstLaunch) == true){
                     if(localStorage.getInt(LocalStorage.role)== 1){
                         Intent i = new Intent(SplashActivity.this , BookStoreMainActivity.class);
                         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -65,7 +67,9 @@ public class SplashActivity extends AppCompatActivity {
         btn_en.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(localStorage.getBoolean(LocalStorage.isFirstLaunch)){
+                Toast.makeText(SplashActivity.this, "hello", Toast.LENGTH_SHORT).show();
+                if(localStorage.getBoolean(LocalStorage.isFirstLaunch)==true){
+
                     if(localStorage.getInt(LocalStorage.role)== 1){
                         Intent i = new Intent(SplashActivity.this , BookStoreMainActivity.class);
                         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -77,6 +81,7 @@ public class SplashActivity extends AppCompatActivity {
                     }
 
                 }else {
+
                     Intent intent = new Intent(getApplicationContext(), AppDescriptionSplashActivity.class);
                     startActivity(intent);
                     finish();

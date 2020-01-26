@@ -19,6 +19,7 @@ import com.io.bookstore.R;
 import com.io.bookstore.activity.authentication.LoginActivity;
 import com.io.bookstore.activity.authentication.SignUpActivity;
 import com.io.bookstore.adapter.IntroViewPagerAdapter;
+import com.io.bookstore.localStorage.LocalStorage;
 import com.io.bookstore.model.ScreenItem;
 
 import java.util.ArrayList;
@@ -34,6 +35,7 @@ public class IntroActivity extends AppCompatActivity {
     Button btnGetStarted;
     Animation btnAnim ;
     TextView btnSkip;
+    LocalStorage localStorage;
 
 
     @Override
@@ -68,6 +70,7 @@ public class IntroActivity extends AppCompatActivity {
 
         // ini views
         btnNext = findViewById(R.id.btn_next);
+        localStorage =new LocalStorage(this);
         btnGetStarted = findViewById(R.id.btn_get_started);
         tabIndicator = findViewById(R.id.tab_indicator);
         btnAnim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.btn_getting_started);
@@ -94,7 +97,7 @@ public class IntroActivity extends AppCompatActivity {
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                localStorage.putBooleAan(LocalStorage.isFirstLaunch,true);
                 position = screenPager.getCurrentItem();
                 if (position < mList.size()) {
 
@@ -126,11 +129,9 @@ public class IntroActivity extends AppCompatActivity {
             public void onTabSelected(TabLayout.Tab tab) {
 
                 if (tab.getPosition() == mList.size()-1) {
-
                     loaddLastScreen();
 
                 }
-
 
             }
 
@@ -153,7 +154,7 @@ public class IntroActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
+                localStorage.putBooleAan(LocalStorage.isFirstLaunch,true);
                 //open main activity
 
                 Intent mainActivity = new Intent(getApplicationContext(), LoginActivity.class);

@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -50,10 +51,11 @@ public class BookListFragment extends Fragment {
     private View root;
     private NewProgressBar dialog;
     private userOnlineInfo user;
-    private EditText searchView2;
+    private SearchView searchView2;
     private List<Datum> data;
     private ArrayList<Datum> childdata;
     private LocalStorage localStorage;
+    private BookListAdapter categoryAdapter;
 
     public BookListFragment() {
         // Required empty public constructor
@@ -74,34 +76,7 @@ public class BookListFragment extends Fragment {
     }
 
     private void startWorking() {
-        searchView2.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (searchView2.getText().toString().trim().length() > 0) {
-                    for (int i = 0; i < data.size(); i++) {
-                        if (data.get(i).getName().toLowerCase().indexOf(searchView2.getText().toString().toLowerCase()) != -1) {
-                            childdata.add(data.get(i));
-                        }
-                    }
-                    setRecyclerViewData(childdata);
-                } else {
-                    getBookList(searchView2.getText().toString(),
-                            localStorage.getString(LocalStorage.StoreId),
-                            localStorage.getString(LocalStorage.CategoryId));
-                }
-
-            }
-        });
+        searchViewSetUp();
     }
 
     private void initView() {
@@ -147,10 +122,36 @@ public class BookListFragment extends Fragment {
 
 
     private void setRecyclerViewData(List<Datum> result) {
-        BookListAdapter categoryAdapter = new BookListAdapter(getActivity(), result);
+         categoryAdapter = new BookListAdapter(getActivity(), result);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+        childdata = (ArrayList<Datum>) result;
         recyclerView.setAdapter(categoryAdapter);
 
     }
+
+    private void searchViewSetUp() {
+        searchView2.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                List<Datum> newlist = new ArrayList<>();
+                for (Datum productList : childdata) {
+                    String name = productList.getName();
+                    if (name.contains(s))
+                        newlist.add(productList);
+                }
+                categoryAdapter.setFilter(newlist);
+                return true;
+            }
+
+        });
+
+
+    }
+
 
 }

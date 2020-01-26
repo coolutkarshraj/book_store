@@ -69,11 +69,8 @@ public class CategoryListFragment extends Fragment {
 
 
 
-
-
     private void bindListner() {
     }
-
 
 
     private void getCategoryList() {

@@ -65,7 +65,7 @@ public class DeliveryAddressFragment extends Fragment {
     private AddressAdapter addressAdapter;
     private JsonArray jsonArray;
     LocalStorage localStorage;
-    private LinearLayout nestedScrollView;
+     LinearLayout linearLayout;
     private TextView loggdin;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -81,7 +81,7 @@ public class DeliveryAddressFragment extends Fragment {
         activity = getActivity();
         user = new userOnlineInfo();
         localStorage = new LocalStorage(getActivity());
-        nestedScrollView = root.findViewById(R.id.nested_c_view);
+        linearLayout = root.findViewById(R.id.linearLayout);
         loggdin = root.findViewById(R.id.loggedih);
         recyclerView = root.findViewById(R.id.recyclerView);
         tv_address = root.findViewById(R.id.tv_address);
@@ -173,7 +173,7 @@ public class DeliveryAddressFragment extends Fragment {
             loggdin.setVisibility(View.VISIBLE);
 
         } else {
-            nestedScrollView.setVisibility(View.VISIBLE);
+            linearLayout.setVisibility(View.VISIBLE);
             getaddressListApi();
         }
     }
@@ -257,7 +257,7 @@ public class DeliveryAddressFragment extends Fragment {
         String strState = etState.getText().toString().trim();
         String strPinCode = etPinCode.getText().toString().trim();
         if (strAddress1.isEmpty() || strCity.isEmpty() || strState.isEmpty() || strPinCode.isEmpty()) {
-            etAddress.setError("Please Enter Address 1");
+            etAddress.setError("Please Enter Address");
 
             etCity.setError("Please Enter City");
             etState.setError("Please Enter State");
@@ -274,9 +274,9 @@ public class DeliveryAddressFragment extends Fragment {
             dialog = new NewProgressBar(activity);
             dialog.show();
             LocalStorage localStorage = new LocalStorage(getActivity());
-            ApiCaller.addAddress(activity, Config.Url.addAddress, "Testing", strAddress1, "Home", strCity,
-                    "Test", Integer.valueOf(strPinCode), "Dubai",
-                    "Kuwait", "+965", strState, localStorage.getString(LocalStorage.token),
+            ApiCaller.addAddress(activity, Config.Url.addAddress, "", strAddress1, "Home", strCity,
+                    "", Integer.valueOf(strPinCode), "Dubai",
+                    "", "", strState, localStorage.getString(LocalStorage.token),
                     new FutureCallback<AddAddressResponseModel>() {
                         @Override
                         public void onCompleted(Exception e, AddAddressResponseModel result) {

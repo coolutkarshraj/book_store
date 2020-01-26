@@ -72,10 +72,11 @@ public class BookstoresAdapter extends RecyclerView.Adapter<BookstoresAdapter.My
                 int height = metrics.heightPixels;
                 dialog.getWindow().setLayout((6 * width) / 7, ViewGroup.LayoutParams.WRAP_CONTENT);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-                dialog.setContentView(R.layout.activity_add_adress1);
+                dialog.setContentView(R.layout.activity_add_adress_new);
                 dialog.setTitle("");
+                final ImageView Clear = (ImageView) dialog.findViewById(R.id.clear);
                 final Button btn_Add = (Button) dialog.findViewById(R.id.btn_Add);
-                final Button btn_cancel = (Button) dialog.findViewById(R.id.btn_cancel);
+                //final Button btn_cancel = (Button) dialog.findViewById(R.id.btn_cancel);
                 final TextView etAddress = (TextView) dialog.findViewById(R.id.et_address);
                 final TextView etCity = (TextView) dialog.findViewById(R.id.et_city);
                 final TextView etState = (TextView) dialog.findViewById(R.id.et_state);
@@ -93,14 +94,15 @@ public class BookstoresAdapter extends RecyclerView.Adapter<BookstoresAdapter.My
                         dialog.dismiss();
                     }
                 });
-                btn_cancel.setOnClickListener(new View.OnClickListener() {
-                    @SuppressLint("ResourceAsColor")
+
+
+                Clear.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View v) {
+                    public void onClick(View view) {
+
                         dialog.dismiss();
                     }
                 });
-
                 dialog.show();
 
             }

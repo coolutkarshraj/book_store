@@ -31,6 +31,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/exo"
+            android:visibility="gone"
             android:text="Pilot Paint , Color mix"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
