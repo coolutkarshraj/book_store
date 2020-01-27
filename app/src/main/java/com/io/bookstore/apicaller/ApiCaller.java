@@ -394,20 +394,39 @@ public class ApiCaller {
 
     /*------------------------------------------------------ get Book Model -------------------------------------------------*/
 
-    public static void getBookModel(Activity activity, String url, String sId, String cId, String name,
+    public static void getBookModel(Activity activity, String url, String sId, String cId, String name,String token,
                                     final FutureCallback<BookListModel> apiCallback) {
-        final Gson gson = new Gson();
-        Ion.with(activity)
-                .load(UrlLocator.getFinalUrl(url))
-                .noCache()
-                .asJsonObject()
-                .setCallback(new FutureCallback<JsonObject>() {
-                    @Override
-                    public void onCompleted(Exception e, JsonObject result) {
-                        BookListModel featuredProductResponseModel = gson.fromJson(result, BookListModel.class);
-                        apiCallback.onCompleted(e, featuredProductResponseModel);
-                    }
-                });
+
+        if(token == "" || token == null){
+            final Gson gson = new Gson();
+            Ion.with(activity)
+                    .load(UrlLocator.getFinalUrl(url))
+                    .setHeader("SkipAuth","true")
+                    .noCache()
+                    .asJsonObject()
+                    .setCallback(new FutureCallback<JsonObject>() {
+                        @Override
+                        public void onCompleted(Exception e, JsonObject result) {
+                            BookListModel featuredProductResponseModel = gson.fromJson(result, BookListModel.class);
+                            apiCallback.onCompleted(e, featuredProductResponseModel);
+                        }
+                    });
+        }else {
+            final Gson gson = new Gson();
+            Ion.with(activity)
+                    .load(UrlLocator.getFinalUrl(url))
+                    .setHeader("Authorization", "Bearer " + token)
+                    .noCache()
+                    .asJsonObject()
+                    .setCallback(new FutureCallback<JsonObject>() {
+                        @Override
+                        public void onCompleted(Exception e, JsonObject result) {
+                            BookListModel featuredProductResponseModel = gson.fromJson(result, BookListModel.class);
+                            apiCallback.onCompleted(e, featuredProductResponseModel);
+                        }
+                    });
+        }
+
     }
 
     /* ------------------------------------------------------ Store detail Model ------------------------------------------------------*/

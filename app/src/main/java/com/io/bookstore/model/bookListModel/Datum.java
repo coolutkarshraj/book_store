@@ -3,6 +3,7 @@ package com.io.bookstore.model.bookListModel;
 
 import android.os.Build;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import androidx.annotation.RequiresApi;
@@ -44,6 +45,10 @@ public class Datum {
     private Store mStore;
     @SerializedName("storeId")
     private Object mStoreId;
+
+    @SerializedName("isWishlist")
+    @Expose
+    private boolean isWishlist;
 
     public String getAvatarName() {
         return mAvatarName;
@@ -182,4 +187,11 @@ public class Datum {
         mStoreId = storeId;
     }
 
+    public boolean isWishlist() {
+        return isWishlist;
+    }
+
+    public void setWishlist(boolean wishlist) {
+        isWishlist = wishlist;
+    }
 }

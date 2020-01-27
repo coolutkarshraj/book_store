@@ -3,6 +3,7 @@ package com.io.bookstore.fragment;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.io.bookstore.Config;
 import com.io.bookstore.R;
@@ -35,7 +37,7 @@ import com.koushikdutta.async.future.FutureCallback;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FavoriteItemsFragment extends Fragment {
+public class FavoriteItemsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     private ArrayList lstBook;
     private RecyclerView recyclerView;
     private FavoriteItemsAdapter favoriteItemsAdapter;
@@ -45,20 +47,28 @@ public class FavoriteItemsFragment extends Fragment {
     private userOnlineInfo user;
     private Activity activity;
     private NewProgressBar dialog;
+    private View root;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_favorite_items, container, false);
+         root = inflater.inflate(R.layout.fragment_favorite_items, container, false);
+        intializeViews(root);
+        return root;
+    }
+
+    private void intializeViews(View root) {
         recyclerView = root.findViewById(R.id.fav_recyclerView);
         loggedih = root.findViewById(R.id.loggedih);
+        swipeRefreshLayout = root.findViewById(R.id.swipe_refresh);
         nested_c_view = root.findViewById(R.id.nested_c_view);
         user = new userOnlineInfo();
         activity = getActivity();
         localStorage = new LocalStorage(getActivity());
         LoginModel loginModel = localStorage.getUserProfile();
         System.out.println(loginModel);
-        if(localStorage.getString(LocalStorage.token) == null ||
-                localStorage.getString(LocalStorage.token).equals("")){
+        if (localStorage.getString(LocalStorage.token) == null ||
+                localStorage.getString(LocalStorage.token).equals("")) {
             nested_c_view.setVisibility(View.GONE);
             loggedih.setVisibility(View.VISIBLE);
         } else {
@@ -68,7 +78,6 @@ public class FavoriteItemsFragment extends Fragment {
             getWishListApiCall();
         }
         bindListner();
-        return root;
     }
 
     private void getWishListApiCall() {
@@ -118,7 +127,18 @@ public class FavoriteItemsFragment extends Fragment {
                 startActivity(intent);
             }
         });
+        swipeRefreshLayout.setOnRefreshListener(this);
     }
 
 
+    @Override
+    public void onRefresh() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                intializeViews(root);
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        }, 1000);
+    }
 }

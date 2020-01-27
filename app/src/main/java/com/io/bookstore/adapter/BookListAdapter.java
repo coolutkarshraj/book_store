@@ -74,6 +74,14 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.MyView
          holder.tv_price.setText(""+mData.get(position).getPrice()+"KD");
          holder.tv_bookName.setText(""+mData.get(position).getName());
         Glide.with(mContext).load(Config.imageUrl + mData.get(position).getAvatarPath()).into(holder.iv_favorite);
+        if(mData.get(position).isWishlist() == true){
+            holder.mark_fav.setVisibility(View.GONE);
+            holder.mark_fav_red.setVisibility(View.VISIBLE);
+        }else {
+            holder.mark_fav.setVisibility(View.VISIBLE);
+            holder.mark_fav_red.setVisibility(View.GONE);
+        }
+
         holder.mark_cart.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override

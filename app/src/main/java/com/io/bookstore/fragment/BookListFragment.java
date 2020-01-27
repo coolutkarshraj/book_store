@@ -1,15 +1,10 @@
 package com.io.bookstore.fragment;
 
 
-import android.database.Cursor;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.SearchView;
@@ -19,24 +14,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.io.bookstore.Config;
 import com.io.bookstore.R;
-import com.io.bookstore.StaticData;
 import com.io.bookstore.adapter.BookListAdapter;
-import com.io.bookstore.adapter.CategoryAdapter;
 import com.io.bookstore.apicaller.ApiCaller;
-import com.io.bookstore.listeners.ItemClickListner;
-import com.io.bookstore.localStorage.DbHelper;
 import com.io.bookstore.localStorage.LocalStorage;
-import com.io.bookstore.model.BookModel;
 import com.io.bookstore.model.bookListModel.BookListModel;
 import com.io.bookstore.model.bookListModel.Datum;
-import com.io.bookstore.model.categoryModel.CategoryModel;
 import com.io.bookstore.utility.NewProgressBar;
 import com.io.bookstore.utility.Utils;
 import com.io.bookstore.utility.userOnlineInfo;
 import com.koushikdutta.async.future.FutureCallback;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,9 +54,18 @@ public class BookListFragment extends Fragment {
         // Inflate the layout for this fragment
         root = inflater.inflate(R.layout.fragment_category_list, container, false);
         initView();
-        getBookList("",
-                localStorage.getString(LocalStorage.StoreId),
-                localStorage.getString(LocalStorage.CategoryId));
+
+        if (localStorage.getString(LocalStorage.token) == null ||
+                localStorage.getString(LocalStorage.token).equals("")) {
+            getBookList("",
+                    localStorage.getString(LocalStorage.StoreId),
+                    localStorage.getString(LocalStorage.CategoryId),"");
+        }else {
+            getBookList("",
+                    localStorage.getString(LocalStorage.StoreId),
+                    localStorage.getString(LocalStorage.CategoryId),localStorage.getString(LocalStorage.token));
+        }
+
         startWorking();
         return root;
     }
@@ -89,11 +84,11 @@ public class BookListFragment extends Fragment {
 
 
 
-    private void getBookList(String name, String sId, String Cid) {
+    private void getBookList(String name, String sId, String Cid, String token) {
         if (user.isOnline(getActivity())) {
             dialog = new NewProgressBar(getActivity());
             dialog.show();
-            ApiCaller.getBookModel(getActivity(), Config.Url.getAllBook+sId+"/"+Cid+"/", sId, Cid, name,
+            ApiCaller.getBookModel(getActivity(), Config.Url.getAllBook+sId+"/"+Cid+"/", sId, Cid, name,token,
                     new FutureCallback<BookListModel>() {
 
                         @Override

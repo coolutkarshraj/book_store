@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/swipe_refresh"
     android:layout_height="match_parent"
     tools:context=".fragment.FavoriteItemsFragment">
+
+
 
     <androidx.core.widget.NestedScrollView
         android:visibility="gone"
@@ -42,6 +45,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
+
 <TextView
     android:layout_width="match_parent"
     android:textSize="16dp"
@@ -55,4 +59,4 @@
 
 </TextView>
 
-</FrameLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

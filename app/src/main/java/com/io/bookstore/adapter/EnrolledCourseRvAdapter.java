@@ -47,7 +47,7 @@ public class EnrolledCourseRvAdapter extends RecyclerView.Adapter<EnrolledCourse
         boolean flag = false;
         View view;
         LayoutInflater mInflater = LayoutInflater.from(mContext);
-        view = mInflater.inflate(R.layout.item_courses, parent, false);
+        view = mInflater.inflate(R.layout.layout_add_course, parent, false);
         return new MyViewHolder(view);
     }
 
