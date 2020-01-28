@@ -99,34 +99,43 @@ public class LoginActivity extends AppCompatActivity {
         if(userNaame.length()<1){
             Utils.showAlertDialog(activity, "Please Enter Username");
         }
-        if(password.length()<6){
+       else if(password.length()<6){
             Utils.showAlertDialog(activity, "Please Enter Minimum 6 Digit Password");
         }
-        if (user.isOnline(activity)) {
-            dialog = new NewProgressBar(activity);
-            dialog.show();
-            ApiCaller.loginCustomer(activity, Config.Url.login, userNaame, password,
-                    new FutureCallback<LoginModel>() {
-                        @Override
-                        public void onCompleted(Exception e, LoginModel result) {
-                            if(e!=null){
-                                Utils.showAlertDialog(activity, "Something Went Wrong");
-                                return;
-                            }
-
-                            if(result != null){
-                                if(result.getStatus()){
-                                    saveLoginData(result);
-                                    localStorage.putBooleAan(LocalStorage.isLoggedIn,true);
-                                    navigateToHomeActivit(result);
-                                }
-                            }
-
-                        }
-                    });
-
+       else if(userNaame.equals("") || password.equals("")){
+            Utils.showAlertDialog(activity, "Please Enter Username and password");
         }else {
-            Utils.showAlertDialog(activity, "No Internet Connection");
+            if (user.isOnline(activity)) {
+                dialog = new NewProgressBar(activity);
+                dialog.show();
+                ApiCaller.loginCustomer(activity, Config.Url.login, userNaame, password,
+                        new FutureCallback<LoginModel>() {
+                            @Override
+                            public void onCompleted(Exception e, LoginModel result) {
+                                if (e != null) {
+                                    Utils.showAlertDialog(activity, "Something Went Wrong");
+                                    dialog.dismiss();
+                                    return;
+                                }
+
+                                if (result != null) {
+                                    if (result.getStatus() == true) {
+                                        dialog.dismiss();
+                                        saveLoginData(result);
+                                        localStorage.putBooleAan(LocalStorage.isLoggedIn, true);
+                                        navigateToHomeActivit(result);
+                                    } else {
+                                        dialog.dismiss();
+                                        Toast.makeText(activity, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
+                            }
+                        });
+
+            } else {
+                Utils.showAlertDialog(activity, "No Internet Connection");
+            }
         }
 
     }

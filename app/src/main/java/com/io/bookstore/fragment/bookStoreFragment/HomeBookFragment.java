@@ -15,7 +15,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +25,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -162,7 +160,7 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
         if (user.isOnline(getActivity())) {
             dialog = new NewProgressBar(getActivity());
             dialog.show();
-            ApiCaller.getAdminBookList(getActivity(), Config.Url.getAllBook + localStorage.getInt(LocalStorage.userId) + "/" + spindata, 1, 1, "",
+            ApiCaller.getAdminBookList(getActivity(), Config.Url.getAllBook + localStorage.getInt(LocalStorage.userId) + "/" + spindata,localStorage.getString(LocalStorage.token),
                     new FutureCallback<AdminBookListResponseModel>() {
 
                         @Override
@@ -185,9 +183,14 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
     @SuppressLint("WrongConstant")
     private void setRecyclerViewData(AdminBookListResponseModel result) {
         rvBookStore.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false));
-        adapter = new AdminBookListAdapter(activity, result.getData(), this);
-        item = result.getData();
-        rvBookStore.setAdapter(adapter);
+        if(result.getData().size() == 0 ) {
+
+        }else {
+            adapter = new AdminBookListAdapter(activity, result.getData(), this);
+            item = result.getData();
+            rvBookStore.setAdapter(adapter);
+        }
+
 
     }
 
@@ -457,7 +460,7 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
         if (user.isOnline(getActivity())) {
             dialog = new NewProgressBar(getActivity());
             dialog.show();
-            ApiCaller.getAdminBookList(getActivity(), Config.Url.getAllBook + localStorage.getInt(LocalStorage.userId) + "/" + spindata, 1, 1, "",
+            ApiCaller.getAdminBookList(getActivity(), Config.Url.getAllBook + localStorage.getInt(LocalStorage.userId) + "/" + spindata,localStorage.getString(LocalStorage.token),
                     new FutureCallback<AdminBookListResponseModel>() {
 
                         @Override

@@ -8,7 +8,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.io.bookstore.model.PlaceOrderModel.OrderModel;
 import com.io.bookstore.model.addAddressResponseModel.AddAddressResponseModel;
-import com.io.bookstore.model.addAddressResponseModel.EditBookDataModel;
 import com.io.bookstore.model.addAddressResponseModel.EditBookResponseModel;
 import com.io.bookstore.model.addAddressResponseModel.GetAddressListResponseModel;
 import com.io.bookstore.model.addAddressResponseModel.GetAdminOrderListResponseModel;
@@ -594,11 +593,12 @@ public class ApiCaller {
     }
 
 
-    public static void getAdminBookList(Activity activity, String url, int sId, int cId, String name,
+    public static void getAdminBookList(Activity activity, String url, String token,
                                         final FutureCallback<AdminBookListResponseModel> apiCallback) {
         final Gson gson = new Gson();
         Ion.with(activity)
                 .load(UrlLocator.getFinalUrl(url))
+                .setHeader("Authorization", "Bearer " + token)
                 .noCache()
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
