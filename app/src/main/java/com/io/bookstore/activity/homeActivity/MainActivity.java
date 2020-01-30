@@ -44,11 +44,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener, ItemClickListner {
-    LinearLayout ll_personal_info, ll_address, ll_payment, language, country;
+    RelativeLayout ll_personal_info, ll_address, ll_payment, language, country,logout,ll_enroll_course;
     private DrawerLayout drawer;
     private NavigationView navigationView;
     private ImageView menu;
@@ -62,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements
     ImageView iv_cart;
     TextView nav_user,nav_Email;
     CircleImageView imageView;
-    LinearLayout home, favfourite, order, profile,logout,ll_enroll_course;
+    LinearLayout home, favfourite, order, profile;
     ImageView ivHome, ivHeart, ivCart, iv_profile;
     ProfileFragment profileFragment;
     EditProfileFragment editProfileFragment;
@@ -371,7 +372,7 @@ public class MainActivity extends AppCompatActivity implements
         navigationView = findViewById(R.id.nav_view);
         ll_enroll_course = findViewById(R.id.ll_course);
         menu = findViewById(R.id.menu);
-        logout = (LinearLayout) findViewById(R.id.logout);
+        logout = (RelativeLayout) findViewById(R.id.ll_logout);
         nav_user = (TextView) findViewById(R.id.nav_username);
         nav_Email = (TextView) findViewById(R.id.nav_email);
         imageView = (CircleImageView) findViewById(R.id.nav_profile_iv);

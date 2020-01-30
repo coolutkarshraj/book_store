@@ -123,24 +123,33 @@
 
                     <TextView
                         android:id="@+id/textView"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toStartOf="@+id/iv_view_all_stores"
+                        android:layout_alignParentStart="true"
                         android:fontFamily="@font/exo_bold"
                         android:text="@string/stores"
+                        android:layout_marginStart="5dp"
                         android:textColor="@color/lang_sel__1"
                         android:textSize="16sp"
                         app:layout_constraintHorizontal_bias="0.0">
 
                     </TextView>
 
-                    <ImageView
+                    <RelativeLayout
                         android:id="@+id/iv_view_all_stores"
                         android:layout_width="70dp"
-                        android:layout_height="25dp"
+                        android:layout_height="20dp"
                         android:layout_alignParentEnd="true"
-                        android:layout_weight="1"
-                        android:src="@drawable/view"></ImageView>
+                        android:background="@drawable/view_empty">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/view_all"
+                            android:layout_centerInParent="true"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/h2"
+                            app:layout_constraintHorizontal_bias="0.0"/>
+                    </RelativeLayout>
                 </RelativeLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -170,10 +179,11 @@
 
                     <TextView
                         android:id="@+id/tv_course_institutes"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toStartOf="@+id/iv_viewall_instutues"
+                       android:layout_alignParentStart="true"
                         android:fontFamily="@font/exo_bold"
+                        android:layout_marginStart="5dp"
                         android:text="@string/courses_institution"
                         android:textColor="@color/lang_sel__1"
                         android:textSize="16sp"
@@ -181,13 +191,21 @@
 
                     </TextView>
 
-                    <ImageView
+                    <RelativeLayout
                         android:id="@+id/iv_viewall_instutues"
                         android:layout_width="70dp"
-                        android:layout_height="25dp"
+                        android:layout_height="20dp"
                         android:layout_alignParentEnd="true"
-                        android:layout_weight="1"
-                        android:src="@drawable/view"></ImageView>
+                       android:background="@drawable/view_empty">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/view_all"
+                            android:layout_centerInParent="true"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/h2"
+                            app:layout_constraintHorizontal_bias="0.0"/>
+                    </RelativeLayout>
                 </RelativeLayout>
 
                 <androidx.recyclerview.widget.RecyclerView

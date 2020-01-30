@@ -16,7 +16,7 @@
 
     </View>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/ll_personal_info"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -27,23 +27,25 @@
         android:weightSum="3">
 
         <ImageView
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="50dp"
+            android:id="@+id/person"
             android:layout_weight="0.3"
             android:src="@drawable/ic_person_black_24dp">
 
         </ImageView>
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/sixteen_dp"
             android:layout_weight="2.7"
+            android:layout_toEndOf="@id/person"
             android:gravity="center_vertical"
             android:text="@string/personal_info"></TextView>
-    </LinearLayout>
+    </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/ll_address"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -54,23 +56,26 @@
         android:weightSum="3">
 
         <ImageView
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_weight="0.3"
+            android:id="@+id/loc"
             android:src="@drawable/ic_add_location_black_24dp">
 
         </ImageView>
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/sixteen_dp"
             android:layout_weight="2.7"
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@id/loc"
             android:gravity="center_vertical"
+            android:textAlignment="gravity"
             android:text="@string/delivery_address"></TextView>
-    </LinearLayout>
+    </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/ll_payment"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -81,23 +86,26 @@
         android:weightSum="3">
 
         <ImageView
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_weight="0.3"
+            android:id="@+id/payment"
             android:src="@drawable/ic_payment_black_24dp">
 
         </ImageView>
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/sixteen_dp"
             android:layout_weight="2.7"
+            android:layout_toEndOf="@+id/payment"
             android:gravity="center_vertical"
-            android:text="@string/payment"></TextView>
-    </LinearLayout>
+            android:textAlignment="gravity"
+            android:text="@string/payment"/>
+    </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/language"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -109,23 +117,26 @@
 
         <ImageView
 
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="50dp"
+            android:id="@+id/languaget"
             android:layout_weight="0.3"
             android:src="@drawable/ic_language_black_24dp">
 
         </ImageView>
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/sixteen_dp"
+            android:layout_toEndOf="@+id/languaget"
             android:layout_weight="2.7"
+            android:textAlignment="gravity"
             android:gravity="center_vertical"
-            android:text="@string/languages"></TextView>
-    </LinearLayout>
+            android:text="@string/languages"/>
+    </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/country"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -136,50 +147,55 @@
         android:weightSum="3">
 
         <ImageView
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_weight="0.3"
+            android:id="@+id/map"
             android:src="@drawable/ic_location_on_black_24dp">
 
         </ImageView>
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/sixteen_dp"
             android:layout_weight="2.7"
+            android:layout_toEndOf="@id/map"
             android:gravity="center_vertical"
-            android:text="@string/country"></TextView>
-    </LinearLayout>
+            android:textAlignment="gravity"
+            android:text="@string/country"/>
+    </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/ll_course"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_gravity="center"
+        android:layout_gravity="start"
         android:layout_margin="8dp"
         android:background="@drawable/dotted_border"
         android:orientation="horizontal"
         android:weightSum="3">
 
         <ImageView
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_weight="0.3"
+            android:id="@+id/cmp"
             android:src="@drawable/ic_computer_black_24dp">
 
         </ImageView>
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/sixteen_dp"
             android:layout_weight="2.7"
+            android:layout_toEndOf="@+id/cmp"
             android:gravity="center_vertical"
             android:text="@string/enrolledcourse"></TextView>
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/logout"
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/ll_logout"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="center"
@@ -189,42 +205,43 @@
         android:weightSum="3">
 
         <ImageView
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_weight="0.3"
+            android:id="@+id/log"
             android:src="@drawable/ic_arrow_back_black_24dp">
 
         </ImageView>
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_toEndOf="@+id/log"
             android:layout_marginLeft="@dimen/sixteen_dp"
             android:layout_weight="2.7"
             android:gravity="center_vertical"
+            android:textAlignment="gravity"
             android:text="@string/logout"></TextView>
-    </LinearLayout>
+    </RelativeLayout>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_margin="8dp"
         android:background="@drawable/search_view_background"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        android:gravity="left">
+        android:orientation="horizontal">
 
 
         <TextView
             android:id="@+id/autoCompleteTextView"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="@android:color/transparent"
-            android:cursorVisible="true"
-            android:ems="10"
+            android:layout_alignParentStart="true"
             android:gravity="center_vertical"
             android:hint="@string/notifications"
-            android:paddingLeft="10dp"
+            android:layout_marginStart="5dp"
             android:textColor="@color/black">
             <!--                        <requestFocus />-->
         </TextView>
@@ -233,8 +250,11 @@
             android:id="@+id/iv_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+           android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="5dp"
             android:src="@drawable/search" />
-    </LinearLayout>
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

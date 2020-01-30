@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -47,7 +48,7 @@ import com.io.bookstore.localStorage.LocalStorage;
 
 public class BookStoreMainActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener, ItemClickListner {
-    LinearLayout ll_personal_info, ll_address, ll_payment, language, country;
+    RelativeLayout ll_personal_info, ll_address, ll_payment, language, country,logout;
     private DrawerLayout drawer;
     private NavigationView navigationView;
     private ImageView menu;
@@ -63,7 +64,7 @@ public class BookStoreMainActivity extends AppCompatActivity implements
     FavoriteItemsFragment favoriteItemsFragment;
     FloatingActionButton fabSave;
     ImageView iv_cart;
-    LinearLayout home, favfourite, order, profile, logout;
+    LinearLayout home, favfourite, order, profile;
     ImageView ivHome, ivHeart, ivCart, iv_profile;
     ProfileFragment profileFragment;
     EditProfileFragment editProfileFragment;

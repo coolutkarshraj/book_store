@@ -71,7 +71,7 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener,
     private CoursesFragment coursesFragment;
     private CourseEnrollmentFragment courseEnrollmentFragment;
     InstituteFragment instituteFragment;
-    private ImageView iv_view_all_stores, iv_viewall_instutues;
+    private RelativeLayout iv_view_all_stores, iv_viewall_instutues;
     private ItemClickListner itemClickListner;
     RecyclerViewClickListener recyclerViewClickListener;
     AddressResponseModel result;
