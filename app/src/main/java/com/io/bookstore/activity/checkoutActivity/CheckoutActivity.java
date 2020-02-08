@@ -1,9 +1,5 @@
 package com.io.bookstore.activity.checkoutActivity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
@@ -22,31 +18,37 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.io.bookstore.Config;
 import com.io.bookstore.R;
 import com.io.bookstore.StaticData;
 import com.io.bookstore.adapter.AddressAdapter;
-import com.io.bookstore.adapter.CartAdapter;
 import com.io.bookstore.apicaller.ApiCaller;
 import com.io.bookstore.localStorage.DbHelper;
 import com.io.bookstore.localStorage.LocalStorage;
 import com.io.bookstore.model.PlaceOrderModel.OrderModel;
 import com.io.bookstore.model.addAddressResponseModel.AddAddressResponseModel;
 import com.io.bookstore.model.addAddressResponseModel.GetAddressListResponseModel;
-import com.io.bookstore.model.bookListModel.CartLocalListResponseMode;
-import com.io.bookstore.model.filterByAddress.FilterAddressModel;
-import com.io.bookstore.model.getAddressResponseModel.AddressResponseModel;
 import com.io.bookstore.utility.NewProgressBar;
 import com.io.bookstore.utility.Utils;
 import com.io.bookstore.utility.userOnlineInfo;
 import com.koushikdutta.async.future.FutureCallback;
+import com.paypal.android.sdk.payments.PayPalConfiguration;
+import com.paypal.android.sdk.payments.PayPalPayment;
+import com.paypal.android.sdk.payments.PayPalService;
+import com.paypal.android.sdk.payments.PaymentActivity;
+import com.paypal.android.sdk.payments.PaymentConfirmation;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public class CheckoutActivity extends AppCompatActivity {
@@ -62,6 +64,9 @@ public class CheckoutActivity extends AppCompatActivity {
     private JsonArray jsonArray;
     private String deliveryType;
     int totalprice;
+    private static PayPalConfiguration config = new PayPalConfiguration()
+            .environment(PayPalConfiguration.ENVIRONMENT_NO_NETWORK)
+            .clientId(StaticData.PAYPAL_CLIENT_ID);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,14 +88,17 @@ public class CheckoutActivity extends AppCompatActivity {
         iv_back = findViewById(R.id.iv_back);
         tv_address = findViewById(R.id.tv_address);
         btnLoginToDashBoard = findViewById(R.id.btnLoginToDashBoard);
+        startService();
 
     }
+
 
     private void bindListner() {
         btnLoginToDashBoard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                callApiToPlaceOrder();
+                paypalPayment();
+
             }
         });
         iv_back.setOnClickListener(new View.OnClickListener() {
@@ -105,6 +113,46 @@ public class CheckoutActivity extends AppCompatActivity {
                 dialogOpen();
             }
         });
+    }
+
+    private void startService() {
+        Intent intent = new Intent(this, PayPalService.class);
+        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
+        startService(intent);
+    }
+
+    private void paypalPayment() {
+        PayPalPayment payment = new PayPalPayment(new BigDecimal("2"), "USD", "hipster jeans",
+                PayPalPayment.PAYMENT_INTENT_SALE);
+        Intent intent = new Intent(this, PaymentActivity.class);
+        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
+        intent.putExtra(PaymentActivity.EXTRA_PAYMENT, payment);
+        startActivityForResult(intent, 0);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            PaymentConfirmation confirm = data.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
+            if (confirm != null) {
+                try {
+                    String paydetial = confirm.toJSONObject().toString(4);
+                    JSONObject jsonObject;
+                    jsonObject = new JSONObject(paydetial);
+
+                    Toast.makeText(activity, "" + jsonObject.getJSONObject("response"), Toast.LENGTH_SHORT).show();
+                    callApiToPlaceOrder();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        } else if (resultCode == Activity.RESULT_CANCELED) {
+            Toast.makeText(activity, "The user canceled.", Toast.LENGTH_SHORT).show();
+
+        } else if (resultCode == PaymentActivity.RESULT_EXTRAS_INVALID) {
+            Toast.makeText(activity, "An invalid Payment or PayPalConfiguration was submitted.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void callApiToPlaceOrder() {
@@ -345,6 +393,12 @@ public class CheckoutActivity extends AppCompatActivity {
         } else {
             Utils.showAlertDialog(activity, "No Internet Connection");
         }
+    }
 
+
+    @Override
+    public void onDestroy() {
+        stopService(new Intent(this, PayPalService.class));
+        super.onDestroy();
     }
 }

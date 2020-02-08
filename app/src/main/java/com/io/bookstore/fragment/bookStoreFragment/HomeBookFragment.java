@@ -87,7 +87,7 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
     ImageView imageView, ivFilter;
     Spinner spin;
 
-    String strName, strDesc, strImage, strPrice, strQuantity, strCategory;
+    String strName, strDesc, strImage, strPrice, strQuantity, strCategory,strAuthor;
     String spindata = "-1";
     LocalStorage localStorage;
     private String[] items = {" Select Category ", "Arabic Books", "English Books", "Computer Supplies", "Games toys", "School Supplies",
@@ -491,6 +491,7 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
         final EditText tvDesc = (EditText) dialogs.findViewById(R.id.tv_book_Descrption);
         final EditText price = (EditText) dialogs.findViewById(R.id.tv_book_price);
         final EditText quantity = (EditText) dialogs.findViewById(R.id.tv_book_quantity);
+        final EditText author = (EditText) dialogs.findViewById(R.id.tv_book_author);
         spin = (Spinner) dialogs.findViewById(R.id.category_spinner);
         imageView = (ImageView) dialogs.findViewById(R.id.image);
         final ImageView clear = (ImageView) dialogs.findViewById(R.id.clear);
@@ -502,11 +503,13 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
         strPrice = String.valueOf(item.get(position).getPrice());
         strQuantity = String.valueOf(item.get(position).getQuantity());
         strImage = item.get(position).getAvatarPath();
+        strAuthor = item.get(position).getAuthor();
         strCategory = String.valueOf(item.get(position).getCategoryId());
         tvName.setText(strName);
         tvDesc.setText(strDesc);
         price.setText(strPrice);
         quantity.setText(strQuantity);
+        author.setText(strAuthor);
         //
         Glide.with(activity).load(Config.imageUrl + item.get(position).getAvatarPath()).into(imageView);
 
@@ -548,9 +551,10 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
                 strDesc = tvDesc.getText().toString().trim();
                 strPrice = price.getText().toString().trim();
                 strQuantity = quantity.getText().toString().trim();
+                strAuthor = author.getText().toString().trim();
                 Toast.makeText(activity, "postionspiner " + spindata, Toast.LENGTH_SHORT).show();
 
-                editBook(strName, strDesc, strPrice, strQuantity, imageView, licenseFile, spindata, item.get(position).getBookId(), dialogs);
+                editBook(strName, strDesc, strPrice, strQuantity, imageView, licenseFile, spindata, item.get(position).getBookId(), dialogs,strAuthor);
             }
         });
         No.setOnClickListener(new View.OnClickListener() {
@@ -572,22 +576,23 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
 
     }
 
-    private void editBook(String name, String descrption, String price, String quantity, ImageView imageView, String licenseFile, String spindata, Integer bookId, Dialog dialogs) {
+    private void editBook(String name, String descrption, String price, String quantity, ImageView imageView, String licenseFile, String spindata, Integer bookId, Dialog dialogs, String strAuthor) {
         if (name.isEmpty() || descrption.isEmpty() || price.isEmpty() || quantity.isEmpty() || spindata.equals(" ")) {
             Toast.makeText(activity, "please enter data" + bookId, Toast.LENGTH_SHORT).show();
         } else {
-            editDataIntoApi(name, descrption, price, quantity, licenseFile, spindata, bookId, dialogs);
+            editDataIntoApi(name, descrption, price, quantity, licenseFile, spindata, bookId, dialogs,strAuthor);
 
         }
     }
 
-    private void editDataIntoApi(String name, String descrption, String price, String quantity, String licenseFile, String spindata, Integer bookId, final Dialog dialogs) {
+    private void editDataIntoApi(String name, String descrption, String price, String quantity, String licenseFile, String spindata, Integer bookId, final Dialog dialogs, String strAuthor) {
         if (user.isOnline(getActivity())) {
             dialog = new NewProgressBar(getActivity());
             dialog.show();
             ApiCaller.editBookDetial(activity, Config.Url.editBookDetial,
                     name, descrption, spindata, quantity, price, localStorage.getString(LocalStorage.token),
-                    imgFile, bookId, new FutureCallback<EditBookResponseModel>() {
+                    imgFile, bookId,strAuthor,
+                    new FutureCallback<EditBookResponseModel>() {
                         @Override
                         public void onCompleted(Exception e, EditBookResponseModel result) {
                             if (result.getStatus() == true) {

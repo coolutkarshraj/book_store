@@ -191,6 +191,15 @@ public class MainActivity extends AppCompatActivity implements
                 }
             }
         });
+        nav_Email.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(nav_Email.getText().toString().trim().equals("Login or SignUp")){
+                    Intent i = new Intent(MainActivity.this,LoginActivity.class);
+                    startActivity(i);
+                }
+            }
+        });
         ll_enroll_course.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

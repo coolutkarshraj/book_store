@@ -659,7 +659,7 @@ public class ApiCaller {
 
     public static void editBookDetial(Activity activity, String url, String bookname, String bookdesc,
                                       String catId, String Quantity, String amount, String token, File image,
-                                      Integer bookId, final FutureCallback<EditBookResponseModel> apiCallBack) {
+                                      Integer bookId,String author, final FutureCallback<EditBookResponseModel> apiCallBack) {
         final Gson gson = new Gson();
         List<Part> files = new ArrayList();
         if (image == null) {
@@ -668,6 +668,7 @@ public class ApiCaller {
                     .setHeader("Authorization", "Bearer " + token)
                     .setHeader("Role", "store")
                     .setMultipartParameter("name", bookname)
+                    .setMultipartParameter("author", author)
                     .setMultipartParameter("categoryId", catId)
                     .setMultipartParameter("description", bookdesc)
                     .setMultipartParameter("price", amount)
@@ -689,6 +690,7 @@ public class ApiCaller {
                     .setHeader("Role", "store")
                     .addMultipartParts(files)
                     .setMultipartParameter("name", bookname)
+                    .setMultipartParameter("author", author)
                     .setMultipartParameter("categoryId", catId)
                     .setMultipartParameter("description", bookdesc)
                     .setMultipartParameter("price", amount)
