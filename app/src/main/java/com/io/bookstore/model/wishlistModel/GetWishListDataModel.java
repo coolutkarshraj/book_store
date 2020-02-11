@@ -13,7 +13,7 @@ public class GetWishListDataModel {
     private Object modifiedDate;
     @SerializedName("bookId")
     @Expose
-    private Integer bookId;
+    private Long bookId;
     @SerializedName("quantity")
     @Expose
     private Integer quantity;
@@ -37,7 +37,7 @@ public class GetWishListDataModel {
     private Integer avatarHeight;
     @SerializedName("price")
     @Expose
-    private Integer price;
+    private Long price;
     @SerializedName("dateAvailable")
     @Expose
     private String dateAvailable;
@@ -55,7 +55,7 @@ public class GetWishListDataModel {
     private Integer rating;
     @SerializedName("gstPrice")
     @Expose
-    private Integer gstPrice;
+    private Long gstPrice;
     @SerializedName("categoryId")
     @Expose
     private Object categoryId;
@@ -79,11 +79,11 @@ public class GetWishListDataModel {
         this.modifiedDate = modifiedDate;
     }
 
-    public Integer getBookId() {
+    public Long getBookId() {
         return bookId;
     }
 
-    public void setBookId(Integer bookId) {
+    public void setBookId(Long bookId) {
         this.bookId = bookId;
     }
 
@@ -143,11 +143,11 @@ public class GetWishListDataModel {
         this.avatarHeight = avatarHeight;
     }
 
-    public Integer getPrice() {
+    public Long getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(Long price) {
         this.price = price;
     }
 
@@ -191,11 +191,11 @@ public class GetWishListDataModel {
         this.rating = rating;
     }
 
-    public Integer getGstPrice() {
+    public Long getGstPrice() {
         return gstPrice;
     }
 
-    public void setGstPrice(Integer gstPrice) {
+    public void setGstPrice(Long gstPrice) {
         this.gstPrice = gstPrice;
     }
 

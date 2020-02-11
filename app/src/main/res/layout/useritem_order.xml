@@ -5,8 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="5dp"
-    android:layout_marginStart="5dp"
-    android:layout_marginEnd="5dp"
     app:cardCornerRadius="5dp"
     app:cardElevation="3dp">
 
@@ -53,13 +51,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
-        <androidx.cardview.widget.CardView
+        <LinearLayout
             android:id="@+id/linearLayout"
-            android:layout_width="95dp"
+            android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="16dp"
+
             android:background="@color/light_gray"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
@@ -75,7 +74,7 @@
                 tools:layout_editor_absoluteX="258dp"
                 tools:layout_editor_absoluteY="20dp" />
 
-        </androidx.cardview.widget.CardView>
+        </LinearLayout>
 
 
         <RelativeLayout
@@ -111,17 +110,7 @@
                 android:textColor="@android:color/holo_blue_light"
                 android:textSize="@dimen/h2" />
 
-            <ImageView
-                android:id="@+id/iv_editOrder"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_toEndOf="@+id/textView13"
-                android:background="@drawable/ic_edit_black_24dp"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="10dp"
-                android:backgroundTint="@color/colorPrimary"
 
-                tools:ignore="MissingConstraints" />
         </RelativeLayout>
 
 

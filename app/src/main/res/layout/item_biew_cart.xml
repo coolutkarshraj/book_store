@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginStart="5dp"
+    android:layout_marginEnd="5dp"
     android:layout_marginTop="@dimen/ten_dp">
 
     <RelativeLayout
@@ -13,10 +15,11 @@
 
         <ImageView
             android:id="@+id/imageView9"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_alignParentEnd="true"
             android:layout_margin="5dp"
+            android:background="@drawable/item_click_animation"
             app:srcCompat="@drawable/cross" />
 
         <ImageView
@@ -124,7 +127,7 @@
                         android:layout_height="20dp"
                         android:layout_above="@+id/rl_addremove"
                         android:layout_marginTop="2dp"
-                        android:background="@drawable/substract"
+                        android:background="@drawable/less"
                         android:backgroundTint="@color/black"
                         android:gravity="center_vertical" />
 

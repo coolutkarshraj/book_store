@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,7 +15,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,15 +24,10 @@ import com.io.bookstore.StaticData;
 import com.io.bookstore.activity.authentication.LoginActivity;
 import com.io.bookstore.activity.checkoutActivity.CheckoutActivity;
 import com.io.bookstore.adapter.CartAdapter;
-import com.io.bookstore.adapter.CourseAdapter;
-import com.io.bookstore.adapter.ItemAdapter;
-import com.io.bookstore.adapter.SToreAdapter;
 import com.io.bookstore.apicaller.ApiCaller;
-import com.io.bookstore.listeners.ItemClickListner;
 import com.io.bookstore.localStorage.DbHelper;
 import com.io.bookstore.localStorage.LocalStorage;
 import com.io.bookstore.model.bookListModel.CartLocalListResponseMode;
-import com.io.bookstore.model.categoryModel.CategoryModel;
 import com.io.bookstore.model.deliveryPriceModel.DeliveryResponseModel;
 import com.io.bookstore.utility.NewProgressBar;
 import com.io.bookstore.utility.Utils;
@@ -56,13 +49,14 @@ public class CartFragment extends Fragment {
     public static CartAdapter cartAdapter;
     public static ArrayList<CartLocalListResponseMode> list;
     LocalStorage localStorage;
-    TextView tv_name_1,tv_name_2,no_text_found;
+    public static TextView tv_name_1, tv_name_2, no_text_found;
     RadioButton rb_1st,rb_2nd;
-    NestedScrollView nested_sc_view;
-    TextView delivery_type,deliv_charge,tv_gst,total_cost;
+    public static NestedScrollView nested_sc_view;
+    public static TextView delivery_type, deliv_charge, tv_gst, total_cost, totalAll_cost;
     private DeliveryResponseModel deliveryModel;
     private String deliveryType;
-    int price,gst = 0;
+    public static int dilvery = 2;
+    public static int price, Qty, gst = 0;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -79,6 +73,7 @@ public class CartFragment extends Fragment {
         tv_gst =  root.findViewById(R.id.tv_gst);
         delivery_type =  root.findViewById(R.id.delivery_type);
         deliv_charge =  root.findViewById(R.id.deliv_charge);
+        totalAll_cost = root.findViewById(R.id.totalAll_cost);
         nested_sc_view =  root.findViewById(R.id.nested_sc_view);
         no_text_found =  root.findViewById(R.id.no_text_found);
         tv_name_2 =  root.findViewById(R.id.tv_name_2);
@@ -138,8 +133,11 @@ public class CartFragment extends Fragment {
 
                 if(rb_1st.isChecked()){
                     rb_2nd.setChecked(false);
+
                     delivery_type.setText(deliveryModel.getData().get(0).getType() + " Delivery");
                     deliv_charge.setText(deliveryModel.getData().get(0).getPrice() + deliveryModel.getData().get(0).getUnit());
+                    dilvery = deliveryModel.getData().get(0).getPrice();
+                    getSqliteData1();
                 }
             }
         });
@@ -148,8 +146,11 @@ public class CartFragment extends Fragment {
             public void onClick(View v) {
                 if(rb_2nd.isChecked()){
                     rb_1st.setChecked(false);
+
                     delivery_type.setText(deliveryModel.getData().get(1).getType() + " Delivery");
                     deliv_charge.setText(deliveryModel.getData().get(1).getPrice() + deliveryModel.getData().get(1).getUnit());
+                    dilvery = deliveryModel.getData().get(1).getPrice();
+                    getSqliteData1();
                 }
             }
         });
@@ -164,9 +165,11 @@ public class CartFragment extends Fragment {
                         deliveryType =   deliveryModel.getData().get(1).getType();
 
                     }
+                    int total = price + dilvery;
                     Intent intent = new Intent(getActivity(), CheckoutActivity.class);
                     intent.putExtra("deliveryType",deliveryType);
-                    intent.putExtra("totalprice",price +gst);
+                    intent.putExtra("totalprice", total);
+
                     startActivity(intent);
                 }else{
                     localStorage.putBooleAan(LocalStorage.isCart,true);
@@ -226,6 +229,10 @@ public class CartFragment extends Fragment {
         try {
             list.clear();
             jArray = new JSONArray(datajson);
+            int price = 0;
+            int gst = 0;
+            int qty = 0;
+            int sum = 0;
             if(jArray == null || jArray.length() == 0){
                 no_text_found.setVisibility(View.VISIBLE);
                 nested_sc_view.setVisibility(View.GONE);
@@ -243,13 +250,20 @@ public class CartFragment extends Fragment {
                     shoppingBagModel.setAvailibleQty(json_data.getString("avalible"));
                     shoppingBagModel.setPID(json_data.getString("P_ID"));
                     shoppingBagModel.setGst(json_data.getString("gstPrice"));
-                    list.add(shoppingBagModel);
-                 /*   price = price + Integer.parseInt( json_data.getString("Price")) ;
-                    gst = Integer.parseInt(gst + json_data.getString("gstPrice"));*/
-                }
+                    price = Integer.parseInt(json_data.getString("Price"));
+                    qty = Integer.parseInt(json_data.getString("Quantity"));
+                   // gst = Integer.parseInt(gst + json_data.getString("gstPrice"));
+                    sum += price * qty;
 
-              /*  tv_gst.setText(String.valueOf(gst));
-                total_cost.setText(String.valueOf(price));*/
+                    list.add(shoppingBagModel);
+
+                }
+                this.price = sum;
+             //   this.gst = gst;
+              //  tv_gst.setText(String.valueOf(gst) + "KD");
+                total_cost.setText(String.valueOf(sum) + "KD");
+                int alltotla = sum + dilvery;
+                totalAll_cost.setText(alltotla + "KD");
                 LinearLayoutManager gridLayoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
                 recyclerView.setLayoutManager(gridLayoutManager);
                 cartAdapter = new CartAdapter(getActivity(), list);

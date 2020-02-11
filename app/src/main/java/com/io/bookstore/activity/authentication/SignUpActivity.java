@@ -134,15 +134,20 @@ public class SignUpActivity extends AppCompatActivity {
 
                             if(e!= null){
                                 Utils.showAlertDialog(SignUpActivity.this, "Something Went Wrong");
+                                dialog.dismiss();
                                 return;
                             }
                             if(result != null){
-                                if(result.getStatus()){
-
-                                    Toast.makeText(SignUpActivity.this, ""+result.getMessage(), Toast.LENGTH_LONG).show();
-                                    Intent intent = new Intent(SignUpActivity.this,LoginActivity.class);
+                                if(result.getStatus()== true) {
+                                    dialog.dismiss();
+                                    Toast.makeText(SignUpActivity.this, "" + result.getMessage(), Toast.LENGTH_LONG).show();
+                                    Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
                                     startActivity(intent);
+                                }else {
+                                    dialog.dismiss();
+                                    Toast.makeText(SignUpActivity.this, "" + result.getMessage(), Toast.LENGTH_LONG).show();
                                 }
+
                             }
 
                         }

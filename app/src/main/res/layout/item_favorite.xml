@@ -1,39 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:cardview="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="180dp"
-    android:id="@+id/clayout"
+
+    android:layout_marginBottom="5dp"
     android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/imageView19"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="8dp"
+        android:layout_height="190dp"
+
         cardview:layout_constraintBottom_toBottomOf="parent"
         cardview:layout_constraintEnd_toEndOf="parent"
+        cardview:layout_constraintHorizontal_bias="0.0"
         cardview:layout_constraintStart_toEndOf="@+id/cardview_id_item"
         cardview:layout_constraintTop_toTopOf="parent"
+
+        cardview:layout_constraintVertical_bias="0.714"
         cardview:srcCompat="@color/blackOlive" />
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardview_id_item"
         android:layout_width="130dp"
         android:layout_height="190dp"
-        android:layout_margin="20dp"
+
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
         android:clickable="true"
-        android:elevation="15dp"
+        android:elevation="5dp"
         android:foreground="?android:attr/selectableItemBackground"
         cardview:cardBackgroundColor="@color/lightMediumGrey"
         cardview:cardCornerRadius="4dp"
         cardview:cardElevation="10dp"
+        cardview:layout_constraintBottom_toBottomOf="parent"
         cardview:layout_constraintStart_toStartOf="parent"
         cardview:layout_constraintTop_toTopOf="parent">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clayout"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="vertical">

@@ -1,15 +1,25 @@
 package com.io.bookstore.bookStore;
 
+import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -46,6 +56,8 @@ import com.io.bookstore.fragment.bookStoreFragment.ProfileAdminFragment;
 import com.io.bookstore.listeners.ItemClickListner;
 import com.io.bookstore.localStorage.LocalStorage;
 
+import java.util.Locale;
+
 public class BookStoreMainActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener, ItemClickListner {
     RelativeLayout ll_personal_info, ll_address, ll_payment, language, country,logout;
@@ -53,6 +65,7 @@ public class BookStoreMainActivity extends AppCompatActivity implements
     private NavigationView navigationView;
     private ImageView menu;
     Fragment currFrag;
+    RadioButton radioButton;
     TextView nav_user, nav_Email;
     CircleImageView imageView;
 
@@ -100,11 +113,11 @@ public class BookStoreMainActivity extends AppCompatActivity implements
         DrawableCompat.setTint(wrappedDrawable, getResources().getColor(R.color.gray));
         ivHeart.setImageResource(R.drawable.heart);
 
-        Drawable unwrappedDrawable1 = AppCompatResources.getDrawable(BookStoreMainActivity.this, R.drawable.cart);
+        Drawable unwrappedDrawable1 = AppCompatResources.getDrawable(BookStoreMainActivity.this, R.drawable.ic_local_mall_black_24dp);
         assert unwrappedDrawable1 != null;
         Drawable wrappedDrawable1 = DrawableCompat.wrap(unwrappedDrawable1);
         DrawableCompat.setTint(wrappedDrawable1, getResources().getColor(R.color.gray));
-        ivCart.setImageResource(R.drawable.cart);
+        ivCart.setImageResource(R.drawable.ic_local_mall_black_24dp);
 
         Drawable unwrappedDrawable2 = AppCompatResources.getDrawable(BookStoreMainActivity.this, R.drawable.profile);
         assert unwrappedDrawable2 != null;
@@ -146,6 +159,7 @@ public class BookStoreMainActivity extends AppCompatActivity implements
         ll_payment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                changeFrag(orderListBookFragment, true);
                 drawer.closeDrawer(Gravity.LEFT);
             }
         });
@@ -159,6 +173,7 @@ public class BookStoreMainActivity extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
                 drawer.closeDrawer(Gravity.LEFT);
+                changeLanguageDialog();
             }
         });
         fabSave.setOnClickListener(new View.OnClickListener() {
@@ -232,11 +247,11 @@ public class BookStoreMainActivity extends AppCompatActivity implements
         DrawableCompat.setTint(wrappedDrawable, getResources().getColor(R.color.gray));
         ivHeart.setImageResource(R.drawable.heart);
 
-        Drawable unwrappedDrawable1 = AppCompatResources.getDrawable(BookStoreMainActivity.this, R.drawable.cart);
+        Drawable unwrappedDrawable1 = AppCompatResources.getDrawable(BookStoreMainActivity.this, R.drawable.ic_local_mall_black_24dp);
         assert unwrappedDrawable1 != null;
         Drawable wrappedDrawable1 = DrawableCompat.wrap(unwrappedDrawable1);
         DrawableCompat.setTint(wrappedDrawable1, getResources().getColor(R.color.gray));
-        ivCart.setImageResource(R.drawable.cart);
+        ivCart.setImageResource(R.drawable.ic_local_mall_black_24dp);
 
         Drawable unwrappedDrawable2 = AppCompatResources.getDrawable(BookStoreMainActivity.this, R.drawable.ic_home);
         assert unwrappedDrawable2 != null;
@@ -269,7 +284,7 @@ public class BookStoreMainActivity extends AppCompatActivity implements
         Drawable wrappedDrawable2 = DrawableCompat.wrap(unwrappedDrawable2);
         DrawableCompat.setTint(wrappedDrawable2, getResources().getColor(R.color.gray));
         iv_profile.setImageResource(R.drawable.profile);
-        changeIconColor(BookStoreMainActivity.this, R.drawable.cart, 2);
+        changeIconColor(BookStoreMainActivity.this, R.drawable.ic_local_mall_black_24dp, 2);
 
 
       /*  if(localStorage.getInt(LocalStorage.role) ==0){
@@ -286,11 +301,11 @@ public class BookStoreMainActivity extends AppCompatActivity implements
         DrawableCompat.setTint(wrappedDrawable, getResources().getColor(R.color.gray));
         ivHome.setImageResource(R.drawable.ic_home);
 
-        Drawable unwrappedDrawable1 = AppCompatResources.getDrawable(BookStoreMainActivity.this, R.drawable.cart);
+        Drawable unwrappedDrawable1 = AppCompatResources.getDrawable(BookStoreMainActivity.this, R.drawable.ic_local_mall_black_24dp);
         assert unwrappedDrawable1 != null;
         Drawable wrappedDrawable1 = DrawableCompat.wrap(unwrappedDrawable1);
         DrawableCompat.setTint(wrappedDrawable1, getResources().getColor(R.color.gray));
-        ivCart.setImageResource(R.drawable.cart);
+        ivCart.setImageResource(R.drawable.ic_local_mall_black_24dp);
 
         Drawable unwrappedDrawable2 = AppCompatResources.getDrawable(BookStoreMainActivity.this, R.drawable.profile);
         assert unwrappedDrawable2 != null;
@@ -309,11 +324,11 @@ public class BookStoreMainActivity extends AppCompatActivity implements
         DrawableCompat.setTint(wrappedDrawable, getResources().getColor(R.color.gray));
         ivHeart.setImageResource(R.drawable.heart);
 
-        Drawable unwrappedDrawable1 = AppCompatResources.getDrawable(BookStoreMainActivity.this, R.drawable.cart);
+        Drawable unwrappedDrawable1 = AppCompatResources.getDrawable(BookStoreMainActivity.this, R.drawable.ic_local_mall_black_24dp);
         assert unwrappedDrawable1 != null;
         Drawable wrappedDrawable1 = DrawableCompat.wrap(unwrappedDrawable1);
         DrawableCompat.setTint(wrappedDrawable1, getResources().getColor(R.color.gray));
-        ivCart.setImageResource(R.drawable.cart);
+        ivCart.setImageResource(R.drawable.ic_local_mall_black_24dp);
 
         Drawable unwrappedDrawable2 = AppCompatResources.getDrawable(BookStoreMainActivity.this, R.drawable.profile);
         assert unwrappedDrawable2 != null;
@@ -460,6 +475,73 @@ public class BookStoreMainActivity extends AppCompatActivity implements
 
 
     }
+       private void changeLanguageDialog() {
+
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        int width = metrics.widthPixels;
+        int height = metrics.heightPixels;
+        dialog.getWindow().setLayout((6 * width) / 7, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.setContentView(R.layout.language_dialog);
+        dialog.setTitle("");
+        final Button Yes = (Button) dialog.findViewById(R.id.yes);
+        final Button No = (Button) dialog.findViewById(R.id.no);
+        final RadioGroup radioGroup = (RadioGroup) dialog.findViewById(R.id.radioGroup);
+        final ImageView Clear = (ImageView) dialog.findViewById(R.id.clear);
+
+
+        Yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int selectedId = radioGroup.getCheckedRadioButtonId();
+                radioButton = (RadioButton) dialog.findViewById(selectedId);
+                if (selectedId == -1) {
+                } else {
+                    if (radioButton.getText().equals("English")) {
+                        Locale locale = new Locale("en");
+                        Locale.setDefault(locale);
+                        Configuration config = new Configuration();
+                        config.locale = locale;
+                        getBaseContext().getResources().updateConfiguration(config, null);
+                        dialog.dismiss();
+                        initView();
+                        bindListner();
+                        startWorking();
+                    } else {
+                        Locale locale = new Locale("hi");
+                        Locale.setDefault(locale);
+                        Configuration config = new Configuration();
+                        config.locale = locale;
+                        getBaseContext().getResources().updateConfiguration(config, null);
+                        dialog.dismiss();
+                        initView();
+                        bindListner();
+                        startWorking();
+                    }
+                }
+            }
+        });
+        No.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        Clear.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("ResourceAsColor")
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+
+
+    }
+
 
     @Override
     public void onBackPressed() {

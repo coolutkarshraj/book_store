@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nested_sc_view"
-        android:visibility="gone"
+       android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -23,9 +23,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_min"
-                    android:layout_marginLeft="@dimen/sixteen_dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_marginTop="@dimen/ten_dp"
-                    android:layout_marginRight="@dimen/sixteen_dp">
+                    android:layout_marginRight="10dp">
 
                 </androidx.recyclerview.widget.RecyclerView>
 
@@ -58,6 +58,7 @@
                                 android:id="@+id/tv_name_1"
                                 android:layout_width="0dp"
                                 android:layout_weight="0.6"
+                                android:textStyle="bold"
                                 android:layout_height="wrap_content"
                                 android:text="@string/express_delivery">
 
@@ -163,6 +164,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="8dp"
                             android:layout_marginTop="8dp"
+                            android:visibility="gone"
                             android:layout_marginRight="8dp">
 
                             <TextView
@@ -178,7 +180,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentRight="true"
-                                android:text="2k days">
+                                android:text="">
 
                             </TextView>
                         </RelativeLayout>
@@ -193,7 +195,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentLeft="true"
-                                android:text="@string/total_cost">
+                                android:text="Item Cost">
 
                             </TextView>
 
@@ -202,11 +204,36 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentRight="true"
-                                android:text="2k days">
+                                android:text="">
 
                             </TextView>
                         </RelativeLayout>
 
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+
+                            android:layout_marginRight="8dp"
+                            android:layout_marginBottom="8dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentLeft="true"
+                                android:text="@string/total_cost">
+
+                            </TextView>
+
+                            <TextView
+                                android:id="@+id/totalAll_cost"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:text="">
+
+                            </TextView>
+                        </RelativeLayout>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 

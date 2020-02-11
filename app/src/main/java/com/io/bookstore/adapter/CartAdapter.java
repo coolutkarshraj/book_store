@@ -1,19 +1,12 @@
 package com.io.bookstore.adapter;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.database.Cursor;
-import android.graphics.drawable.ColorDrawable;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,6 +15,8 @@ import com.bumptech.glide.Glide;
 import com.io.bookstore.Config;
 import com.io.bookstore.R;
 import com.io.bookstore.StaticData;
+import com.io.bookstore.activity.homeActivity.MainActivity;
+import com.io.bookstore.activity.homeActivity.ui.cart.CartFragment;
 import com.io.bookstore.holder.CartHolder;
 import com.io.bookstore.localStorage.DbHelper;
 import com.io.bookstore.localStorage.LocalStorage;
@@ -46,7 +41,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartHolder> {
     ArrayList<CartLocalListResponseMode> item;
     int count;
     DbHelper dbHelper;
-
     public CartAdapter(Activity activity, ArrayList<CartLocalListResponseMode> item) {
         this.activity = activity;
         this.item = item;
@@ -74,17 +68,23 @@ public class CartAdapter extends RecyclerView.Adapter<CartHolder> {
             public void onClick(View v) {
                 DbHelper dbHelper;
                 dbHelper = new DbHelper(activity);
-
+                Cursor cursor = dbHelper.getData();
                 boolean isdeleted = false;
-
                 isdeleted = dbHelper.deleteData(model.getPID());
 
                 if (isdeleted == true) {
                     Utils.showAlertDialog(activity, "Data Deleted Sucessfully");
+                    if(cursor.getCount() == 0){
+                        MainActivity.tvcart.setVisibility(View.GONE);
+                        CartFragment.no_text_found.setVisibility(View.VISIBLE);
+                        CartFragment.nested_sc_view.setVisibility(View.GONE);
+                    }
+
                     getSqliteData();
 
                 } else {
                     Utils.showAlertDialog(activity, "Data is not deleted");
+                    getSqliteData();
                 }
             }
         });
@@ -96,6 +96,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartHolder> {
                 count--;
                 if (count <= 0) {
                     Utils.showAlertDialog(activity, "You cannot decrease quantity less than one");
+                    getSqliteData();
                 } else {
                     holder.textView8.setText(String.valueOf(count));
                     updateQuantity(model.getName(), model.getImage(), count,
@@ -113,6 +114,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartHolder> {
                 count++;
                 if (count >= Integer.parseInt(model.getAvailibleQty()) + 1) {
                     Utils.showAlertDialog(activity, "This much quantity is not availiable");
+                    getSqliteData();
                 } else {
                     holder.textView8.setText(String.valueOf(count));
                     updateQuantity(model.getName(), model.getImage(), count,
@@ -167,29 +169,57 @@ public class CartAdapter extends RecyclerView.Adapter<CartHolder> {
         datajson.replaceAll("\\\\", "");
         Log.d("datajson", "data" + datajson);
         StaticData.CartData = datajson;
+
         JSONArray jArray = null;
 
         try {
             list.clear();
             jArray = new JSONArray(datajson);
-            for (int i = 0; i < jArray.length(); i++) {
-                JSONObject json_data = jArray.getJSONObject(i);
-                CartLocalListResponseMode shoppingBagModel = new CartLocalListResponseMode();
-                shoppingBagModel.setId(json_data.getString("Id"));
-                shoppingBagModel.setName(json_data.getString("Name"));
-                shoppingBagModel.setQuantity(json_data.getString("Quantity"));
-                shoppingBagModel.setPrice(json_data.getString("Price"));
-                shoppingBagModel.setImage(json_data.getString("Image"));
-                shoppingBagModel.setAvailibleQty(json_data.getString("avalible"));
-                shoppingBagModel.setPID(json_data.getString("P_ID"));
-                shoppingBagModel.setGst(json_data.getString("gstPrice"));
-                list.add(shoppingBagModel);
-                LinearLayoutManager gridLayoutManager = new LinearLayoutManager(activity, RecyclerView.VERTICAL, false);
-                recyclerView.setLayoutManager(gridLayoutManager);
-                CartAdapter cartAdapter = new CartAdapter(activity, list);
-                recyclerView.setAdapter(cartAdapter);
-            }
+            int price = 0;
+            int gst = 0;
+            int qty = 0;
+            int sum = 0;
+            MainActivity.tvcart.setText("" + jArray.length());
 
+            if (jArray == null || jArray.length() == 0) {
+                CartFragment.no_text_found.setVisibility(View.VISIBLE);
+                CartFragment.nested_sc_view.setVisibility(View.GONE);
+                MainActivity.tvcart.setText("" + jArray.length());
+            } else {
+                MainActivity.tvcart.setText("" + jArray.length());
+                CartFragment.no_text_found.setVisibility(View.GONE);
+                CartFragment. nested_sc_view.setVisibility(View.VISIBLE);
+                for (int i = 0; i < jArray.length(); i++) {
+                    JSONObject json_data = jArray.getJSONObject(i);
+                    CartLocalListResponseMode shoppingBagModel = new CartLocalListResponseMode();
+                    shoppingBagModel.setId(json_data.getString("Id"));
+                    shoppingBagModel.setName(json_data.getString("Name"));
+                    shoppingBagModel.setQuantity(json_data.getString("Quantity"));
+                    shoppingBagModel.setPrice(json_data.getString("Price"));
+                    shoppingBagModel.setImage(json_data.getString("Image"));
+                    shoppingBagModel.setAvailibleQty(json_data.getString("avalible"));
+                    shoppingBagModel.setPID(json_data.getString("P_ID"));
+                    shoppingBagModel.setGst(json_data.getString("gstPrice"));
+                    price = Integer.parseInt(json_data.getString("Price"));
+                    qty = Integer.parseInt(json_data.getString("Quantity"));
+                    gst = Integer.parseInt(gst + json_data.getString("gstPrice"));
+                    sum += price * qty;
+                    list.add(shoppingBagModel);
+
+                    LinearLayoutManager gridLayoutManager = new LinearLayoutManager(activity, RecyclerView.VERTICAL, false);
+                    recyclerView.setLayoutManager(gridLayoutManager);
+                    CartAdapter cartAdapter = new CartAdapter(activity, list);
+                    recyclerView.setAdapter(cartAdapter);
+                }
+                CartFragment.price = sum;
+                CartFragment.gst = gst;
+                CartFragment.tv_gst.setText(String.valueOf(gst) + "KD");
+                CartFragment.total_cost.setText(String.valueOf(sum) + "KD");
+                int amt = sum + CartFragment.dilvery;
+                CartFragment.totalAll_cost.setText(amt + "KD");
+
+
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }

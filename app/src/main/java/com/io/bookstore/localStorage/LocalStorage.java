@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
-import com.io.bookstore.model.UserModel;
 import com.io.bookstore.model.loginModel.LoginModel;
 
 /**

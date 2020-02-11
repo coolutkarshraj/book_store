@@ -43,7 +43,7 @@
                     android:id="@+id/chatdelete"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Update Order Status"
+                    android:text="Add to cart"
                     android:textColor="@color/blue"
                     android:textSize="@dimen/startmargin" />
 
@@ -62,31 +62,11 @@
 
 
 
-                <RadioGroup
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/radioGroup">
-
-                    <RadioButton
-                        android:id="@+id/r1_Accepted"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Accepted"
-                        android:paddingStart="20dp"
-                        android:layout_marginTop="10dp"
-                        android:checked="false"
-                        android:textSize="@dimen/h2" />
-
-                    <RadioButton
-                        android:id="@+id/r2_Rejected"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Rejected"
-                        android:layout_marginTop="20dp"
-                        android:checked="false"
-                        android:paddingStart="20dp"
-                        android:textSize="@dimen/h2" />
-                </RadioGroup>
+              <TextView
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:textSize="@dimen/h1"
+                  android:text="Are you sure you want to add this book into cart"/>
 
             </LinearLayout>
 
@@ -102,19 +82,18 @@
 
                 <Button
                     android:id="@+id/no"
-                    android:layout_width="100dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20dp"
                     android:text="No"
-                    android:background="@drawable/round_corner_light_gray"
                     android:textSize="@dimen/h2" />
 
                 <Button
                     android:id="@+id/yes"
-                    android:layout_width="100dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Yes"
-                    android:background="@drawable/button_shape_red"
+
                     android:textSize="@dimen/h2" />
             </LinearLayout>
         </LinearLayout>

@@ -55,11 +55,12 @@
             android:layout_weight="0.6">
             <ImageView
                 android:id="@+id/ivCart"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:scaleType="center"
-                android:src="@drawable/cart">
+                android:src="@drawable/ic_local_mall_black_24dp">
 
             </ImageView>
 

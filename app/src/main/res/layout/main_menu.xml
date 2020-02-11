@@ -140,6 +140,7 @@
         android:id="@+id/country"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:visibility="gone"
         android:layout_gravity="center"
         android:layout_margin="8dp"
         android:background="@drawable/dotted_border"
@@ -219,9 +220,9 @@
             android:layout_toEndOf="@+id/log"
             android:layout_marginLeft="@dimen/sixteen_dp"
             android:layout_weight="2.7"
+            android:id="@+id/tv_logout"
             android:gravity="center_vertical"
-            android:textAlignment="gravity"
-            android:text="@string/logout"></TextView>
+            android:textAlignment="gravity"></TextView>
     </RelativeLayout>
 
     <RelativeLayout

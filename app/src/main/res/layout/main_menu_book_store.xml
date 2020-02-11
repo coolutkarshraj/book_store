@@ -49,6 +49,7 @@
         android:id="@+id/ll_address"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:visibility="gone"
         android:layout_gravity="center"
         android:layout_margin="8dp"
         android:background="@drawable/dotted_border"
@@ -79,6 +80,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="center"
+
         android:layout_margin="8dp"
         android:background="@drawable/dotted_border"
         android:orientation="horizontal"
@@ -89,7 +91,7 @@
             android:layout_height="50dp"
             android:layout_weight="0.3"
             android:id="@+id/pay"
-            android:src="@drawable/ic_payment_black_24dp">
+            android:src="@drawable/ic_format_list_bulleted_black_24dp">
 
         </ImageView>
 
@@ -137,6 +139,7 @@
         android:id="@+id/country"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:visibility="gone"
         android:layout_gravity="center"
         android:layout_margin="8dp"
         android:background="@drawable/dotted_border"
@@ -158,6 +161,7 @@
             android:layout_marginLeft="@dimen/sixteen_dp"
             android:layout_toEndOf="@id/locc"
             android:layout_weight="2.7"
+
             android:gravity="center_vertical"
             android:text="@string/country"></TextView>
     </RelativeLayout>

@@ -38,7 +38,7 @@
                 android:id="@+id/mark_fav"
                 android:layout_width="0dp"
                 android:layout_height="25dp"
-                android:layout_weight="0.3"
+                android:layout_weight="0.2"
                 android:padding="5dp"
 
                 android:src="@drawable/heart">
@@ -50,7 +50,7 @@
                 android:id="@+id/mark_fav_red"
                 android:layout_width="0dp"
                 android:layout_height="25dp"
-                android:layout_weight="0.3"
+                android:layout_weight="0.2"
                 android:padding="5dp"
                 android:visibility="gone"
                 android:backgroundTint="#f00000"
@@ -61,9 +61,10 @@
             <ImageView
                 android:id="@+id/mark_cart"
                 android:layout_width="0dp"
-                android:layout_weight="0.2"
+                android:layout_weight="0.3"
                 android:src="@drawable/cart"
                 android:padding="@dimen/five_dp"
+                android:background="@drawable/item_click_animation"
                 android:layout_height="25dp">
 
             </ImageView>

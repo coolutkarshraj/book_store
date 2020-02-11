@@ -67,16 +67,17 @@ public class ApiCaller {
         final Gson gson = new Gson();
         Ion.with(activity)
                 .load(UrlLocator.getFinalUrl(url))
-                .uploadProgressHandler(new ProgressCallback() {
+               /* .uploadProgressHandler(new ProgressCallback() {
                     @Override
                     public void onProgress(long uploaded, long total) {
                         int percent = (int) (uploaded * 100 / total);
                     }
                 })
-                .setTimeout(60 * 60 * 1000)
+                .setTimeout(60 * 60 * 1000)*/
                 .setMultipartParameter("name", firstname)
                 .setMultipartParameter("email", email)
                 .setMultipartParameter("phone", phone)
+                .setMultipartParameter("avatar", "")
                 .setMultipartParameter("password", password)
                 .setMultipartParameter("address", address)
                 .asJsonObject()

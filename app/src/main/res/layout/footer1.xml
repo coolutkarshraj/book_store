@@ -12,6 +12,7 @@
         android:id="@+id/home"
         android:layout_width="20dp"
         android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="0dp"
         android:layout_weight="0.6">
@@ -51,6 +52,7 @@
         android:id="@+id/order"
         android:layout_width="20dp"
         android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="0dp"
         android:layout_weight="0.6">
@@ -58,9 +60,10 @@
             android:id="@+id/ivCart"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:scaleType="center"
-            android:src="@drawable/cart">
+            android:src="@drawable/ic_local_mall_black_24dp">
 
         </ImageView>
 
@@ -69,6 +72,7 @@
         android:id="@+id/profile"
         android:layout_width="20dp"
         android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="30dp"
         android:layout_weight="0.6">

@@ -18,6 +18,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.io.bookstore.R;
 import com.io.bookstore.activity.authentication.LoginActivity;
 import com.io.bookstore.activity.authentication.SignUpActivity;
+import com.io.bookstore.activity.homeActivity.MainActivity;
 import com.io.bookstore.adapter.IntroViewPagerAdapter;
 import com.io.bookstore.localStorage.LocalStorage;
 import com.io.bookstore.model.ScreenItem;
@@ -100,23 +101,13 @@ public class IntroActivity extends AppCompatActivity {
                 localStorage.putBooleAan(LocalStorage.isFirstLaunch,true);
                 position = screenPager.getCurrentItem();
                 if (position < mList.size()) {
-
                     position++;
                     screenPager.setCurrentItem(position);
-
-
                 }
-
                 if (position == mList.size()-1) { // when we rech to the last screen
-
                     // TODO : show the GETSTARTED Button and hide the indicator and the next button
-
                     loaddLastScreen();
-
-
                 }
-
-
 
             }
         });
@@ -153,10 +144,8 @@ public class IntroActivity extends AppCompatActivity {
         btnGetStarted.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 localStorage.putBooleAan(LocalStorage.isFirstLaunch,true);
                 //open main activity
-
                 Intent mainActivity = new Intent(getApplicationContext(), LoginActivity.class);
                 overridePendingTransition(R.anim.slide_in_from_right,R.anim.slide_out_from_left);
                 startActivity(mainActivity);
@@ -166,8 +155,6 @@ public class IntroActivity extends AppCompatActivity {
                 savePrefsData();
                 finish();
 
-
-
             }
         });
 
@@ -176,10 +163,9 @@ public class IntroActivity extends AppCompatActivity {
         btnSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Intent intent = new Intent(IntroActivity.this, LoginActivity.class);
+                localStorage.putBooleAan(LocalStorage.isFirstLaunch,true);
+                Intent intent = new Intent(IntroActivity.this, MainActivity.class);
                 overridePendingTransition(R.anim.slide_in_from_right,R.anim.slide_out_from_left);
-
                 startActivity(intent);
 
             }
@@ -190,29 +176,22 @@ public class IntroActivity extends AppCompatActivity {
     }
 
     private boolean restorePrefData() {
-
-
         SharedPreferences pref = getApplicationContext().getSharedPreferences("myPrefs",MODE_PRIVATE);
         Boolean isIntroActivityOpnendBefore = pref.getBoolean("isIntroOpnend",false);
         return  isIntroActivityOpnendBefore;
 
-
-
     }
 
     private void savePrefsData() {
-
         SharedPreferences pref = getApplicationContext().getSharedPreferences("myPrefs",MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
         editor.putBoolean("isIntroOpnend",true);
         editor.commit();
 
-
     }
 
     // show the GETSTARTED Button and hide the indicator and the next button
     private void loaddLastScreen() {
-
         btnNext.setVisibility(View.INVISIBLE);
         btnSkip.setVisibility(View.INVISIBLE);
         btnGetStarted.setVisibility(View.VISIBLE);
@@ -220,8 +199,6 @@ public class IntroActivity extends AppCompatActivity {
         // TODO : ADD an animation the getstarted button
         // setup animation
         btnGetStarted.setAnimation(btnAnim);
-
-
 
     }
 }

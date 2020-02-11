@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.io.bookstore.Config;
 import com.io.bookstore.R;
+import com.io.bookstore.activity.homeActivity.MainActivity;
 import com.io.bookstore.adapter.BookListAdapter;
 import com.io.bookstore.apicaller.ApiCaller;
 import com.io.bookstore.localStorage.LocalStorage;
@@ -117,6 +118,7 @@ public class BookListFragment extends Fragment {
 
 
     private void setRecyclerViewData(List<Datum> result) {
+
          categoryAdapter = new BookListAdapter(getActivity(), result);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         childdata = (ArrayList<Datum>) result;

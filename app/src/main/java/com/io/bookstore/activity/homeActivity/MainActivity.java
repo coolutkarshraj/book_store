@@ -1,15 +1,44 @@
 package com.io.bookstore.activity.homeActivity;
 
+import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.database.Cursor;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.core.graphics.drawable.DrawableCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.io.bookstore.Config;
 import com.io.bookstore.R;
+import com.io.bookstore.StaticData;
 import com.io.bookstore.activity.authentication.LoginActivity;
 import com.io.bookstore.activity.homeActivity.ui.cart.CartFragment;
 import com.io.bookstore.activity.homeActivity.ui.deliveryAddress.DeliveryAddressFragment;
@@ -17,7 +46,6 @@ import com.io.bookstore.activity.homeActivity.ui.home.HomeFragment;
 import com.io.bookstore.activity.homeActivity.ui.order.OrderFragment;
 import com.io.bookstore.activity.profile.EditProfileFragment;
 import com.io.bookstore.activity.profile.ProfileFragment;
-import com.io.bookstore.bookStore.BookStoreMainActivity;
 import com.io.bookstore.fragment.BookListFragment;
 import com.io.bookstore.fragment.BookstoresFragment;
 import com.io.bookstore.fragment.BookstoresFragmentWithFilter;
@@ -25,35 +53,28 @@ import com.io.bookstore.fragment.CategoryListFragment;
 import com.io.bookstore.fragment.EnrollCourseListFragment;
 import com.io.bookstore.fragment.FavoriteItemsFragment;
 import com.io.bookstore.listeners.ItemClickListner;
+import com.io.bookstore.localStorage.DbHelper;
 import com.io.bookstore.localStorage.LocalStorage;
+import com.io.bookstore.model.bookListModel.CartLocalListResponseMode;
 import com.io.bookstore.model.loginModel.LoginModel;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.content.res.AppCompatResources;
-import androidx.core.graphics.drawable.DrawableCompat;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
+import java.util.ArrayList;
+import java.util.Locale;
+
 import de.hdodenhof.circleimageview.CircleImageView;
-
-import android.view.Gravity;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener, ItemClickListner {
-    RelativeLayout ll_personal_info, ll_address, ll_payment, language, country,logout,ll_enroll_course;
+    RelativeLayout ll_personal_info, ll_address, ll_payment, language, country, logout, ll_enroll_course;
     private DrawerLayout drawer;
     private NavigationView navigationView;
     private ImageView menu;
     Fragment currFrag;
+    RadioButton radioButton;
     HomeFragment homeFragment;
     CartFragment cartFragment;
     OrderFragment orderFragment;
@@ -61,11 +82,12 @@ public class MainActivity extends AppCompatActivity implements
     FavoriteItemsFragment favoriteItemsFragment;
     FloatingActionButton fabSave;
     ImageView iv_cart;
-    TextView nav_user,nav_Email;
+    TextView nav_user, nav_Email,tv_logout;
     CircleImageView imageView;
     LinearLayout home, favfourite, order, profile;
     ImageView ivHome, ivHeart, ivCart, iv_profile;
     ProfileFragment profileFragment;
+    ArrayList<CartLocalListResponseMode> item = new ArrayList<>();
     EditProfileFragment editProfileFragment;
     BookstoresFragment bookstoresFragment;
     BookstoresFragmentWithFilter bookstoresFragmentWithFilter;
@@ -73,6 +95,9 @@ public class MainActivity extends AppCompatActivity implements
     EnrollCourseListFragment enrollCourseListFragment;
     DeliveryAddressFragment deliveryAddressFragment;
     LocalStorage localStorage;
+    public static TextView tvcart;
+    public static ArrayList<CartLocalListResponseMode> list = new ArrayList<>();
+    DbHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,11 +125,11 @@ public class MainActivity extends AppCompatActivity implements
         DrawableCompat.setTint(wrappedDrawable, getResources().getColor(R.color.gray));
         ivHeart.setImageResource(R.drawable.heart);
 
-        Drawable unwrappedDrawable1 = AppCompatResources.getDrawable(MainActivity.this, R.drawable.cart);
+        Drawable unwrappedDrawable1 = AppCompatResources.getDrawable(MainActivity.this, R.drawable.ic_local_mall_black_24dp);
         assert unwrappedDrawable1 != null;
         Drawable wrappedDrawable1 = DrawableCompat.wrap(unwrappedDrawable1);
         DrawableCompat.setTint(wrappedDrawable1, getResources().getColor(R.color.gray));
-        ivCart.setImageResource(R.drawable.cart);
+        ivCart.setImageResource(R.drawable.ic_local_mall_black_24dp);
 
         Drawable unwrappedDrawable2 = AppCompatResources.getDrawable(MainActivity.this, R.drawable.profile);
         assert unwrappedDrawable2 != null;
@@ -154,6 +179,7 @@ public class MainActivity extends AppCompatActivity implements
         language.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                changeLanguageDialog();
                 drawer.closeDrawer(Gravity.LEFT);
             }
         });
@@ -173,6 +199,7 @@ public class MainActivity extends AppCompatActivity implements
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                dbHelper.deleteAll();
                 localStorage.putBooleAan(LocalStorage.isLoggedIn, false);
                 localStorage.putString(LocalStorage.token, "");
                 localStorage.putDistributorProfile(null);
@@ -185,8 +212,8 @@ public class MainActivity extends AppCompatActivity implements
         nav_user.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(nav_user.getText().toString().trim().equals("Hello Guest")){
-                    Intent i = new Intent(MainActivity.this,LoginActivity.class);
+                if (nav_user.getText().toString().trim().equals("Hello Guest")) {
+                    Intent i = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(i);
                 }
             }
@@ -194,8 +221,8 @@ public class MainActivity extends AppCompatActivity implements
         nav_Email.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(nav_Email.getText().toString().trim().equals("Login or SignUp")){
-                    Intent i = new Intent(MainActivity.this,LoginActivity.class);
+                if (nav_Email.getText().toString().trim().equals("Login or SignUp")) {
+                    Intent i = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(i);
                 }
             }
@@ -209,6 +236,73 @@ public class MainActivity extends AppCompatActivity implements
             }
         });
         footerClick();
+    }
+
+    private void changeLanguageDialog() {
+
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        int width = metrics.widthPixels;
+        int height = metrics.heightPixels;
+        dialog.getWindow().setLayout((6 * width) / 7, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.setContentView(R.layout.language_dialog);
+        dialog.setTitle("");
+        final Button Yes = (Button) dialog.findViewById(R.id.yes);
+        final Button No = (Button) dialog.findViewById(R.id.no);
+        final RadioGroup radioGroup = (RadioGroup) dialog.findViewById(R.id.radioGroup);
+        final ImageView Clear = (ImageView) dialog.findViewById(R.id.clear);
+
+
+        Yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int selectedId = radioGroup.getCheckedRadioButtonId();
+                radioButton = (RadioButton) dialog.findViewById(selectedId);
+                if (selectedId == -1) {
+                } else {
+                    if (radioButton.getText().equals("English")) {
+                        Locale locale = new Locale("en");
+                        Locale.setDefault(locale);
+                        Configuration config = new Configuration();
+                        config.locale = locale;
+                        getBaseContext().getResources().updateConfiguration(config, null);
+                        dialog.dismiss();
+                        initView();
+                        bindListner();
+                        startWorking();
+                    } else {
+                        Locale locale = new Locale("hi");
+                        Locale.setDefault(locale);
+                        Configuration config = new Configuration();
+                        config.locale = locale;
+                        getBaseContext().getResources().updateConfiguration(config, null);
+                        dialog.dismiss();
+                        initView();
+                        bindListner();
+                        startWorking();
+                    }
+                }
+            }
+        });
+        No.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        Clear.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("ResourceAsColor")
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+
+
     }
 
     private void footerClick() {
@@ -254,11 +348,11 @@ public class MainActivity extends AppCompatActivity implements
         DrawableCompat.setTint(wrappedDrawable, getResources().getColor(R.color.gray));
         ivHeart.setImageResource(R.drawable.heart);
 
-        Drawable unwrappedDrawable1 = AppCompatResources.getDrawable(MainActivity.this, R.drawable.cart);
+        Drawable unwrappedDrawable1 = AppCompatResources.getDrawable(MainActivity.this, R.drawable.ic_local_mall_black_24dp);
         assert unwrappedDrawable1 != null;
         Drawable wrappedDrawable1 = DrawableCompat.wrap(unwrappedDrawable1);
         DrawableCompat.setTint(wrappedDrawable1, getResources().getColor(R.color.gray));
-        ivCart.setImageResource(R.drawable.cart);
+        ivCart.setImageResource(R.drawable.ic_local_mall_black_24dp);
 
         Drawable unwrappedDrawable2 = AppCompatResources.getDrawable(MainActivity.this, R.drawable.ic_home);
         assert unwrappedDrawable2 != null;
@@ -291,7 +385,7 @@ public class MainActivity extends AppCompatActivity implements
         Drawable wrappedDrawable2 = DrawableCompat.wrap(unwrappedDrawable2);
         DrawableCompat.setTint(wrappedDrawable2, getResources().getColor(R.color.gray));
         iv_profile.setImageResource(R.drawable.profile);
-        changeIconColor(MainActivity.this, R.drawable.cart, 2);
+        changeIconColor(MainActivity.this, R.drawable.ic_local_mall_black_24dp, 2);
         changeFrag(orderFragment, true);
     }
 
@@ -302,11 +396,11 @@ public class MainActivity extends AppCompatActivity implements
         DrawableCompat.setTint(wrappedDrawable, getResources().getColor(R.color.gray));
         ivHome.setImageResource(R.drawable.ic_home);
 
-        Drawable unwrappedDrawable1 = AppCompatResources.getDrawable(MainActivity.this, R.drawable.cart);
+        Drawable unwrappedDrawable1 = AppCompatResources.getDrawable(MainActivity.this, R.drawable.ic_local_mall_black_24dp);
         assert unwrappedDrawable1 != null;
         Drawable wrappedDrawable1 = DrawableCompat.wrap(unwrappedDrawable1);
         DrawableCompat.setTint(wrappedDrawable1, getResources().getColor(R.color.gray));
-        ivCart.setImageResource(R.drawable.cart);
+        ivCart.setImageResource(R.drawable.ic_local_mall_black_24dp);
 
         Drawable unwrappedDrawable2 = AppCompatResources.getDrawable(MainActivity.this, R.drawable.profile);
         assert unwrappedDrawable2 != null;
@@ -325,11 +419,11 @@ public class MainActivity extends AppCompatActivity implements
         DrawableCompat.setTint(wrappedDrawable, getResources().getColor(R.color.gray));
         ivHeart.setImageResource(R.drawable.heart);
 
-        Drawable unwrappedDrawable1 = AppCompatResources.getDrawable(MainActivity.this, R.drawable.cart);
+        Drawable unwrappedDrawable1 = AppCompatResources.getDrawable(MainActivity.this, R.drawable.ic_local_mall_black_24dp);
         assert unwrappedDrawable1 != null;
         Drawable wrappedDrawable1 = DrawableCompat.wrap(unwrappedDrawable1);
         DrawableCompat.setTint(wrappedDrawable1, getResources().getColor(R.color.gray));
-        ivCart.setImageResource(R.drawable.cart);
+        ivCart.setImageResource(R.drawable.ic_local_mall_black_24dp);
 
         Drawable unwrappedDrawable2 = AppCompatResources.getDrawable(MainActivity.this, R.drawable.profile);
         assert unwrappedDrawable2 != null;
@@ -377,9 +471,10 @@ public class MainActivity extends AppCompatActivity implements
         orderFragment = new OrderFragment();
         favoriteItemsFragment = new FavoriteItemsFragment();
         deliveryAddressFragment = new DeliveryAddressFragment();
-
+        dbHelper = new DbHelper(this);
         navigationView = findViewById(R.id.nav_view);
         ll_enroll_course = findViewById(R.id.ll_course);
+        tv_logout = findViewById(R.id.tv_logout);
         menu = findViewById(R.id.menu);
         logout = (RelativeLayout) findViewById(R.id.ll_logout);
         nav_user = (TextView) findViewById(R.id.nav_username);
@@ -389,6 +484,7 @@ public class MainActivity extends AppCompatActivity implements
         ll_address = findViewById(R.id.ll_address);
         ll_payment = findViewById(R.id.ll_payment);
         language = findViewById(R.id.language);
+        tvcart = findViewById(R.id.tv_cart);
         country = findViewById(R.id.country);
         enrollCourseListFragment = new EnrollCourseListFragment();
         profileFragment = new ProfileFragment();
@@ -396,6 +492,7 @@ public class MainActivity extends AppCompatActivity implements
         bookListFragment = new BookListFragment();
         bookstoresFragmentWithFilter = new BookstoresFragmentWithFilter();
         navigationHeader();
+        getSqliteData1();
     }
 
 
@@ -457,19 +554,98 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
+    @SuppressLint("ResourceType")
     private void navigationHeader() {
-        LoginModel loginModel =  localStorage.getUserProfile() ;
-        if(loginModel == null){
+        LoginModel loginModel = localStorage.getUserProfile();
+        if (loginModel == null) {
             nav_user.setText("Hello Guest");
             nav_Email.setText("Login or SignUp");
+            tv_logout.setText("Login or SignUp");
             Glide.with(getApplicationContext()).load(R.drawable.person_logo).into(imageView);
-        }else {
+        } else {
+            tv_logout.setText(R.string.logout);
             nav_user.setText(localStorage.getUserProfile().getData().getUser().getName());
             nav_Email.setText(localStorage.getUserProfile().getData().getUser().getEmail());
             Glide.with(getApplicationContext()).load(Config.imageUrl + localStorage.getUserProfile().getData().getUser().getAvatarPath()).into(imageView);
 
         }
     }
+
+    private void getSqliteData1() {
+        DbHelper dbHelper;
+        dbHelper = new DbHelper(this);
+        Cursor cursor = dbHelper.getData();
+        if (cursor.getCount() == 0) {
+            Log.e("Error", "no Data");
+            return;
+        }
+        JSONArray resultSet = new JSONArray();
+        JSONObject returnObj = new JSONObject();
+
+        cursor.moveToFirst();
+        while (cursor.isAfterLast() == false) {
+
+            int totalColumn = cursor.getColumnCount();
+            JSONObject rowObject = new JSONObject();
+
+            for (int i = 0; i < totalColumn; i++) {
+                if (cursor.getColumnName(i) != null) {
+                    try {
+                        if (cursor.getString(i) != null) {
+                            Log.d("TAG_NAME2", cursor.getString(i));
+                            rowObject.put(cursor.getColumnName(i), cursor.getString(i));
+                        } else {
+                            rowObject.put(cursor.getColumnName(i), "");
+                        }
+                    } catch (Exception e) {
+                        Log.d("TAG_NAME1", e.getMessage());
+                    }
+                }
+            }
+            resultSet.put(rowObject);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        String datajson = resultSet.toString();
+        datajson.replaceAll("\\\\", "");
+        Log.d("datajson", datajson);
+        StaticData.CartData = datajson;
+        cartData(datajson);
+    }
+
+    private void cartData(String datajson) {
+        JSONArray jArray = null;
+
+        try {
+
+            jArray = new JSONArray(datajson);
+            if (jArray == null || jArray.length() == 0) {
+                tvcart.setVisibility(View.GONE);
+            } else {
+                tvcart.setVisibility(View.VISIBLE);
+                tvcart.setText("" + jArray.length());
+                for (int i = 0; i < jArray.length(); i++) {
+                    JSONObject json_data = jArray.getJSONObject(i);
+                    CartLocalListResponseMode shoppingBagModel = new CartLocalListResponseMode();
+                    shoppingBagModel.setId(json_data.getString("Id"));
+                    shoppingBagModel.setName(json_data.getString("Name"));
+                    shoppingBagModel.setQuantity(json_data.getString("Quantity"));
+                    shoppingBagModel.setPrice(json_data.getString("Price"));
+                    shoppingBagModel.setImage(json_data.getString("Image"));
+                    shoppingBagModel.setAvailibleQty(json_data.getString("avalible"));
+                    shoppingBagModel.setPID(json_data.getString("P_ID"));
+                    shoppingBagModel.setGst(json_data.getString("gstPrice"));
+                    list.add(shoppingBagModel);
+
+                }
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
     @Override
     public void onBackPressed() {

@@ -27,7 +27,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderHolder> {
 
     @Override
     public OrderHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(activity).inflate(R.layout.item_view_order, parent, false);
+        View view = LayoutInflater.from(activity).inflate(R.layout.user_item_order, parent, false);
         return new OrderHolder(view);
     }
 
@@ -37,7 +37,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderHolder> {
         holder.textView11.setText(courseicon.get(position).getCreatedDate());
         holder.textView12.setText("Status-" + " "+courseicon.get(position).getOrderStatus());
         holder.textView9.setText("Order -#" + " "+courseicon.get(position).getOrderId());
-        holder.iv_editOrder.setVisibility(View.GONE);
+
     }
     @Override
     public int getItemCount() {
