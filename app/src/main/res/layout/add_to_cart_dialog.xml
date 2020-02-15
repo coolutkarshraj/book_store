@@ -86,6 +86,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20dp"
                     android:text="No"
+                    android:background="@drawable/round_corner_light_gray"
                     android:textSize="@dimen/h2" />
 
                 <Button
@@ -93,7 +94,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Yes"
-
+                    android:background="@drawable/round_corner_button_yellow"
                     android:textSize="@dimen/h2" />
             </LinearLayout>
         </LinearLayout>

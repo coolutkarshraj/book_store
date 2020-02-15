@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -16,13 +17,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.io.bookstore.Config;
 import com.io.bookstore.R;
 import com.io.bookstore.activity.authentication.LoginActivity;
-import com.io.bookstore.activity.checkoutActivity.CheckoutActivity;
-import com.io.bookstore.activity.checkoutActivity.ProcessingActivity;
-import com.io.bookstore.adapter.CartAdapter;
 import com.io.bookstore.adapter.OrderAdapter;
 import com.io.bookstore.apicaller.ApiCaller;
+import com.io.bookstore.fragment.TrackFragment;
+import com.io.bookstore.listeners.RecyclerViewClickListener;
 import com.io.bookstore.localStorage.LocalStorage;
-import com.io.bookstore.model.PlaceOrderModel.OrderModel;
+import com.io.bookstore.model.getAllOrder.Datum;
 import com.io.bookstore.model.getAllOrder.GetAllOrder;
 import com.io.bookstore.model.loginModel.LoginModel;
 import com.io.bookstore.utility.NewProgressBar;
@@ -31,19 +31,24 @@ import com.io.bookstore.utility.userOnlineInfo;
 import com.koushikdutta.async.future.FutureCallback;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
-public class OrderFragment extends Fragment {
+public class OrderFragment extends Fragment implements RecyclerViewClickListener {
     private ArrayList itemname;
     private RecyclerView recyclerView;
     private OrderAdapter orderAdapter;
+    private TrackFragment track;
     private TextView loggedih;
     private LinearLayout hide;
     private LocalStorage localStorage;
+    private RecyclerViewClickListener item;
+    private List<Datum> courseicon;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
       View root = inflater.inflate(R.layout.order_fragment, container, false);
+        item = this;
         recyclerView = root.findViewById(R.id.recyclerView);
         loggedih = root.findViewById(R.id.loggedih);
         hide = root.findViewById(R.id.hide);
@@ -101,7 +106,8 @@ public class OrderFragment extends Fragment {
         LinearLayoutManager gridLayoutManager = new LinearLayoutManager(getActivity(),
                 RecyclerView.VERTICAL,false);
         recyclerView.setLayoutManager(gridLayoutManager);
-        orderAdapter = new OrderAdapter(getActivity(),order.getData());
+        orderAdapter = new OrderAdapter(getActivity(), order.getData(), item);
+        courseicon = order.getData();
         recyclerView.setAdapter(orderAdapter);
     }
 
@@ -113,5 +119,18 @@ public class OrderFragment extends Fragment {
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public void onClickPosition(int position) {
+        if (courseicon.get(position).getOrderStatus().equals("Rejected")) {
+            Toast.makeText(getActivity(), "your order was rejected and dont track", Toast.LENGTH_SHORT).show();
+        } else {
+            track = new TrackFragment(courseicon.get(position).getOrderStatus());
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.content_view, track)
+                    .addToBackStack(null)
+                    .commit();
+        }
     }
 }

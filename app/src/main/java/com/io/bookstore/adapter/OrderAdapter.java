@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.io.bookstore.R;
 import com.io.bookstore.holder.CartHolder;
 import com.io.bookstore.holder.OrderHolder;
+import com.io.bookstore.listeners.RecyclerViewClickListener;
 import com.io.bookstore.model.getAllOrder.Datum;
 
 import java.util.ArrayList;
@@ -19,10 +20,12 @@ import java.util.List;
 public class OrderAdapter extends RecyclerView.Adapter<OrderHolder> {
     private Activity activity;
     private List<Datum> courseicon;
+    private RecyclerViewClickListener item;
 
-    public OrderAdapter(Activity activity, List<Datum> courseicon) {
+    public OrderAdapter(Activity activity, List<Datum> courseicon, RecyclerViewClickListener item) {
         this.activity = activity;
         this.courseicon = courseicon;
+        this.item = item;
     }
 
     @Override
@@ -32,11 +35,17 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderHolder> {
     }
 
     @Override
-    public void onBindViewHolder(OrderHolder holder, int position) {
+    public void onBindViewHolder(OrderHolder holder, final int position) {
         holder.tv_product_id.setText(courseicon.get(position).toString());
         holder.textView11.setText(courseicon.get(position).getCreatedDate());
         holder.textView12.setText("Status-" + " "+courseicon.get(position).getOrderStatus());
         holder.textView9.setText("Order -#" + " "+courseicon.get(position).getOrderId());
+        holder.textView13.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               item.onClickPosition(position);
+            }
+        });
 
     }
     @Override

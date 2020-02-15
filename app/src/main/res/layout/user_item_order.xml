@@ -111,7 +111,6 @@
                 android:layout_toEndOf="@+id/textView12"
                 android:fontFamily="@font/exo"
                 android:text="Track"
-                android:visibility="gone"
                 android:textColor="@android:color/holo_blue_light"
                 android:textSize="@dimen/h2" />
 

@@ -88,7 +88,7 @@ public class CheckoutActivity extends AppCompatActivity {
         iv_back = findViewById(R.id.iv_back);
         tv_address = findViewById(R.id.tv_address);
         btnLoginToDashBoard = findViewById(R.id.btnLoginToDashBoard);
-
+        startService();
 
     }
 
@@ -97,7 +97,8 @@ public class CheckoutActivity extends AppCompatActivity {
         btnLoginToDashBoard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                callApiToPlaceOrder();
+                paypalPayment();
+
 
             }
         });
@@ -140,8 +141,8 @@ public class CheckoutActivity extends AppCompatActivity {
                     String paydetial = confirm.toJSONObject().toString(4);
                     JSONObject jsonObject;
                     jsonObject = new JSONObject(paydetial);
-
-                    Toast.makeText(activity, "" + jsonObject.getJSONObject("response"), Toast.LENGTH_SHORT).show();
+                    callApiToPlaceOrder();
+                    // Toast.makeText(activity, "" + jsonObject.getJSONObject("response"), Toast.LENGTH_SHORT).show();
 
                 } catch (JSONException e) {
                     e.printStackTrace();

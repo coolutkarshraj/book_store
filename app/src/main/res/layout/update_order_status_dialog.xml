@@ -76,13 +76,40 @@
                         android:layout_marginTop="10dp"
                         android:checked="false"
                         android:textSize="@dimen/h2" />
+                    <RadioButton
+                        android:id="@+id/r1_Shipped"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Shipped"
+                        android:paddingStart="20dp"
+                        android:layout_marginTop="10dp"
+                        android:checked="false"
+                        android:textSize="@dimen/h2" />
+                    <RadioButton
+                        android:id="@+id/r1_Out_For_Delivery"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Out For Delivery"
+                        android:paddingStart="20dp"
+                        android:layout_marginTop="10dp"
+                        android:checked="false"
+                        android:textSize="@dimen/h2" />
+                    <RadioButton
+                        android:id="@+id/r1_Delivered"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Delivered"
+                        android:paddingStart="20dp"
+                        android:layout_marginTop="10dp"
+                        android:checked="false"
+                        android:textSize="@dimen/h2" />
 
                     <RadioButton
                         android:id="@+id/r2_Rejected"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:text="Rejected"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="10dp"
                         android:checked="false"
                         android:paddingStart="20dp"
                         android:textSize="@dimen/h2" />

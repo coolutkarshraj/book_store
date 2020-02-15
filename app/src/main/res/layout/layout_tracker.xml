@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textView34"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/font_10"
+        android:text="Track your Order"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/ll0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/checkbox0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:clickable="false"
+                android:textAlignment="textStart"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pending"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:id="@+id/tv_pending" />
+        </LinearLayout>
+
+
+        <ImageView
+            android:id="@+id/view0"
+            android:layout_width="1dp"
+            android:layout_height="80dp"
+            android:layout_below="@id/ll0"
+            android:orientation="horizontal"
+            android:layout_marginStart="35dp"
+            android:background="@color/light_gray" />
+
+        <LinearLayout
+            android:id="@+id/ll1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/view0"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/checkbox1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:clickable="false"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Accepted"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:id="@+id/tv_accepted" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/view1"
+            android:layout_width="1dp"
+            android:layout_height="80dp"
+            android:orientation="horizontal"
+            android:layout_below="@id/ll1"
+            android:layout_marginStart="35dp"
+        
+            android:background="@color/light_gray" />
+
+        <LinearLayout
+            android:id="@+id/ll2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/view1"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/checkbox2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:clickable="false"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Shipped"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:id="@+id/tv_shipped" />
+        </LinearLayout>
+
+
+        <ImageView
+            android:id="@+id/view2"
+            android:layout_width="1dp"
+            android:layout_height="80dp"
+            android:layout_below="@id/ll2"
+            android:layout_marginStart="35dp"
+           android:orientation="vertical"
+            android:background="@color/light_gray" />
+
+        <LinearLayout
+            android:id="@+id/ll3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/view2"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/checkbox3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:clickable="false"
+
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Out for Delivery"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:id="@+id/tv_out_for_dilvery" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/view3"
+            android:layout_width="1dp"
+            android:layout_height="80dp"
+            android:layout_below="@id/ll3"
+            android:orientation="vertical"
+            android:layout_marginStart="35dp"
+            android:background="@color/light_gray" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/view3"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/checkbox4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:clickable="false"
+
+                android:textSize="14sp" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Delivered"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:id="@+id/tv_delivered" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>
