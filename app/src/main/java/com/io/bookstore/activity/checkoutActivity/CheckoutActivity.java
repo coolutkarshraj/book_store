@@ -365,8 +365,8 @@ public class CheckoutActivity extends AppCompatActivity {
             dialog = new NewProgressBar(activity);
             dialog.show();
             LocalStorage localStorage = new LocalStorage(this);
-            ApiCaller.addAddress(activity, Config.Url.addAddress, "Testing", strAddress1, "Home", strCity, "Test", Integer.valueOf(strPinCode), "Dubai",
-                    "Kuwait", "+965", strState, localStorage.getString(LocalStorage.token),
+            ApiCaller.addAddress(activity, Config.Url.addAddress, "", strAddress1, "", strCity, "", Integer.valueOf(strPinCode), "",
+                    "", "", strState, localStorage.getString(LocalStorage.token),
                     new FutureCallback<AddAddressResponseModel>() {
                         @Override
                         public void onCompleted(Exception e, AddAddressResponseModel result) {

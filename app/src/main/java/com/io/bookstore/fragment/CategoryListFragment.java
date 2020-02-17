@@ -104,12 +104,6 @@ public class CategoryListFragment extends Fragment {
         }
     }
 
-
-
-
-
-
-
         private void setRecyclerViewData(CategoryModel result) {
         categoryAdapter = new CategoryAdapter(getActivity(),result.getData());
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),3));

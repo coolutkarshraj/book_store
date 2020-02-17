@@ -52,10 +52,12 @@ import com.io.bookstore.fragment.BookstoresFragmentWithFilter;
 import com.io.bookstore.fragment.CategoryListFragment;
 import com.io.bookstore.fragment.EnrollCourseListFragment;
 import com.io.bookstore.fragment.FavoriteItemsFragment;
+import com.io.bookstore.fragment.category.CategoryGridFragment;
 import com.io.bookstore.listeners.ItemClickListner;
 import com.io.bookstore.localStorage.DbHelper;
 import com.io.bookstore.localStorage.LocalStorage;
 import com.io.bookstore.model.bookListModel.CartLocalListResponseMode;
+import com.io.bookstore.model.bookListModel.Category;
 import com.io.bookstore.model.loginModel.LoginModel;
 
 import org.json.JSONArray;
@@ -78,8 +80,10 @@ public class MainActivity extends AppCompatActivity implements
     HomeFragment homeFragment;
     CartFragment cartFragment;
     OrderFragment orderFragment;
+    TextView notification;
     CategoryListFragment categoryListFragment;
     FavoriteItemsFragment favoriteItemsFragment;
+    CategoryGridFragment categoryGridFragment;
     FloatingActionButton fabSave;
     ImageView iv_cart;
     TextView nav_user, nav_Email,tv_logout;
@@ -225,6 +229,14 @@ public class MainActivity extends AppCompatActivity implements
                     Intent i = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(i);
                 }
+            }
+        });
+        notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                changeFrag(categoryGridFragment, true);
+                drawer.closeDrawer(Gravity.LEFT);
             }
         });
         ll_enroll_course.setOnClickListener(new View.OnClickListener() {
@@ -486,8 +498,10 @@ public class MainActivity extends AppCompatActivity implements
         language = findViewById(R.id.language);
         tvcart = findViewById(R.id.tv_cart);
         country = findViewById(R.id.country);
+        notification = findViewById(R.id.autoCompleteTextView);
         enrollCourseListFragment = new EnrollCourseListFragment();
         profileFragment = new ProfileFragment();
+        categoryGridFragment = new CategoryGridFragment();
         categoryListFragment = new CategoryListFragment();
         bookListFragment = new BookListFragment();
         bookstoresFragmentWithFilter = new BookstoresFragmentWithFilter();

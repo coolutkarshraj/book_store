@@ -69,7 +69,7 @@ public class ApiCaller {
                 .load(UrlLocator.getFinalUrl(url))
                /* .uploadProgressHandler(new ProgressCallback() {
                     @Override
-                    public void onProgress(long uploaded, long total) {
+                    public void onProgress(long uploaded, long totaadl) {
                         int percent = (int) (uploaded * 100 / total);
                     }
                 })
@@ -218,7 +218,7 @@ public class ApiCaller {
         json.addProperty("name", name);
         json.addProperty("address", address);
         json.addProperty("addresstype", addresstype);
-        json.addProperty("phonenum", 980250410);
+        json.addProperty("phonenum", 0000000000);
         json.addProperty("city", city);
         json.addProperty("state", state);
         json.addProperty("country", country);
