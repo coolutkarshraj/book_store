@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
@@ -83,7 +84,7 @@ public class FavoriteItemsAdapter extends RecyclerView.Adapter<FavoriteItemsAdap
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         final GetWishListDataModel model = mData.get(position);
 
-
+        holder.textView31.setText(model.getName());
         Glide.with(mContext).load(Config.imageUrl + model.getAvatarPath()).into(holder.img_book_thumbnail);
 
         holder.clayout.setOnClickListener(new View.OnClickListener() {
@@ -92,10 +93,16 @@ public class FavoriteItemsAdapter extends RecyclerView.Adapter<FavoriteItemsAdap
                 addToCArt(model,position);
             }
         });
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
+        holder.imageView19.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 removeWishListItem(model.getBookId(),position);
+            }
+        });
+        holder.imageView21.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addToCArt(model,position);
             }
         });
 
@@ -105,7 +112,7 @@ public class FavoriteItemsAdapter extends RecyclerView.Adapter<FavoriteItemsAdap
         if (user.isOnline(mContext)) {
             dialog = new NewProgressBar(mContext);
             dialog.show();
-            LocalStorage localStorage = new LocalStorage(mContext);
+            final LocalStorage localStorage = new LocalStorage(mContext);
             ApiCaller.addOrRemoveWishList((Activity) mContext, Config.Url.addorremoveWishlist + bookId, localStorage.getString(LocalStorage.token),
                     new FutureCallback<AddorRemoveWishlistResponseModel>() {
                         @Override
@@ -115,16 +122,29 @@ public class FavoriteItemsAdapter extends RecyclerView.Adapter<FavoriteItemsAdap
                                 Utils.showAlertDialog((Activity) mContext, "Something Went Wrong");
                                 return;
                             }
-                            if (result.getStatus() == true) {
-                                Toast.makeText(mContext, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
-                                mData.remove(position);
-                                notifyItemRemoved(position);
-                                notifyItemRangeRemoved(position, mData.size());
-                                dialog.dismiss();
-                            } else {
-                                Toast.makeText(mContext, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
-                                dialog.dismiss();
+
+                            if(result != null){
+                                if(result.getStatus()== null){
+                                    if(result.getMessage().equals("Unauthorized")){
+                                        Utils.showAlertDialogLogout((Activity) mContext, "Your Session was expire. please Logout!",localStorage.getUserProfile().getData().getUser().getUserId());
+                                        dialog.dismiss();
+                                    }
+                                    dialog.dismiss();
+                                }else {
+                                    if (result.getStatus() == true) {
+                                        Toast.makeText(mContext, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                                        mData.remove(position);
+                                        notifyItemRemoved(position);
+                                        notifyItemRangeRemoved(position, mData.size());
+                                        dialog.dismiss();
+                                    } else {
+                                        Toast.makeText(mContext, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                                        dialog.dismiss();
+                                    }
+                                }
                             }
+
+
 
                         }
                     });
@@ -141,18 +161,20 @@ public class FavoriteItemsAdapter extends RecyclerView.Adapter<FavoriteItemsAdap
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        // TextView tv_book_price;
-        ImageView img_book_thumbnail;
+        TextView textView31;
+        ImageView img_book_thumbnail,imageView19,imageView21;
         CardView cardView;
         ConstraintLayout clayout;
 
         public MyViewHolder(View itemView) {
             super(itemView);
 
-            //  tv_book_price = (TextView) itemView.findViewById(R.id.tv_book_price) ;
+            textView31 = (TextView) itemView.findViewById(R.id.textView31) ;
             img_book_thumbnail = (ImageView) itemView.findViewById(R.id.iv_favorite);
             cardView = (CardView) itemView.findViewById(R.id.cardview_id_item);
             clayout = (ConstraintLayout) itemView.findViewById(R.id.clayout);
+            imageView19 = (ImageView) itemView.findViewById(R.id.imageView19);
+            imageView21 = (ImageView) itemView.findViewById(R.id.imageView21);
 
         }
     }

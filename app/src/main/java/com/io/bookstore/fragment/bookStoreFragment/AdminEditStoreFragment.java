@@ -19,13 +19,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+
 import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.io.bookstore.Config;
 import com.io.bookstore.R;
 import com.io.bookstore.apicaller.ApiCaller;
 import com.io.bookstore.localStorage.LocalStorage;
-import com.io.bookstore.model.editProfileResponseModel.EditProfileResponseModel;
 import com.io.bookstore.model.loginModel.LoginModel;
 import com.io.bookstore.model.store.EditStoreDetialResponseModel;
 import com.io.bookstore.model.store.StoreDetailResponseModel;
@@ -41,11 +46,6 @@ import org.json.JSONObject;
 
 import java.io.File;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.app.Activity.RESULT_OK;
@@ -124,10 +124,7 @@ public class AdminEditStoreFragment extends Fragment implements View.OnClickList
         switch (view.getId()) {
             case R.id.btn_save: {
                 validateData();
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_view, profileAdminFragment)
-                        .addToBackStack(null)
-                        .commit();
+
                 return;
             }
             case R.id.fab_editpic:{
@@ -164,9 +161,21 @@ public class AdminEditStoreFragment extends Fragment implements View.OnClickList
                                 Utils.showAlertDialog(activity, "Something Went Wrong");
                                 return;
                             }
+                            if (result != null) {
+                                if (result.getStatus() == null) {
+                                    if (result.getMessage().equals("Unauthorized")) {
+                                        Utils.showAlertDialogAdminLogout(getActivity(), "Your Session was expire. please Logout!", localStorage.getInt(LocalStorage.userId));
 
-                            dialog.dismiss();
-                            getdataSetIntoViews(result);
+                                        dialog.dismiss();
+                                    }
+                                    dialog.dismiss();
+                                } else {
+                                    dialog.dismiss();
+                                    getdataSetIntoViews(result);
+                                }
+                            }
+
+
 
                         }
                     });
@@ -302,7 +311,7 @@ public class AdminEditStoreFragment extends Fragment implements View.OnClickList
         if (user.isOnline(getActivity())) {
             dialog = new NewProgressBar(getActivity());
             dialog.show();
-            LocalStorage localStorage = new LocalStorage(getActivity());
+            final LocalStorage localStorage = new LocalStorage(getActivity());
             ApiCaller.editstoreDetial(getActivity(),Config.Url.storeEdit,strStoreName,strDescrption,strPhone,localStorage.getString(LocalStorage.token),imgFile,strAddressJson,
                     new FutureCallback<EditStoreDetialResponseModel>() {
                         @Override
@@ -312,12 +321,31 @@ public class AdminEditStoreFragment extends Fragment implements View.OnClickList
                                 Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                                 return;
                             }
-                            dialog.dismiss();
-                            if(result.getStatus() == true){
-                                Toast.makeText(getActivity(), ""+result.getMessage(), Toast.LENGTH_SHORT).show();
-                            }else {
-                                Toast.makeText(getActivity(), ""+result.getMessage(), Toast.LENGTH_SHORT).show();
+
+                            if (result != null) {
+                                if (result.getStatus() == null) {
+                                    if (result.getMessage().equals("Unauthorized")) {
+                                        Utils.showAlertDialogLogout(getActivity(), "Your Session was expire. please Logout!", localStorage.getUserProfile().getData().getUser().getUserId());
+                                        dialog.dismiss();
+                                    }
+                                    dialog.dismiss();
+                                } else {
+                                    if (result.getStatus() == true) {
+                                        getActivity().getSupportFragmentManager().beginTransaction()
+                                                .replace(R.id.content_view, profileAdminFragment)
+                                                .addToBackStack(null)
+                                                .commit();
+                                        Toast.makeText(getActivity(), "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(getActivity(), "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                    dialog.dismiss();
+
+                                }
                             }
+
+
+
 
                         }
                     });

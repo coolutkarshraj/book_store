@@ -1,4 +1,5 @@
 package com.io.bookstore.fragment;
+
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
@@ -7,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -19,8 +21,7 @@ import com.io.bookstore.Config;
 import com.io.bookstore.R;
 import com.io.bookstore.adapter.BookstoresAdapter;
 import com.io.bookstore.apicaller.ApiCaller;
-import com.io.bookstore.model.BookstoreModel;
-import com.io.bookstore.model.categoryModel.CategoryModel;
+import com.io.bookstore.listeners.ItemClickListner;
 import com.io.bookstore.model.storeModel.Datum;
 import com.io.bookstore.model.storeModel.StoreModel;
 import com.io.bookstore.utility.NewProgressBar;
@@ -35,18 +36,19 @@ import java.util.Objects;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class BookstoresFragment extends Fragment {
+public class BookstoresFragment extends Fragment implements View.OnClickListener {
 
     private ArrayList lstBook;
     private RecyclerView recyclerView;
     private EditText searchView2;
+    private ImageView iv_back;
     private BookstoresAdapter bookstoresAdapter;
     View root;
     private userOnlineInfo user;
     private NewProgressBar dialog;
     private StoreModel data;
     private ArrayList<Datum> datachild;
-
+    private ItemClickListner itemClickListner;
 
     public BookstoresFragment() {
         // Required empty public constructor
@@ -101,8 +103,11 @@ public class BookstoresFragment extends Fragment {
     private void initView() {
         user = new userOnlineInfo();
         dialog = new NewProgressBar(getActivity());
+        itemClickListner = (ItemClickListner) getActivity();
+        iv_back = root.findViewById(R.id.iv_back);
         recyclerView = root.findViewById(R.id.recyclerView_bookstore);
         searchView2 = root.findViewById(R.id.searchView2);
+        iv_back.setOnClickListener(this);
     }
 
 
@@ -149,6 +154,13 @@ public class BookstoresFragment extends Fragment {
     }
 
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.iv_back:
+                itemClickListner.onClick(6);
+                return;
 
-
+        }
+    }
 }

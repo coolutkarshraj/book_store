@@ -78,13 +78,35 @@
 
             </LinearLayout>
 
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center_horizontal">
+                <ImageView
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:background="@drawable/roundcirce"/>
+                <ImageView
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:layout_marginStart="@dimen/font_10"
+                    android:background="@drawable/roundcirce"/>
+                <ImageView
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:layout_marginStart="@dimen/font_10"
+                    android:background="@drawable/roundcirce"/>
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/five_dp"
-                android:background="@drawable/dotted_border"
+
                 android:orientation="vertical">
 
+              <!--  android:background="@drawable/dotted_border"-->
                 <!--<LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -154,8 +176,9 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_view_store"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
                     android:layout_margin="@dimen/five_dp">
 
                 </androidx.recyclerview.widget.RecyclerView>
@@ -167,9 +190,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/five_dp"
-                android:background="@drawable/dotted_border"
                 android:orientation="vertical">
 
+             <!--   android:background="@drawable/dotted_border"-->
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -210,9 +233,10 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/reccycler_ciew_course"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/five_dp"
+                    android:layout_gravity="center_horizontal"
                     android:fitsSystemWindows="true">
 
                 </androidx.recyclerview.widget.RecyclerView>

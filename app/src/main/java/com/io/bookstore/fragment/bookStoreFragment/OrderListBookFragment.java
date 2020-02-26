@@ -9,12 +9,10 @@ import android.widget.Toast;
 
 import com.io.bookstore.Config;
 import com.io.bookstore.R;
-import com.io.bookstore.adapter.AdminOrderAdapter;
-import com.io.bookstore.adapter.OrderAdapter;
+import com.io.bookstore.adapter.admin.AdminOrderAdapter;
 import com.io.bookstore.apicaller.ApiCaller;
 import com.io.bookstore.localStorage.LocalStorage;
 import com.io.bookstore.model.addAddressResponseModel.GetAdminOrderListResponseModel;
-import com.io.bookstore.model.getAllOrder.GetAllOrder;
 import com.io.bookstore.utility.NewProgressBar;
 import com.io.bookstore.utility.Utils;
 import com.io.bookstore.utility.userOnlineInfo;
@@ -70,12 +68,28 @@ public class OrderListBookFragment extends Fragment {
 
                         @Override
                         public void onCompleted(Exception e, GetAdminOrderListResponseModel result) {
-                            if (result.getData() == null || result.getData().size() == 0) {
+                            if (e != null) {
                                 dialog.dismiss();
-                                Toast.makeText(activity, "data empty", Toast.LENGTH_SHORT).show();
-                            } else {
-                                dialog.dismiss();
-                                setRecyclerViewData(result);
+                                Utils.showAlertDialog(activity, "Something Went Wrong");
+                                return;
+                            }
+
+                            if (result != null) {
+                                if (result.getStatus() == null) {
+                                    if (result.getMessage().equals("Unauthorized")) {
+                                        Utils.showAlertDialogAdminLogout(getActivity(), "Your Session was expire. please Logout!",localStorage.getInt(LocalStorage.userId));
+                                        dialog.dismiss();
+                                    }
+
+                                } else {
+                                    if (result.getData() == null || result.getData().size() == 0) {
+                                        dialog.dismiss();
+                                        Toast.makeText(activity, "your have no Item ", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        dialog.dismiss();
+                                        setRecyclerViewData(result);
+                                    }
+                                }
                             }
                         }
 

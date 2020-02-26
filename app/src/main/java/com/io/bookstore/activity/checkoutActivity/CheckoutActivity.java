@@ -1,5 +1,6 @@
 package com.io.bookstore.activity.checkoutActivity;
 
+import android.R.layout;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
@@ -12,9 +13,12 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +38,10 @@ import com.io.bookstore.localStorage.LocalStorage;
 import com.io.bookstore.model.PlaceOrderModel.OrderModel;
 import com.io.bookstore.model.addAddressResponseModel.AddAddressResponseModel;
 import com.io.bookstore.model.addAddressResponseModel.GetAddressListResponseModel;
+import com.io.bookstore.model.deliveryPriceModel.DeliveryResponseModel;
+import com.io.bookstore.model.dilvery.DilveryAddressDataModel;
+import com.io.bookstore.model.dilvery.DilveryAdressResponseModel;
+import com.io.bookstore.model.dilvery.GetDPriceResponseModel;
 import com.io.bookstore.utility.NewProgressBar;
 import com.io.bookstore.utility.Utils;
 import com.io.bookstore.utility.userOnlineInfo;
@@ -50,6 +58,7 @@ import org.json.JSONObject;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.List;
 
 public class CheckoutActivity extends AppCompatActivity {
     Button btnLoginToDashBoard;
@@ -60,10 +69,21 @@ public class CheckoutActivity extends AppCompatActivity {
     private TextView tv_address;
     private ArrayList itemname;
     private RecyclerView recyclerView;
+    public static TextView tv_name_1, tv_name_2, no_text_found;
     private AddressAdapter addressAdapter;
     private JsonArray jsonArray;
+    public static TextView delivery_type, deliv_charge, tv_gst, total_cost, totalAll_cost;
     private String deliveryType;
+    private DeliveryResponseModel deliveryModel;
+    RadioButton rb_1st, rb_2nd;
+    public static int dilvery = 2;
+    LocalStorage localStorage;
+    String message = "";
     int totalprice;
+    int totalpricessss;
+
+
+    List<String> listcity = new ArrayList<>();
     private static PayPalConfiguration config = new PayPalConfiguration()
             .environment(PayPalConfiguration.ENVIRONMENT_NO_NETWORK)
             .clientId(StaticData.PAYPAL_CLIENT_ID);
@@ -80,16 +100,69 @@ public class CheckoutActivity extends AppCompatActivity {
 
 
     private void intilizeView() {
-        deliveryType = getIntent().getStringExtra("deliveryType");
+
+
         totalprice = getIntent().getIntExtra("totalprice", 0);
         activity = CheckoutActivity.this;
         user = new userOnlineInfo();
+        tv_name_1 = findViewById(R.id.tv_name_1);
+        total_cost = findViewById(R.id.total_cost);
+        tv_gst = findViewById(R.id.tv_gst);
+        delivery_type = findViewById(R.id.delivery_type);
+        deliv_charge = findViewById(R.id.deliv_charge);
+        totalAll_cost = findViewById(R.id.totalAll_cost);
+        tv_name_2 = findViewById(R.id.tv_name_2);
+        rb_1st = findViewById(R.id.rb_1st);
+        rb_2nd = findViewById(R.id.rb_2nd);
+        localStorage = new LocalStorage(activity);
+        localStorage.putBooleAan(LocalStorage.isCart, false);
         recyclerView = findViewById(R.id.recyclerView);
         iv_back = findViewById(R.id.iv_back);
         tv_address = findViewById(R.id.tv_address);
         btnLoginToDashBoard = findViewById(R.id.btnLoginToDashBoard);
+        total_cost.setText(String.valueOf(totalprice) + "KD");
         startService();
+        callApiToGetDeliveryCharge();
 
+    }
+
+    private void callApiToGetDeliveryCharge() {
+        if (user.isOnline(this)) {
+
+            ApiCaller.getDileveryPrice(this, Config.Url.getDeliverCharge,
+                    new FutureCallback<DeliveryResponseModel>() {
+
+                        @Override
+                        public void onCompleted(Exception e, DeliveryResponseModel result) {
+                            if (e != null) {
+
+                                Utils.showAlertDialog(CheckoutActivity.this, "Something Went Wrong");
+                                return;
+                            }
+                            if (result.getStatus() == true) {
+
+                                deliveryModel = result;
+                                rb_1st.setChecked(true);
+                                tv_name_1.setText(result.getData().get(0).getType() + " Delivery");
+                                rb_1st.setText(result.getData().get(0).getPrice() + result.getData().get(0).getUnit());
+                                rb_2nd.setText("0KD");
+                                tv_name_2.setText(result.getData().get(1).getType() + " Delivery");
+                                delivery_type.setText(deliveryModel.getData().get(0).getType() + " Delivery");
+                                deliveryType = deliveryModel.getData().get(0).getType();
+                                deliv_charge.setText(deliveryModel.getData().get(0).getPrice() + deliveryModel.getData().get(0).getUnit());
+                                totalpricessss = totalprice + deliveryModel.getData().get(0).getPrice();
+                                totalAll_cost.setText(totalpricessss + "KD");
+                            } else {
+
+                                Toast.makeText(activity, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+
+                        }
+                    });
+        } else {
+
+            Utils.showAlertDialog(activity, "No Internet Connection");
+        }
     }
 
 
@@ -97,8 +170,11 @@ public class CheckoutActivity extends AppCompatActivity {
         btnLoginToDashBoard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                paypalPayment();
-
+                if (localStorage.getString(LocalStorage.addressId).equals("")) {
+                    Utils.showAlertDialog(activity, "please select delivery address");
+                } else {
+                    callApiToPlaceOrder();
+                }
 
             }
         });
@@ -111,9 +187,101 @@ public class CheckoutActivity extends AppCompatActivity {
         tv_address.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                getAllCities();
                 dialogOpen();
             }
         });
+        rb_1st.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (rb_1st.isChecked()) {
+                    rb_2nd.setChecked(false);
+
+                    delivery_type.setText(deliveryModel.getData().get(0).getType() + " Delivery");
+                    deliveryType = deliveryModel.getData().get(0).getType();
+                    deliv_charge.setText(deliveryModel.getData().get(0).getPrice() + deliveryModel.getData().get(0).getUnit());
+                    dilvery = deliveryModel.getData().get(0).getPrice();
+
+
+                    totalpricessss = totalprice + deliveryModel.getData().get(0).getPrice();
+                    totalAll_cost.setText(totalpricessss + "KD");
+                }
+            }
+        });
+        rb_2nd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (rb_2nd.isChecked()) {
+                    rb_1st.setChecked(false);
+
+                    delivery_type.setText(deliveryModel.getData().get(1).getType() + " Delivery");
+                    deliveryType = deliveryModel.getData().get(1).getType();
+                    if (localStorage.getString(LocalStorage.addressId).equals("")) {
+                        rb_2nd.setChecked(false);
+                        rb_1st.setChecked(true);
+                        Utils.showAlertDialog(activity, "please select delivery address");
+                    } else {
+                        getApiDPrice();
+                    }
+
+
+                    // getSqliteData1();
+                }
+            }
+        });
+
+
+    }
+
+    private void getApiDPrice() {
+        if (user.isOnline(activity)) {
+
+            final LocalStorage localStorage = new LocalStorage(this);
+            ApiCaller.orderPrice(activity, Config.Url.orderprice + "sId=" + localStorage.getString(LocalStorage.Dummy_Store_ID) + "&dId=" + localStorage.getString(LocalStorage.addressId), localStorage.getString(LocalStorage.token),
+                    new FutureCallback<GetDPriceResponseModel>() {
+                        @Override
+                        public void onCompleted(Exception e, GetDPriceResponseModel result) {
+                            if (e != null) {
+                                dialog.dismiss();
+                                Utils.showAlertDialog(activity, "Something Went Wrong");
+                                return;
+                            }
+
+                            if (result != null) {
+                                if (result.getStatus() == true) {
+                                    dialog.dismiss();
+                                    deliv_charge.setText(deliveryModel.getData().get(1).getPrice() + deliveryModel.getData().get(1).getUnit());
+                                    dilvery = result.getData().getPrice();
+                                    rb_2nd.setText(result.getData().getPrice() + "KD");
+                                    totalpricessss = totalprice + result.getData().getPrice();
+                                    totalAll_cost.setText(totalpricessss + "KD");
+                                } else {
+                                    if (result.getMessage().equals("Unauthorized")) {
+                                        Utils.showAlertDialogLogout(CheckoutActivity.this, "Your Session was expire. please Logout!", localStorage.getUserProfile().getData().getUser().getUserId());
+                                        dialog.dismiss();
+                                    } else if (result.getMessage().equals("District name issue")) {
+                                        message = "District name issue";
+                                     /*   rb_2nd.setChecked(false);
+                                        rb_1st.setChecked(true);*/;
+                                        deliv_charge.setText(2 + deliveryModel.getData().get(1).getUnit());
+                                        dilvery = 2;
+                                        rb_2nd.setText("2KD");
+                                        totalpricessss = totalprice + 2;
+                                        totalAll_cost.setText(totalpricessss + "KD");
+                                        //Utils.showAlertDialog(CheckoutActivity.this, "These books are not deliverd to this address .please change Address.");
+                                        dialog.dismiss();
+                                    }
+                                }
+                            }
+
+                        }
+                    });
+
+        } else {
+            Utils.showAlertDialog(activity, "No Internet Connection");
+        }
+
     }
 
     private void startService() {
@@ -141,7 +309,11 @@ public class CheckoutActivity extends AppCompatActivity {
                     String paydetial = confirm.toJSONObject().toString(4);
                     JSONObject jsonObject;
                     jsonObject = new JSONObject(paydetial);
-                    callApiToPlaceOrder();
+
+
+
+
+
                     // Toast.makeText(activity, "" + jsonObject.getJSONObject("response"), Toast.LENGTH_SHORT).show();
 
                 } catch (JSONException e) {
@@ -157,17 +329,17 @@ public class CheckoutActivity extends AppCompatActivity {
     }
 
     private void callApiToPlaceOrder() {
-        LocalStorage localStorage = new LocalStorage(this);
+        final LocalStorage localStorage = new LocalStorage(this);
         JsonObject jsonObject = new JsonObject();
         jsonArray = new JsonArray();
         jsonObject.addProperty("storeid", localStorage.getString(LocalStorage.Dummy_Store_ID));
         jsonObject.addProperty("deliverytype", deliveryType);
         jsonObject.addProperty("deliveryaddressid", localStorage.getString(LocalStorage.addressId));
-        jsonObject.addProperty("totalprice", totalprice);
+        jsonObject.addProperty("totalprice", totalpricessss);
         getSqliteData1();
         jsonObject.add("items", jsonArray);
 
-
+        Log.e("jsonob", "" + jsonObject);
         if (user.isOnline(this)) {
             dialog = new NewProgressBar(this);
             dialog.show();
@@ -182,16 +354,28 @@ public class CheckoutActivity extends AppCompatActivity {
                                 Utils.showAlertDialog(CheckoutActivity.this, "Something Went Wrong");
                                 return;
                             }
-                            if (result.getStatus() == true) {
-                                Intent intent = new Intent(CheckoutActivity.this, ProcessingActivity.class);
-                                startActivity(intent);
-                                finish();
-                            } else {
-                                dialog.dismiss();
-                                Toast.makeText(CheckoutActivity.this, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+
+                            if (result != null) {
+                                if (result.getStatus() == null) {
+                                    if (result.getMessage().equals("Unauthorized")) {
+                                        Utils.showAlertDialogLogout(activity, "Your Session was expire. please Logout!", localStorage.getUserProfile().getData().getUser().getUserId());
+                                        dialog.dismiss();
+                                    }
+                                    dialog.dismiss();
+                                } else {
+
+                                    if (result.getStatus() == true) {
+                                        Intent intent = new Intent(CheckoutActivity.this, ProcessingActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    } else {
+                                        dialog.dismiss();
+                                        Toast.makeText(CheckoutActivity.this, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
+
                             }
-
-
                         }
                     });
         } else {
@@ -265,7 +449,7 @@ public class CheckoutActivity extends AppCompatActivity {
         if (user.isOnline(activity)) {
             dialog = new NewProgressBar(activity);
             dialog.show();
-            LocalStorage localStorage = new LocalStorage(activity);
+            final LocalStorage localStorage = new LocalStorage(activity);
             ApiCaller.getUserSavedAddressList(activity, Config.Url.getAddressList, localStorage.getString(LocalStorage.token),
                     new FutureCallback<GetAddressListResponseModel>() {
                         @Override
@@ -276,8 +460,19 @@ public class CheckoutActivity extends AppCompatActivity {
                                 return;
                             }
 
-                            setRecyclerViewData(result);
-                            dialog.dismiss();
+                            if (result != null) {
+                                if (result.getStatus() == null) {
+                                    if (result.getMessage().equals("Unauthorized")) {
+                                        Utils.showAlertDialogLogout(CheckoutActivity.this, "Your Session was expire. please Logout!", localStorage.getUserProfile().getData().getUser().getUserId());
+                                        dialog.dismiss();
+                                    }
+                                    dialog.dismiss();
+                                } else {
+                                    setRecyclerViewData(result);
+                                    dialog.dismiss();
+
+                                }
+                            }
                         }
                     });
 
@@ -314,13 +509,16 @@ public class CheckoutActivity extends AppCompatActivity {
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.setContentView(R.layout.activity_add_adress);
         dialog.setTitle("");
+
         final Button btn_Add = (Button) dialog.findViewById(R.id.btn_Add);
         final Button btn_cancel = (Button) dialog.findViewById(R.id.btn_cancel);
         final EditText etAddress = (EditText) dialog.findViewById(R.id.et_address);
-        final EditText etCity = (EditText) dialog.findViewById(R.id.et_city);
+            final AutoCompleteTextView etCity = (AutoCompleteTextView) dialog.findViewById(R.id.et_city);
         final EditText etState = (EditText) dialog.findViewById(R.id.et_state);
         final EditText etPinCode = (EditText) dialog.findViewById(R.id.et_pincode);
 
+            ArrayAdapter aa = new ArrayAdapter(activity, layout.simple_list_item_1, listcity);
+            etCity.setAdapter(aa);
 
         btn_Add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -341,6 +539,7 @@ public class CheckoutActivity extends AppCompatActivity {
         dialog.show();
 
     }
+
 
     private void addAddressValidateData(EditText etAddress, EditText etCity, EditText etState, EditText etPinCode) {
         String strAddress1 = etAddress.getText().toString().trim();
@@ -364,9 +563,9 @@ public class CheckoutActivity extends AppCompatActivity {
         if (user.isOnline(activity)) {
             dialog = new NewProgressBar(activity);
             dialog.show();
-            LocalStorage localStorage = new LocalStorage(this);
-            ApiCaller.addAddress(activity, Config.Url.addAddress, "", strAddress1, "", strCity, "", Integer.valueOf(strPinCode), "",
-                    "", "", strState, localStorage.getString(LocalStorage.token),
+            final LocalStorage localStorage = new LocalStorage(this);
+            ApiCaller.addAddress(activity, Config.Url.addAddress, " ", strAddress1, " ", strCity, " ", Integer.valueOf(strPinCode), " ",
+                    " ", " ", " ", localStorage.getString(LocalStorage.token),
                     new FutureCallback<AddAddressResponseModel>() {
                         @Override
                         public void onCompleted(Exception e, AddAddressResponseModel result) {
@@ -385,6 +584,11 @@ public class CheckoutActivity extends AppCompatActivity {
                                     dialog.dismiss();
                                     Toast.makeText(activity, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
                                     getaddressListApi();
+                                } else {
+                                    if (result.getMessage().equals("Unauthorized")) {
+                                        Utils.showAlertDialogLogout(CheckoutActivity.this, "Your Session was expire. please Logout!", localStorage.getUserProfile().getData().getUser().getUserId());
+                                        dialog.dismiss();
+                                    }
                                 }
                             }
 
@@ -395,6 +599,61 @@ public class CheckoutActivity extends AppCompatActivity {
             Utils.showAlertDialog(activity, "No Internet Connection");
         }
     }
+
+
+        private void getAllCities () {
+            if (user.isOnline(activity)) {
+                final LocalStorage localStorage = new LocalStorage(this);
+                ApiCaller.getdistic(activity, Config.Url.disticGet,
+                        new FutureCallback<DilveryAdressResponseModel>() {
+                            @Override
+                            public void onCompleted(Exception e, DilveryAdressResponseModel result) {
+                                if (e != null) {
+                                    dialog.dismiss();
+                                    Utils.showAlertDialog(activity, "Something Went Wrong");
+                                    return;
+                                }
+                                if (e != null) {
+                                    Utils.showAlertDialog(activity, "Something Went Wrong");
+                                    return;
+                                }
+
+                                if (result != null) {
+                                    if (result.getStatus()) {
+                                        dialog.dismiss();
+                                        listData(result.getData());
+                                    } else {
+                                        if (result.getMessage().equals("Unauthorized")) {
+                                            Utils.showAlertDialogLogout(CheckoutActivity.this, "Your Session was expire. please Logout!", localStorage.getUserProfile().getData().getUser().getUserId());
+                                            dialog.dismiss();
+                                        }
+                                    }
+                                }
+
+                            }
+                        });
+
+            } else {
+                Utils.showAlertDialog(activity, "No Internet Connection");
+            }
+
+        }
+
+        private void listData (List < DilveryAddressDataModel > data) {
+
+            for (int i = 0; i < data.size(); i++) {
+                for (int j = 0; j < data.get(i).getCities().size(); j++) {
+
+              /*  city.setCityId(data.get(i).getCities().get(j).getCityId());
+                city.setId(data.get(i).getCities().get(j).getId());*/
+                    //  city.setName(data.get(i).getCities().get(j).getName());
+                    //   city.setDistrictId(data.get(i).getCities().get(j).getDistrictId());
+                    listcity.add(data.get(i).getCities().get(j).getName());
+                }
+            }
+
+            Log.e("city", "" + listcity.size());
+        }
 
 
     @Override

@@ -28,7 +28,6 @@ import com.io.bookstore.activity.profile.ProfileFragment;
 import com.io.bookstore.apicaller.ApiCaller;
 import com.io.bookstore.localStorage.LocalStorage;
 import com.io.bookstore.model.addAddressResponseModel.GetAddressListResponseModel;
-import com.io.bookstore.model.loginModel.LoginModel;
 import com.io.bookstore.model.updatePasswordModel.UpdatePasswordModel;
 import com.io.bookstore.utility.NewProgressBar;
 import com.io.bookstore.utility.Utils;
@@ -93,7 +92,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         if (user.isOnline(activity)) {
             dialog = new NewProgressBar(activity);
             dialog.show();
-            LocalStorage localStorage = new LocalStorage(getActivity());
+            final LocalStorage localStorage = new LocalStorage(getActivity());
             ApiCaller.getUserSavedAddressList(activity, Config.Url.getAddressList, localStorage.getString(LocalStorage.token),
                     new FutureCallback<GetAddressListResponseModel>() {
                         @Override
@@ -104,13 +103,30 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                                 return;
                             }
 
-                            dialog.dismiss();
-                            et_phone.setText(result.getData().getPhone());
-                            et_email.setText(result.getData().getEmail());
-                            et_address.setText(result.getData().getAddress());
-                            et_username.setText(result.getData().getName());
-                            ProfileFragment.et_firstname.setText(result.getData().getName());
-                         Glide.with(getActivity()).load(Config.imageUrl + result.getData().getAvatarPath()).into(ProfileFragment.iv_avatar);
+                            if(result != null){
+                                if(result.getStatus()== null){
+                                    if(result.getMessage().equals("Unauthorized")){
+                                        Utils.showAlertDialogLogout(getActivity(), "Your Session was expire. please Logout!",localStorage.getUserProfile().getData().getUser().getUserId());
+                                        dialog.dismiss();
+                                    }
+                                    dialog.dismiss();
+                                }else {
+                                    dialog.dismiss();
+                                    et_phone.setText(result.getData().getPhone());
+                                    et_email.setText(result.getData().getEmail());
+                                    et_address.setText(result.getData().getAddress());
+                                    et_username.setText(result.getData().getName());
+                                    ProfileFragment.et_firstname.setText(result.getData().getName());
+                                    if (result.getData().getAvatarPath() == null) {
+                                        Glide.with(getActivity()).load(R.drawable.person_logo).into(ProfileFragment.iv_avatar);
+                                    } else {
+                                        Glide.with(getActivity()).load(Config.imageUrl + result.getData().getAvatarPath()).into(ProfileFragment.iv_avatar);
+
+                                    }
+                                }
+                            }
+
+
 
                         }
                     });
@@ -168,7 +184,9 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         if (strOldPassword.equals("") || strNewPassword.equals("")) {
             oldPassword.setError("Please enter old password");
             newPassword.setError("Please enter new password");
-        } else {
+        } else if(strNewPassword.length()<5) {
+            oldPassword.setError("Please Enter Minimum 5 Digit Password");
+        }else {
             changePasswordApi(dialog);
         }
 
@@ -188,12 +206,20 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                             }
 
                             if(result != null){
-                                if(result.getStatus()){
+                                if(result.getStatus()== null){
+                                    if(result.getMessage().equals("Unauthorized")){
+                                        Utils.showAlertDialogLogout(getActivity(), "Your Session was expire. please Logout!",localStorage.getUserProfile().getData().getUser().getUserId());
+                                        dialog.dismiss();
+                                    }
+                                    dialog.dismiss();
+                                }else {
                                     SettingsFragment.this.dialog.dismiss();
                                     dialog.dismiss();
                                     changePasswordData(result);
                                 }
                             }
+
+
                         }
                     });
         } else {

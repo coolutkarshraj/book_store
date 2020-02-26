@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.SearchView;
@@ -14,9 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.io.bookstore.Config;
 import com.io.bookstore.R;
-import com.io.bookstore.activity.homeActivity.MainActivity;
 import com.io.bookstore.adapter.BookListAdapter;
 import com.io.bookstore.apicaller.ApiCaller;
+import com.io.bookstore.listeners.ItemClickListner;
 import com.io.bookstore.localStorage.LocalStorage;
 import com.io.bookstore.model.bookListModel.BookListModel;
 import com.io.bookstore.model.bookListModel.Datum;
@@ -31,7 +32,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class BookListFragment extends Fragment {
+public class BookListFragment extends Fragment implements View.OnClickListener {
 
 
     private RecyclerView recyclerView;
@@ -43,6 +44,8 @@ public class BookListFragment extends Fragment {
     private ArrayList<Datum> childdata;
     private LocalStorage localStorage;
     private BookListAdapter categoryAdapter;
+    private ItemClickListner itemClickListner;
+    private ImageView iv_back;
 
     public BookListFragment() {
         // Required empty public constructor
@@ -81,6 +84,9 @@ public class BookListFragment extends Fragment {
         recyclerView = root.findViewById(R.id.rv_cateory_list);
         searchView2 = root.findViewById(R.id.searchView2);
         user = new userOnlineInfo();
+        itemClickListner = (ItemClickListner) getActivity();
+        iv_back = root.findViewById(R.id.iv_back);
+        iv_back.setOnClickListener(this);
     }
 
 
@@ -99,14 +105,27 @@ public class BookListFragment extends Fragment {
                                 Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                                 return;
                             }
-                            if (result.getStatus() == true) {
-                                dialog.dismiss();
-                                data = result.getData();
-                                setRecyclerViewData(result.getData());
-                            } else {
-                                dialog.dismiss();
-                                Toast.makeText(getActivity(), "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                            if (result != null) {
+                                if (result.getStatus() == null) {
+                                    if (result.getMessage().equals("Unauthorized")) {
+                                        Utils.showAlertDialogLogout(getActivity(), "Your Session was expire. please Logout!",localStorage.getUserProfile().getData().getUser().getUserId());
+                                        dialog.dismiss();
+                                    }
+                                    dialog.dismiss();
+                                } else {
+                                    if (result.getStatus() == true) {
+                                        dialog.dismiss();
+                                        data = result.getData();
+                                        setRecyclerViewData(result.getData());
+                                    } else {
+                                        dialog.dismiss();
+                                        Toast.makeText(getActivity(), "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                }
                             }
+
+
+
 
 
                         }
@@ -118,11 +137,14 @@ public class BookListFragment extends Fragment {
 
 
     private void setRecyclerViewData(List<Datum> result) {
-
-         categoryAdapter = new BookListAdapter(getActivity(), result);
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
-        childdata = (ArrayList<Datum>) result;
-        recyclerView.setAdapter(categoryAdapter);
+        if (result.isEmpty()) {
+            Utils.showAlertDialog(getActivity(), "Books are not available in this category.");
+        } else {
+            categoryAdapter = new BookListAdapter(getActivity(), result);
+            recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+            childdata = (ArrayList<Datum>) result;
+            recyclerView.setAdapter(categoryAdapter);
+        }
 
     }
 
@@ -135,13 +157,17 @@ public class BookListFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String s) {
-                List<Datum> newlist = new ArrayList<>();
-                for (Datum productList : childdata) {
-                    String name = productList.getName();
-                    if (name.contains(s))
-                        newlist.add(productList);
+                if (childdata == null || childdata.isEmpty()) {
+
+                } else {
+                    List<Datum> newlist = new ArrayList<>();
+                    for (Datum productList : childdata) {
+                        String name = productList.getName();
+                        if (name.contains(s))
+                            newlist.add(productList);
+                    }
+                    categoryAdapter.setFilter(newlist);
                 }
-                categoryAdapter.setFilter(newlist);
                 return true;
             }
 
@@ -151,4 +177,11 @@ public class BookListFragment extends Fragment {
     }
 
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.iv_back:
+                itemClickListner.onClick(6);
+        }
+    }
 }

@@ -116,8 +116,6 @@ public class SignUpActivity extends AppCompatActivity {
         }
     }
 
-
-
     /*----------------------------------------------- Registration Api------------------------------------------------------*/
 
     private void registrationApi(String f_name, String u_emael, String et_number, String password,

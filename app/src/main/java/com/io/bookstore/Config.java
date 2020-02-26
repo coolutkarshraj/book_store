@@ -46,6 +46,12 @@ public class Config {
         public static String trendingInstitute = "institute/trending";
         public static String coursedetial = "course/detail?id=";
         public static String discountList = "discount/list";
+        public static String logout = "user/logout";
+        public static String storelogout = "store/logout";
+        public static String disticGet = "order/district/-1";
+        public static String orderprice = "order/delivery-price/?";
+        public static String contactus = "user/complain";
+        public static String getAddsList = "discount/adlist";
     }
 
     public final static int splashTimeout = 3000;

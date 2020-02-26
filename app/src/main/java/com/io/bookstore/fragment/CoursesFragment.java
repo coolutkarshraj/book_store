@@ -6,9 +6,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,10 +19,12 @@ import com.io.bookstore.Config;
 import com.io.bookstore.R;
 import com.io.bookstore.adapter.CoursesAdapter;
 import com.io.bookstore.apicaller.ApiCaller;
+import com.io.bookstore.listeners.ItemClickListner;
 import com.io.bookstore.listeners.RecyclerViewClickListener;
 import com.io.bookstore.model.CourseModel;
 import com.io.bookstore.model.courseModel.CourseDataModel;
 import com.io.bookstore.model.courseModel.CourseResponseModel;
+import com.io.bookstore.model.insituteModel.InsituiteDataModel;
 import com.io.bookstore.model.insituteModel.InsituiteResponseModel;
 import com.io.bookstore.utility.NewProgressBar;
 import com.io.bookstore.utility.Utils;
@@ -34,7 +38,7 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  */
 @SuppressLint("ValidFragment")
-public class CoursesFragment extends Fragment implements RecyclerViewClickListener {
+public class CoursesFragment extends Fragment implements RecyclerViewClickListener,View.OnClickListener {
 
     private Activity activity;
     private List<CourseDataModel> item;
@@ -45,6 +49,10 @@ public class CoursesFragment extends Fragment implements RecyclerViewClickListen
     private RecyclerViewClickListener recyclerViewClickListener;
     private CoursesAdapter coursesAdapter;
     int instituteId;
+    private SearchView searchView;
+    private ItemClickListner itemClickListner;
+    private ImageView iv_back;
+    private List<CourseDataModel> mData =new ArrayList<>();
 
     public CoursesFragment(Integer instituteId) {
         this.instituteId = instituteId;
@@ -68,7 +76,11 @@ public class CoursesFragment extends Fragment implements RecyclerViewClickListen
         user = new userOnlineInfo();
         dialog = new NewProgressBar(activity);
         item = new ArrayList<>();
+        searchView = root.findViewById(R.id.sv_courses);
+        itemClickListner = (ItemClickListner)getActivity();
+        iv_back = root.findViewById(R.id.iv_back);
         recyclerView = root.findViewById(R.id.recyclerView_courses);
+        iv_back.setOnClickListener(this);
     }
 
     private void bindListner() {
@@ -77,6 +89,7 @@ public class CoursesFragment extends Fragment implements RecyclerViewClickListen
 
     private void startWorking() {
         getcourseList();
+        searchViewSetUp();
     }
 
     private void getcourseList() {
@@ -113,6 +126,31 @@ public class CoursesFragment extends Fragment implements RecyclerViewClickListen
         recyclerView.setAdapter(coursesAdapter);
     }
 
+    private void searchViewSetUp() {
+        searchView.setQueryHint("Search More Courses");
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                List<CourseDataModel> newlist = new ArrayList<>();
+                for (CourseDataModel productList : item) {
+                    String name = productList.getCourseName();
+                    if (name.contains(s))
+                        newlist.add(productList);
+                }
+                coursesAdapter.setFilter(newlist);
+                return true;
+            }
+
+        });
+
+
+    }
+
 
     @Override
     public void onClickPosition(int position) {
@@ -121,5 +159,13 @@ public class CoursesFragment extends Fragment implements RecyclerViewClickListen
                 .replace(R.id.content_view, courseEnrollmentFragment)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    @Override
+    public void onClick(View v) {
+       switch (v.getId()){
+           case R.id.iv_back:
+               itemClickListner.onClick(6);
+       }
     }
 }

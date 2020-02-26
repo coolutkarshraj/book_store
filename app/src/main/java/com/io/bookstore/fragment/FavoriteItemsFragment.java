@@ -84,7 +84,7 @@ public class FavoriteItemsFragment extends Fragment implements SwipeRefreshLayou
         if (user.isOnline(activity)) {
             dialog = new NewProgressBar(activity);
             dialog.show();
-            LocalStorage localStorage = new LocalStorage(activity);
+            final LocalStorage localStorage = new LocalStorage(activity);
             ApiCaller.getWishList(activity, Config.Url.getWishList, localStorage.getString(LocalStorage.token),
                     new FutureCallback<GetWishlistResponseModel>() {
                         @Override
@@ -94,13 +94,26 @@ public class FavoriteItemsFragment extends Fragment implements SwipeRefreshLayou
                                 Utils.showAlertDialog(activity, "Something Went Wrong");
                                 return;
                             }
-                            if (result.getStatus() == true) {
-                                setRecyclerViewData(result.getData());
-                                dialog.dismiss();
-                            } else {
-                                Toast.makeText(activity, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
-                                dialog.dismiss();
+
+                            if(result != null){
+                                if(result.getStatus()== null){
+                                    if(result.getMessage().equals("Unauthorized")){
+                                        Utils.showAlertDialogLogout(getActivity(), "Your Session was expire. please Logout!",localStorage.getUserProfile().getData().getUser().getUserId());
+                                        dialog.dismiss();
+                                    }
+                                    dialog.dismiss();
+                                }else {
+                                    if (result.getStatus() == true) {
+                                        setRecyclerViewData(result.getData());
+                                        dialog.dismiss();
+                                    } else {
+                                        Toast.makeText(activity, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                                        dialog.dismiss();
+                                    }
+                                }
                             }
+
+
 
                         }
                     });

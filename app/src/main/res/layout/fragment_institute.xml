@@ -15,25 +15,39 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_arrow_back_black_24dp"
+                tools:ignore="MissingConstraints"
+                android:background="@drawable/item_click_animation"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="9dp"
+                android:layout_marginStart="15dp"/>
+
             <TextView
                 android:id="@+id/tv_institute_heading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Discover More Courses"
+                android:text="Discover More Institue"
                 android:textSize="20sp"
                 app:fontFamily="@font/arial_bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <SearchView
+            <androidx.appcompat.widget.SearchView
                 android:id="@+id/sv_institute"
                 android:layout_width="300dp"
                 android:layout_height="40dp"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/bg_searchview"
                 android:elevation="10dp"
+                app:iconifiedByDefault="false"
+                app:queryHint="Search by name..."
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_institute_heading" />

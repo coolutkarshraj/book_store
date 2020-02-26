@@ -31,6 +31,7 @@ import com.io.bookstore.StaticData;
 import com.io.bookstore.activity.authentication.LoginActivity;
 import com.io.bookstore.activity.homeActivity.MainActivity;
 import com.io.bookstore.apicaller.ApiCaller;
+import com.io.bookstore.fragment.SettingsFragment;
 import com.io.bookstore.localStorage.DbHelper;
 import com.io.bookstore.localStorage.LocalStorage;
 import com.io.bookstore.model.bookListModel.CartLocalListResponseMode;
@@ -166,6 +167,13 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.MyView
             }
         });
 
+        holder.iv_favorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showBookDetila(mData.get(position));
+            }
+        });
+
     }
 
 
@@ -176,7 +184,7 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.MyView
         if (user.isOnline(mContext)) {
             dialog = new NewProgressBar(mContext);
             dialog.show();
-            LocalStorage localStorage = new LocalStorage(mContext);
+            final LocalStorage localStorage = new LocalStorage(mContext);
             ApiCaller.addOrRemoveWishList((Activity) mContext, Config.Url.addorremoveWishlist + bookId, localStorage.getString(LocalStorage.token),
                     new FutureCallback<AddorRemoveWishlistResponseModel>() {
                         @Override
@@ -186,13 +194,26 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.MyView
                                 Utils.showAlertDialog((Activity) mContext, "Something Went Wrong");
                                 return;
                             }
-                            if (result.getStatus() == true) {
-                                Toast.makeText(mContext, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
-                                dialog.dismiss();
-                            } else {
-                                Toast.makeText(mContext, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
-                                dialog.dismiss();
+
+                            if(result != null){
+                                if(result.getStatus()== null){
+                                    if(result.getMessage().equals("Unauthorized")){
+                                        Utils.showAlertDialogLogout((Activity) mContext, "Your Session was expire. please Logout!",localStorage.getUserProfile().getData().getUser().getUserId());
+                                        dialog.dismiss();
+                                    }
+                                    dialog.dismiss();
+                                }else {
+                                    if (result.getStatus() == true) {
+                                        Toast.makeText(mContext, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                                        dialog.dismiss();
+                                    } else {
+                                        Toast.makeText(mContext, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                                        dialog.dismiss();
+                                    }
+                                }
                             }
+
+
 
                         }
                     });

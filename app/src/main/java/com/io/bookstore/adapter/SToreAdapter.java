@@ -26,6 +26,7 @@ public class SToreAdapter extends RecyclerView.Adapter<StoresHolder> {
     public SToreAdapter(Activity activity, List<Datum> coursename) {
         this.activity = activity;
         this.coursename = coursename;
+
     }
 
     @Override

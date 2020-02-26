@@ -21,9 +21,11 @@ import com.io.bookstore.fragment.InstituteFragment;
 import com.io.bookstore.listeners.ItemClickListner;
 import com.io.bookstore.listeners.RecyclerViewClickListener;
 import com.io.bookstore.model.InstituteModel;
+import com.io.bookstore.model.adminResponseModel.AdminBookDataModel;
 import com.io.bookstore.model.insituteModel.InsituiteDataModel;
 import com.io.bookstore.model.insituteModel.InsituiteResponseModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class InstitutesAdapter extends RecyclerView.Adapter<InstitutesAdapter.MyViewHolder> {
@@ -54,7 +56,7 @@ public class InstitutesAdapter extends RecyclerView.Adapter<InstitutesAdapter.My
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         InsituiteDataModel model = mData.get(position);
-        holder.cardView.setAnimation(AnimationUtils.loadAnimation(mContext,R.anim.fade_scale_animation));
+       // holder.cardView.setAnimation(AnimationUtils.loadAnimation(mContext,R.anim.fade_scale_animation));
         holder.tv_institute_title.setText(model.getInstituteName());
 
         holder.bv_institute_browse.setOnClickListener(new View.OnClickListener() {
@@ -66,6 +68,12 @@ public class InstitutesAdapter extends RecyclerView.Adapter<InstitutesAdapter.My
         });
         Glide.with(mContext).load(Config.imageUrl + model.getAvatarPath()).into(holder.iv_institute_thumbnail);
 
+    }
+
+    public void setFilter(List<InsituiteDataModel> newlist){
+        mData=new ArrayList<>();
+        mData.addAll(newlist);
+        notifyDataSetChanged();
     }
 
     @Override

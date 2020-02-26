@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.io.bookstore.model.LogoutResponseModel;
 import com.io.bookstore.model.PlaceOrderModel.OrderModel;
 import com.io.bookstore.model.addAddressResponseModel.AddAddressResponseModel;
 import com.io.bookstore.model.addAddressResponseModel.EditBookResponseModel;
@@ -17,12 +18,16 @@ import com.io.bookstore.model.adminResponseModel.DeleteBookResponseModel;
 import com.io.bookstore.model.bookListModel.BookListModel;
 import com.io.bookstore.model.categoryModel.CategoryModel;
 import com.io.bookstore.model.changePasswordOtpModel.ChangePasswordVerifyOtpModel;
+import com.io.bookstore.model.contactUs.AdsResponseModel;
+import com.io.bookstore.model.contactUs.ContactUsResponseModel;
 import com.io.bookstore.model.courseModel.CourseDetialResponseModel;
 import com.io.bookstore.model.courseModel.CourseResponseModel;
 import com.io.bookstore.model.courseModel.EnrollCourseResponseModel;
 import com.io.bookstore.model.courseModel.EnrolledCourseListResponseModel;
 import com.io.bookstore.model.deleteAddressResponseModel.DeleteAddressResponseModel;
 import com.io.bookstore.model.deliveryPriceModel.DeliveryResponseModel;
+import com.io.bookstore.model.dilvery.DilveryAdressResponseModel;
+import com.io.bookstore.model.dilvery.GetDPriceResponseModel;
 import com.io.bookstore.model.editProfileResponseModel.EditProfileResponseModel;
 import com.io.bookstore.model.filterByAddress.FilterAddressModel;
 import com.io.bookstore.model.getAddressResponseModel.AddressResponseModel;
@@ -48,7 +53,6 @@ import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.async.http.body.FilePart;
 import com.koushikdutta.async.http.body.Part;
 import com.koushikdutta.ion.Ion;
-import com.koushikdutta.ion.ProgressCallback;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -975,6 +979,104 @@ public class ApiCaller {
                     }
                 });
     }
+
+    public static void logout(Activity activity, String url,
+                              final FutureCallback<LogoutResponseModel> apiCallBack) {
+        final Gson gson = new Gson();
+        Ion.with(activity)
+                .load(UrlLocator.getFinalUrl(url))
+                .noCache()
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        LogoutResponseModel logoutResponseModel = gson.fromJson(result, LogoutResponseModel.class);
+                        apiCallBack.onCompleted(e, logoutResponseModel);
+                    }
+                });
+
+    }
+
+    public static void getdistic(Activity activity, String url,
+                                 final FutureCallback<DilveryAdressResponseModel> apiCallBack) {
+        final Gson gson = new Gson();
+        Ion.with(activity)
+                .load(UrlLocator.getFinalUrl(url))
+                .noCache()
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        DilveryAdressResponseModel dilveryAddressDataModel = gson.fromJson(result, DilveryAdressResponseModel.class);
+                        apiCallBack.onCompleted(e, dilveryAddressDataModel);
+                    }
+                });
+
+    }
+
+    public static void orderPrice(Activity activity, String url, String token,
+                                  final FutureCallback<GetDPriceResponseModel> apiCallBack) {
+        final JsonObject json = new JsonObject();
+        final Gson gson = new Gson();
+        Ion.with(activity)
+                .load(UrlLocator.getFinalUrl(url))
+                .setHeader("Authorization", "Bearer " + token)
+                .noCache()
+                .setJsonObjectBody(json)
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        GetDPriceResponseModel dilveryAddressDataModel = gson.fromJson(result, GetDPriceResponseModel.class);
+                        apiCallBack.onCompleted(e, dilveryAddressDataModel);
+                    }
+                });
+
+    }
+
+    public static void contactUs(Activity activity, String url, String token,
+                                  String email,String title,String body,
+                                  final FutureCallback<ContactUsResponseModel> apiCallBack) {
+        final JsonObject json = new JsonObject();
+        json.addProperty("email", email);
+        json.addProperty("tittle", title);
+        json.addProperty("body", body);
+
+        final Gson gson = new Gson();
+        Ion.with(activity)
+                .load(UrlLocator.getFinalUrl(url))
+                .setHeader("Authorization", "Bearer " + token)
+                .noCache()
+                .setJsonObjectBody(json)
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        ContactUsResponseModel contactUsResponseModel = gson.fromJson(result, ContactUsResponseModel.class);
+                        apiCallBack.onCompleted(e, contactUsResponseModel);
+                    }
+                });
+
+    }
+
+    public static void getAdvertisment(Activity activity, String url,
+                                  final FutureCallback<AdsResponseModel> apiCallBack) {
+
+        final Gson gson = new Gson();
+        Ion.with(activity)
+                .load(UrlLocator.getFinalUrl(url))
+                .noCache()
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        AdsResponseModel adsResponseModel = gson.fromJson(result, AdsResponseModel.class);
+                        apiCallBack.onCompleted(e, adsResponseModel);
+                    }
+                });
+
+    }
+
 
 
 }

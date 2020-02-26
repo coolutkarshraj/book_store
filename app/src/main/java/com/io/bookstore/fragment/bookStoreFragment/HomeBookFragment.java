@@ -33,7 +33,7 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.io.bookstore.Config;
 import com.io.bookstore.R;
-import com.io.bookstore.adapter.AdminBookListAdapter;
+import com.io.bookstore.adapter.admin.AdminBookListAdapter;
 import com.io.bookstore.apicaller.ApiCaller;
 import com.io.bookstore.listeners.RecyclerViewClickListener;
 import com.io.bookstore.localStorage.LocalStorage;
@@ -41,6 +41,7 @@ import com.io.bookstore.model.addAddressResponseModel.EditBookResponseModel;
 import com.io.bookstore.model.adminResponseModel.AddBookResponseModel;
 import com.io.bookstore.model.adminResponseModel.AdminBookDataModel;
 import com.io.bookstore.model.adminResponseModel.AdminBookListResponseModel;
+import com.io.bookstore.model.categoryModel.CategoryModel;
 import com.io.bookstore.utility.ImageUtility;
 import com.io.bookstore.utility.NewProgressBar;
 import com.io.bookstore.utility.PermissionFile;
@@ -90,9 +91,11 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
     String strName, strDesc, strImage, strPrice, strQuantity, strCategory,strAuthor;
     String spindata = "-1";
     LocalStorage localStorage;
-    private String[] items = {" Select Category ", "Arabic Books", "English Books", "Computer Supplies", "Games toys", "School Supplies",
+    List<String> items =new ArrayList<>();
+    List<String> categoryId =new ArrayList<>();
+   /* private String[] items = {" Select Category ", "Arabic Books", "English Books", "Computer Supplies", "Games toys", "School Supplies",
             "Kids", "Office", "Art", "Smartphones"};
-    String[] categoryId = {" ", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
+    String[] categoryId = {" ", "1", "2", "3", "4", "5", "6", "7", "8", "9"};*/
     private FloatingActionButton floatingActionButton;
     File imagefile;
     private File imgFile;
@@ -152,6 +155,7 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
 
     private void startWorking() {
         getBookList();
+        getCategoryList();
         searchViewSetUp();
 
     }
@@ -165,12 +169,23 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
 
                         @Override
                         public void onCompleted(Exception e, AdminBookListResponseModel result) {
-                            dialog.dismiss();
-                            if (result == null) {
+                            if(result != null){
+                                if(result.getStatus()== null){
+                                    if(result.getMessage().equals("Unauthorized")){
+                                        Utils.showAlertDialogAdminLogout(getActivity(), "Your Session was expire. please Logout!",localStorage.getInt(LocalStorage.userId));
+                                        dialog.dismiss();
+                                    }
+                                    dialog.dismiss();
+                                }else {
+                                    setRecyclerViewData(result);
+                                    dialog.dismiss();
+
+                                }
+                            }else {
                                 Toast.makeText(getActivity(), "No Data Found", Toast.LENGTH_SHORT).show();
-                                return;
                             }
-                            setRecyclerViewData(result);
+
+
 
                         }
                     });
@@ -192,6 +207,42 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
         }
 
 
+    }
+
+    private void getCategoryList() {
+        if (user.isOnline(getActivity())) {
+
+            ApiCaller.getCategoryModel(getActivity(), Config.Url.getCategoryModel, "",
+                    new FutureCallback<CategoryModel>() {
+
+                        @Override
+                        public void onCompleted(Exception e, CategoryModel result) {
+                            if (e != null) {
+
+                                Utils.showAlertDialog(getActivity(), "Something Went Wrong");
+                                return;
+                            }
+                            if (result.getStatus() == true) {
+
+                                items.clear();
+                                categoryId.clear();
+                                for(int i = 0;i<result.getData().size();i++){
+                                    String name= result.getData().get(i).getName();
+                                    items.add(name);
+                                    categoryId.add(String.valueOf(result.getData().get(i).getCategoryId()));
+                                }
+
+                            } else {
+
+                                Toast.makeText(getActivity(), "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+
+
+                        }
+                    });
+        } else {
+            Utils.showAlertDialog(getActivity(), "No Internet Connection");
+        }
     }
 
     private void dialogOpenForAddBook() {
@@ -229,7 +280,7 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
         spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                spindata = categoryId[i];
+                spindata = categoryId.get(i);
             }
 
             @Override
@@ -358,15 +409,33 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
             ApiCaller.upload(activity, Config.Url.addbook, author, strBookName, strDescrpition, spindata, strQuantity, strPrice, localStorage.getString(LocalStorage.token), imgFile, new FutureCallback<AddBookResponseModel>() {
                 @Override
                 public void onCompleted(Exception e, AddBookResponseModel result) {
-                    if (result.getStatus() == true) {
+                    if (e != null) {
                         dialog.dismiss();
-                        dialogs.dismiss();
-                        Toast.makeText(activity, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
-                    } else {
-                        dialog.dismiss();
-                        dialogs.dismiss();
-                        Toast.makeText(activity, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                        Utils.showAlertDialog(getActivity(), "Something Went Wrong");
+                        return;
                     }
+
+                    if(result != null){
+                        if(result.getStatus()== null){
+                            if(result.getMessage().equals("Unauthorized")){
+                                Utils.showAlertDialogAdminLogout(getActivity(), "Your Session was expire. please Logout!",localStorage.getInt(LocalStorage.userId));
+                                dialog.dismiss();
+                            }
+                        }else {
+                            if (result.getStatus() == true) {
+                                dialog.dismiss();
+                                dialogs.dismiss();
+                                Toast.makeText(activity, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                            } else {
+                                dialog.dismiss();
+                                dialogs.dismiss();
+                                Toast.makeText(activity, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+
+                        }
+                    }
+
+
                 }
             });
 
@@ -429,7 +498,7 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
         spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                spindata = categoryId[i];
+                spindata = categoryId.get(i);
             }
 
             @Override
@@ -465,8 +534,23 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
 
                         @Override
                         public void onCompleted(Exception e, AdminBookListResponseModel result) {
-                            dialog.dismiss();
-                            setRecyclerViewData(result);
+
+                            if(result != null){
+                                if(result.getStatus()== null){
+                                    if(result.getMessage().equals("Unauthorized")){
+                                        Utils.showAlertDialogAdminLogout(getActivity(), "Your Session was expire. please Logout!",localStorage.getInt(LocalStorage.userId));
+                                        dialog.dismiss();
+                                    }
+                                    dialog.dismiss();
+                                }else {
+                                    dialog.dismiss();
+                                    setRecyclerViewData(result);
+                                    dialog.dismiss();
+
+                                }
+                            }
+
+
 
                         }
                     });
@@ -513,12 +597,12 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
         //
         Glide.with(activity).load(Config.imageUrl + item.get(position).getAvatarPath()).into(imageView);
 
-        for (int i = 0; i < items.length; i++) {
+        /*for (int i = 0; i < items.length; i++) {
             if (items[i].toLowerCase().equals(item.get(position).getCategory().getName().toLowerCase())) {
                 spin.setSelection(i);
                 break;
             }
-        }
+        }*/
 
 
         imageView.setOnClickListener(new View.OnClickListener() {
@@ -535,7 +619,7 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
         spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                spindata = categoryId[i];
+                spindata = categoryId.get(i);
             }
 
             @Override
@@ -595,15 +679,35 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
                     new FutureCallback<EditBookResponseModel>() {
                         @Override
                         public void onCompleted(Exception e, EditBookResponseModel result) {
-                            if (result.getStatus() == true) {
+
+                            if (e != null) {
                                 dialog.dismiss();
-                                dialogs.dismiss();
-                                Toast.makeText(activity, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
-                            } else {
-                                dialog.dismiss();
-                                dialogs.dismiss();
-                                Toast.makeText(activity, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                                Utils.showAlertDialog(getActivity(), "Something Went Wrong");
+                                return;
                             }
+
+                            if(result != null){
+                                if(result.getStatus()== null){
+                                    if(result.getMessage().equals("Unauthorized")){
+                                        Utils.showAlertDialogAdminLogout(getActivity(), "Your Session was expire. please Logout!",localStorage.getInt(LocalStorage.userId));
+                                        dialog.dismiss();
+                                    }
+
+                                }else {
+                                    if (result.getStatus() == true) {
+                                        dialog.dismiss();
+                                        dialogs.dismiss();
+                                        Toast.makeText(activity, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        dialog.dismiss();
+                                        dialogs.dismiss();
+                                        Toast.makeText(activity, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+
+                                }
+                            }
+
+
                         }
                     });
 

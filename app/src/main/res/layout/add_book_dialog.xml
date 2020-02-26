@@ -49,6 +49,7 @@
                 android:layout_alignParentEnd="true"
                 android:background="@drawable/layout_bg_on_focus"
                 android:contentDescription="@null"
+                android:src="@drawable/defaultimage"
                 android:scaleType="centerCrop"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp" />

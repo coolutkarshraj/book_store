@@ -121,6 +121,7 @@
                     android:layout_height="120dp"
                     android:background="@drawable/layout_bg_on_focus"
                     android:layout_weight="1.4"
+                    android:src="@drawable/defaultimage"
                     android:contentDescription="@null"
                     android:scaleType="centerCrop"
                     tools:layout_editor_absoluteX="0dp"

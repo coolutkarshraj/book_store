@@ -125,6 +125,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
+                android:inputType="phone"
+                android:maxLength="12"
                 android:layout_below="@+id/textView2"
                 app:fontFamily="@font/droidsans_bold"
                 tools:ignore="MissingConstraints"

@@ -1,4 +1,4 @@
-package com.io.bookstore.adapter;
+package com.io.bookstore.adapter.admin;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -10,34 +10,30 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.io.bookstore.Config;
 import com.io.bookstore.R;
 import com.io.bookstore.apicaller.ApiCaller;
 import com.io.bookstore.fragment.bookStoreFragment.OrderListBookFragment;
-import com.io.bookstore.fragment.bookStoreFragment.ProfileAdminFragment;
 import com.io.bookstore.holder.OrderHolder;
 import com.io.bookstore.localStorage.LocalStorage;
 import com.io.bookstore.model.addAddressResponseModel.GetAdminOrderListDataModel;
 import com.io.bookstore.model.addAddressResponseModel.GetAdminOrderListResponseModel;
-import com.io.bookstore.model.getAllOrder.Datum;
 import com.io.bookstore.model.orderModel.OrderStatusChangeResponseModel;
-import com.io.bookstore.model.updatePasswordModel.UpdatePasswordModel;
 import com.io.bookstore.utility.NewProgressBar;
 import com.io.bookstore.utility.Utils;
 import com.io.bookstore.utility.userOnlineInfo;
 import com.koushikdutta.async.future.FutureCallback;
 
 import java.util.List;
-
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 
 public class AdminOrderAdapter extends RecyclerView.Adapter<OrderHolder> {
@@ -139,18 +135,34 @@ public class AdminOrderAdapter extends RecyclerView.Adapter<OrderHolder> {
                         @Override
                         public void onCompleted(Exception e, OrderStatusChangeResponseModel result) {
                             if (e != null) {
+                                dialog.dismiss();
+                                Utils.showAlertDialog(activity, "Something Went Wrong");
                                 return;
                             }
-                          if(result.getStatus() == true){
-                              AdminOrderAdapter.this.dialog.dismiss();
-                              dialog.dismiss();
-                              Toast.makeText(activity, ""+result.getMessage(), Toast.LENGTH_SHORT).show();
-                              getOrderList();
-                          }else {
-                              dialog.dismiss();
-                              AdminOrderAdapter.this.dialog.dismiss();
-                              Toast.makeText(activity, ""+result.getMessage(), Toast.LENGTH_SHORT).show();
-                          }
+
+                            if (result != null) {
+                                if (result.getStatus() == null) {
+                                    if (result.getMessage().equals("Unauthorized")) {
+                                        Utils.showAlertDialogAdminLogout(activity, "Your Session was expire. please Logout!",localStorage.getInt(LocalStorage.userId));
+                                        dialog.dismiss();
+                                    }
+                                    dialog.dismiss();
+                                } else {
+                                    if (result.getStatus() == true) {
+                                        AdminOrderAdapter.this.dialog.dismiss();
+                                        dialog.dismiss();
+                                        Toast.makeText(activity, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                                        getOrderList();
+                                    } else {
+                                        dialog.dismiss();
+                                        AdminOrderAdapter.this.dialog.dismiss();
+                                        Toast.makeText(activity, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            }
+
+
+
                         }
                     });
         } else {
@@ -168,13 +180,31 @@ public class AdminOrderAdapter extends RecyclerView.Adapter<OrderHolder> {
 
                         @Override
                         public void onCompleted(Exception e, GetAdminOrderListResponseModel result) {
-                            if (result.getData() == null || result.getData().size() == 0) {
+                            if (e != null) {
                                 dialog.dismiss();
-                                Toast.makeText(activity, "data empty", Toast.LENGTH_SHORT).show();
-                            } else {
-                                dialog.dismiss();
-                                setRecyclerViewData(result);
+                                Utils.showAlertDialog(activity, "Something Went Wrong");
+                                return;
                             }
+
+                            if (result != null) {
+                                if (result.getStatus() == null) {
+                                    if (result.getMessage().equals("Unauthorized")) {
+                                        Utils.showAlertDialogLogout(activity, "Your Session was expire. please Logout!",localStorage.getUserProfile().getData().getUser().getUserId());
+                                        dialog.dismiss();
+                                    }
+
+                                } else {
+                                    if (result.getData() == null || result.getData().size() == 0) {
+                                        dialog.dismiss();
+                                        Toast.makeText(activity, "data empty", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        dialog.dismiss();
+                                        setRecyclerViewData(result);
+                                    }
+                                }
+                            }
+
+
                         }
 
 

@@ -11,6 +11,7 @@
         android:id="@+id/iv_image"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:src="@drawable/defaultimage"
         android:scaleType="centerCrop"
         android:layout_gravity="center_horizontal"
         android:padding="@dimen/twenty_four_dp" />

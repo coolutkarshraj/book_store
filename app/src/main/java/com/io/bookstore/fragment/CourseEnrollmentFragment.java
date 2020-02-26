@@ -98,6 +98,8 @@ public class CourseEnrollmentFragment extends Fragment implements View.OnClickLi
 
 
     private void startWorking() {
+
+
         corseDetialSetIntViews();
     }
 
@@ -119,14 +121,21 @@ public class CourseEnrollmentFragment extends Fragment implements View.OnClickLi
                             if (e != null) {
                                 Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                             }
-                            if (result != null) {
-                                dialog.dismiss();
-                                if (result.getStatus()) {
-                                    Toast.makeText(activity, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+
+                            if(result != null){
+                                if(result.getStatus()== null){
+                                    if(result.getMessage().equals("Unauthorized")){
+                                        Utils.showAlertDialogLogout(getActivity(), "Your Session was expire. please Logout!",localStorage.getUserProfile().getData().getUser().getUserId());
+                                        dialog.dismiss();
+                                    }
                                     dialog.dismiss();
+                                }else {
+                                    if (result.getStatus()) {
+                                        Toast.makeText(activity, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                                        dialog.dismiss();
+                                    }
                                 }
                             }
-                            dialog.dismiss();
 
 
                         }

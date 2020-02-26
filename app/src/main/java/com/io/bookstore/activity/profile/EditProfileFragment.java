@@ -9,32 +9,26 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
+
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.io.bookstore.Config;
 import com.io.bookstore.R;
-import com.io.bookstore.activity.authentication.SignUpActivity;
-import com.io.bookstore.activity.authentication.SignupVerifyActivity;
 import com.io.bookstore.apicaller.ApiCaller;
 import com.io.bookstore.localStorage.LocalStorage;
 import com.io.bookstore.model.addAddressResponseModel.GetAddressListResponseModel;
 import com.io.bookstore.model.editProfileResponseModel.EditProfileResponseModel;
-import com.io.bookstore.model.registerModel.RegisterModel;
 import com.io.bookstore.utility.ImageUtility;
 import com.io.bookstore.utility.NewProgressBar;
 import com.io.bookstore.utility.PermissionFile;
@@ -43,7 +37,6 @@ import com.io.bookstore.utility.userOnlineInfo;
 import com.koushikdutta.async.future.FutureCallback;
 
 import java.io.File;
-import java.io.IOException;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -101,7 +94,7 @@ public class EditProfileFragment extends Fragment {
         if (user.isOnline(activity)) {
             dialog = new NewProgressBar(activity);
             dialog.show();
-            LocalStorage localStorage = new LocalStorage(activity);
+            final LocalStorage localStorage = new LocalStorage(activity);
             ApiCaller.getUserSavedAddressList(activity, Config.Url.getAddressList,localStorage.getString(LocalStorage.token),
                     new FutureCallback<GetAddressListResponseModel>() {
                         @Override
@@ -112,12 +105,30 @@ public class EditProfileFragment extends Fragment {
                                 return;
                             }
 
-                            dialog.dismiss();
-                            phone.setText(result.getData().getPhone());
-                            email.setText(result.getData().getEmail());
-                            address.setText(result.getData().getAddress());
-                            username.setText(result.getData().getName());
-                            Glide.with(getActivity()).load(Config.imageUrl +result.getData().getAvatarPath()).into(avatar);
+                            if (result != null) {
+                                if (result.getStatus() == null) {
+                                    if (result.getMessage().equals("Unauthorized")) {
+                                        Utils.showAlertDialogLogout(getActivity(), "Your Session was expire. please Logout!",localStorage.getUserProfile().getData().getUser().getUserId());
+                                        dialog.dismiss();
+                                    }
+                                    dialog.dismiss();
+                                } else {
+                                    dialog.dismiss();
+                                    phone.setText(result.getData().getPhone());
+                                    email.setText(result.getData().getEmail());
+                                    address.setText(result.getData().getAddress());
+                                    username.setText(result.getData().getName());
+                                    if (result.getData().getAvatarPath() == null) {
+                                        Glide.with(getActivity()).load(R.drawable.person_logo).into(avatar);
+                                    } else {
+                                        Glide.with(getActivity()).load(Config.imageUrl + result.getData().getAvatarPath()).into(avatar);
+                                    }
+
+                                }
+                            }
+
+
+
                         }
                     });
 
@@ -284,7 +295,7 @@ public class EditProfileFragment extends Fragment {
         if (user.isOnline(getActivity())) {
             dialog = new NewProgressBar(getActivity());
             dialog.show();
-            LocalStorage localStorage = new LocalStorage(getActivity());
+            final LocalStorage localStorage = new LocalStorage(getActivity());
             ApiCaller.editProfileUser(getActivity(), Config.Url.editProfile,name,address,phone, localStorage.getString(LocalStorage.token),imgFile,
                     new FutureCallback<EditProfileResponseModel>() {
                         @Override
@@ -294,12 +305,27 @@ public class EditProfileFragment extends Fragment {
                                 Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                                 return;
                             }
-                            dialog.dismiss();
-                            if(result.getStatus() == true){
-                                Toast.makeText(getActivity(), ""+result.getMessage(), Toast.LENGTH_SHORT).show();
-                            }else {
-                                Toast.makeText(getActivity(), ""+result.getMessage(), Toast.LENGTH_SHORT).show();
+
+                            if (result != null) {
+                                if (result.getStatus() == null) {
+                                    if (result.getMessage().equals("Unauthorized")) {
+                                        Utils.showAlertDialogLogout(getActivity(), "Your Session was expire. please Logout!",localStorage.getUserProfile().getData().getUser().getUserId());
+                                        dialog.dismiss();
+                                    }
+
+                                } else {
+                                    if (result.getStatus() == true) {
+                                        Toast.makeText(getActivity(), "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(getActivity(), "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                    dialog.dismiss();
+
+                                }
                             }
+
+
+
 
                         }
                     });

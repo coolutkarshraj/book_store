@@ -70,7 +70,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                app:srcCompat="@drawable/booksteo2"
+                android:src="@drawable/defaultimage"
                 tools:layout_editor_absoluteX="258dp"
                 tools:layout_editor_absoluteY="20dp" />
 

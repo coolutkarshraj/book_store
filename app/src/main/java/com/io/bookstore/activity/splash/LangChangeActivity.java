@@ -63,7 +63,7 @@ public class LangChangeActivity extends AppCompatActivity {
                     }
 
                 }else {
-                    Intent intent = new Intent(getApplicationContext(), IntroActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), AddsActivity.class);
                     startActivity(intent);
                     finish();
                 }
@@ -97,7 +97,7 @@ public class LangChangeActivity extends AppCompatActivity {
 
                 }else {
 
-                    Intent intent = new Intent(getApplicationContext(), IntroActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), AddsActivity.class);
                     startActivity(intent);
                     finish();
                 }

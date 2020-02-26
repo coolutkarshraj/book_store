@@ -99,8 +99,8 @@ public class LoginActivity extends AppCompatActivity {
         if(userNaame.length()<1){
             Utils.showAlertDialog(activity, "Please Enter Username");
         }
-       else if(password.length()<6){
-            Utils.showAlertDialog(activity, "Please Enter Minimum 6 Digit Password");
+       else if(password.length()<5){
+            Utils.showAlertDialog(activity, "Please Enter Minimum 5 Digit Password");
         }
        else if(userNaame.equals("") || password.equals("")){
             Utils.showAlertDialog(activity, "Please Enter Username and password");
@@ -150,7 +150,6 @@ public class LoginActivity extends AppCompatActivity {
             Intent i = new Intent(activity , MainActivity.class);
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(i);
-
         }
 
     }

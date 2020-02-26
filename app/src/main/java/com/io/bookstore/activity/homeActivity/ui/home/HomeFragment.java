@@ -31,6 +31,7 @@ import com.io.bookstore.fragment.CategoryListFragment;
 import com.io.bookstore.fragment.CourseEnrollmentFragment;
 import com.io.bookstore.fragment.CoursesFragment;
 import com.io.bookstore.fragment.InstituteFragment;
+import com.io.bookstore.fragment.category.CategoryGridFragment;
 import com.io.bookstore.listeners.ItemClickListner;
 import com.io.bookstore.listeners.RecyclerViewClickListener;
 import com.io.bookstore.model.InstituteModel;
@@ -67,6 +68,8 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener,
     private RecyclerView recycler_view_store, reccycler_ciew_course, recyclerView_courses;
     private CourseAdapter courseAdapter;
     private SToreAdapter sToreAdapter;
+    ItemClickListner clickListner;
+    CategoryGridFragment categoryGridFragment;
     private BookstoresFragment bookstoresFragment;
     private CoursesFragment coursesFragment;
     private CourseEnrollmentFragment courseEnrollmentFragment;
@@ -81,7 +84,7 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener,
     private NewProgressBar dialog;
     private RelativeLayout rl_main_child;
     private LinearLayout ll_sub_child;
-    private SwipeRefreshLayout swipeRefreshLayout;
+    public static SwipeRefreshLayout swipeRefreshLayout;
     private View root;
     private List<Datum> listd= new ArrayList();
 
@@ -174,6 +177,12 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener,
                         .replace(R.id.content_view, instituteFragment)
                         .addToBackStack(null)
                         .commit();
+            }
+        });
+        swipeRefreshLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(), "clcik", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -346,4 +355,6 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener,
 
 
     }
+
+
 }

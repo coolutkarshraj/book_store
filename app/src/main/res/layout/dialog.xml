@@ -31,7 +31,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
-                android:text="Course Detial"
+                android:text="Course Detials"
                 app:layout_constraintBottom_toTopOf="@+id/view4"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

@@ -23,7 +23,9 @@ import com.io.bookstore.R;
 import com.io.bookstore.listeners.RecyclerViewClickListener;
 import com.io.bookstore.model.CourseModel;
 import com.io.bookstore.model.courseModel.CourseDataModel;
+import com.io.bookstore.model.insituteModel.InsituiteDataModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.MyViewHolder> {
@@ -52,7 +54,7 @@ public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.MyViewHo
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         CourseDataModel model = mData.get(position);
-        holder.cardView.setAnimation(AnimationUtils.loadAnimation(mContext,R.anim.fade_scale_animation));
+        //holder.cardView.setAnimation(AnimationUtils.loadAnimation(mContext,R.anim.fade_scale_animation));
         holder.tv_courses_tilte.setText(model.getCourseName());
         holder.tv_courses_desc.setText(model.getCourseDescription());
         Glide.with(mContext).load(Config.imageUrl + model.getAvatarPath()).into(holder.iv_courses_thumbnail);
@@ -97,6 +99,13 @@ public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.MyViewHo
 
 
     }
+
+    public void setFilter(List<CourseDataModel> newlist){
+        mData=new ArrayList<>();
+        mData.addAll(newlist);
+        notifyDataSetChanged();
+    }
+
 
     @Override
     public int getItemCount() {

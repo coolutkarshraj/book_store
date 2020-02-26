@@ -46,7 +46,7 @@
     <string name="skip_btn">تخطى</string>
     <string name="languages">اللغات</string>
     <string name="get_started">البدء</string>
-    <string name="country">بلد</string>
+    <string name="country">اتصل بنا</string>
     <string name="recieve_notifications">تلقي الإخطارات</string>
     <string name="enabled">تمكين</string>
     <string name="sign_up">سجل</string>
@@ -133,5 +133,5 @@
     <string name="logout">تسجيل خروج</string>
     <string name="savedadd">عنوانك المحفوظ؟ الرجاء تسجيل الدخول لمشاهدة</string>
     <string name="please_logged_in_to_see_your_enrolled_courseloggedin">مسجّل التسجيل الخاص بك؟ الرجاء تسجيل الدخول لمشاهدة </string>
-
+    <string name="please_logged_in_to_see_your_contact">يرجى تسجيل الدخول لمشاهدة دورتك  المسجلة؟ </string>
 </resources>

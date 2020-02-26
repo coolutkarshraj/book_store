@@ -50,6 +50,7 @@
                     android:drawableRight="@drawable/ic_search"
                     android:drawablePadding="5dp"
                     android:elevation="10dp"
+                    app:iconifiedByDefault="false"
                     app:queryHint="Discover more books..."
                     android:gravity="center"
                     android:layout_toLeftOf="@+id/iv_filter"

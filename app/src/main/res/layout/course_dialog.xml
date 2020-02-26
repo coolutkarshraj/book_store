@@ -44,7 +44,7 @@ android:layout_gravity="center">
                 android:id="@+id/chatdelete"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Course Detial"
+                android:text="Course Detials"
                 android:textColor="@color/blue"
                 android:textSize="@dimen/startmargin" />
 

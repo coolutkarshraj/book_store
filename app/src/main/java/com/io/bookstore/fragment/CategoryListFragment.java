@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.io.bookstore.Config;
@@ -26,9 +27,7 @@ import com.koushikdutta.async.future.FutureCallback;
 
 import java.util.ArrayList;
 
-/**
- * A simple {@link Fragment} subclass.
- */
+
 public class CategoryListFragment extends Fragment {
 
 
@@ -40,6 +39,7 @@ public class CategoryListFragment extends Fragment {
     private NewProgressBar dialog;
     private userOnlineInfo user;
 
+    private ImageView iv_image;
 
 
     public CategoryListFragment() {
@@ -65,11 +65,19 @@ public class CategoryListFragment extends Fragment {
     private void initView() {
         recyclerView = root.findViewById(R.id.rv_cateory_list);
         user = new userOnlineInfo();
+        itemClickListner = (ItemClickListner)getActivity();
+        iv_image =(ImageView)root.findViewById(R.id.iv_back);
     }
 
 
 
     private void bindListner() {
+        iv_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itemClickListner.onClick(6);
+            }
+        });
     }
 
 

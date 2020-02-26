@@ -1,4 +1,4 @@
-package com.io.bookstore.adapter;
+package com.io.bookstore.adapter.admin;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -136,16 +136,29 @@ public class AdminBookListAdapter extends
                                 return;
                             }
 
-                            if (result.getStatus() == true) {
-                                dialog.dismiss();
-                                Toast.makeText(mContext, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
-                                mData.remove(position);
-                                notifyItemRemoved(position);
-                                notifyItemRangeRemoved(position, mData.size());
-                            } else {
-                                Toast.makeText(mContext, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
-                                dialog.dismiss();
+                            if(result != null){
+                                if(result.getStatus()== null){
+                                    if(result.getMessage().equals("Unauthorized")){
+                                        Utils.showAlertDialogAdminLogout((Activity) mContext, "Your Session was expire. please Logout!",localStorage.getUserProfile().getData().getUser().getUserId());
+                                        dialog.dismiss();
+                                    }
+                                    dialog.dismiss();
+                                }else {
+                                    if (result.getStatus() == true) {
+                                        dialog.dismiss();
+                                        Toast.makeText(mContext, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                                        mData.remove(position);
+                                        notifyItemRemoved(position);
+                                        notifyItemRangeRemoved(position, mData.size());
+                                    } else {
+                                        Toast.makeText(mContext, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                                        dialog.dismiss();
+                                    }
+
+                                }
                             }
+
+
                         }
                     });
 

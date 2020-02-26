@@ -84,6 +84,7 @@ public class OrderFragment extends Fragment implements RecyclerViewClickListener
                                 Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                                 return;
                             }
+
                             if(result.getData() == null || result.getData().size() == 0){
                                 recyclerView.setVisibility(View.GONE);
                                 loggedih.setVisibility(View.VISIBLE);

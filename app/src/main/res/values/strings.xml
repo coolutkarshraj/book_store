@@ -64,7 +64,7 @@
     <string name="skip_btn">Skip</string>
     <string name="languages">Languages</string>
     <string name="get_started">Get Started</string>
-    <string name="country">Country</string>
+    <string name="country">Contact Us</string>
     <string name="recieve_notifications">Recieve notifications</string>
     <string name="enabled">Enabled</string>
     <string name="sign_up">Sign up</string>
@@ -147,6 +147,7 @@
     <string name="logout">Logout</string>
     <string name="savedadd">Please Logged In To See Your Saved Address?</string>
     <string name="please_logged_in_to_see_your_enrolled_courseloggedin">Please Logged In To See Your Enrolled Course LoggedIn?</string>
+    <string name="please_logged_in_to_see_your_contact">Please Logged In To See Your Enrolled Course?</string>
 
 
 </resources>

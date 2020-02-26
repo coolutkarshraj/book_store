@@ -7,6 +7,15 @@
     android:background="@android:color/white"
     android:orientation="vertical">
 
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
     <include layout="@layout/nav_header_main"></include>
 
     <View
@@ -136,36 +145,7 @@
             android:text="@string/languages"/>
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/country"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:visibility="gone"
-        android:layout_gravity="center"
-        android:layout_margin="8dp"
-        android:background="@drawable/dotted_border"
-        android:orientation="horizontal"
-        android:weightSum="3">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_weight="0.3"
-            android:id="@+id/map"
-            android:src="@drawable/ic_location_on_black_24dp">
-
-        </ImageView>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/sixteen_dp"
-            android:layout_weight="2.7"
-            android:layout_toEndOf="@id/map"
-            android:gravity="center_vertical"
-            android:textAlignment="gravity"
-            android:text="@string/country"/>
-    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/ll_course"
@@ -195,6 +175,38 @@
             android:gravity="center_vertical"
             android:text="@string/enrolledcourse"></TextView>
     </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/country"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_margin="8dp"
+        android:background="@drawable/dotted_border"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_weight="0.3"
+            android:id="@+id/map"
+            android:src="@drawable/ic_perm_contact_calendar_black_24dp">
+
+        </ImageView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/sixteen_dp"
+            android:layout_weight="2.7"
+            android:layout_toEndOf="@id/map"
+            android:gravity="center_vertical"
+            android:textAlignment="gravity"
+            android:text="@string/country"/>
+    </RelativeLayout>
+
+
     <RelativeLayout
         android:id="@+id/ll_logout"
         android:layout_width="match_parent"
@@ -281,6 +293,6 @@
             android:src="@drawable/g" />
     </LinearLayout>
 
-
-
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 </LinearLayout>

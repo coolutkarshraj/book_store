@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:cardview="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="87dp"
+    android:layout_height="wrap_content"
+    android:id="@+id/card_view"
+    android:orientation="vertical"
+    android:background="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="5dp">
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardview_item_category"
+        android:layout_width="80dp"
+        android:layout_height="70dp"
+        android:backgroundTint="@color/white"
+        android:clickable="true"
+        android:layout_centerHorizontal="true"
+        android:elevation="5dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:orientation="vertical"
+        cardview:cardCornerRadius="20dp"
+
+        cardview:strokeColor="@color/light_gray"
+        cardview:strokeWidth="@dimen/one_dp"
+        cardview:layout_constraintEnd_toEndOf="parent"
+        cardview:layout_constraintStart_toStartOf="parent"
+        cardview:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/iv_category"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center"
+            android:scaleType="fitXY"
+            cardview:srcCompat="@drawable/ic_book" />
+    </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:id="@+id/tv_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="TextView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="3dp"
+        android:layout_below="@+id/cardview_item_category"
+        android:textColor="@color/blackOlive"
+        android:textSize="16sp"
+        cardview:fontFamily="@font/fontawesome"
+        cardview:layout_constraintBottom_toBottomOf="parent"
+        cardview:layout_constraintEnd_toEndOf="parent"
+        cardview:layout_constraintStart_toStartOf="parent"
+        cardview:layout_constraintTop_toBottomOf="@+id/cardview_item_category" />
+
+</RelativeLayout>

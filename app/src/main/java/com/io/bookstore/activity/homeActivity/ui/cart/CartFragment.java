@@ -165,17 +165,19 @@ public class CartFragment extends Fragment {
                         deliveryType =   deliveryModel.getData().get(1).getType();
 
                     }
-                    int total = price + dilvery;
+                    int total = price;
                     Intent intent = new Intent(getActivity(), CheckoutActivity.class);
-                    intent.putExtra("deliveryType",deliveryType);
+                   // intent.putExtra("deliveryType",deliveryType);
                     intent.putExtra("totalprice", total);
 
                     startActivity(intent);
                 }else{
                     localStorage.putBooleAan(LocalStorage.isCart,true);
+
                     Intent intent = new Intent(getActivity(), LoginActivity.class);
                     startActivity(intent);
                 }
+                localStorage.putString(LocalStorage.addressId,"");
 
             }
         });

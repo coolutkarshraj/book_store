@@ -15,6 +15,18 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_arrow_back_black_24dp"
+                tools:ignore="MissingConstraints"
+                android:background="@drawable/item_click_animation"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="@dimen/font_10"
+                android:layout_marginStart="15dp"/>
+
             <TextView
                 android:id="@+id/tv_courses_heading"
                 android:layout_width="wrap_content"
@@ -27,13 +39,17 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <SearchView
+            <androidx.appcompat.widget.SearchView
                 android:id="@+id/sv_courses"
                 android:layout_width="300dp"
                 android:layout_height="40dp"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/bg_searchview"
                 android:elevation="10dp"
+                android:contentInsetStart="0dp"
+                app:contentInsetStart="0dp"
+                app:iconifiedByDefault="false"
+                app:queryHint="Search More Courses"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_courses_heading" />

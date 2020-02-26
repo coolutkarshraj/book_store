@@ -6,8 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,6 +21,7 @@ import com.io.bookstore.apicaller.ApiCaller;
 import com.io.bookstore.listeners.RecyclerViewClickListener;
 import com.io.bookstore.model.BookstoreModel;
 import com.io.bookstore.listeners.ItemClickListner;
+import com.io.bookstore.model.adminResponseModel.AdminBookDataModel;
 import com.io.bookstore.model.insituteModel.InsituiteDataModel;
 import com.io.bookstore.model.insituteModel.InsituiteResponseModel;
 import com.io.bookstore.model.storeModel.StoreModel;
@@ -34,7 +37,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class InstituteFragment extends Fragment implements  RecyclerViewClickListener {
+public class InstituteFragment extends Fragment implements  RecyclerViewClickListener,View.OnClickListener {
 
     private Activity activity;
     private RecyclerView recyclerView;
@@ -42,8 +45,11 @@ public class InstituteFragment extends Fragment implements  RecyclerViewClickLis
     private CoursesFragment coursesFragment;
     private userOnlineInfo user;
     private NewProgressBar dialog;
+    private ImageView iv_back;
+    private SearchView searchView;
     private List<InsituiteDataModel> item = new ArrayList<>();
     RecyclerViewClickListener recyclerViewClickListener;
+    private ItemClickListner itemClickListner;
 
     public InstituteFragment() {
     }
@@ -63,12 +69,17 @@ public class InstituteFragment extends Fragment implements  RecyclerViewClickLis
         activity = getActivity();
         user = new userOnlineInfo();
         recyclerViewClickListener = this;
+        itemClickListner =(ItemClickListner)getActivity();
+        iv_back = root.findViewById(R.id.iv_back);
+        searchView = root.findViewById(R.id.sv_institute);
         dialog = new NewProgressBar(getActivity());
         recyclerView = root.findViewById(R.id.recyclerView_institute);
+        iv_back.setOnClickListener(this);
     }
 
     private void startWorking() {
         getInstituiteList();
+        searchViewSetUp();
     }
 
     private void getInstituiteList() {
@@ -105,6 +116,31 @@ public class InstituteFragment extends Fragment implements  RecyclerViewClickLis
         recyclerView.setAdapter(institutesAdapter);
     }
 
+    private void searchViewSetUp() {
+        searchView.setQueryHint("Search More Institue");
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                List<InsituiteDataModel> newlist = new ArrayList<>();
+                for (InsituiteDataModel productList : item) {
+                    String name = productList.getInstituteName();
+                    if (name.contains(s))
+                        newlist.add(productList);
+                }
+                institutesAdapter.setFilter(newlist);
+                return true;
+            }
+
+        });
+
+
+    }
+
 
     @Override
     public void onClickPosition(int position) {
@@ -114,5 +150,13 @@ public class InstituteFragment extends Fragment implements  RecyclerViewClickLis
                 .addToBackStack(null)
                 .commit();
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.iv_back:
+                itemClickListner.onClick(6);
+        }
     }
 }

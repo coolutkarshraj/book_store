@@ -44,7 +44,7 @@ public class EnrollCourseListFragment extends Fragment implements View.OnClickLi
     private userOnlineInfo user;
     private NewProgressBar dialog;
     private LocalStorage localStorage;
-    private TextView tv_login;
+    private TextView tv_login,notdata;
     private SearchView searchView;
     private EnrolledCourseRvAdapter adapter;
     private NestedScrollView nestedScrollView;
@@ -75,6 +75,7 @@ public class EnrollCourseListFragment extends Fragment implements View.OnClickLi
         recyclerView = view.findViewById(R.id.recyclerView_courses);
         nestedScrollView = view.findViewById(R.id.nested_view);
         tv_login = view.findViewById(R.id.tv_login);
+        notdata = view.findViewById(R.id.notdata);
     }
 
     private void bindListner() {
@@ -94,16 +95,18 @@ public class EnrollCourseListFragment extends Fragment implements View.OnClickLi
 
     private void startWorking() {
         getdataFromLocalStorage();
-        getEnrolledCourseListApi();
-        searchViewSetUp();
+
+
     }
 
 
     private void getdataFromLocalStorage() {
         if (localStorage.getString(LocalStorage.token) == null ||
                 localStorage.getString(LocalStorage.token).equals("")) {
-            tv_login.setVisibility(View.VISIBLE);
+               tv_login.setVisibility(View.VISIBLE);
         } else {
+            getEnrolledCourseListApi();
+            searchViewSetUp();
             nestedScrollView.setVisibility(View.VISIBLE);
         }
     }
@@ -117,10 +120,24 @@ public class EnrollCourseListFragment extends Fragment implements View.OnClickLi
                         @Override
                         public void onCompleted(Exception e, EnrolledCourseListResponseModel result) {
                             if (e != null) {
+                                dialog.dismiss();
                                 Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                             }
-                            datasetToRecyclerView(result);
-                            dialog.dismiss();
+
+                            if(result != null){
+                                if(result.getStatus()== null){
+                                    if(result.getMessage().equals("Unauthorized")){
+                                        Utils.showAlertDialogLogout(getActivity(), "Your Session was expire. please Logout!",localStorage.getUserProfile().getData().getUser().getUserId());
+                                        dialog.dismiss();
+                                    }
+                                    dialog.dismiss();
+                                }else {
+                                    datasetToRecyclerView(result);
+                                    dialog.dismiss();
+                                }
+                            }
+
+
 
 
                         }
@@ -131,10 +148,18 @@ public class EnrollCourseListFragment extends Fragment implements View.OnClickLi
     }
 
     private void datasetToRecyclerView(EnrolledCourseListResponseModel result) {
+
+        if(result.getData().isEmpty()){
+            notdata.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+        }else {
+            notdata.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
             LinearLayoutManager gridLayoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
             recyclerView.setLayoutManager(gridLayoutManager);
             adapter = new EnrolledCourseRvAdapter(getActivity(), result.getData());
             recyclerView.setAdapter(adapter);
+        }
 
     }
 

@@ -22,6 +22,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,12 +40,14 @@ import com.google.android.material.navigation.NavigationView;
 import com.io.bookstore.Config;
 import com.io.bookstore.R;
 import com.io.bookstore.activity.authentication.LoginActivity;
+import com.io.bookstore.activity.homeActivity.MainActivity;
 import com.io.bookstore.activity.homeActivity.ui.cart.CartFragment;
 import com.io.bookstore.activity.homeActivity.ui.deliveryAddress.DeliveryAddressFragment;
 import com.io.bookstore.activity.homeActivity.ui.home.HomeFragment;
 import com.io.bookstore.activity.homeActivity.ui.order.OrderFragment;
 import com.io.bookstore.activity.profile.EditProfileFragment;
 import com.io.bookstore.activity.profile.ProfileFragment;
+import com.io.bookstore.apicaller.ApiCaller;
 import com.io.bookstore.fragment.BookListFragment;
 import com.io.bookstore.fragment.BookstoresFragment;
 import com.io.bookstore.fragment.BookstoresFragmentWithFilter;
@@ -55,6 +58,11 @@ import com.io.bookstore.fragment.bookStoreFragment.OrderListBookFragment;
 import com.io.bookstore.fragment.bookStoreFragment.ProfileAdminFragment;
 import com.io.bookstore.listeners.ItemClickListner;
 import com.io.bookstore.localStorage.LocalStorage;
+import com.io.bookstore.model.LogoutResponseModel;
+import com.io.bookstore.utility.NewProgressBar;
+import com.io.bookstore.utility.Utils;
+import com.io.bookstore.utility.userOnlineInfo;
+import com.koushikdutta.async.future.FutureCallback;
 
 import java.util.Locale;
 
@@ -68,6 +76,8 @@ public class BookStoreMainActivity extends AppCompatActivity implements
     RadioButton radioButton;
     TextView nav_user, nav_Email;
     CircleImageView imageView;
+    userOnlineInfo user;
+    NewProgressBar dialog;
 
     HomeBookFragment homeBookFragment;
     OrderListBookFragment orderListBookFragment;
@@ -229,15 +239,47 @@ public class BookStoreMainActivity extends AppCompatActivity implements
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                localStorage.putBooleAan(LocalStorage.isLoggedIn, false);
-                localStorage.putString(LocalStorage.token, "");
-                localStorage.clearAll();
-                Intent i = new Intent(BookStoreMainActivity.this, LoginActivity.class);
-                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(i);
+                logoutApiCall();
             }
         });
 
+    }
+
+    private void logoutApiCall() {
+        if (user.isOnline(this)) {
+            dialog = new NewProgressBar(this);
+            dialog.show();
+            final LocalStorage localStorage = new LocalStorage(this);
+            ApiCaller.logout(this, Config.Url.storelogout+"/"+localStorage.getInt(LocalStorage.userId),
+                    new FutureCallback<LogoutResponseModel>() {
+                        @Override
+                        public void onCompleted(Exception e, LogoutResponseModel result) {
+                            if (e != null) {
+                                dialog.dismiss();
+                                Utils.showAlertDialog(BookStoreMainActivity.this, "Something Went Wrong");
+                                return;
+                            }
+
+                            if (result != null) {
+                                if (result.getStatus() ==true) {
+                                    dialog.dismiss();
+                                    Toast.makeText(BookStoreMainActivity.this, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                                    localStorage.putBooleAan(LocalStorage.isLoggedIn, false);
+                                    localStorage.putString(LocalStorage.token, "");
+                                    localStorage.putInt(LocalStorage.role,0);
+                                    localStorage.putDistributorProfile(null);
+                                    Intent i = new Intent(BookStoreMainActivity.this, LoginActivity.class);
+                                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    startActivity(i);
+                                }
+                            }
+
+                        }
+                    });
+
+        } else {
+            Utils.showAlertDialog(BookStoreMainActivity.this, "No Internet Connection");
+        }
     }
 
     private void changeProfileColorIcon() {
@@ -376,9 +418,7 @@ public class BookStoreMainActivity extends AppCompatActivity implements
         order = findViewById(R.id.order);
         profile = findViewById(R.id.profile);
         fabSave = findViewById(R.id.fabSave);
-       /* homeFragment = new HomeFragment();
-        cartFragment = new CartFragment();
-        orderFragment = new OrderFragment();*/
+    user = new userOnlineInfo();
         nav_user = (TextView) findViewById(R.id.nav_username);
         nav_Email = (TextView) findViewById(R.id.nav_email);
         imageView = (CircleImageView) findViewById(R.id.nav_profile_iv);
@@ -506,9 +546,7 @@ public class BookStoreMainActivity extends AppCompatActivity implements
                         config.locale = locale;
                         getBaseContext().getResources().updateConfiguration(config, null);
                         dialog.dismiss();
-                        initView();
-                        bindListner();
-                        startWorking();
+                        startActivity(new Intent(BookStoreMainActivity.this,BookStoreMainActivity.class));
                     } else {
                         Locale locale = new Locale("hi");
                         Locale.setDefault(locale);
@@ -516,9 +554,7 @@ public class BookStoreMainActivity extends AppCompatActivity implements
                         config.locale = locale;
                         getBaseContext().getResources().updateConfiguration(config, null);
                         dialog.dismiss();
-                        initView();
-                        bindListner();
-                        startWorking();
+                        startActivity(new Intent(BookStoreMainActivity.this,BookStoreMainActivity.class));
                     }
                 }
             }

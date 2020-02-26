@@ -12,6 +12,7 @@
         android:id="@+id/iv_image"
         android:layout_width="143dp"
         android:layout_height="100dp"
+        android:src="@drawable/defaultimage"
         android:scaleType="fitXY"
         android:layout_gravity="center_horizontal"
         android:padding="@dimen/twenty_four_dp" />

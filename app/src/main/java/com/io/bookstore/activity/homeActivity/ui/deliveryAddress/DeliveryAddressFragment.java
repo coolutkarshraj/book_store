@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -13,19 +14,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
-import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -35,15 +35,15 @@ import com.io.bookstore.Config;
 import com.io.bookstore.R;
 import com.io.bookstore.StaticData;
 import com.io.bookstore.activity.authentication.LoginActivity;
-import com.io.bookstore.activity.checkoutActivity.CheckoutActivity;
-import com.io.bookstore.activity.checkoutActivity.ProcessingActivity;
 import com.io.bookstore.adapter.AddressAdapter;
+import com.io.bookstore.adapter.AddressCheckoutAdapter;
 import com.io.bookstore.apicaller.ApiCaller;
 import com.io.bookstore.localStorage.DbHelper;
 import com.io.bookstore.localStorage.LocalStorage;
-import com.io.bookstore.model.PlaceOrderModel.OrderModel;
 import com.io.bookstore.model.addAddressResponseModel.AddAddressResponseModel;
 import com.io.bookstore.model.addAddressResponseModel.GetAddressListResponseModel;
+import com.io.bookstore.model.dilvery.DilveryAddressDataModel;
+import com.io.bookstore.model.dilvery.DilveryAdressResponseModel;
 import com.io.bookstore.utility.NewProgressBar;
 import com.io.bookstore.utility.Utils;
 import com.io.bookstore.utility.userOnlineInfo;
@@ -54,6 +54,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class DeliveryAddressFragment extends Fragment {
@@ -62,11 +63,13 @@ public class DeliveryAddressFragment extends Fragment {
     NewProgressBar dialog;
     private TextView tv_address;
     private RecyclerView recyclerView;
-    private AddressAdapter addressAdapter;
+    private AddressCheckoutAdapter addressAdapter;
     private JsonArray jsonArray;
     LocalStorage localStorage;
      LinearLayout linearLayout;
     private TextView loggdin;
+    String spindata;
+    private  List<String> listcity = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -92,6 +95,7 @@ public class DeliveryAddressFragment extends Fragment {
         tv_address.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                getAllCities();
                 dialogOpen();
             }
         });
@@ -192,8 +196,21 @@ public class DeliveryAddressFragment extends Fragment {
                                 Utils.showAlertDialog(activity, "Something Went Wrong");
                                 return;
                             }
-                            setRecyclerViewData(result);
-                            dialog.dismiss();
+
+                            if(result != null){
+                                if(result.getStatus()== null){
+                                    if(result.getMessage().equals("Unauthorized")){
+                                        Utils.showAlertDialogLogout(getActivity(), "Your Session was expire. please Logout!",localStorage.getUserProfile().getData().getUser().getUserId());
+                                        dialog.dismiss();
+                                    }
+                                    dialog.dismiss();
+                                }else {
+                                    setRecyclerViewData(result);
+                                    dialog.dismiss();
+
+                                }
+                            }
+
                         }
                     });
 
@@ -205,10 +222,10 @@ public class DeliveryAddressFragment extends Fragment {
     private void setRecyclerViewData(GetAddressListResponseModel result) {
         LinearLayoutManager gridLayoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(gridLayoutManager);
-        for (int i = 0; i < result.getData().getDeliveryAddresses().size(); i++) {
+     /*   for (int i = 0; i < result.getData().getDeliveryAddresses().size(); i++) {
             result.getData().getDeliveryAddresses().get(i).setChecked(false);
-        }
-        addressAdapter = new AddressAdapter(getActivity(), result.getData().getDeliveryAddresses());
+        }*/
+        addressAdapter = new AddressCheckoutAdapter(getActivity(), result.getData().getDeliveryAddresses());
         recyclerView.setAdapter(addressAdapter);
     }
 
@@ -220,23 +237,35 @@ public class DeliveryAddressFragment extends Fragment {
         int width = metrics.widthPixels;
         int height = metrics.heightPixels;
         dialog.getWindow().setLayout((6 * width) / 7, ViewGroup.LayoutParams.WRAP_CONTENT);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setContentView(R.layout.activity_add_adress);
         dialog.setTitle("");
         final Button btn_Add = (Button) dialog.findViewById(R.id.btn_Add);
         final Button btn_cancel = (Button) dialog.findViewById(R.id.btn_cancel);
         final EditText etAddress = (EditText) dialog.findViewById(R.id.et_address);
-        final EditText etCity = (EditText) dialog.findViewById(R.id.et_city);
+        final Spinner etCity = (Spinner) dialog.findViewById(R.id.et_city);
         final EditText etState = (EditText) dialog.findViewById(R.id.et_state);
         final EditText etPinCode = (EditText) dialog.findViewById(R.id.et_pincode);
 
+        ArrayAdapter aa = new ArrayAdapter(activity, android.R.layout.simple_list_item_1, listcity);
+        etCity.setAdapter(aa);
 
+        etCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                spindata = listcity.get(i);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
         btn_Add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                addAddressValidateData(etAddress, etCity, etState, etPinCode);
-                dialog.dismiss();
+                addAddressValidateData(etAddress, spindata, etState, etPinCode,dialog);
             }
         });
         btn_cancel.setOnClickListener(new View.OnClickListener() {
@@ -251,46 +280,49 @@ public class DeliveryAddressFragment extends Fragment {
 
     }
 
-    private void addAddressValidateData(EditText etAddress, EditText etCity, EditText etState, EditText etPinCode) {
+    private void addAddressValidateData(EditText etAddress, String etCity, EditText etState, EditText etPinCode, Dialog dialog) {
         String strAddress1 = etAddress.getText().toString().trim();
-        String strCity = etCity.getText().toString().trim();
+      //  String strCity = etCity.getText().toString().trim();
         String strState = etState.getText().toString().trim();
         String strPinCode = etPinCode.getText().toString().trim();
-        if (strAddress1.isEmpty() || strCity.isEmpty() || strState.isEmpty() || strPinCode.isEmpty()) {
+        if (strAddress1.isEmpty() ||  strState.isEmpty() || strPinCode.isEmpty()) {
             etAddress.setError("Please Enter Address");
-
-            etCity.setError("Please Enter City");
-            etState.setError("Please Enter State");
+            etState.setError("Please Enter Landmark");
             etPinCode.setError("Please Enter PinCode");
         } else {
 
-            addDataIntoApi(strAddress1, strCity, strState, strPinCode);
+            addDataIntoApi(strAddress1, etCity, strState, strPinCode,dialog);
 
         }
     }
 
-    private void addDataIntoApi(String strAddress1, String strCity, String strState, String strPinCode) {
+    private void addDataIntoApi(String strAddress1, String strCity, String strState, String strPinCode, final Dialog dialog) {
         if (user.isOnline(activity)) {
-            dialog = new NewProgressBar(activity);
-            dialog.show();
-            LocalStorage localStorage = new LocalStorage(getActivity());
-            ApiCaller.addAddress(activity, Config.Url.addAddress, "", strAddress1, "Home", strCity,
-                    "", Integer.valueOf(strPinCode), "Dubai",
-                    "", "", strState, localStorage.getString(LocalStorage.token),
+            this.dialog = new NewProgressBar(activity);
+            this.dialog.show();
+            final LocalStorage localStorage = new LocalStorage(getActivity());
+            ApiCaller.addAddress(activity, Config.Url.addAddress, " ", strAddress1, " ", strCity,
+                    strState, Integer.valueOf(strPinCode), " ",
+                    " ", " ", " ", localStorage.getString(LocalStorage.token),
                     new FutureCallback<AddAddressResponseModel>() {
                         @Override
                         public void onCompleted(Exception e, AddAddressResponseModel result) {
                             if (e != null) {
-                                dialog.dismiss();
+                                DeliveryAddressFragment.this.dialog.dismiss();
                                 Utils.showAlertDialog(activity, "Something Went Wrong");
                                 return;
                             }
                             if (result.getStatus() == true) {
-                                dialog.dismiss();
+                                DeliveryAddressFragment.this.dialog.dismiss();
                                 Toast.makeText(activity, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                                dialog.dismiss();
                                 getaddressListApi();
                             } else {
-                                dialog.dismiss();
+                                if (result.getMessage().equals("Unauthorized")) {
+                                    Utils.showAlertDialogLogout(getActivity(), "Your Session was expire. please Logout!",localStorage.getUserProfile().getData().getUser().getUserId());
+                                    DeliveryAddressFragment.this.dialog.dismiss();
+                                }
+                                DeliveryAddressFragment.this.dialog.dismiss();
                                 Toast.makeText(activity, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
                             }
 
@@ -302,4 +334,53 @@ public class DeliveryAddressFragment extends Fragment {
         }
 
     }
+
+    private void getAllCities () {
+        if (user.isOnline(activity)) {
+            final LocalStorage localStorage = new LocalStorage(getActivity());
+            ApiCaller.getdistic(activity, Config.Url.disticGet,
+                    new FutureCallback<DilveryAdressResponseModel>() {
+                        @Override
+                        public void onCompleted(Exception e, DilveryAdressResponseModel result) {
+                            if (e != null) {
+                                dialog.dismiss();
+                                Utils.showAlertDialog(activity, "Something Went Wrong");
+                                return;
+                            }
+                            if (e != null) {
+                                Utils.showAlertDialog(activity, "Something Went Wrong");
+                                return;
+                            }
+
+                            if (result != null) {
+                                if (result.getStatus()) {
+                                    dialog.dismiss();
+                                    listData(result.getData());
+                                } else {
+                                    dialog.dismiss();
+
+                                }
+                            }
+
+                        }
+                    });
+
+        } else {
+            Utils.showAlertDialog(activity, "No Internet Connection");
+        }
+
+    }
+
+    private void listData (List<DilveryAddressDataModel> data) {
+
+        for (int i = 0; i < data.size(); i++) {
+            for (int j = 0; j < data.get(i).getCities().size(); j++) {
+
+                listcity.add(data.get(i).getCities().get(j).getName());
+            }
+        }
+
+        Log.e("city", "" + listcity.size());
+    }
+
 }

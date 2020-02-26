@@ -63,6 +63,7 @@ public class EnrolledCourseRvAdapter extends RecyclerView.Adapter<EnrolledCourse
     }
 
     private void getCourseDetial(Integer courseId, final TextView tv_courses_tilte, final TextView tv_courses_desc, final ImageView iv_courses_thumbnail) {
+        final LocalStorage localStorage = new LocalStorage(mContext);
         ApiCaller.courseDetial((Activity) mContext, Config.Url.coursedetial + courseId,
                 new FutureCallback<CourseDetialResponseModel>() {
 
@@ -71,6 +72,21 @@ public class EnrolledCourseRvAdapter extends RecyclerView.Adapter<EnrolledCourse
                         if (e != null) {
                             Utils.showAlertDialog((Activity) mContext, "Something Went Wrong");
                         }
+
+                        if(result != null){
+                            if(result.getStatus()== null){
+                                if(result.getMessage().equals("Unauthorized")){
+                                    Utils.showAlertDialogLogout((Activity) mContext, "Your Session was expire. please Logout!",localStorage.getUserProfile().getData().getUser().getUserId());
+                                }
+                            }else {
+                                if (result.getStatus() == 1) {
+                                    tv_courses_tilte.setText(result.getData().getCourseName());
+                                    tv_courses_desc.setText(result.getData().getCourseDescription());
+                                    Glide.with(mContext).load(Config.imageUrl + result.getData().getAvatarPath()).into(iv_courses_thumbnail);
+                                }
+                            }
+                        }
+
                         if (result != null) {
                             if (result.getStatus() == 1) {
                                 tv_courses_tilte.setText(result.getData().getCourseName());

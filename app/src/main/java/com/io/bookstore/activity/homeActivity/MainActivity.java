@@ -23,6 +23,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -46,19 +47,25 @@ import com.io.bookstore.activity.homeActivity.ui.home.HomeFragment;
 import com.io.bookstore.activity.homeActivity.ui.order.OrderFragment;
 import com.io.bookstore.activity.profile.EditProfileFragment;
 import com.io.bookstore.activity.profile.ProfileFragment;
+import com.io.bookstore.apicaller.ApiCaller;
 import com.io.bookstore.fragment.BookListFragment;
 import com.io.bookstore.fragment.BookstoresFragment;
 import com.io.bookstore.fragment.BookstoresFragmentWithFilter;
 import com.io.bookstore.fragment.CategoryListFragment;
+import com.io.bookstore.fragment.ContactUsFragment;
 import com.io.bookstore.fragment.EnrollCourseListFragment;
 import com.io.bookstore.fragment.FavoriteItemsFragment;
 import com.io.bookstore.fragment.category.CategoryGridFragment;
 import com.io.bookstore.listeners.ItemClickListner;
 import com.io.bookstore.localStorage.DbHelper;
 import com.io.bookstore.localStorage.LocalStorage;
+import com.io.bookstore.model.LogoutResponseModel;
 import com.io.bookstore.model.bookListModel.CartLocalListResponseMode;
-import com.io.bookstore.model.bookListModel.Category;
 import com.io.bookstore.model.loginModel.LoginModel;
+import com.io.bookstore.utility.NewProgressBar;
+import com.io.bookstore.utility.Utils;
+import com.io.bookstore.utility.userOnlineInfo;
+import com.koushikdutta.async.future.FutureCallback;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -81,12 +88,15 @@ public class MainActivity extends AppCompatActivity implements
     CartFragment cartFragment;
     OrderFragment orderFragment;
     TextView notification;
+    userOnlineInfo user;
+    NewProgressBar dialog;
+
     CategoryListFragment categoryListFragment;
     FavoriteItemsFragment favoriteItemsFragment;
     CategoryGridFragment categoryGridFragment;
     FloatingActionButton fabSave;
     ImageView iv_cart;
-    TextView nav_user, nav_Email,tv_logout;
+    TextView nav_user, nav_Email, tv_logout;
     CircleImageView imageView;
     LinearLayout home, favfourite, order, profile;
     ImageView ivHome, ivHeart, ivCart, iv_profile;
@@ -100,6 +110,7 @@ public class MainActivity extends AppCompatActivity implements
     DeliveryAddressFragment deliveryAddressFragment;
     LocalStorage localStorage;
     public static TextView tvcart;
+    private ImageView iv_cancel;
     public static ArrayList<CartLocalListResponseMode> list = new ArrayList<>();
     DbHelper dbHelper;
 
@@ -146,13 +157,16 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private void bindListner() {
+        localStorage.putString(LocalStorage.addressId,"");
         navigationView.setNavigationItemSelectedListener(MainActivity.this);
-        menu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                drawer.openDrawer(Gravity.LEFT);
-            }
-        });
+
+        menu.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        drawer.openDrawer(Gravity.LEFT);
+                    }
+                });
         ll_personal_info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -177,6 +191,8 @@ public class MainActivity extends AppCompatActivity implements
         country.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ContactUsFragment contactUsFragment = new ContactUsFragment();
+                changeFrag(contactUsFragment, true);
                 drawer.closeDrawer(Gravity.LEFT);
             }
         });
@@ -203,13 +219,13 @@ public class MainActivity extends AppCompatActivity implements
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dbHelper.deleteAll();
-                localStorage.putBooleAan(LocalStorage.isLoggedIn, false);
-                localStorage.putString(LocalStorage.token, "");
-                localStorage.putDistributorProfile(null);
-                Intent i = new Intent(MainActivity.this, LoginActivity.class);
-                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(i);
+                if (nav_Email.getText().toString().trim().equals("Login or SignUp")) {
+                    Intent i = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(i);
+                } else {
+                    logoutApiCall();
+                }
+
             }
         });
 
@@ -235,8 +251,6 @@ public class MainActivity extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
 
-                changeFrag(categoryGridFragment, true);
-                drawer.closeDrawer(Gravity.LEFT);
             }
         });
         ll_enroll_course.setOnClickListener(new View.OnClickListener() {
@@ -247,8 +261,54 @@ public class MainActivity extends AppCompatActivity implements
                 drawer.closeDrawer(Gravity.LEFT);
             }
         });
+
+        iv_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
         footerClick();
     }
+
+    private void logoutApiCall() {
+        if (user.isOnline(this)) {
+            dialog = new NewProgressBar(this);
+            dialog.show();
+            final LocalStorage localStorage = new LocalStorage(this);
+            ApiCaller.logout(this, Config.Url.logout + "/" + localStorage.getUserProfile().getData().getUser().getUserId(),
+                    new FutureCallback<LogoutResponseModel>() {
+                        @Override
+                        public void onCompleted(Exception e, LogoutResponseModel result) {
+                            if (e != null) {
+                                dialog.dismiss();
+                                Utils.showAlertDialog(MainActivity.this, "Something Went Wrong");
+                                return;
+                            }
+
+                            if (result != null) {
+                                if (result.getStatus()) {
+                                    dialog.dismiss();
+                                    Toast.makeText(MainActivity.this, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                                    dbHelper.deleteAll();
+                                    localStorage.putBooleAan(LocalStorage.isLoggedIn, false);
+                                    localStorage.putString(LocalStorage.token, "");
+                                    localStorage.putDistributorProfile(null);
+                                    Intent i = new Intent(MainActivity.this, LoginActivity.class);
+                                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    startActivity(i);
+                                }
+                            }
+
+                        }
+                    });
+
+        } else {
+            Utils.showAlertDialog(MainActivity.this, "No Internet Connection");
+        }
+    }
+
+
 
     private void changeLanguageDialog() {
 
@@ -280,10 +340,12 @@ public class MainActivity extends AppCompatActivity implements
                         Configuration config = new Configuration();
                         config.locale = locale;
                         getBaseContext().getResources().updateConfiguration(config, null);
+
                         dialog.dismiss();
                         initView();
                         bindListner();
                         startWorking();
+                        startActivity(new Intent(MainActivity.this,MainActivity.class));
                     } else {
                         Locale locale = new Locale("hi");
                         Locale.setDefault(locale);
@@ -291,9 +353,8 @@ public class MainActivity extends AppCompatActivity implements
                         config.locale = locale;
                         getBaseContext().getResources().updateConfiguration(config, null);
                         dialog.dismiss();
-                        initView();
-                        bindListner();
-                        startWorking();
+                      startActivity(new Intent(MainActivity.this,MainActivity.class));
+
                     }
                 }
             }
@@ -467,6 +528,7 @@ public class MainActivity extends AppCompatActivity implements
 
     private void initView() {
         localStorage = new LocalStorage(this);
+        user = new userOnlineInfo();
         ivHome = findViewById(R.id.ivHome);
         ivHeart = findViewById(R.id.ivHeart);
         ivCart = findViewById(R.id.ivCart);
@@ -498,6 +560,8 @@ public class MainActivity extends AppCompatActivity implements
         language = findViewById(R.id.language);
         tvcart = findViewById(R.id.tv_cart);
         country = findViewById(R.id.country);
+        iv_cancel = findViewById(R.id.iv_cancel);
+        categoryGridFragment = new CategoryGridFragment();
         notification = findViewById(R.id.autoCompleteTextView);
         enrollCourseListFragment = new EnrollCourseListFragment();
         profileFragment = new ProfileFragment();
@@ -519,6 +583,7 @@ public class MainActivity extends AppCompatActivity implements
     }
 
 
+    @SuppressLint("WrongConstant")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         int id = menuItem.getItemId();
@@ -550,7 +615,7 @@ public class MainActivity extends AppCompatActivity implements
         }
         if (position == 2) {
             MainActivity.this.getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.content_view, categoryListFragment)
+                    .replace(R.id.content_view, categoryGridFragment)
                     .addToBackStack(null)
                     .commit();
         }
@@ -566,6 +631,9 @@ public class MainActivity extends AppCompatActivity implements
                     .addToBackStack(null)
                     .commit();
         }
+        if (position == 6) {
+            onBackPressed();
+        }
     }
 
     @SuppressLint("ResourceType")
@@ -580,7 +648,12 @@ public class MainActivity extends AppCompatActivity implements
             tv_logout.setText(R.string.logout);
             nav_user.setText(localStorage.getUserProfile().getData().getUser().getName());
             nav_Email.setText(localStorage.getUserProfile().getData().getUser().getEmail());
-            Glide.with(getApplicationContext()).load(Config.imageUrl + localStorage.getUserProfile().getData().getUser().getAvatarPath()).into(imageView);
+            if (localStorage.getUserProfile().getData().getUser().getAvatarPath() == null) {
+                Glide.with(getApplicationContext()).load(R.drawable.person_logo).into(imageView);
+            } else {
+                Glide.with(getApplicationContext()).load(Config.imageUrl + localStorage.getUserProfile().getData().getUser().getAvatarPath()).into(imageView);
+            }
+
 
         }
     }

@@ -160,8 +160,21 @@ public class ProfileAdminFragment extends Fragment implements View.OnClickListen
                                 return;
                             }
 
-                            dialog.dismiss();
-                            getdataSetIntoViews(result);
+                            if(result != null){
+                                if(result.getStatus()== null){
+                                    if(result.getMessage().equals("Unauthorized")){
+                                        Utils.showAlertDialogLogout(getActivity(), "Your Session was expire. please Logout!",localStorage.getInt(LocalStorage.userId));
+
+                                        dialog.dismiss();
+                                    }
+                                    dialog.dismiss();
+                                }else {
+                                    dialog.dismiss();
+                                    getdataSetIntoViews(result);
+                                }
+                            }
+
+
 
                         }
                     });
@@ -232,6 +245,8 @@ public class ProfileAdminFragment extends Fragment implements View.OnClickListen
         if (strOldPassword.equals("") || strNewPassword.equals("")) {
             oldPassword.setError("Please enter old password");
             newPassword.setError("Please enter new password");
+        }else if(strNewPassword.length()<5){
+            oldPassword.setError("Please Enter Minimum 6 Digit Password");
         } else {
             changePasswordApi(dialog);
         }
@@ -252,12 +267,19 @@ public class ProfileAdminFragment extends Fragment implements View.OnClickListen
                             }
 
                             if(result != null){
-                                if(result.getStatus()){
+                                if(result.getStatus()== null){
+                                    if(result.getMessage().equals("Unauthorized")){
+                                        Utils.showAlertDialogAdminLogout(getActivity(), "Your Session was expire. please Logout!",localStorage.getInt(LocalStorage.userId));
+                                        dialog.dismiss();
+                                    }
+                                    dialog.dismiss();
+                                }else {
                                     ProfileAdminFragment.this.dialog.dismiss();
                                     dialog.dismiss();
                                     changePasswordData(result);
                                 }
                             }
+
                         }
                     });
         } else {
