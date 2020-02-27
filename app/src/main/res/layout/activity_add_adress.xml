@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center">
@@ -154,30 +155,69 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="8dp"
-                android:text="city"
+                android:text="District"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/et_state" />
 
-            <Spinner
-                android:id="@+id/et_city"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
+                android:id="@+id/llo"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
-                android:textColor="@color/text_color"
+                tools:ignore="MissingConstraints"
+                android:background="@drawable/layout_bg_on_focus"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView28">
+                <Spinner
+                    android:id="@+id/et_distic"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:textSize="12sp"
+                    android:paddingLeft="@dimen/five_dp"
+                    android:ems="10"
+                    android:importantForAutofill="no"
+                    android:inputType="textPersonName"
+                    />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/textView288"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:text="city"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/llo" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:id="@+id/ll"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                tools:ignore="MissingConstraints"
+                android:background="@drawable/layout_bg_on_focus"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView288">
+            <Spinner
+                android:id="@+id/et_city"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
                 android:textSize="12sp"
                 android:paddingLeft="@dimen/five_dp"
-                android:layout_marginRight="16dp"
-                android:background="@drawable/layout_bg_on_focus"
                 android:ems="10"
                 android:importantForAutofill="no"
                 android:inputType="textPersonName"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView28" />
-
+                 />
+            </RelativeLayout>
             <Button
                 android:id="@+id/btn_Add"
                 android:layout_width="116dp"
@@ -190,7 +230,7 @@
                 android:text="Add"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/et_city" />
+                app:layout_constraintTop_toBottomOf="@+id/ll" />
 
             <Button
                 android:id="@+id/btn_cancel"
@@ -204,7 +244,7 @@
                 android:text="Cancel"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/btn_Add"
-                app:layout_constraintTop_toBottomOf="@+id/et_city" />
+                app:layout_constraintTop_toBottomOf="@+id/ll" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 

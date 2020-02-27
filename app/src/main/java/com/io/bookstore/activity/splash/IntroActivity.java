@@ -146,7 +146,7 @@ public class IntroActivity extends AppCompatActivity {
             public void onClick(View v) {
                 localStorage.putBooleAan(LocalStorage.isFirstLaunch,true);
                 //open main activity
-                Intent mainActivity = new Intent(getApplicationContext(), LoginActivity.class);
+                Intent mainActivity = new Intent(getApplicationContext(), AddsActivity.class);
                 overridePendingTransition(R.anim.slide_in_from_right,R.anim.slide_out_from_left);
                 startActivity(mainActivity);
                 // also we need to save a boolean value to storage so next time when the user run the app
@@ -164,7 +164,7 @@ public class IntroActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 localStorage.putBooleAan(LocalStorage.isFirstLaunch,true);
-                Intent intent = new Intent(IntroActivity.this, MainActivity.class);
+                Intent intent = new Intent(IntroActivity.this, AddsActivity.class);
                 overridePendingTransition(R.anim.slide_in_from_right,R.anim.slide_out_from_left);
                 startActivity(intent);
 

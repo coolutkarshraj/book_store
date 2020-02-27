@@ -13,7 +13,7 @@
     android:orientation="horizontal">
 
     <androidx.core.widget.NestedScrollView
-        android:visibility="gone"
+  android:visibility="gone"
         android:id="@+id/nested_c_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -49,9 +49,25 @@
 
     </androidx.core.widget.NestedScrollView>
 
+
     <TextView
         android:layout_width="match_parent"
         android:textSize="16dp"
+        android:layout_gravity="center_vertical"
+        android:fontFamily="@font/exo_bold"
+        android:textAlignment="center"
+        android:id="@+id/wishlist"
+        android:visibility="gone"
+        android:gravity="center_vertical"
+        android:layout_centerInParent="true"
+        android:layout_margin="20dp"
+        android:text="you have no items add to wishlist"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints" />
+    <TextView
+        android:layout_width="match_parent"
+        android:textSize="16dp"
+
         android:layout_gravity="center_vertical"
         android:fontFamily="@font/exo_bold"
         android:textAlignment="center"

@@ -222,6 +222,7 @@
             android:layout_height="50dp"
             android:layout_weight="0.3"
             android:id="@+id/log"
+            android:tint="#637381"
             android:src="@drawable/ic_arrow_back_black_24dp">
 
         </ImageView>

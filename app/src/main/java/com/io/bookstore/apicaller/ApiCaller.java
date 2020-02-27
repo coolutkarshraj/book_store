@@ -31,11 +31,12 @@ import com.io.bookstore.model.dilvery.GetDPriceResponseModel;
 import com.io.bookstore.model.editProfileResponseModel.EditProfileResponseModel;
 import com.io.bookstore.model.filterByAddress.FilterAddressModel;
 import com.io.bookstore.model.getAddressResponseModel.AddressResponseModel;
-import com.io.bookstore.model.getAllOrder.GetAllOrder;
 import com.io.bookstore.model.getProfileResponseModel.GetProfileResponseModel;
 import com.io.bookstore.model.insituteModel.InsituiteResponseModel;
 import com.io.bookstore.model.insituteModel.TrendingInstituteResponseModel;
+import com.io.bookstore.model.instituteDetial.InsituiteDetialResponseModel;
 import com.io.bookstore.model.loginModel.LoginModel;
+import com.io.bookstore.model.myOrder.MyOrderResponseModel;
 import com.io.bookstore.model.orderModel.OrderStatusChangeResponseModel;
 import com.io.bookstore.model.registerModel.RegisterModel;
 import com.io.bookstore.model.sliderAdModel.AdModel;
@@ -216,7 +217,7 @@ public class ApiCaller {
 
 
     public static void addAddress(Activity activity, String url, String name, String address, String addresstype, String city, String state,
-                                  int zipcode, String locality, String country, String code, String landmark, String token, final FutureCallback<AddAddressResponseModel> apiCallBack) {
+                                  int zipcode, String locality, String country, String code, String landmark, String token,String distict, final FutureCallback<AddAddressResponseModel> apiCallBack) {
 
         final JsonObject json = new JsonObject();
         json.addProperty("name", name);
@@ -228,6 +229,7 @@ public class ApiCaller {
         json.addProperty("country", country);
         json.addProperty("landmark", landmark);
         json.addProperty("zipcode", zipcode);
+        json.addProperty("district", distict);
         json.addProperty("locality", locality);
         json.addProperty("code", code);
         final Gson gson = new Gson();
@@ -502,7 +504,7 @@ public class ApiCaller {
 
     /*-------------------------------------------------- (Get order) --------------------------------------------------------)*/
 
-    public static void getOrder(Activity activity, String url, String token, final FutureCallback<GetAllOrder> apiCallBack) {
+    public static void getOrder(Activity activity, String url, String token, final FutureCallback<MyOrderResponseModel> apiCallBack) {
 
 
         final Gson gson = new Gson();
@@ -514,7 +516,27 @@ public class ApiCaller {
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
                     public void onCompleted(Exception e, JsonObject result) {
-                        GetAllOrder placeOrderResponseModel = gson.fromJson(result, GetAllOrder.class);
+                        MyOrderResponseModel placeOrderResponseModel = gson.fromJson(result, MyOrderResponseModel.class);
+                        apiCallBack.onCompleted(e, placeOrderResponseModel);
+                    }
+                });
+
+    }
+
+    public static void getInstuteDetial(Activity activity, String url,
+                                        final FutureCallback<InsituiteDetialResponseModel> apiCallBack) {
+
+
+        final Gson gson = new Gson();
+        Ion.with(activity)
+                .load(UrlLocator.getFinalUrl(url))
+                .noCache()
+
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        InsituiteDetialResponseModel placeOrderResponseModel = gson.fromJson(result, InsituiteDetialResponseModel.class);
                         apiCallBack.onCompleted(e, placeOrderResponseModel);
                     }
                 });

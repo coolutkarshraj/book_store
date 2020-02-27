@@ -44,6 +44,7 @@ public class Config {
         public static String courseEnroll = "course/enroll?cId=";
         public static String courseEnrolledList = "course/enrolled";
         public static String trendingInstitute = "institute/trending";
+        public static String insituteDetial = "institute/detail?id=";
         public static String coursedetial = "course/detail?id=";
         public static String discountList = "discount/list";
         public static String logout = "user/logout";

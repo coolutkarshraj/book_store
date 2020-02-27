@@ -13,12 +13,13 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -81,9 +82,11 @@ public class CheckoutActivity extends AppCompatActivity {
     String message = "";
     int totalprice;
     int totalpricessss;
+    String spindata, spindistict;
 
-
+    private List<DilveryAddressDataModel> listdata = new ArrayList<>();
     List<String> listcity = new ArrayList<>();
+    List<String> listDistict = new ArrayList<>();
     private static PayPalConfiguration config = new PayPalConfiguration()
             .environment(PayPalConfiguration.ENVIRONMENT_NO_NETWORK)
             .clientId(StaticData.PAYPAL_CLIENT_ID);
@@ -123,7 +126,7 @@ public class CheckoutActivity extends AppCompatActivity {
         total_cost.setText(String.valueOf(totalprice) + "KD");
         startService();
         callApiToGetDeliveryCharge();
-
+        getAllCities();
     }
 
     private void callApiToGetDeliveryCharge() {
@@ -187,7 +190,7 @@ public class CheckoutActivity extends AppCompatActivity {
         tv_address.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getAllCities();
+
                 dialogOpen();
             }
         });
@@ -513,18 +516,60 @@ public class CheckoutActivity extends AppCompatActivity {
         final Button btn_Add = (Button) dialog.findViewById(R.id.btn_Add);
         final Button btn_cancel = (Button) dialog.findViewById(R.id.btn_cancel);
         final EditText etAddress = (EditText) dialog.findViewById(R.id.et_address);
-            final AutoCompleteTextView etCity = (AutoCompleteTextView) dialog.findViewById(R.id.et_city);
+        final Spinner etCity = (Spinner) dialog.findViewById(R.id.et_city);
+        final Spinner et_distic = (Spinner) dialog.findViewById(R.id.et_distic);
         final EditText etState = (EditText) dialog.findViewById(R.id.et_state);
         final EditText etPinCode = (EditText) dialog.findViewById(R.id.et_pincode);
 
-            ArrayAdapter aa = new ArrayAdapter(activity, layout.simple_list_item_1, listcity);
-            etCity.setAdapter(aa);
+
+        ArrayAdapter aa2 = new ArrayAdapter(activity, android.R.layout.simple_list_item_1, listDistict);
+        et_distic.setAdapter(aa2);
+
+
+        etCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (listcity.isEmpty() || listcity == null) {
+                    Toast.makeText(activity, "please select District", Toast.LENGTH_SHORT).show();
+                } else {
+                    spindata = listcity.get(i);
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        et_distic.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                spindistict = listDistict.get(i);
+                listcity.clear();
+                for (int j = 0; j < listdata.get(i).getCities().size(); j++) {
+
+                    listcity.add(listdata.get(i).getCities().get(j).getName());
+                }
+
+                ArrayAdapter aa = new ArrayAdapter(activity, android.R.layout.simple_list_item_1, listcity);
+                etCity.setAdapter(aa);
+
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         btn_Add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                addAddressValidateData(etAddress, etCity, etState, etPinCode);
+              //  addAddressValidateData(etAddress, spindata, etState, etPinCode,dialog,spindistict);
+                addAddressValidateData(etAddress, spindata, etState, etPinCode,dialog,spindistict);
                 dialog.dismiss();
             }
         });
@@ -541,36 +586,36 @@ public class CheckoutActivity extends AppCompatActivity {
     }
 
 
-    private void addAddressValidateData(EditText etAddress, EditText etCity, EditText etState, EditText etPinCode) {
+    private void addAddressValidateData(EditText etAddress, String spindata, EditText etState, EditText etPinCode, Dialog dialog, String spindistict) {
         String strAddress1 = etAddress.getText().toString().trim();
-        String strCity = etCity.getText().toString().trim();
+       // String strCity = etCity.getText().toString().trim();
         String strState = etState.getText().toString().trim();
         String strPinCode = etPinCode.getText().toString().trim();
-        if (strAddress1.isEmpty() || strCity.isEmpty() || strState.isEmpty() || strPinCode.isEmpty()) {
+        if (strAddress1.isEmpty() || strState.isEmpty() || strPinCode.isEmpty()) {
             etAddress.setError("Please Enter Address 1");
 
-            etCity.setError("Please Enter City");
+           // etCity.setError("Please Enter City");
             etState.setError("Please Enter State");
             etPinCode.setError("Please Enter PinCode");
         } else {
 
-            addDataIntoApi(strAddress1, strCity, strState, strPinCode);
+            addDataIntoApi(strAddress1, spindata, strState, strPinCode,dialog,spindistict);
 
         }
     }
 
-    private void addDataIntoApi(String strAddress1, String strCity, String strState, String strPinCode) {
+    private void addDataIntoApi(String strAddress1, String strCity, String strState, String strPinCode, final Dialog dialog, String spindistict) {
         if (user.isOnline(activity)) {
-            dialog = new NewProgressBar(activity);
-            dialog.show();
+            this.dialog = new NewProgressBar(activity);
+            this.dialog.show();
             final LocalStorage localStorage = new LocalStorage(this);
-            ApiCaller.addAddress(activity, Config.Url.addAddress, " ", strAddress1, " ", strCity, " ", Integer.valueOf(strPinCode), " ",
-                    " ", " ", " ", localStorage.getString(LocalStorage.token),
+            ApiCaller.addAddress(activity, Config.Url.addAddress, " ", strAddress1, " ", strCity, strState, Integer.valueOf(strPinCode), " ",
+                    " ", " ", " ", localStorage.getString(LocalStorage.token),spindata,
                     new FutureCallback<AddAddressResponseModel>() {
                         @Override
                         public void onCompleted(Exception e, AddAddressResponseModel result) {
                             if (e != null) {
-                                dialog.dismiss();
+                                CheckoutActivity.this.dialog.dismiss();
                                 Utils.showAlertDialog(activity, "Something Went Wrong");
                                 return;
                             }
@@ -581,13 +626,14 @@ public class CheckoutActivity extends AppCompatActivity {
 
                             if (result != null) {
                                 if (result.getStatus()) {
+                                    CheckoutActivity.this.dialog.dismiss();
                                     dialog.dismiss();
                                     Toast.makeText(activity, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
                                     getaddressListApi();
                                 } else {
                                     if (result.getMessage().equals("Unauthorized")) {
                                         Utils.showAlertDialogLogout(CheckoutActivity.this, "Your Session was expire. please Logout!", localStorage.getUserProfile().getData().getUser().getUserId());
-                                        dialog.dismiss();
+                                        CheckoutActivity.this.dialog.dismiss();
                                     }
                                 }
                             }
@@ -640,17 +686,13 @@ public class CheckoutActivity extends AppCompatActivity {
         }
 
         private void listData (List < DilveryAddressDataModel > data) {
-
+            listdata = data;
             for (int i = 0; i < data.size(); i++) {
-                for (int j = 0; j < data.get(i).getCities().size(); j++) {
 
-              /*  city.setCityId(data.get(i).getCities().get(j).getCityId());
-                city.setId(data.get(i).getCities().get(j).getId());*/
-                    //  city.setName(data.get(i).getCities().get(j).getName());
-                    //   city.setDistrictId(data.get(i).getCities().get(j).getDistrictId());
-                    listcity.add(data.get(i).getCities().get(j).getName());
-                }
+                listDistict.add(data.get(i).getName());
+
             }
+
 
             Log.e("city", "" + listcity.size());
         }

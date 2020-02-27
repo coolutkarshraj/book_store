@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.SearchView;
@@ -37,6 +38,7 @@ public class BookListFragment extends Fragment implements View.OnClickListener {
 
     private RecyclerView recyclerView;
     private View root;
+    private TextView notdata;
     private NewProgressBar dialog;
     private userOnlineInfo user;
     private SearchView searchView2;
@@ -86,6 +88,7 @@ public class BookListFragment extends Fragment implements View.OnClickListener {
         user = new userOnlineInfo();
         itemClickListner = (ItemClickListner) getActivity();
         iv_back = root.findViewById(R.id.iv_back);
+        notdata = root.findViewById(R.id.notdata);
         iv_back.setOnClickListener(this);
     }
 
@@ -138,8 +141,13 @@ public class BookListFragment extends Fragment implements View.OnClickListener {
 
     private void setRecyclerViewData(List<Datum> result) {
         if (result.isEmpty()) {
-            Utils.showAlertDialog(getActivity(), "Books are not available in this category.");
+            notdata.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+
         } else {
+            searchView2.setVisibility(View.VISIBLE);
+            notdata.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
             categoryAdapter = new BookListAdapter(getActivity(), result);
             recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
             childdata = (ArrayList<Datum>) result;

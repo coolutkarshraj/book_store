@@ -23,10 +23,7 @@ import com.io.bookstore.activity.authentication.LoginActivity;
 import com.io.bookstore.adapter.FavoriteItemsAdapter;
 import com.io.bookstore.apicaller.ApiCaller;
 import com.io.bookstore.localStorage.LocalStorage;
-import com.io.bookstore.model.BookModel;
 import com.io.bookstore.model.loginModel.LoginModel;
-import com.io.bookstore.model.wishlistModel.AddorRemoveWishlistDataModel;
-import com.io.bookstore.model.wishlistModel.AddorRemoveWishlistResponseModel;
 import com.io.bookstore.model.wishlistModel.GetWishListDataModel;
 import com.io.bookstore.model.wishlistModel.GetWishlistResponseModel;
 import com.io.bookstore.utility.NewProgressBar;
@@ -42,7 +39,7 @@ public class FavoriteItemsFragment extends Fragment implements SwipeRefreshLayou
     private RecyclerView recyclerView;
     private FavoriteItemsAdapter favoriteItemsAdapter;
     private LocalStorage localStorage;
-    private TextView loggedih;
+    private TextView loggedih, wishlist;
     private NestedScrollView nested_c_view;
     private userOnlineInfo user;
     private Activity activity;
@@ -62,6 +59,7 @@ public class FavoriteItemsFragment extends Fragment implements SwipeRefreshLayou
         loggedih = root.findViewById(R.id.loggedih);
         swipeRefreshLayout = root.findViewById(R.id.swipe_refresh);
         nested_c_view = root.findViewById(R.id.nested_c_view);
+        wishlist = root.findViewById(R.id.wishlist);
         user = new userOnlineInfo();
         activity = getActivity();
         localStorage = new LocalStorage(getActivity());
@@ -125,10 +123,16 @@ public class FavoriteItemsFragment extends Fragment implements SwipeRefreshLayou
 
     private void setRecyclerViewData(List<GetWishListDataModel> data) {
 
-
-        FavoriteItemsAdapter myAdapter = new FavoriteItemsAdapter(activity, data);
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-        recyclerView.setAdapter(myAdapter);
+        if (data.isEmpty()) {
+            recyclerView.setVisibility(View.GONE);
+            wishlist.setVisibility(View.VISIBLE);
+        } else {
+            recyclerView.setVisibility(View.VISIBLE);
+            wishlist.setVisibility(View.GONE);
+            FavoriteItemsAdapter myAdapter = new FavoriteItemsAdapter(activity, data);
+            recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+            recyclerView.setAdapter(myAdapter);
+        }
 
     }
 

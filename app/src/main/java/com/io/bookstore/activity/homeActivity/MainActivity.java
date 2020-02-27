@@ -178,6 +178,7 @@ public class MainActivity extends AppCompatActivity implements
         ll_address.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                colorAllBlack();
                 changeFrag(deliveryAddressFragment, true);
                 drawer.closeDrawer(Gravity.LEFT);
             }
@@ -185,12 +186,15 @@ public class MainActivity extends AppCompatActivity implements
         ll_payment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                payment();
+                changeFrag(orderFragment, true);
                 drawer.closeDrawer(Gravity.LEFT);
             }
         });
         country.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                colorAllBlack();
                 ContactUsFragment contactUsFragment = new ContactUsFragment();
                 changeFrag(contactUsFragment, true);
                 drawer.closeDrawer(Gravity.LEFT);
@@ -256,7 +260,7 @@ public class MainActivity extends AppCompatActivity implements
         ll_enroll_course.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                colorAllBlack();
                 changeFrag(enrollCourseListFragment, true);
                 drawer.closeDrawer(Gravity.LEFT);
             }
@@ -730,6 +734,53 @@ public class MainActivity extends AppCompatActivity implements
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    private void colorAllBlack(){
+        Drawable unwrappedDrawable = AppCompatResources.getDrawable(MainActivity.this, R.drawable.heart);
+        assert unwrappedDrawable != null;
+        Drawable wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable);
+        DrawableCompat.setTint(wrappedDrawable, getResources().getColor(R.color.gray));
+        ivHeart.setImageResource(R.drawable.heart);
+
+        Drawable unwrappedDrawable1 = AppCompatResources.getDrawable(MainActivity.this, R.drawable.ic_home);
+        assert unwrappedDrawable1 != null;
+        Drawable wrappedDrawable1 = DrawableCompat.wrap(unwrappedDrawable1);
+        DrawableCompat.setTint(wrappedDrawable1, getResources().getColor(R.color.gray));
+        ivHome.setImageResource(R.drawable.ic_home);
+
+        Drawable unwrappedDrawable2 = AppCompatResources.getDrawable(MainActivity.this, R.drawable.profile);
+        assert unwrappedDrawable2 != null;
+        Drawable wrappedDrawable2 = DrawableCompat.wrap(unwrappedDrawable2);
+        DrawableCompat.setTint(wrappedDrawable2, getResources().getColor(R.color.gray));
+        iv_profile.setImageResource(R.drawable.profile);
+
+        Drawable unwrappedDrawable4 = AppCompatResources.getDrawable(MainActivity.this, R.drawable.ic_local_mall_black_24dp);
+        assert unwrappedDrawable4 != null;
+        Drawable wrappedDrawable4 = DrawableCompat.wrap(unwrappedDrawable1);
+        DrawableCompat.setTint(wrappedDrawable4, getResources().getColor(R.color.gray));
+        ivCart.setImageResource(R.drawable.ic_local_mall_black_24dp);
+    }
+
+    private void payment(){
+        Drawable unwrappedDrawable = AppCompatResources.getDrawable(MainActivity.this, R.drawable.heart);
+        assert unwrappedDrawable != null;
+        Drawable wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable);
+        DrawableCompat.setTint(wrappedDrawable, getResources().getColor(R.color.gray));
+        ivHeart.setImageResource(R.drawable.heart);
+
+        Drawable unwrappedDrawable1 = AppCompatResources.getDrawable(MainActivity.this, R.drawable.ic_home);
+        assert unwrappedDrawable1 != null;
+        Drawable wrappedDrawable1 = DrawableCompat.wrap(unwrappedDrawable1);
+        DrawableCompat.setTint(wrappedDrawable1, getResources().getColor(R.color.gray));
+        ivHome.setImageResource(R.drawable.ic_home);
+
+        Drawable unwrappedDrawable2 = AppCompatResources.getDrawable(MainActivity.this, R.drawable.profile);
+        assert unwrappedDrawable2 != null;
+        Drawable wrappedDrawable2 = DrawableCompat.wrap(unwrappedDrawable2);
+        DrawableCompat.setTint(wrappedDrawable2, getResources().getColor(R.color.gray));
+        iv_profile.setImageResource(R.drawable.profile);
+        changeIconColor(MainActivity.this, R.drawable.ic_local_mall_black_24dp, 2);
     }
 
 

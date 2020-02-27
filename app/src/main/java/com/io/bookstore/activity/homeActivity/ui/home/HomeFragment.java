@@ -291,14 +291,14 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener,
         HorizontalScrollView horizontalScrollView = new HorizontalScrollView(getActivity());
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         horizontalScrollView.setLayoutParams(layoutParams);
+        layoutParams.setMargins(0,0,0,3);
         horizontalScrollView.setVerticalScrollBarEnabled(false);
-        horizontalScrollView.setHorizontalScrollBarEnabled(false);
+        horizontalScrollView.setHorizontalScrollBarEnabled(true);
         LinearLayout linearLayout = new LinearLayout(getActivity());
         LinearLayout.LayoutParams linearParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         linearLayout.setOrientation(LinearLayout.HORIZONTAL);
         linearLayout.setLayoutParams(linearParams);
         horizontalScrollView.addView(linearLayout);
-
         int i;
 
         for (i = 0; i < listd.size(); i++) {
@@ -327,6 +327,7 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener,
                 }
             });
         }
+
         if (ll_sub_child != null) {
             ll_sub_child.addView(horizontalScrollView);
         }

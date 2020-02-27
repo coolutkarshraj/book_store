@@ -16,7 +16,6 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -35,7 +34,6 @@ import com.io.bookstore.Config;
 import com.io.bookstore.R;
 import com.io.bookstore.StaticData;
 import com.io.bookstore.activity.authentication.LoginActivity;
-import com.io.bookstore.adapter.AddressAdapter;
 import com.io.bookstore.adapter.AddressCheckoutAdapter;
 import com.io.bookstore.apicaller.ApiCaller;
 import com.io.bookstore.localStorage.DbHelper;
@@ -68,8 +66,10 @@ public class DeliveryAddressFragment extends Fragment {
     LocalStorage localStorage;
      LinearLayout linearLayout;
     private TextView loggdin;
-    String spindata;
+    String spindata, spindistict;
     private  List<String> listcity = new ArrayList<>();
+    private List<String> listDistict = new ArrayList<>();
+    private List<DilveryAddressDataModel> listdata = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -88,14 +88,14 @@ public class DeliveryAddressFragment extends Fragment {
         loggdin = root.findViewById(R.id.loggedih);
         recyclerView = root.findViewById(R.id.recyclerView);
         tv_address = root.findViewById(R.id.tv_address);
-
+        getAllCities();
     }
 
     private void bindListner() {
         tv_address.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getAllCities();
+
                 dialogOpen();
             }
         });
@@ -244,16 +244,46 @@ public class DeliveryAddressFragment extends Fragment {
         final Button btn_cancel = (Button) dialog.findViewById(R.id.btn_cancel);
         final EditText etAddress = (EditText) dialog.findViewById(R.id.et_address);
         final Spinner etCity = (Spinner) dialog.findViewById(R.id.et_city);
+        final Spinner et_distic = (Spinner) dialog.findViewById(R.id.et_distic);
         final EditText etState = (EditText) dialog.findViewById(R.id.et_state);
         final EditText etPinCode = (EditText) dialog.findViewById(R.id.et_pincode);
 
-        ArrayAdapter aa = new ArrayAdapter(activity, android.R.layout.simple_list_item_1, listcity);
-        etCity.setAdapter(aa);
+
+        ArrayAdapter aa2 = new ArrayAdapter(activity, android.R.layout.simple_list_item_1, listDistict);
+        et_distic.setAdapter(aa2);
+
 
         etCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                spindata = listcity.get(i);
+                if (listcity.isEmpty() || listcity == null) {
+                    Toast.makeText(activity, "please select District", Toast.LENGTH_SHORT).show();
+                } else {
+                    spindata = listcity.get(i);
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        et_distic.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                spindistict = listDistict.get(i);
+                listcity.clear();
+                for (int j = 0; j < listdata.get(i).getCities().size(); j++) {
+
+                    listcity.add(listdata.get(i).getCities().get(j).getName());
+                }
+
+                ArrayAdapter aa = new ArrayAdapter(activity, android.R.layout.simple_list_item_1, listcity);
+                etCity.setAdapter(aa);
+
+
             }
 
             @Override
@@ -265,7 +295,7 @@ public class DeliveryAddressFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                addAddressValidateData(etAddress, spindata, etState, etPinCode,dialog);
+                addAddressValidateData(etAddress, spindata, etState, etPinCode,dialog,spindistict);
             }
         });
         btn_cancel.setOnClickListener(new View.OnClickListener() {
@@ -280,7 +310,7 @@ public class DeliveryAddressFragment extends Fragment {
 
     }
 
-    private void addAddressValidateData(EditText etAddress, String etCity, EditText etState, EditText etPinCode, Dialog dialog) {
+    private void addAddressValidateData(EditText etAddress, String spindataCity, EditText etState, EditText etPinCode, Dialog dialog, String spindistict) {
         String strAddress1 = etAddress.getText().toString().trim();
       //  String strCity = etCity.getText().toString().trim();
         String strState = etState.getText().toString().trim();
@@ -291,19 +321,19 @@ public class DeliveryAddressFragment extends Fragment {
             etPinCode.setError("Please Enter PinCode");
         } else {
 
-            addDataIntoApi(strAddress1, etCity, strState, strPinCode,dialog);
+            addDataIntoApi(strAddress1, spindataCity, strState, strPinCode,dialog,spindistict);
 
         }
     }
 
-    private void addDataIntoApi(String strAddress1, String strCity, String strState, String strPinCode, final Dialog dialog) {
+    private void addDataIntoApi(String strAddress1, String strCity, String strState, String strPinCode, final Dialog dialog, String spindistict) {
         if (user.isOnline(activity)) {
             this.dialog = new NewProgressBar(activity);
             this.dialog.show();
             final LocalStorage localStorage = new LocalStorage(getActivity());
             ApiCaller.addAddress(activity, Config.Url.addAddress, " ", strAddress1, " ", strCity,
                     strState, Integer.valueOf(strPinCode), " ",
-                    " ", " ", " ", localStorage.getString(LocalStorage.token),
+                    " ", " ", " ", localStorage.getString(LocalStorage.token),spindistict,
                     new FutureCallback<AddAddressResponseModel>() {
                         @Override
                         public void onCompleted(Exception e, AddAddressResponseModel result) {
@@ -372,12 +402,11 @@ public class DeliveryAddressFragment extends Fragment {
     }
 
     private void listData (List<DilveryAddressDataModel> data) {
-
+        listdata = data;
         for (int i = 0; i < data.size(); i++) {
-            for (int j = 0; j < data.get(i).getCities().size(); j++) {
 
-                listcity.add(data.get(i).getCities().get(j).getName());
-            }
+            listDistict.add(data.get(i).getName());
+
         }
 
         Log.e("city", "" + listcity.size());

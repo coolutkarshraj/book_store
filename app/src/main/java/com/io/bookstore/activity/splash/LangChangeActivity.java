@@ -52,7 +52,7 @@ public class LangChangeActivity extends AppCompatActivity {
                 getBaseContext().getResources().updateConfiguration(config, null);
                // Toast.makeText(LangChangeActivity.this, "اللغة العربية المختارة!", Toast.LENGTH_LONG).show();
                 if(localStorage.getBoolean(LocalStorage.isFirstLaunch) == true){
-                    if(localStorage.getInt(LocalStorage.role)== 1){
+               /*     if(localStorage.getInt(LocalStorage.role)== 1){
                         Intent i = new Intent(LangChangeActivity.this , BookStoreMainActivity.class);
                         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(i);
@@ -60,10 +60,13 @@ public class LangChangeActivity extends AppCompatActivity {
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(intent);
                         finish();
-                    }
+                    }*/
+                    Intent intent = new Intent(getApplicationContext(), AddsActivity.class);
+                    startActivity(intent);
+                    finish();
 
                 }else {
-                    Intent intent = new Intent(getApplicationContext(), AddsActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), IntroActivity.class);
                     startActivity(intent);
                     finish();
                 }
@@ -85,7 +88,7 @@ public class LangChangeActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_in_from_right,R.anim.slide_out_from_left);
                 if(localStorage.getBoolean(LocalStorage.isFirstLaunch)==true){
 
-                    if(localStorage.getInt(LocalStorage.role)== 1){
+               /*     if(localStorage.getInt(LocalStorage.role)== 1){
                         Intent i = new Intent(LangChangeActivity.this , BookStoreMainActivity.class);
                         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(i);
@@ -93,11 +96,14 @@ public class LangChangeActivity extends AppCompatActivity {
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(intent);
                         finish();
-                    }
+                    }*/
+                    Intent intent = new Intent(getApplicationContext(), AddsActivity.class);
+                    startActivity(intent);
+                    finish();
 
                 }else {
 
-                    Intent intent = new Intent(getApplicationContext(), AddsActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), IntroActivity.class);
                     startActivity(intent);
                     finish();
                 }

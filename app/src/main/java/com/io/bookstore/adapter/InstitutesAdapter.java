@@ -1,11 +1,14 @@
 package com.io.bookstore.adapter;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,14 +19,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.io.bookstore.Config;
 import com.io.bookstore.R;
+import com.io.bookstore.apicaller.ApiCaller;
 import com.io.bookstore.fragment.CoursesFragment;
-import com.io.bookstore.fragment.InstituteFragment;
 import com.io.bookstore.listeners.ItemClickListner;
 import com.io.bookstore.listeners.RecyclerViewClickListener;
-import com.io.bookstore.model.InstituteModel;
-import com.io.bookstore.model.adminResponseModel.AdminBookDataModel;
 import com.io.bookstore.model.insituteModel.InsituiteDataModel;
-import com.io.bookstore.model.insituteModel.InsituiteResponseModel;
+import com.io.bookstore.model.instituteDetial.InsituiteDetialResponseModel;
+import com.io.bookstore.utility.Utils;
+import com.koushikdutta.async.future.FutureCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +37,11 @@ public class InstitutesAdapter extends RecyclerView.Adapter<InstitutesAdapter.My
     private List<InsituiteDataModel> mData ;
     private ItemClickListner itemClickListner;
     CoursesFragment coursesFragment;
+    String strName;
+    String strAddress;
+    String strState;
+    String strCity;
+
     private RecyclerViewClickListener item;
 
 
@@ -58,6 +66,7 @@ public class InstitutesAdapter extends RecyclerView.Adapter<InstitutesAdapter.My
         InsituiteDataModel model = mData.get(position);
        // holder.cardView.setAnimation(AnimationUtils.loadAnimation(mContext,R.anim.fade_scale_animation));
         holder.tv_institute_title.setText(model.getInstituteName());
+        holder.tv_institute_desc.setText(model.getDescription());
 
         holder.bv_institute_browse.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,7 +75,85 @@ public class InstitutesAdapter extends RecyclerView.Adapter<InstitutesAdapter.My
 
             }
         });
+        holder.bv_institute_location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                apiCall(mData.get(position).getInstituteId());
+            }
+        });
+
+
+
+
         Glide.with(mContext).load(Config.imageUrl + model.getAvatarPath()).into(holder.iv_institute_thumbnail);
+
+    }
+
+    private void apiCall(Integer instituteId) {
+        ApiCaller.getInstuteDetial((Activity) mContext, Config.Url.insituteDetial+instituteId,
+                new FutureCallback<InsituiteDetialResponseModel>() {
+
+                    @Override
+                    public void onCompleted(Exception e, InsituiteDetialResponseModel result) {
+                        if (e != null) {
+                            Utils.showAlertDialog((Activity) mContext, "Something Went Wrong");
+                        }
+                        if (result != null) {
+                            if (result.getStatus()) {
+                                strName = result.getData().getInstituteName();
+                                strAddress = result.getData().getAddress().getAddress();
+                                strCity = result.getData().getAddress().getCity();
+                                strState = result.getData().getAddress().getState();
+                                dialogadd();
+                            }
+                        }
+                        ;
+
+
+                    }
+                });
+    }
+
+    private void dialogadd() {
+        final Dialog dialog = new Dialog(mContext);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        DisplayMetrics metrics = mContext.getResources().getDisplayMetrics();
+        int width = metrics.widthPixels;
+        int height = metrics.heightPixels;
+        dialog.getWindow().setLayout((6 * width) / 7, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.setContentView(R.layout.dialog_institue_location);
+        dialog.setTitle("");
+        final ImageView Clear = (ImageView) dialog.findViewById(R.id.clear);
+        final Button btn_Add = (Button) dialog.findViewById(R.id.btn_Add);
+        //final Button btn_cancel = (Button) dialog.findViewById(R.id.btn_cancel);
+        final TextView etAddress = (TextView) dialog.findViewById(R.id.et_address);
+        final TextView etCity = (TextView) dialog.findViewById(R.id.et_city);
+        final TextView etState = (TextView) dialog.findViewById(R.id.et_state);
+        final TextView etPinCode = (TextView) dialog.findViewById(R.id.et_pincode);
+        etAddress.setText(strName);
+        etState.setText(strState);
+        etCity.setText(strCity);
+        etPinCode.setText(strAddress);
+
+        btn_Add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                dialog.dismiss();
+            }
+        });
+
+
+        Clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+
 
     }
 
@@ -85,7 +172,7 @@ public class InstitutesAdapter extends RecyclerView.Adapter<InstitutesAdapter.My
 
         TextView tv_institute_title,tv_institute_desc;
         ImageView iv_institute_thumbnail;
-        Button bv_institute_browse;
+        Button bv_institute_browse, bv_institute_location;
         CardView cardView ;
 
         public MyViewHolder(View itemView) {
@@ -96,6 +183,7 @@ public class InstitutesAdapter extends RecyclerView.Adapter<InstitutesAdapter.My
             iv_institute_thumbnail = (ImageView) itemView.findViewById(R.id.iv_institute_thumbnail);
             cardView = (CardView) itemView.findViewById(R.id.cardview_item_institute);
             bv_institute_browse = (Button) itemView.findViewById(R.id.bv_institute_browse);
+            bv_institute_location = (Button) itemView.findViewById(R.id.bv_institute_location);
 
         }
     }

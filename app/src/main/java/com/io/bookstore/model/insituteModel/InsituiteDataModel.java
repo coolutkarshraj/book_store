@@ -19,6 +19,10 @@ public class InsituiteDataModel {
     @SerializedName("addedById")
     @Expose
     private Integer addedById;
+    @SerializedName("description")
+    @Expose
+    private String description;
+
 
     public Integer getInstituteId() {
         return instituteId;
@@ -58,5 +62,13 @@ public class InsituiteDataModel {
 
     public void setAddedById(Integer addedById) {
         this.addedById = addedById;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

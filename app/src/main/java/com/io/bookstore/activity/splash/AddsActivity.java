@@ -16,8 +16,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.io.bookstore.Config;
 import com.io.bookstore.R;
 import com.io.bookstore.activity.authentication.LoginActivity;
+import com.io.bookstore.activity.homeActivity.MainActivity;
 import com.io.bookstore.adapter.admin.AddsAdapter;
 import com.io.bookstore.apicaller.ApiCaller;
+import com.io.bookstore.bookStore.BookStoreMainActivity;
 import com.io.bookstore.localStorage.LocalStorage;
 import com.io.bookstore.model.contactUs.AdsDataModel;
 import com.io.bookstore.model.contactUs.AdsResponseModel;
@@ -68,11 +70,16 @@ public class AddsActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_skip:
-                localStorage.putBooleAan(LocalStorage.isFirstLaunch,true);
-                Intent intent = new Intent(activity, IntroActivity.class);
-                overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_from_left);
-                startActivity(intent);
-                finish();
+                if(localStorage.getInt(LocalStorage.role)== 1){
+                    Intent i = new Intent(AddsActivity.this , BookStoreMainActivity.class);
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(i);
+                }else {
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+
                 return;
 
         }

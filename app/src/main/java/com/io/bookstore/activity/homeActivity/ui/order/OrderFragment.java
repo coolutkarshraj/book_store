@@ -25,6 +25,7 @@ import com.io.bookstore.localStorage.LocalStorage;
 import com.io.bookstore.model.getAllOrder.Datum;
 import com.io.bookstore.model.getAllOrder.GetAllOrder;
 import com.io.bookstore.model.loginModel.LoginModel;
+import com.io.bookstore.model.myOrder.MyOrderResponseModel;
 import com.io.bookstore.utility.NewProgressBar;
 import com.io.bookstore.utility.Utils;
 import com.io.bookstore.utility.userOnlineInfo;
@@ -43,7 +44,7 @@ public class OrderFragment extends Fragment implements RecyclerViewClickListener
     private LinearLayout hide;
     private LocalStorage localStorage;
     private RecyclerViewClickListener item;
-    private List<Datum> courseicon;
+    private List<com.io.bookstore.model.myOrder.Datum> courseicon;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -75,10 +76,10 @@ public class OrderFragment extends Fragment implements RecyclerViewClickListener
             final NewProgressBar dialog = new NewProgressBar(getActivity());
             dialog.show();
             ApiCaller.getOrder(getActivity(), Config.Url.getAllOrder,localStorage.getString(LocalStorage.token),
-                    new FutureCallback<GetAllOrder>() {
+                    new FutureCallback<MyOrderResponseModel>() {
 
                         @Override
-                        public void onCompleted(Exception e, GetAllOrder result) {
+                        public void onCompleted(Exception e, MyOrderResponseModel result) {
                             dialog.dismiss();
                             if(e!=null){
                                 Utils.showAlertDialog(getActivity(), "Something Went Wrong");
@@ -103,7 +104,7 @@ public class OrderFragment extends Fragment implements RecyclerViewClickListener
         }
     }
 
-    private void setRecyclerViewData(GetAllOrder order) {
+    private void setRecyclerViewData(MyOrderResponseModel order) {
         LinearLayoutManager gridLayoutManager = new LinearLayoutManager(getActivity(),
                 RecyclerView.VERTICAL,false);
         recyclerView.setLayoutManager(gridLayoutManager);

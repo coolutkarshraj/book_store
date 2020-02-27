@@ -81,6 +81,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                app:counterEnabled="true"
+                app:counterMaxLength="50"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvEmail">
@@ -92,6 +94,7 @@
                     android:drawablePadding="@dimen/font_10"
                     android:gravity="start"
                     android:hint="Title"
+                    android:maxLength="50"
                     android:inputType="textPersonName"
                     android:paddingBottom="@dimen/value_8"
                     android:singleLine="true"
@@ -110,6 +113,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                app:counterEnabled="true"
+                app:counterMaxLength="150"
                >
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -118,9 +123,9 @@
                     android:layout_height="wrap_content"
                     android:drawablePadding="@dimen/font_10"
                     android:gravity="start"
-                    android:hint="Message"
+                    android:hint="Description"
                     android:inputType="text"
-                    android:maxLength="10"
+                    android:maxLength="150"
                     android:paddingBottom="@dimen/value_8"
                     android:textAlignment="viewStart"
                     android:textDirection="locale"
