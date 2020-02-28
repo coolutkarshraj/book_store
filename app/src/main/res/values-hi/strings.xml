@@ -134,4 +134,6 @@
     <string name="savedadd">عنوانك المحفوظ؟ الرجاء تسجيل الدخول لمشاهدة</string>
     <string name="please_logged_in_to_see_your_enrolled_courseloggedin">مسجّل التسجيل الخاص بك؟ الرجاء تسجيل الدخول لمشاهدة </string>
     <string name="please_logged_in_to_see_your_contact">يرجى تسجيل الدخول لمشاهدة دورتك  المسجلة؟ </string>
+    <string name="guest">تواصل كضيف
+</string>
 </resources>

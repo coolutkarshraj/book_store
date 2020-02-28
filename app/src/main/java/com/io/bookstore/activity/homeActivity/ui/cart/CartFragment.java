@@ -173,7 +173,6 @@ public class CartFragment extends Fragment {
                     startActivity(intent);
                 }else{
                     localStorage.putBooleAan(LocalStorage.isCart,true);
-
                     Intent intent = new Intent(getActivity(), LoginActivity.class);
                     startActivity(intent);
                 }

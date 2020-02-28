@@ -97,7 +97,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="48dp"
-            android:background="#57adee"
+            android:background="@drawable/round_corner_button_yellow"
             android:fontFamily="@font/fontawesome"
             android:text="@string/sign_in"
             android:textColor="@android:color/white"
@@ -105,6 +105,21 @@
             app:layout_constraintEnd_toEndOf="@+id/tvPass"
             app:layout_constraintStart_toStartOf="@+id/tvPass"
             app:layout_constraintTop_toBottomOf="@+id/tvPass" />
+
+        <Button
+            android:id="@+id/btn_gust"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/round_corner_button_yellow"
+            android:visibility="gone"
+            android:fontFamily="@font/fontawesome"
+            android:text="@string/guest"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/btnSignIn"
+            app:layout_constraintStart_toStartOf="@+id/btnSignIn"
+            app:layout_constraintTop_toBottomOf="@+id/btnSignIn" />
 
         <TextView
             android:id="@+id/textView38"
@@ -116,9 +131,9 @@
             android:textSize="14sp"
             android:textStyle="normal"
             app:fontFamily="@font/fontawesome"
-            app:layout_constraintEnd_toEndOf="@+id/btnSignIn"
-            app:layout_constraintStart_toStartOf="@+id/btnSignIn"
-            app:layout_constraintTop_toBottomOf="@+id/btnSignIn" />
+            app:layout_constraintEnd_toEndOf="@+id/btn_gust"
+            app:layout_constraintStart_toStartOf="@+id/btn_gust"
+            app:layout_constraintTop_toBottomOf="@+id/btn_gust" />
 
         <TextView
             android:id="@+id/tvSignUp"

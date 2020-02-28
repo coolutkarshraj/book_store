@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -15,9 +14,11 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.viewpager.widget.ViewPager;
 
 import com.io.bookstore.Config;
 import com.io.bookstore.R;
@@ -25,20 +26,18 @@ import com.io.bookstore.StaticData;
 import com.io.bookstore.adapter.AdSliderAdapter;
 import com.io.bookstore.adapter.CourseAdapter;
 import com.io.bookstore.adapter.SToreAdapter;
+import com.io.bookstore.adapter.categoryAdapter.CategoryFragmentAdapter;
 import com.io.bookstore.apicaller.ApiCaller;
 import com.io.bookstore.fragment.BookstoresFragment;
-import com.io.bookstore.fragment.CategoryListFragment;
 import com.io.bookstore.fragment.CourseEnrollmentFragment;
 import com.io.bookstore.fragment.CoursesFragment;
 import com.io.bookstore.fragment.InstituteFragment;
+import com.io.bookstore.fragment.category.AddressSliderFragment;
 import com.io.bookstore.fragment.category.CategoryGridFragment;
 import com.io.bookstore.listeners.ItemClickListner;
 import com.io.bookstore.listeners.RecyclerViewClickListener;
-import com.io.bookstore.model.InstituteModel;
 import com.io.bookstore.model.getAddressResponseModel.AddressResponseModel;
 import com.io.bookstore.model.getAddressResponseModel.Datum;
-import com.io.bookstore.model.insituteModel.InsituiteDataModel;
-import com.io.bookstore.model.insituteModel.InsituiteResponseModel;
 import com.io.bookstore.model.insituteModel.TrendingInstituteDataModel;
 import com.io.bookstore.model.insituteModel.TrendingInstituteResponseModel;
 import com.io.bookstore.model.sliderAdModel.AdModel;
@@ -47,11 +46,10 @@ import com.io.bookstore.utility.NewProgressBar;
 import com.io.bookstore.utility.Utils;
 import com.io.bookstore.utility.userOnlineInfo;
 import com.koushikdutta.async.future.FutureCallback;
-
 import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.SliderAnimations;
-
 import com.smarteist.autoimageslider.SliderView;
+import com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,7 +84,11 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener,
     private LinearLayout ll_sub_child;
     public static SwipeRefreshLayout swipeRefreshLayout;
     private View root;
+    public  static ViewPager viewPager;
     private List<Datum> listd= new ArrayList();
+    SpringDotsIndicator dotsIndicator;
+
+    int sizee = 0;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -103,7 +105,8 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener,
         ll_sub_child = root.findViewById(R.id.ll_sub_child);
         sliderView = root.findViewById(R.id.imageSlider);
         getSliderAdList();
-
+        viewPager = root.findViewById(R.id.viewpager);
+        dotsIndicator = (SpringDotsIndicator) root.findViewById(R.id.dots_indicator);
         iv_view_all_stores = root.findViewById(R.id.iv_view_all_stores);
         swipeRefreshLayout = root.findViewById(R.id.swipe_refresh);
         iv_viewall_instutues = root.findViewById(R.id.iv_viewall_instutues);
@@ -288,7 +291,7 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener,
 
     private void makaAddressListScrollView(AddressResponseModel resultt) {
         listd = resultt.getData();
-        HorizontalScrollView horizontalScrollView = new HorizontalScrollView(getActivity());
+/*        HorizontalScrollView horizontalScrollView = new HorizontalScrollView(getActivity());
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         horizontalScrollView.setLayoutParams(layoutParams);
         layoutParams.setMargins(0,0,0,3);
@@ -299,7 +302,7 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener,
         linearLayout.setOrientation(LinearLayout.HORIZONTAL);
         linearLayout.setLayoutParams(linearParams);
         horizontalScrollView.addView(linearLayout);
-        int i;
+      int i;
 
         for (i = 0; i < listd.size(); i++) {
 
@@ -330,8 +333,22 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener,
 
         if (ll_sub_child != null) {
             ll_sub_child.addView(horizontalScrollView);
-        }
+        }*/
 
+        CategoryFragmentAdapter adapter = new CategoryFragmentAdapter(((FragmentActivity) getActivity()).getSupportFragmentManager());
+        if (listd.size() % 5 == 0) {
+            sizee = listd.size() / 5;
+        } else {
+            sizee = listd.size() / 5 + 1;
+        }
+        for (int p = 0; p < sizee; p++) {
+            adapter.addFragment(new AddressSliderFragment(listd));
+            adapter.notifyDataSetChanged();
+
+        }
+        adapter.notifyDataSetChanged();
+        viewPager.setAdapter(adapter);
+        dotsIndicator.setViewPager(viewPager);
     }
 
     @Override
@@ -356,6 +373,8 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener,
 
 
     }
+
+
 
 
 }

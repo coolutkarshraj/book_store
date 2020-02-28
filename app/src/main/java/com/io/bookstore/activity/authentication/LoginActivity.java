@@ -1,7 +1,5 @@
 package com.io.bookstore.activity.authentication;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,22 +9,20 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.io.bookstore.Config;
 import com.io.bookstore.R;
 import com.io.bookstore.activity.homeActivity.MainActivity;
 import com.io.bookstore.apicaller.ApiCaller;
-import com.io.bookstore.apicaller.LoginAPICaller;
 import com.io.bookstore.bookStore.BookStoreMainActivity;
 import com.io.bookstore.localStorage.LocalStorage;
-import com.io.bookstore.model.UserModel;
 import com.io.bookstore.model.loginModel.LoginModel;
 import com.io.bookstore.utility.NewProgressBar;
 import com.io.bookstore.utility.Utils;
 import com.io.bookstore.utility.userOnlineInfo;
 import com.koushikdutta.async.future.FutureCallback;
-import com.koushikdutta.ion.Response;
 
 /**
  * Created by Utkarsh Raj 10/12/2019.
@@ -35,7 +31,7 @@ import com.koushikdutta.ion.Response;
 public class LoginActivity extends AppCompatActivity {
     private Activity activity;
     private TextView tvSignUp,tv_tnc ;
-    private Button login_btn;
+    private Button login_btn, btn_gust;
     private EditText email,pass;
     userOnlineInfo user;
     private NewProgressBar dialog;
@@ -79,10 +75,18 @@ public class LoginActivity extends AppCompatActivity {
                loginApi();
             }
         });
+
+        btn_gust.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, GuestLoginActivity.class));
+            }
+        });
     }
 
     private void initView() {
         tvSignUp = findViewById(R.id.tvSignUp);
+        btn_gust = findViewById(R.id.btn_gust);
         tv_forgotpassword = findViewById(R.id.tvForgotPass);
         tv_tnc = findViewById(R.id.tvSkip);
         login_btn = findViewById(R.id.btnSignIn);
@@ -91,6 +95,10 @@ public class LoginActivity extends AppCompatActivity {
         localStorage = new LocalStorage(activity);
         email = findViewById(R.id.etEmailLogin);
         pass = findViewById(R.id.etPassLogin);
+        if (localStorage.getBoolean(LocalStorage.isCart) == true) {
+            btn_gust.setVisibility(View.VISIBLE);
+
+        }
     }
 
     private void loginApi() {
