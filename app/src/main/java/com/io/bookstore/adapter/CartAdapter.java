@@ -2,11 +2,13 @@ package com.io.bookstore.adapter;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 import android.database.Cursor;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,13 +17,20 @@ import com.bumptech.glide.Glide;
 import com.io.bookstore.Config;
 import com.io.bookstore.R;
 import com.io.bookstore.StaticData;
+import com.io.bookstore.activity.authentication.LoginActivity;
 import com.io.bookstore.activity.homeActivity.MainActivity;
 import com.io.bookstore.activity.homeActivity.ui.cart.CartFragment;
+import com.io.bookstore.apicaller.ApiCaller;
 import com.io.bookstore.holder.CartHolder;
 import com.io.bookstore.localStorage.DbHelper;
 import com.io.bookstore.localStorage.LocalStorage;
 import com.io.bookstore.model.bookListModel.CartLocalListResponseMode;
+import com.io.bookstore.model.loginModel.LoginModel;
+import com.io.bookstore.model.wishlistModel.AddorRemoveWishlistResponseModel;
+import com.io.bookstore.utility.NewProgressBar;
 import com.io.bookstore.utility.Utils;
+import com.io.bookstore.utility.userOnlineInfo;
+import com.koushikdutta.async.future.FutureCallback;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,10 +46,14 @@ public class CartAdapter extends RecyclerView.Adapter<CartHolder> {
     private Activity activity;
     private JSONArray courseicon;
     JSONObject json_data;
-    Dialog dialog;
+    NewProgressBar dialog;
     ArrayList<CartLocalListResponseMode> item;
+    LoginModel loginModel;
     int count;
+    LocalStorage localStorage;
     DbHelper dbHelper;
+    userOnlineInfo user;
+
     public CartAdapter(Activity activity, ArrayList<CartLocalListResponseMode> item) {
         this.activity = activity;
         this.item = item;
@@ -48,7 +61,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartHolder> {
 
     @Override
     public CartHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(activity).inflate(R.layout.item_biew_cart, parent, false);
+       // View view = LayoutInflater.from(activity).inflate(R.layout.item_biew_cart, parent, false);
+        View view = LayoutInflater.from(activity).inflate(R.layout.item_cart, parent, false);
+        localStorage = new LocalStorage(activity);
+
+        loginModel = localStorage.getUserProfile();
+        user = new userOnlineInfo();
         return new CartHolder(view);
     }
 
@@ -64,6 +82,32 @@ public class CartAdapter extends RecyclerView.Adapter<CartHolder> {
 
 
         holder.imageView9.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DbHelper dbHelper;
+                dbHelper = new DbHelper(activity);
+                Cursor cursor = dbHelper.getData();
+                boolean isdeleted = false;
+                isdeleted = dbHelper.deleteData(model.getPID());
+
+                if (isdeleted == true) {
+                    Utils.showAlertDialog(activity, "Data Deleted Sucessfully");
+                    if(cursor.getCount() == 0){
+                        MainActivity.tvcart.setVisibility(View.GONE);
+                        CartFragment.no_text_found.setVisibility(View.VISIBLE);
+                        CartFragment.nested_sc_view.setVisibility(View.GONE);
+                    }
+
+                    getSqliteData();
+
+                } else {
+                    Utils.showAlertDialog(activity, "Data is not deleted");
+                    getSqliteData();
+                }
+            }
+        });
+
+        holder.ll_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DbHelper dbHelper;
@@ -123,6 +167,37 @@ public class CartAdapter extends RecyclerView.Adapter<CartHolder> {
                     getSqliteData();
                 }
 
+            }
+        });
+        holder.mark_fav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (loginModel == null) {
+                    Toast.makeText(activity, "please login", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(activity, LoginActivity.class);
+                    activity.startActivity(intent);
+                } else {
+                    holder.mark_fav.setVisibility(View.GONE);
+                    holder.mark_fav_red.setVisibility(View.VISIBLE);
+                    addorRemomoveWishlist(Long.valueOf(item.get(position).getPID()));
+                }
+
+
+            }
+        });
+
+        holder.mark_fav_red.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (loginModel == null) {
+                    Intent intent = new Intent(activity, LoginActivity.class);
+                    activity.startActivity(intent);
+                } else {
+                    holder.mark_fav.setVisibility(View.VISIBLE);
+                    holder.mark_fav_red.setVisibility(View.GONE);
+                    addorRemomoveWishlist(Long.valueOf(item.get(position).getPID()));
+                }
             }
         });
 
@@ -248,6 +323,52 @@ public class CartAdapter extends RecyclerView.Adapter<CartHolder> {
             getSqliteData();
         } else {
             Utils.showAlertDialog(activity, "something went wrong");
+        }
+    }
+
+
+    /* ---------------------------------------------- add or remove wishlist api -----------------------------------------*/
+
+    private void addorRemomoveWishlist(Long bookId) {
+        if (user.isOnline(activity)) {
+            dialog = new NewProgressBar(activity);
+            dialog.show();
+            final LocalStorage localStorage = new LocalStorage(activity);
+            ApiCaller.addOrRemoveWishList((Activity) activity, Config.Url.addorremoveWishlist + bookId, localStorage.getString(LocalStorage.token),
+                    new FutureCallback<AddorRemoveWishlistResponseModel>() {
+                        @Override
+                        public void onCompleted(Exception e, AddorRemoveWishlistResponseModel result) {
+                            if (e != null) {
+                                dialog.dismiss();
+                                Utils.showAlertDialog((Activity) activity, "Something Went Wrong");
+                                return;
+                            }
+
+                            if(result != null){
+                                if(result.getStatus()== null){
+                                    if(result.getMessage().equals("Unauthorized")){
+                                        Utils.showAlertDialogLogout((Activity) activity, "Your Session was expire. please Logout!",localStorage.getUserProfile().getData().getUser().getUserId());
+                                        dialog.dismiss();
+                                    }
+                                    dialog.dismiss();
+                                }else {
+                                    if (result.getStatus() == true) {
+                                        Toast.makeText(activity, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                                        dialog.dismiss();
+                                    } else {
+                                        Toast.makeText(activity, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                                        dialog.dismiss();
+                                    }
+                                }
+                            }
+
+
+
+                        }
+                    });
+
+        } else {
+            Utils.showAlertDialog((Activity) activity, "No Internet Connection");
         }
     }
 

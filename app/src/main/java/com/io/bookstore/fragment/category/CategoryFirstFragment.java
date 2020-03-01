@@ -48,10 +48,9 @@ public class CategoryFirstFragment extends Fragment {
 
     private void intializeViews(View view) {
         activity = getActivity();
-        recyclerView1 = view.findViewById(R.id.recycler1);
-        recyclerView2 = view.findViewById(R.id.recycler2);
+
         recyclerView3 = view.findViewById(R.id.recycler3);
-        recyclerView4 = view.findViewById(R.id.recycler4);
+
     }
 
     private void startWorking() {
@@ -59,36 +58,29 @@ public class CategoryFirstFragment extends Fragment {
     }
 
     private void dataSetIntoRecyclerView() {
-        item1.clear();
-        item2.clear();
+
         item3.clear();
-        item4.clear();
+
         if (CategoryGridFragment.viewPager.getCurrentItem() == 0) {
-            sizeo = 0;
-            i = 0;
+            sizeo = 5;
+            i = 5;
         } else if (CategoryGridFragment.viewPager.getCurrentItem() > 0) {
             sizeo = 10 * CategoryGridFragment.viewPager.getCurrentItem();
             i = 10 * CategoryGridFragment.viewPager.getCurrentItem();
         }
 
         for (i = sizeo; i <= data.size() - 1; i++) {
-            if (i < sizeo + 3) {
-                item1.add(data.get(i));
-            } else if (i < sizeo + 3 + 3) {
-                item2.add(data.get(i));
-            } else if (i < sizeo + 3 + 3 + 4) {
+                if (i < sizeo +10) {
                 item3.add(data.get(i));
-            }/* else if (i < sizeo + 2 + 3 + 2 + 4) {
-                item4.add(data.get(i));
-            }*/
+            }
         }
-        recyclerView1.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+   /*     recyclerView1.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         CategoryGridAdapter adapter = new CategoryGridAdapter(getActivity(), item1);
         recyclerView1.setAdapter(adapter);
 
         recyclerView2.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         CategoryGridAdapter adapter2 = new CategoryGridAdapter(getActivity(), item2);
-        recyclerView2.setAdapter(adapter2);
+        recyclerView2.setAdapter(adapter2);*/
 
 
         recyclerView3.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));

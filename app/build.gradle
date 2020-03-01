@@ -10,7 +10,7 @@ android {
         minSdkVersion 18
         targetSdkVersion 29
         versionCode 3
-        versionName "1.0.2"
+        versionName "1.1.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -20,6 +20,7 @@ android {
         }
     }
     sourceSets { main { assets.srcDirs = ['src/main/assets', 'src/main/assets/'] } }
+
 }
 
 dependencies {
@@ -31,6 +32,7 @@ dependencies {
     implementation "androidx.cardview:cardview:1.0.0"
     //noinspection GradleCompatible
     implementation 'com.tbuonomo.andrui:viewpagerdotsindicator:4.1.2'
+    //noinspection GradleCompatible
     implementation 'com.android.support:design:28.0.0'
     implementation 'com.koushikdutta.ion:ion:2.+'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'

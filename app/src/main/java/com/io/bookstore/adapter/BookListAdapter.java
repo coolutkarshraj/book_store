@@ -330,9 +330,10 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.MyView
             tv_bookName= (TextView) itemView.findViewById(R.id.bookName);
             iv_favorite = (ImageView) itemView.findViewById(R.id.iv_favorite);
             mark_fav = (ImageView) itemView.findViewById(R.id.mark_fav);
+            mark_fav_red = (ImageView) itemView.findViewById(R.id.mark_fav_red);
             mark_cart = (ImageView) itemView.findViewById(R.id.mark_cart);
             mark_setting = (ImageView) itemView.findViewById(R.id.mark_setting);
-            mark_fav_red = (ImageView) itemView.findViewById(R.id.mark_fav_red);
+
 
         }
     }

@@ -77,8 +77,8 @@ public class CartFragment extends Fragment {
         nested_sc_view =  root.findViewById(R.id.nested_sc_view);
         no_text_found =  root.findViewById(R.id.no_text_found);
         tv_name_2 =  root.findViewById(R.id.tv_name_2);
-        rb_1st =  root.findViewById(R.id.rb_1st);
-        rb_2nd =  root.findViewById(R.id.rb_2nd);
+        rb_1st =  root.findViewById(R.id.rb_1st1);
+        rb_2nd =  root.findViewById(R.id.rb_2nd2);
         localStorage = new LocalStorage(getActivity());
         localStorage.putBooleAan(LocalStorage.isCart,false);
         user = new userOnlineInfo();
