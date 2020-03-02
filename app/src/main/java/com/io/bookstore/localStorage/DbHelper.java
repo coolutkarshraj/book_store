@@ -20,6 +20,7 @@ public class DbHelper extends SQLiteOpenHelper {
     private final static String PRODUCT_QTY="Quantity";
     private final static String PRODUCT_PRICE="Price";
     private final static String PRODUCT_AQTY="avalible";
+    private final static String WISHLIST="wishlist";
 
     private SQLiteDatabase database;
 
@@ -33,7 +34,7 @@ public class DbHelper extends SQLiteOpenHelper {
             description +" TEXT,"+
             gstPrice +" TEXT,"+
             PRODUCT_AQTY +" TEXT,"+
-            PRODUCT_Id +" TEXT);";
+            PRODUCT_Id +" TEXT,"+WISHLIST +" TEXT);";
 
     public DbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -55,7 +56,7 @@ public class DbHelper extends SQLiteOpenHelper {
     /* ----------------------------------------------------insert data in table -----------------------------------------------------*/
 
     public boolean insertData(String name, String avatarPath, Long bookId, int qty,
-                              Long price, String description, Long gstPrice,int avalibleqty ){
+                              Long price, String description, Long gstPrice, int avalibleqty, String s){
         database = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("Name",name);
@@ -66,6 +67,7 @@ public class DbHelper extends SQLiteOpenHelper {
         values.put("gstPrice",gstPrice);
         values.put("P_ID",bookId);
         values.put("avalible",avalibleqty);
+        values.put("wishlist",s);
         long result = database.insert(TABLE_NAME,null,values);
         if(result==-1){
             return false;
@@ -92,7 +94,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
     /* ---------------------------------------------------- update data from table ----------------------------------------------*/
 
-    public boolean updateData(String name, String image, String qty, String price, String pid)
+    public boolean updateData(String name, String image, String qty, String price, String pid,String s)
     {
         database = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -101,6 +103,21 @@ public class DbHelper extends SQLiteOpenHelper {
         values.put("Quantity",qty);
         values.put("Price",price);
         values.put("P_ID",pid);
+        values.put("wishlist",s);
+        long result = database.update(TABLE_NAME, values, PRODUCT_Id + "=?", new String[]{pid});
+        if (result == -1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public boolean updatewish(String pid,String s)
+    {
+        database = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("P_ID",pid);
+        values.put("wishlist",s);
         long result = database.update(TABLE_NAME, values, PRODUCT_Id + "=?", new String[]{pid});
         if (result == -1) {
             return false;

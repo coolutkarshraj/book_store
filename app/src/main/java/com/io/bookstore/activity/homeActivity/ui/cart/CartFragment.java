@@ -55,7 +55,7 @@ public class CartFragment extends Fragment {
     public static TextView delivery_type, deliv_charge, tv_gst, total_cost, totalAll_cost;
     private DeliveryResponseModel deliveryModel;
     private String deliveryType;
-    public static int dilvery = 2;
+    public static int dilvery = 0;
     public static int price, Qty, gst = 0;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -108,10 +108,10 @@ public class CartFragment extends Fragment {
                                 deliveryModel = result;
                                 dialog.dismiss();
                                 tv_name_1.setText(result.getData().get(0).getType() + " Delivery");
-                                rb_1st.setText(result.getData().get(0).getPrice() + result.getData().get(0).getUnit());
-                                rb_2nd.setText(result.getData().get(1).getPrice() + result.getData().get(1).getUnit());
+                                //  rb_1st.setText(result.getData().get(0).getPrice() + result.getData().get(0).getUnit());
+                                //  rb_2nd.setText(result.getData().get(1).getPrice() + result.getData().get(1).getUnit());
                                 tv_name_2.setText(result.getData().get(1).getType() + " Delivery");
-                                deliv_charge.setText(deliveryModel.getData().get(1).getPrice() + deliveryModel.getData().get(1).getUnit());
+                                // deliv_charge.setText(deliveryModel.getData().get(1).getPrice() + deliveryModel.getData().get(1).getUnit());
 
                             } else {
                                 dialog.dismiss();
@@ -146,10 +146,15 @@ public class CartFragment extends Fragment {
             public void onClick(View v) {
                 if(rb_2nd.isChecked()){
                     rb_1st.setChecked(false);
-
-                    delivery_type.setText(deliveryModel.getData().get(1).getType() + " Delivery");
+                    Utils.showAlertDialog(getActivity(), "Standard delivery is depend on your address.procced to checkout");
+                   /* delivery_type.setText(deliveryModel.getData().get(1).getType() + " Delivery");
                     deliv_charge.setText(deliveryModel.getData().get(1).getPrice() + deliveryModel.getData().get(1).getUnit());
-                    dilvery = deliveryModel.getData().get(1).getPrice();
+                    dilvery = deliveryModel.getData().get(1).getPrice();*/
+                    // delivery_type.setText(deliveryModel.getData().get(1).getType() + " Delivery");
+                    deliv_charge.setText("Its Depend on your address");
+                    dilvery = 0;
+                    //  dilvery = deliveryModel.getData().get(1).getPrice();
+
                     getSqliteData1();
                 }
             }
@@ -159,18 +164,23 @@ public class CartFragment extends Fragment {
             public void onClick(View v) {
                 LocalStorage localStorage = new LocalStorage(getActivity());
                 if(localStorage.getBoolean(LocalStorage.isLoggedIn)){
-                    if(rb_1st.isChecked()){
-                        deliveryType =   deliveryModel.getData().get(0).getType();
-                    }else {
-                        deliveryType =   deliveryModel.getData().get(1).getType();
 
+                    if (rb_1st.isChecked()== false && rb_2nd.isChecked()==false ) {
+                        Toast.makeText(getActivity(), "please select delivery method", Toast.LENGTH_SHORT).show();
+                    } else {
+                        if (rb_1st.isChecked()) {
+                            deliveryType = deliveryModel.getData().get(0).getType();
+                        } else {
+                            deliveryType = deliveryModel.getData().get(1).getType();
+
+                        }
+                        int total = price;
+                        Intent intent = new Intent(getActivity(), CheckoutActivity.class);
+                        // intent.putExtra("deliveryType",deliveryType);
+                        intent.putExtra("totalprice", total);
+
+                        startActivity(intent);
                     }
-                    int total = price;
-                    Intent intent = new Intent(getActivity(), CheckoutActivity.class);
-                   // intent.putExtra("deliveryType",deliveryType);
-                    intent.putExtra("totalprice", total);
-
-                    startActivity(intent);
                 }else{
                     localStorage.putBooleAan(LocalStorage.isCart,true);
                     Intent intent = new Intent(getActivity(), LoginActivity.class);
@@ -249,6 +259,7 @@ public class CartFragment extends Fragment {
                     shoppingBagModel.setPrice(json_data.getString("Price"));
                     shoppingBagModel.setImage(json_data.getString("Image"));
                     shoppingBagModel.setAvailibleQty(json_data.getString("avalible"));
+                    shoppingBagModel.setWishlist(json_data.getString("wishlist"));
                     shoppingBagModel.setPID(json_data.getString("P_ID"));
                     shoppingBagModel.setGst(json_data.getString("gstPrice"));
                     price = Integer.parseInt(json_data.getString("Price"));
@@ -275,4 +286,6 @@ public class CartFragment extends Fragment {
             e.printStackTrace();
         }
     }
+
+
     }

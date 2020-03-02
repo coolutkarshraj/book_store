@@ -1,7 +1,6 @@
 package com.io.bookstore.adapter;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.util.Log;
@@ -144,7 +143,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartHolder> {
                 } else {
                     holder.textView8.setText(String.valueOf(count));
                     updateQuantity(model.getName(), model.getImage(), count,
-                            model.getPrice(), model.getPID());
+                            model.getPrice(), model.getPrice(), model.getPID());
                     getSqliteData();
 
                 }
@@ -162,13 +161,20 @@ public class CartAdapter extends RecyclerView.Adapter<CartHolder> {
                 } else {
                     holder.textView8.setText(String.valueOf(count));
                     updateQuantity(model.getName(), model.getImage(), count,
-                            model.getPrice(), model.getPID());
+                            model.getPrice(), model.getPrice(), model.getPID());
 
                     getSqliteData();
                 }
 
             }
         });
+        if (item.get(position).getWishlist().equals("true")) {
+            holder.mark_fav_red.setVisibility(View.VISIBLE);
+            holder.mark_fav.setVisibility(View.GONE);
+        } else {
+            holder.mark_fav_red.setVisibility(View.GONE);
+            holder.mark_fav.setVisibility(View.VISIBLE);
+        }
         holder.mark_fav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -180,7 +186,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartHolder> {
                 } else {
                     holder.mark_fav.setVisibility(View.GONE);
                     holder.mark_fav_red.setVisibility(View.VISIBLE);
+                    updateQuantity(Long.valueOf(item.get(position).getPID()),"true");
                     addorRemomoveWishlist(Long.valueOf(item.get(position).getPID()));
+
                 }
 
 
@@ -196,7 +204,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartHolder> {
                 } else {
                     holder.mark_fav.setVisibility(View.VISIBLE);
                     holder.mark_fav_red.setVisibility(View.GONE);
+                    updateQuantity(Long.valueOf(item.get(position).getPID()),"false");
                     addorRemomoveWishlist(Long.valueOf(item.get(position).getPID()));
+
                 }
             }
         });
@@ -275,6 +285,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartHolder> {
                     shoppingBagModel.setAvailibleQty(json_data.getString("avalible"));
                     shoppingBagModel.setPID(json_data.getString("P_ID"));
                     shoppingBagModel.setGst(json_data.getString("gstPrice"));
+                    shoppingBagModel.setWishlist(json_data.getString("wishlist"));
                     price = Integer.parseInt(json_data.getString("Price"));
                     qty = Integer.parseInt(json_data.getString("Quantity"));
                     gst = Integer.parseInt(gst + json_data.getString("gstPrice"));
@@ -316,9 +327,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartHolder> {
     }
 
 
-    private void updateQuantity(String name, String image, int count, String price, String pid) {
+    private void updateQuantity(String name, String image, int count, String modelPrice, String price, String pid) {
         dbHelper = new DbHelper(activity);
-        boolean isupdated = dbHelper.updateData(name, image, String.valueOf(count), price, pid);
+        boolean isupdated = dbHelper.updateData(name, image, String.valueOf(count), price, pid,modelPrice);
         if (isupdated == true) {
             getSqliteData();
         } else {
@@ -355,6 +366,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartHolder> {
                                     if (result.getStatus() == true) {
                                         Toast.makeText(activity, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
                                         dialog.dismiss();
+                                        getSqliteData();
                                     } else {
                                         Toast.makeText(activity, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
                                         dialog.dismiss();
@@ -372,5 +384,13 @@ public class CartAdapter extends RecyclerView.Adapter<CartHolder> {
         }
     }
 
-
+    private void updateQuantity(Long pid, String s) {
+        dbHelper = new DbHelper(activity);
+        boolean isupdated = dbHelper.updatewish(String.valueOf(pid),s);
+        if (isupdated == true) {
+            getSqliteData();
+        } else {
+            Utils.showAlertDialog(activity, "something went wrong");
+        }
+    }
 }

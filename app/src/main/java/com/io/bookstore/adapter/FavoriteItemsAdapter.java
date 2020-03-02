@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.res.Configuration;
 import android.database.Cursor;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -17,7 +16,6 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,7 +49,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class FavoriteItemsAdapter extends RecyclerView.Adapter<FavoriteItemsAdapter.MyViewHolder> {
 
@@ -215,7 +212,7 @@ public class FavoriteItemsAdapter extends RecyclerView.Adapter<FavoriteItemsAdap
                                 mData.get(position).getPrice(),
                                 mData.get(position).getDescription(),
                                 mData.get(position).getGstPrice(),
-                                mData.get(position).getQuantity());
+                                mData.get(position).getQuantity(), "false");
                         if (isInserted) {
                             getSqliteData1();
                             Toast.makeText(mContext, "Items Added Succesfully", Toast.LENGTH_SHORT).show();
@@ -280,7 +277,7 @@ public class FavoriteItemsAdapter extends RecyclerView.Adapter<FavoriteItemsAdap
                         mData.get(position).getPrice(),
                         mData.get(position).getDescription(),
                         mData.get(position).getGstPrice(),
-                        mData.get(position).getQuantity());
+                        mData.get(position).getQuantity(), "false");
 
                 if (isInserted) {
                     Toast.makeText(mContext, "Items Added Succesfully", Toast.LENGTH_SHORT).show();

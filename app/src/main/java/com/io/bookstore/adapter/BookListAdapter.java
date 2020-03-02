@@ -31,7 +31,6 @@ import com.io.bookstore.StaticData;
 import com.io.bookstore.activity.authentication.LoginActivity;
 import com.io.bookstore.activity.homeActivity.MainActivity;
 import com.io.bookstore.apicaller.ApiCaller;
-import com.io.bookstore.fragment.SettingsFragment;
 import com.io.bookstore.localStorage.DbHelper;
 import com.io.bookstore.localStorage.LocalStorage;
 import com.io.bookstore.model.bookListModel.CartLocalListResponseMode;
@@ -58,6 +57,7 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.MyView
     NewProgressBar dialog;
     private LocalStorage localStorage;
     private LoginModel loginModel;
+    private DbHelper dbHelper;
     public static ArrayList<CartLocalListResponseMode> list = new ArrayList<>();
 
 
@@ -71,6 +71,7 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.MyView
         View view;
         LayoutInflater mInflater = LayoutInflater.from(mContext);
         view = mInflater.inflate(R.layout.list_book_item, parent, false);
+        dbHelper =new DbHelper(mContext);
         user = new userOnlineInfo();
         localStorage = new LocalStorage(mContext);
         loginModel = localStorage.getUserProfile();
@@ -110,7 +111,8 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.MyView
                                 mData.get(position).getPrice(),
                                 mData.get(position).getDescription(),
                                 mData.get(position).getGstPrice(),
-                                mData.get(position).getQuantity());
+                                mData.get(position).getQuantity(),
+                                String.valueOf(mData.get(position).isWishlist()));
                         if (isInserted) {
                             getSqliteData1();
                             Toast.makeText(mContext, "Items Added Succesfully", Toast.LENGTH_SHORT).show();
@@ -139,6 +141,7 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.MyView
                 } else {
                     holder.mark_fav.setVisibility(View.GONE);
                     holder.mark_fav_red.setVisibility(View.VISIBLE);
+                    updateQuantity(mData.get(position).getBookId(),"true");
                     addorRemomoveWishlist(mData.get(position).getBookId());
                 }
 
@@ -155,6 +158,7 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.MyView
                 } else {
                     holder.mark_fav.setVisibility(View.VISIBLE);
                     holder.mark_fav_red.setVisibility(View.GONE);
+                    updateQuantity(mData.get(position).getBookId(),"false");
                     addorRemomoveWishlist(mData.get(position).getBookId());
                 }
             }
@@ -245,7 +249,7 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.MyView
                         mData.get(position).getPrice(),
                         mData.get(position).getDescription(),
                         mData.get(position).getGstPrice(),
-                        mData.get(position).getQuantity());
+                        mData.get(position).getQuantity(), String.valueOf(mData.get(position).isWishlist()));
 
                 if (isInserted) {
                     Toast.makeText(mContext, "Items Added Succesfully", Toast.LENGTH_SHORT).show();
@@ -401,6 +405,7 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.MyView
                     shoppingBagModel.setImage(json_data.getString("Image"));
                     shoppingBagModel.setAvailibleQty(json_data.getString("avalible"));
                     shoppingBagModel.setPID(json_data.getString("P_ID"));
+                    shoppingBagModel.setWishlist(json_data.getString("wishlist"));
                     shoppingBagModel.setGst(json_data.getString("gstPrice"));
                     list.add(shoppingBagModel);
 
@@ -418,5 +423,14 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.MyView
         }
     }
 
+    private void updateQuantity(Long pid, String s) {
+        dbHelper = new DbHelper(mContext);
+        boolean isupdated = dbHelper.updatewish(String.valueOf(pid),s);
+        if (isupdated == true) {
+            getSqliteData1();
+        } else {
+            Utils.showAlertDialog((Activity) mContext, "something went wrong");
+        }
+    }
 
 }

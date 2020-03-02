@@ -27,6 +27,16 @@ public class CartLocalListResponseMode {
     @Expose
     private String pID;
     private String gst;
+    @SerializedName("wishlist")
+    private String wishlist;
+
+    public String getWishlist() {
+        return wishlist;
+    }
+
+    public void setWishlist(String wishlist) {
+        this.wishlist = wishlist;
+    }
 
     public String getAmountGst() {
         return AmountGst;

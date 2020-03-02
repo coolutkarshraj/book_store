@@ -6,6 +6,7 @@
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nested_sc_view"
         android:layout_width="match_parent"
+        android:visibility="gone"
         android:layout_height="match_parent">
         <RelativeLayout
             android:layout_width="match_parent"
@@ -79,10 +80,10 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="start"
                                 android:layout_marginLeft="14dp"
-                                android:checked="true"
+
                                 android:fontFamily="@font/exo"
                                 android:layoutDirection="ltr"
-                                android:text="Standard"
+                                android:text="@string/standard_delivery"
                                 android:textAlignment="textStart"
                                 android:textStyle="normal">
 
@@ -95,7 +96,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="45dp"
                                 android:fontFamily="@font/exo"
-                                android:text="2 Kd"
+                                android:text="Depend's on Address"
                                 android:textSize="@dimen/h1" />
 
                             <TextView
@@ -134,7 +135,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="45dp"
                                 android:fontFamily="@font/exo"
-                                android:text="4 Kd"
+                                android:text="5 Kd"
                                 android:textSize="@dimen/h1" />
 
                             <TextView
@@ -160,20 +161,18 @@
                     android:weightSum="2">
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
+                        android:layout_marginEnd="@dimen/font_10"
                         android:layout_weight="1"
-                        android:gravity="end"
-
                         android:orientation="vertical">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="end"
-                            android:layout_marginEnd="10dp"
                             android:fontFamily="@font/exo"
+                            android:layout_gravity="end"
                             android:text="Cart Subtotal"
                             android:textSize="@dimen/h2" />
 
@@ -183,8 +182,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:fontFamily="@font/exo"
-                            android:layout_marginEnd="10dp"
                             android:text="Shipping"
+                            android:layout_gravity="end"
                             android:textSize="@dimen/h2" />
 
                         <TextView
@@ -193,41 +192,40 @@
                             android:layout_marginTop="5dp"
                             android:fontFamily="@font/exo"
                             android:text="Total"
-                            android:layout_marginEnd="10dp"
+                            android:layout_gravity="end"
                             android:textSize="@dimen/h2" />
 
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-
                         android:layout_weight="1"
+                        android:layout_marginStart="@dimen/font_10"
                         android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/totalAll_cost"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:text="12000"
-                            android:fontFamily="@font/exo"
-                            android:textSize="@dimen/h2" />
-
-                        <TextView
-                            android:id="@+id/ship"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginTop="5dp"
-                            android:fontFamily="@font/exo"
-                            android:textSize="@dimen/h2" />
 
                         <TextView
                             android:id="@+id/total_cost"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
+
+                            android:text="12000"
+                            android:fontFamily="@font/exo"
+                            android:textSize="@dimen/h2" />
+
+                        <TextView
+                            android:id="@+id/deliv_charge"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="@font/exo"
+                            android:textSize="@dimen/h2" />
+
+                        <TextView
+                            android:id="@+id/totalAll_cost"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
                             android:layout_marginTop="5dp"
                             android:text="12004"
                             android:fontFamily="@font/exo"
@@ -368,7 +366,7 @@
                             </TextView>
 
                             <TextView
-                                android:id="@+id/deliv_charge"
+                                android:id="@+id/ship"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentRight="true"
