@@ -50,7 +50,7 @@ public class CartFragment extends Fragment {
     public static ArrayList<CartLocalListResponseMode> list;
     LocalStorage localStorage;
     public static TextView tv_name_1, tv_name_2, no_text_found;
-    RadioButton rb_1st,rb_2nd;
+    public static RadioButton rb_1st,rb_2nd;
     public static NestedScrollView nested_sc_view;
     public static TextView delivery_type, deliv_charge, tv_gst, total_cost, totalAll_cost;
     private DeliveryResponseModel deliveryModel;
@@ -79,6 +79,7 @@ public class CartFragment extends Fragment {
         tv_name_2 =  root.findViewById(R.id.tv_name_2);
         rb_1st =  root.findViewById(R.id.rb_1st1);
         rb_2nd =  root.findViewById(R.id.rb_2nd2);
+
         localStorage = new LocalStorage(getActivity());
         localStorage.putBooleAan(LocalStorage.isCart,false);
         user = new userOnlineInfo();
@@ -87,6 +88,7 @@ public class CartFragment extends Fragment {
         card_view = root.findViewById(R.id.btnLoginToDashBoard);
         getSqliteData1();
         callApiToGetDeliveryCharge();
+        deliv_charge.setText("0KD");
     }
 
     private void callApiToGetDeliveryCharge() {

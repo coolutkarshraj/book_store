@@ -35,8 +35,12 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.io.bookstore.Config;
 import com.io.bookstore.R;
 import com.io.bookstore.StaticData;
@@ -573,6 +577,14 @@ public class MainActivity extends AppCompatActivity implements
         categoryListFragment = new CategoryListFragment();
         bookListFragment = new BookListFragment();
         bookstoresFragmentWithFilter = new BookstoresFragmentWithFilter();
+        FirebaseApp.initializeApp(this);
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
+                    @Override
+                    public void onSuccess(InstanceIdResult instanceIdResult) {
+                        Log.e("token",instanceIdResult.getToken());
+                    }
+                });
         navigationHeader();
         getSqliteData1();
     }
@@ -787,6 +799,9 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onBackPressed() {
+        CartFragment.rb_1st.setChecked(false);
+        CartFragment.rb_2nd.setChecked(false);
+        CartFragment.dilvery = 0;
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -794,4 +809,5 @@ public class MainActivity extends AppCompatActivity implements
         }
 
     }
+
 }

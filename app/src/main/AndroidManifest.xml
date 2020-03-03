@@ -107,6 +107,14 @@
             android:name=".activity.authentication.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
+        <service
+            android:name=".fcm.MyFirebaseServices"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
         <activity
             android:name=".activity.authentication.SignupVerifyActivity"
             android:screenOrientation="portrait"
