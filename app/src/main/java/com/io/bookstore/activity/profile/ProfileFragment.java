@@ -24,6 +24,7 @@ import com.io.bookstore.activity.homeActivity.ui.order.OrderFragment;
 import com.io.bookstore.adapter.ProfilePagerAdapter;
 import com.io.bookstore.fragment.CategoryListFragment;
 import com.io.bookstore.fragment.SettingsFragment;
+import com.io.bookstore.listeners.ItemClickListner;
 import com.io.bookstore.localStorage.LocalStorage;
 import com.io.bookstore.model.loginModel.LoginModel;
 
@@ -37,7 +38,9 @@ public class ProfileFragment extends Fragment {
     FloatingActionButton fabEditProfile;
     private TextView loggedih;
     LinearLayout ll_main_view;
+    private  ImageView iv_back;
     private LocalStorage localStorage;
+    private ItemClickListner itemClickListner;
 
 
     @Nullable
@@ -78,6 +81,12 @@ public class ProfileFragment extends Fragment {
                         .commit();
             }
         });
+        iv_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itemClickListner.onClick(6);
+            }
+        });
         viewPager.addOnPageChangeListener(
                 new TabLayout.TabLayoutOnPageChangeListener(tabLayout)
         );
@@ -104,6 +113,8 @@ public class ProfileFragment extends Fragment {
 
     private void initView(View view) {
         iv_avatar = (CircleImageView) view.findViewById(R.id.iv_avatar);
+        iv_back = (ImageView)view.findViewById(R.id.iv_back);
+        itemClickListner = (ItemClickListner)getActivity();
         tabLayout = (TabLayout) view.findViewById(R.id.tab_profile);
         loggedih = (TextView) view.findViewById(R.id.loggedih);
         ll_main_view = (LinearLayout) view.findViewById(R.id.ll_main_view);

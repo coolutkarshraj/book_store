@@ -252,6 +252,7 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.MyView
                         mData.get(position).getQuantity(), String.valueOf(mData.get(position).isWishlist()));
 
                 if (isInserted) {
+                    getSqliteData1();
                     Toast.makeText(mContext, "Items Added Succesfully", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(mContext, "Something Went Wrong", Toast.LENGTH_SHORT).show();

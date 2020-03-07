@@ -53,6 +53,7 @@ public class Config {
         public static String orderprice = "order/delivery-price/?";
         public static String contactus = "user/complain";
         public static String getAddsList = "discount/adlist";
+        public static String updateDeviceToken = "store/update-token";
     }
 
     public final static int splashTimeout = 3000;

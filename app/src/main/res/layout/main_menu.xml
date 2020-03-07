@@ -242,6 +242,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_margin="8dp"
+        android:visibility="gone"
         android:background="@drawable/search_view_background"
         android:focusable="true"
         android:focusableInTouchMode="true"

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +21,7 @@ import com.io.bookstore.activity.authentication.LoginActivity;
 import com.io.bookstore.adapter.OrderAdapter;
 import com.io.bookstore.apicaller.ApiCaller;
 import com.io.bookstore.fragment.TrackFragment;
+import com.io.bookstore.listeners.ItemClickListner;
 import com.io.bookstore.listeners.RecyclerViewClickListener;
 import com.io.bookstore.localStorage.LocalStorage;
 import com.io.bookstore.model.getAllOrder.Datum;
@@ -45,11 +47,15 @@ public class OrderFragment extends Fragment implements RecyclerViewClickListener
     private LocalStorage localStorage;
     private RecyclerViewClickListener item;
     private List<com.io.bookstore.model.myOrder.Datum> courseicon;
+    private ImageView iv_back;
+    private ItemClickListner itemClickListner;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
       View root = inflater.inflate(R.layout.order_fragment, container, false);
         item = this;
+        iv_back = root.findViewById(R.id.iv_back);
+        itemClickListner = (ItemClickListner)getActivity();
         recyclerView = root.findViewById(R.id.recyclerView);
         loggedih = root.findViewById(R.id.loggedih);
         hide = root.findViewById(R.id.hide);
@@ -119,6 +125,13 @@ public class OrderFragment extends Fragment implements RecyclerViewClickListener
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        iv_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itemClickListner.onClick(6);
             }
         });
     }

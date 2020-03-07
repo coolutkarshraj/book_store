@@ -35,16 +35,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
 import com.io.bookstore.Config;
 import com.io.bookstore.R;
 import com.io.bookstore.StaticData;
 import com.io.bookstore.activity.authentication.LoginActivity;
+import com.io.bookstore.activity.authentication.SignUpActivity;
 import com.io.bookstore.activity.homeActivity.ui.cart.CartFragment;
 import com.io.bookstore.activity.homeActivity.ui.deliveryAddress.DeliveryAddressFragment;
 import com.io.bookstore.activity.homeActivity.ui.home.HomeFragment;
@@ -94,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements
     TextView notification;
     userOnlineInfo user;
     NewProgressBar dialog;
+    boolean doubleBackToExitPressedOnce = false;
 
     CategoryListFragment categoryListFragment;
     FavoriteItemsFragment favoriteItemsFragment;
@@ -117,6 +115,7 @@ public class MainActivity extends AppCompatActivity implements
     private ImageView iv_cancel;
     public static ArrayList<CartLocalListResponseMode> list = new ArrayList<>();
     DbHelper dbHelper;
+    private LoginModel loginModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -174,17 +173,34 @@ public class MainActivity extends AppCompatActivity implements
         ll_personal_info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                changeProfileColorIcon();
-                drawer.closeDrawer(Gravity.LEFT);
+                if (loginModel == null) {
+                    Intent i = new Intent(MainActivity.this, SignUpActivity.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(i);
+                    finish();
+                } else {
+                    changeProfileColorIcon();
+                    drawer.closeDrawer(Gravity.LEFT);
+                }
+
 
             }
         });
         ll_address.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                colorAllBlack();
-                changeFrag(deliveryAddressFragment, true);
-                drawer.closeDrawer(Gravity.LEFT);
+                if (loginModel == null) {
+                    Intent i = new Intent(MainActivity.this, SignUpActivity.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(i);
+                    finish();
+                } else {
+                    colorAllBlack();
+                    changeFrag(deliveryAddressFragment, true);
+                    drawer.closeDrawer(Gravity.LEFT);
+                }
             }
         });
         ll_payment.setOnClickListener(new View.OnClickListener() {
@@ -577,14 +593,7 @@ public class MainActivity extends AppCompatActivity implements
         categoryListFragment = new CategoryListFragment();
         bookListFragment = new BookListFragment();
         bookstoresFragmentWithFilter = new BookstoresFragmentWithFilter();
-        FirebaseApp.initializeApp(this);
-        FirebaseInstanceId.getInstance().getInstanceId()
-                .addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
-                    @Override
-                    public void onSuccess(InstanceIdResult instanceIdResult) {
-                        Log.e("token",instanceIdResult.getToken());
-                    }
-                });
+            loginModel = localStorage.getUserProfile();
         navigationHeader();
         getSqliteData1();
     }
@@ -654,7 +663,7 @@ public class MainActivity extends AppCompatActivity implements
 
     @SuppressLint("ResourceType")
     private void navigationHeader() {
-        LoginModel loginModel = localStorage.getUserProfile();
+
         if (loginModel == null) {
             nav_user.setText("Hello Guest");
             nav_Email.setText("Login or SignUp");
@@ -799,9 +808,14 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onBackPressed() {
-        CartFragment.rb_1st.setChecked(false);
-        CartFragment.rb_2nd.setChecked(false);
-        CartFragment.dilvery = 0;
+            if (localStorage.getBoolean(LocalStorage.isCart)) {
+                CartFragment.rb_1st.setChecked(false);
+                CartFragment.rb_2nd.setChecked(false);
+                CartFragment.dilvery = 0;
+            }
+
+
+
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {

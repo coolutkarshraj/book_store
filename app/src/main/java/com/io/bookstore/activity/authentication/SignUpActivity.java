@@ -2,11 +2,13 @@ package com.io.bookstore.activity.authentication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -15,11 +17,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.io.bookstore.Config;
 import com.io.bookstore.R;
 import com.io.bookstore.activity.homeActivity.MainActivity;
 import com.io.bookstore.apicaller.ApiCaller;
+import com.io.bookstore.bookStore.BookStoreMainActivity;
 import com.io.bookstore.localStorage.LocalStorage;
+import com.io.bookstore.model.loginModel.LoginModel;
 import com.io.bookstore.model.registerModel.RegisterModel;
 import com.io.bookstore.utility.NewProgressBar;
 import com.io.bookstore.utility.Utils;
@@ -35,6 +40,7 @@ import java.io.InputStream;
  */
 
 public class SignUpActivity extends AppCompatActivity {
+    private Activity activity;
     private TextView tvLogin,tv_tnc ;
     private Button signup_btn;
     private EditText firstname;
@@ -47,6 +53,8 @@ public class SignUpActivity extends AppCompatActivity {
     String strImageFormet;
     private NewProgressBar dialog;
     private userOnlineInfo user;
+    private LocalStorage localStorage;
+    boolean doubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +89,8 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        activity = SignUpActivity.this;
+        localStorage = new LocalStorage(activity);
         firstname = findViewById(R.id.etFullName);
        // lastName = findViewById(R.id.lastName);
         email = findViewById(R.id.etEmail);
@@ -118,7 +128,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     /*----------------------------------------------- Registration Api------------------------------------------------------*/
 
-    private void registrationApi(String f_name, String u_emael, String et_number, String password,
+    private void registrationApi(String f_name, final String u_emael, String et_number, final String password,
                                  String address) {
         if (user.isOnline(this)) {
             dialog = new NewProgressBar(this);
@@ -138,9 +148,7 @@ public class SignUpActivity extends AppCompatActivity {
                             if(result != null){
                                 if(result.getStatus()== true) {
                                     dialog.dismiss();
-                                    Toast.makeText(SignUpActivity.this, "" + result.getMessage(), Toast.LENGTH_LONG).show();
-                                    Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
-                                    startActivity(intent);
+                                    loginApi(u_emael,password);
                                 }else {
                                     dialog.dismiss();
                                     Toast.makeText(SignUpActivity.this, "" + result.getMessage(), Toast.LENGTH_LONG).show();
@@ -153,6 +161,91 @@ public class SignUpActivity extends AppCompatActivity {
         }else {
             Utils.showAlertDialog(this, "No Internet Connection");
         }
+
+    }
+
+    private void loginApi(String u_emael, String password) {
+
+            if (user.isOnline(activity)) {
+                dialog = new NewProgressBar(activity);
+                dialog.show();
+                ApiCaller.loginCustomer(activity, Config.Url.login, u_emael, password,
+                        new FutureCallback<LoginModel>() {
+                            @Override
+                            public void onCompleted(Exception e, LoginModel result) {
+                                if (e != null) {
+                                    Utils.showAlertDialog(activity, "Something Went Wrong");
+                                    dialog.dismiss();
+                                    return;
+                                }
+
+                                if (result != null) {
+                                    if (result.getStatus() == true) {
+                                        dialog.dismiss();
+                                        saveLoginData(result);
+                                        localStorage.putBooleAan(LocalStorage.isLoggedIn, true);
+                                        navigateToHomeActivit(result);
+                                    } else {
+                                        dialog.dismiss();
+                                        Toast.makeText(activity, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
+                            }
+                        });
+
+            } else {
+                Utils.showAlertDialog(activity, "No Internet Connection");
+            }
+
+
+    }
+
+    private void navigateToHomeActivit(LoginModel result) {
+        localStorage.putInt(LocalStorage.role,result.getData().getRole());
+        if(result.getData().getRole()== 1){
+            Intent i = new Intent(activity , BookStoreMainActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(i);
+        }else {
+            Intent i = new Intent(activity , MainActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(i);
+        }
+
+    }
+
+    private void saveLoginData(LoginModel result) {
+        Gson gson = new Gson();
+        String json = gson.toJson(result);
+        localStorage.putDistributorProfile(result);
+        localStorage.putString(LocalStorage.token,result.getData().getToken());
+        localStorage.putInt(LocalStorage.role,result.getData().getRole());
+        if(result.getData().getRole() ==0){
+            localStorage.putInt(LocalStorage.userId,result.getData().getUser().getUserId());
+        }else {
+            localStorage.putInt(LocalStorage.userId,result.getData().getUser().getStoreId());
+        }
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce = false;
+            }
+        }, 2000);
 
     }
 }

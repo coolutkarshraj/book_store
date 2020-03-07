@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
@@ -26,6 +27,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.io.bookstore.Config;
 import com.io.bookstore.R;
 import com.io.bookstore.apicaller.ApiCaller;
+import com.io.bookstore.listeners.ItemClickListner;
 import com.io.bookstore.localStorage.LocalStorage;
 import com.io.bookstore.model.addAddressResponseModel.GetAddressListResponseModel;
 import com.io.bookstore.model.editProfileResponseModel.EditProfileResponseModel;
@@ -67,6 +69,8 @@ public class EditProfileFragment extends Fragment {
     File imagefile;
     private File imgFile;
     LocalStorage localStorage;
+    private ImageView iv_back;
+    private ItemClickListner itemClickListner;
 
 
 
@@ -137,6 +141,8 @@ public class EditProfileFragment extends Fragment {
         }
     }
     private void initView() {
+        iv_back = view.findViewById(R.id.iv_back);
+        itemClickListner = (ItemClickListner)getActivity();
         fNmae = view.findViewById(R.id.et_firstname);
         email = view.findViewById(R.id.et_email);
         username = view.findViewById(R.id.et_username);
@@ -171,6 +177,12 @@ public class EditProfileFragment extends Fragment {
                         .replace(R.id.content_view, profileFragment)
                         .addToBackStack(null)
                         .commit();
+            }
+        });
+        iv_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itemClickListner.onClick(6);
             }
         });
 

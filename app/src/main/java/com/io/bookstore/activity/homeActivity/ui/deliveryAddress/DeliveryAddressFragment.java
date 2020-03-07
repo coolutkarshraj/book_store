@@ -18,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -36,6 +37,7 @@ import com.io.bookstore.StaticData;
 import com.io.bookstore.activity.authentication.LoginActivity;
 import com.io.bookstore.adapter.AddressCheckoutAdapter;
 import com.io.bookstore.apicaller.ApiCaller;
+import com.io.bookstore.listeners.ItemClickListner;
 import com.io.bookstore.localStorage.DbHelper;
 import com.io.bookstore.localStorage.LocalStorage;
 import com.io.bookstore.model.addAddressResponseModel.AddAddressResponseModel;
@@ -67,6 +69,8 @@ public class DeliveryAddressFragment extends Fragment {
      LinearLayout linearLayout;
     private TextView loggdin;
     String spindata, spindistict;
+    private ImageView iv_back;
+    private ItemClickListner itemClickListner;
     private  List<String> listcity = new ArrayList<>();
     private List<String> listDistict = new ArrayList<>();
     private List<DilveryAddressDataModel> listdata = new ArrayList<>();
@@ -84,6 +88,8 @@ public class DeliveryAddressFragment extends Fragment {
         activity = getActivity();
         user = new userOnlineInfo();
         localStorage = new LocalStorage(getActivity());
+        itemClickListner = (ItemClickListner) getActivity();
+        iv_back =root.findViewById(R.id.iv_back);
         linearLayout = root.findViewById(R.id.linearLayout);
         loggdin = root.findViewById(R.id.loggedih);
         recyclerView = root.findViewById(R.id.recyclerView);
@@ -104,6 +110,12 @@ public class DeliveryAddressFragment extends Fragment {
             public void onClick(View view) {
                 Intent i = new Intent(activity, LoginActivity.class);
                 startActivity(i);
+            }
+        });
+        iv_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itemClickListner.onClick(6);
             }
         });
     }
@@ -373,7 +385,7 @@ public class DeliveryAddressFragment extends Fragment {
                         @Override
                         public void onCompleted(Exception e, DilveryAdressResponseModel result) {
                             if (e != null) {
-                                dialog.dismiss();
+
                                 Utils.showAlertDialog(activity, "Something Went Wrong");
                                 return;
                             }
@@ -384,10 +396,10 @@ public class DeliveryAddressFragment extends Fragment {
 
                             if (result != null) {
                                 if (result.getStatus()) {
-                                    dialog.dismiss();
+
                                     listData(result.getData());
                                 } else {
-                                    dialog.dismiss();
+
 
                                 }
                             }

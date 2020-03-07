@@ -21,8 +21,10 @@ import com.io.bookstore.R;
 import com.io.bookstore.adapter.categoryAdapter.CategoryFragmentAdapter;
 import com.io.bookstore.adapter.categoryAdapter.CategoryGridAdapter;
 import com.io.bookstore.apicaller.ApiCaller;
+import com.io.bookstore.fragment.BookListFragment;
 import com.io.bookstore.fragment.CategoryListFragment;
 import com.io.bookstore.listeners.ItemClickListner;
+import com.io.bookstore.localStorage.LocalStorage;
 import com.io.bookstore.model.categoryModel.CategoryData;
 import com.io.bookstore.model.categoryModel.CategoryModel;
 import com.io.bookstore.utility.NewProgressBar;
@@ -51,8 +53,10 @@ public class CategoryGridFragment extends Fragment implements View.OnClickListen
     List<CategoryData> data = new ArrayList<>();
     List<CategoryData> item1 = new ArrayList<>();
     List<CategoryData> item2 = new ArrayList<>();
+    private  LocalStorage localStorage;
 
     int sizee = 0;
+    private BookListFragment bookListFragment;
     private ItemClickListner itemClickListner;
     private ImageView iv_image;
     public CategoryGridFragment() {
@@ -74,6 +78,7 @@ public class CategoryGridFragment extends Fragment implements View.OnClickListen
     private void intializeViews(View view) {
         activity = getActivity();
         user = new userOnlineInfo();
+        localStorage = new LocalStorage(activity);
         recyclerView1 = view.findViewById(R.id.recycler1);
         recyclerView2 = view.findViewById(R.id.recycler2);
         itemClickListner = (ItemClickListner)getActivity();
@@ -93,9 +98,10 @@ public class CategoryGridFragment extends Fragment implements View.OnClickListen
     public void onClick(View v) {
         switch ((v.getId())) {
             case R.id.iv_view_all_category:
-                categoryListFragment = new CategoryListFragment();
+                localStorage.putString(LocalStorage.CategoryId,"-1");
+                bookListFragment = new BookListFragment();
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_view, categoryListFragment)
+                        .replace(R.id.content_view, bookListFragment)
                         .addToBackStack(null)
                         .commit();
                 return;

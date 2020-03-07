@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +23,7 @@ import com.io.bookstore.R;
 import com.io.bookstore.activity.authentication.LoginActivity;
 import com.io.bookstore.adapter.FavoriteItemsAdapter;
 import com.io.bookstore.apicaller.ApiCaller;
+import com.io.bookstore.listeners.ItemClickListner;
 import com.io.bookstore.localStorage.LocalStorage;
 import com.io.bookstore.model.loginModel.LoginModel;
 import com.io.bookstore.model.wishlistModel.GetWishListDataModel;
@@ -45,6 +47,8 @@ public class FavoriteItemsFragment extends Fragment implements SwipeRefreshLayou
     private Activity activity;
     private NewProgressBar dialog;
     private View root;
+    private ImageView iv_back;
+    private ItemClickListner itemClickListner;
     private SwipeRefreshLayout swipeRefreshLayout;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -57,6 +61,8 @@ public class FavoriteItemsFragment extends Fragment implements SwipeRefreshLayou
     private void intializeViews(View root) {
         recyclerView = root.findViewById(R.id.fav_recyclerView);
         loggedih = root.findViewById(R.id.loggedih);
+        itemClickListner = (ItemClickListner)getActivity();
+        iv_back = root.findViewById(R.id.iv_back);
         swipeRefreshLayout = root.findViewById(R.id.swipe_refresh);
         nested_c_view = root.findViewById(R.id.nested_c_view);
         wishlist = root.findViewById(R.id.wishlist);
@@ -142,6 +148,12 @@ public class FavoriteItemsFragment extends Fragment implements SwipeRefreshLayou
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent);
+            }
+        });
+        iv_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itemClickListner.onClick(6);
             }
         });
         swipeRefreshLayout.setOnRefreshListener(this);

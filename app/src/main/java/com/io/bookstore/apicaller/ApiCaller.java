@@ -20,6 +20,7 @@ import com.io.bookstore.model.categoryModel.CategoryModel;
 import com.io.bookstore.model.changePasswordOtpModel.ChangePasswordVerifyOtpModel;
 import com.io.bookstore.model.contactUs.AdsResponseModel;
 import com.io.bookstore.model.contactUs.ContactUsResponseModel;
+import com.io.bookstore.model.contactUs.UpdateDeviceToken;
 import com.io.bookstore.model.courseModel.CourseDetialResponseModel;
 import com.io.bookstore.model.courseModel.CourseResponseModel;
 import com.io.bookstore.model.courseModel.EnrollCourseResponseModel;
@@ -1098,7 +1099,27 @@ public class ApiCaller {
                 });
 
     }
+    public static void updateDevice(Activity activity, String url, String token,
+                                 String devicetoken,
+                                 final FutureCallback<UpdateDeviceToken> apiCallBack) {
+        final JsonObject json = new JsonObject();
+        json.addProperty("registrationToken", devicetoken);
+        final Gson gson = new Gson();
+        Ion.with(activity)
+                .load(UrlLocator.getFinalUrl(url))
+                .setHeader("Authorization", "Bearer " + token)
+                .noCache()
+                .setJsonObjectBody(json)
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        UpdateDeviceToken updateDeviceToken = gson.fromJson(result, UpdateDeviceToken.class);
+                        apiCallBack.onCompleted(e, updateDeviceToken);
+                    }
+                });
 
+    }
 
 
 }

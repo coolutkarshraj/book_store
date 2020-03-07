@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +16,7 @@ import com.io.bookstore.activity.authentication.LoginActivity;
 import com.io.bookstore.adapter.CoursesAdapter;
 import com.io.bookstore.adapter.EnrolledCourseRvAdapter;
 import com.io.bookstore.apicaller.ApiCaller;
+import com.io.bookstore.listeners.ItemClickListner;
 import com.io.bookstore.localStorage.LocalStorage;
 import com.io.bookstore.model.courseModel.CourseResponseModel;
 import com.io.bookstore.model.courseModel.EnrollCourseResponseModel;
@@ -49,6 +51,8 @@ public class EnrollCourseListFragment extends Fragment implements View.OnClickLi
     private EnrolledCourseRvAdapter adapter;
     private NestedScrollView nestedScrollView;
     private List<EnrolledCourseListDataModel> item;
+    private ImageView iv_back;
+    private ItemClickListner itemClickListner;
 
     public EnrollCourseListFragment() {
 
@@ -69,6 +73,8 @@ public class EnrollCourseListFragment extends Fragment implements View.OnClickLi
         activity = getActivity();
         user = new userOnlineInfo();
         item = new ArrayList<>();
+        itemClickListner = (ItemClickListner)getActivity();
+        iv_back = view.findViewById(R.id.iv_back);
         dialog = new NewProgressBar(activity);
         localStorage = new LocalStorage(activity);
         searchView = view.findViewById(R.id.sv_courses);
@@ -80,6 +86,7 @@ public class EnrollCourseListFragment extends Fragment implements View.OnClickLi
 
     private void bindListner() {
         tv_login.setOnClickListener(this);
+        iv_back.setOnClickListener(this);
     }
 
     @Override
@@ -88,6 +95,10 @@ public class EnrollCourseListFragment extends Fragment implements View.OnClickLi
             case R.id.tv_login:
                 Intent i =new Intent(activity, LoginActivity.class);
                 startActivity(i);
+                return;
+
+            case R.id.iv_back:
+                itemClickListner.onClick(6);
                 return;
         }
 

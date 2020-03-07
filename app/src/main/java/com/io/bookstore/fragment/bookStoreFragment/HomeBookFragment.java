@@ -30,7 +30,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.io.bookstore.Config;
 import com.io.bookstore.R;
 import com.io.bookstore.adapter.admin.AdminBookListAdapter;
@@ -42,6 +46,7 @@ import com.io.bookstore.model.adminResponseModel.AddBookResponseModel;
 import com.io.bookstore.model.adminResponseModel.AdminBookDataModel;
 import com.io.bookstore.model.adminResponseModel.AdminBookListResponseModel;
 import com.io.bookstore.model.categoryModel.CategoryModel;
+import com.io.bookstore.model.contactUs.UpdateDeviceToken;
 import com.io.bookstore.utility.ImageUtility;
 import com.io.bookstore.utility.NewProgressBar;
 import com.io.bookstore.utility.PermissionFile;
@@ -89,7 +94,7 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
     Spinner spin;
 
     String strName, strDesc, strImage, strPrice, strQuantity, strCategory,strAuthor;
-    String spindata = "-1";
+    String spindata = "-1",deviceToken;
     LocalStorage localStorage;
     List<String> items =new ArrayList<>();
     List<String> categoryId =new ArrayList<>();
@@ -129,6 +134,14 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
         rvBookStore = view.findViewById(R.id.recyclerView_bookstore);
         floatingActionButton = view.findViewById(R.id.floating);
         ivFilter = view.findViewById(R.id.iv_filter);
+        FirebaseApp.initializeApp(activity);
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
+                    @Override
+                    public void onSuccess(InstanceIdResult instanceIdResult) {
+                        deviceToken = instanceIdResult.getToken();
+                    }
+                });
     }
 
     private void bindListner() {
@@ -154,10 +167,41 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
 
 
     private void startWorking() {
+        updateDevceToken();
         getBookList();
         getCategoryList();
         searchViewSetUp();
 
+    }
+
+    private void updateDevceToken() {
+        if (user.isOnline(getActivity())) {
+            ApiCaller.updateDevice(getActivity(), Config.Url.updateDeviceToken ,localStorage.getString(LocalStorage.token),deviceToken,
+                    new FutureCallback<UpdateDeviceToken>() {
+
+                        @Override
+                        public void onCompleted(Exception e, UpdateDeviceToken result) {
+                            if(result != null){
+
+                                if(result.getStatus()== null){
+                                    if(result.getMessage().equals("Unauthorized")){
+                                        Utils.showAlertDialogAdminLogout(getActivity(), "Your Session was expire. please Logout!",localStorage.getInt(LocalStorage.userId));
+
+                                    }
+
+                                }else {
+
+
+                                }
+                            }else {
+                                dialog.dismiss();
+                                Toast.makeText(getActivity(), "No Data Found", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+        } else {
+            Utils.showAlertDialog(getActivity(), "No Internet Connection");
+        }
     }
 
     private void getBookList() {
