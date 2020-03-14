@@ -42,6 +42,35 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:73403087742:android:3fce3bbd6e46d7d22ed12f",
+        "android_client_info": {
+          "package_name": "com.io.bookstores"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "73403087742-vs5h23vf98jvraksc0rs5nt3av6ldn6u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCiCKSkZMsYkyuAT_dVr9eFzgGc6Q5bGU4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "73403087742-vs5h23vf98jvraksc0rs5nt3av6ldn6u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"

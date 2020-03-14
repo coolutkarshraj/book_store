@@ -41,7 +41,7 @@
                 android:layout_weight="0.2"
                 android:padding="5dp"
 
-                android:src="@drawable/heart">
+                android:src="@drawable/heratoutline">
 
             </ImageView>
 

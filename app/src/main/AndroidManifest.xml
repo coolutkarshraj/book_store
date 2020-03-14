@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.io.bookstore">
+    package="com.io.bookstores">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -26,15 +26,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activity.authentication.GuestLoginActivity"
+        <activity android:name="com.io.bookstores.activity.authentication.GuestLoginActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name=".activity.splash.AddsActivity"
+            android:name="com.io.bookstores.activity.splash.AddsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.splash.SplashVideoActivity"
+            android:name="com.io.bookstores.activity.splash.SplashVideoActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -43,43 +43,43 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.splash.IntroActivity"
+            android:name="com.io.bookstores.activity.splash.IntroActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeSplah" />
         <activity
-            android:name=".activity.splash.LangChangeActivity"
+            android:name="com.io.bookstores.activity.splash.LangChangeActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.homeActivity.ui.home.BookstoreBooksActivity"
+            android:name="com.io.bookstores.activity.homeActivity.ui.home.BookstoreBooksActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.authentication.ForgotPasswodActivity"
+            android:name="com.io.bookstores.activity.authentication.ForgotPasswodActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.checkoutActivity.PaymentConfirmationActivity"
+            android:name="com.io.bookstores.activity.checkoutActivity.PaymentConfirmationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name=".activity.checkoutActivity.ProcessingActivity"
+            android:name="com.io.bookstores.activity.checkoutActivity.ProcessingActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name=".activity.checkoutActivity.CheckoutActivity"
+            android:name="com.io.bookstores.activity.checkoutActivity.CheckoutActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name=".activity.homeActivity.MainActivity"
+            android:name="com.io.bookstores.activity.homeActivity.MainActivity"
             android:label="@string/title_activity_main"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.splash.SplashActivity"
+            android:name="com.io.bookstores.activity.splash.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".bookStore.BookStoreMainActivity"
+            android:name="com.io.bookstores.bookStore.BookStoreMainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
 
@@ -92,23 +92,23 @@
             -->
         </activity>
         <activity
-            android:name=".activity.profile.ProfileFragment"
+            android:name="com.io.bookstores.activity.profile.ProfileFragment"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.splash.AppDescriptionSplashActivity"
+            android:name="com.io.bookstores.activity.splash.AppDescriptionSplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.authentication.SignUpActivity"
+            android:name="com.io.bookstores.activity.authentication.SignUpActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".activity.authentication.LoginActivity"
+            android:name="com.io.bookstores.activity.authentication.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <service
-            android:name=".fcm.MyFirebaseServices"
+            android:name="com.io.bookstores.fcm.MyFirebaseServices"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
@@ -116,7 +116,7 @@
         </service>
 
         <activity
-            android:name=".activity.authentication.SignupVerifyActivity"
+            android:name="com.io.bookstores.activity.authentication.SignupVerifyActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>
