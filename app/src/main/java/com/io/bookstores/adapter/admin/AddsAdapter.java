@@ -2,6 +2,7 @@ package com.io.bookstores.adapter.admin;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.io.bookstores.Config;
 import com.io.bookstores.R;
+import com.io.bookstores.activity.splash.ZoomInOutActivity;
 import com.io.bookstores.listeners.RecyclerViewClickListener;
 import com.io.bookstores.localStorage.LocalStorage;
 import com.io.bookstores.model.contactUs.AdsDataModel;
@@ -54,9 +56,15 @@ public class AddsAdapter extends
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
 
         final AdsDataModel model = mData.get(position);
-
         Glide.with(mContext).load(Config.imageUrl + model.getAvatarPath()).into(holder.iv_image);
-
+        holder.iv_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(mContext , ZoomInOutActivity.class);
+                i.putExtra("images",Config.imageUrl + model.getAvatarPath());
+                mContext.startActivity(i);
+            }
+        });
     }
 
 

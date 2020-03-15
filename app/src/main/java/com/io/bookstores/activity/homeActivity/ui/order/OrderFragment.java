@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +44,7 @@ public class OrderFragment extends Fragment implements RecyclerViewClickListener
     private TextView loggedih;
     private LinearLayout hide;
     private LocalStorage localStorage;
+    public static RelativeLayout  rl_layout;
     private RecyclerViewClickListener item;
     private List<com.io.bookstores.model.myOrder.Datum> courseicon;
     private ImageView iv_back;
@@ -57,6 +59,7 @@ public class OrderFragment extends Fragment implements RecyclerViewClickListener
         recyclerView = root.findViewById(R.id.recyclerView);
         loggedih = root.findViewById(R.id.loggedih);
         hide = root.findViewById(R.id.hide);
+        rl_layout = root.findViewById(R.id.rl_layout);
         localStorage = new LocalStorage(getActivity());
         LoginModel loginModel =  localStorage.getUserProfile() ;
         System.out.println(loginModel);

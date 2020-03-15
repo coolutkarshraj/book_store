@@ -7,13 +7,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
@@ -26,6 +27,8 @@ import com.io.bookstores.listeners.ItemClickListner;
 import com.io.bookstores.localStorage.LocalStorage;
 import com.io.bookstores.model.loginModel.LoginModel;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class ProfileFragment extends Fragment {
 
     private TabLayout tabLayout;
@@ -36,6 +39,7 @@ public class ProfileFragment extends Fragment {
     FloatingActionButton fabEditProfile;
     private TextView loggedih;
     LinearLayout ll_main_view;
+    RelativeLayout rl_layout;
     private  ImageView iv_back;
     private LocalStorage localStorage;
     private ItemClickListner itemClickListner;
@@ -93,6 +97,10 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
+                if (tab.getPosition() == 1) {
+                    OrderFragment.rl_layout.setVisibility(View.GONE);
+                }
+
             }
 
             @Override
@@ -114,6 +122,7 @@ public class ProfileFragment extends Fragment {
         iv_back = (ImageView)view.findViewById(R.id.iv_back);
         itemClickListner = (ItemClickListner)getActivity();
         tabLayout = (TabLayout) view.findViewById(R.id.tab_profile);
+        rl_layout = (RelativeLayout) view.findViewById(R.id.rl_layout);
         loggedih = (TextView) view.findViewById(R.id.loggedih);
         ll_main_view = (LinearLayout) view.findViewById(R.id.ll_main_view);
         viewPager = (ViewPager) view.findViewById(R.id.viewpager_profile);

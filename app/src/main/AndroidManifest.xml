@@ -26,15 +26,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name="com.io.bookstores.activity.authentication.GuestLoginActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.splash.ZoomInOutActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" ></activity>
         <activity
-            android:name="com.io.bookstores.activity.splash.AddsActivity"
+            android:name=".activity.authentication.GuestLoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.io.bookstores.activity.splash.SplashVideoActivity"
+            android:name=".activity.splash.AddsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.splash.SplashVideoActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -43,43 +47,43 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.io.bookstores.activity.splash.IntroActivity"
+            android:name=".activity.splash.IntroActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeSplah" />
         <activity
-            android:name="com.io.bookstores.activity.splash.LangChangeActivity"
+            android:name=".activity.splash.LangChangeActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.io.bookstores.activity.homeActivity.ui.home.BookstoreBooksActivity"
+            android:name=".activity.homeActivity.ui.home.BookstoreBooksActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.io.bookstores.activity.authentication.ForgotPasswodActivity"
+            android:name=".activity.authentication.ForgotPasswodActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.io.bookstores.activity.checkoutActivity.PaymentConfirmationActivity"
+            android:name=".activity.checkoutActivity.PaymentConfirmationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name="com.io.bookstores.activity.checkoutActivity.ProcessingActivity"
+            android:name=".activity.checkoutActivity.ProcessingActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name="com.io.bookstores.activity.checkoutActivity.CheckoutActivity"
+            android:name=".activity.checkoutActivity.CheckoutActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name="com.io.bookstores.activity.homeActivity.MainActivity"
+            android:name=".activity.homeActivity.MainActivity"
             android:label="@string/title_activity_main"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.io.bookstores.activity.splash.SplashActivity"
+            android:name=".activity.splash.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.io.bookstores.bookStore.BookStoreMainActivity"
+            android:name=".bookStore.BookStoreMainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
 
@@ -92,23 +96,24 @@
             -->
         </activity>
         <activity
-            android:name="com.io.bookstores.activity.profile.ProfileFragment"
+            android:name=".activity.profile.ProfileFragment"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.io.bookstores.activity.splash.AppDescriptionSplashActivity"
+            android:name=".activity.splash.AppDescriptionSplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.io.bookstores.activity.authentication.SignUpActivity"
+            android:name=".activity.authentication.SignUpActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.io.bookstores.activity.authentication.LoginActivity"
+            android:name=".activity.authentication.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <service
-            android:name="com.io.bookstores.fcm.MyFirebaseServices"
+            android:name=".fcm.MyFirebaseServices"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
@@ -116,7 +121,7 @@
         </service>
 
         <activity
-            android:name="com.io.bookstores.activity.authentication.SignupVerifyActivity"
+            android:name=".activity.authentication.SignupVerifyActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>

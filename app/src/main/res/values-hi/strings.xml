@@ -11,8 +11,8 @@
     <string name="start">فهمتك</string>
     <string name="item_name">اسم العنصر</string>
     <string name="item_price">سعر البند</string>
-    <string name="orders">الطلب #٪ s</string>
-    <string name="settings">الإعدادات</string>
+    <string name="orders">الطلبات</string>
+    <string name="settings">الخيارات</string>
 
     <string name="all_fav">كل ما تبذلونه المفضلة</string>
     <string name="notifications">إشعارات</string>
@@ -26,28 +26,28 @@
     <string name="profile">الملف الشخصي</string>
     <string name="hello_blank_fragment">مرحبا شظية فارغة</string>
     <string name="bookstores_in_one_place">مكتبات في مكان واحد</string>
-    <string name="courses_institution">الدورات</string>
-    <string name="username">اسم المستخدم</string>
+    <string name="courses_institution">معاهد ودورات</string>
+    <string name="username">الاسم</string>
     <string name="confirm_otp">تأكيد مكتب المدعي العام</string>
     <string name="please_enter_your_otp">
 يرجى إدخال OTP الذي تلقيته على بريدك الإلكتروني / رقم هاتفك المحمول المسجل.
 </string>
     <string name="edit">تعديل</string>
     <string name="browse">تصفح</string>
-    <string name="phone">هاتف</string>
-    <string name="personal_info">معلومات شخصية</string>
+    <string name="phone">الاسم</string>
+    <string name="personal_info">تعديل البيانات الشخصية</string>
     <string name="location">موقعك</string>
     <string name="submit">إرسال</string>
-    <string name="email">البريد الإلكتروني</string>
+    <string name="email">الايميل</string>
     <string name="resend_otp">إعادة إرسال OTP</string>
-    <string name="delivery_address">عنوان التسليم</string>
+    <string name="delivery_address">عنوان التوصيل</string>
     <string name="next_btn">التالى</string>
-    <string name="payment">دفع</string>
+    <string name="payment">طرق الدفع</string>
     <string name="skip_btn">تخطى</string>
-    <string name="languages">اللغات</string>
+    <string name="languages">اللغة</string>
     <string name="get_started">البدء</string>
-    <string name="country">اتصل بنا</string>
-    <string name="recieve_notifications">تلقي الإخطارات</string>
+    <string name="country">الدولة</string>
+    <string name="recieve_notifications">الاشعارات</string>
     <string name="enabled">تمكين</string>
     <string name="sign_up">سجل</string>
     <string name="discover_more_items_in_this_bookstore">اكتشاف المزيد من العناصر في هذه المكتبة</string>
@@ -78,7 +78,7 @@
     <string name="intro11">متاجر الكتب</string>
     <string name="intro22">توصيل سريع</string>
     <string name="intro33">دروس مباشرة على الإنترنت</string>
-    <string name="view_all">عرض الكل</string>
+    <string name="view_all">المزيد</string>
     <string name="pincode">الرقم السري</string>
     <string name="landmark">معلم معروف</string>
     <string name="city">مدينة</string>
@@ -91,7 +91,7 @@
     <string name="address">عنوان</string>
     <string name="total_cost">التكلفة الإجمالية</string>
     <string name="no_items_added_in_the_cart">لا توجد عناصر مضافة في السلة</string>
-    <string name="stores">مخازن</string>
+    <string name="stores">مكتبات</string>
     <string name="looks_up_through_all_bookstores">يبحث عن طريق جميع متاجر الكتب</string>
     <string name="in_kuwait">في الكويت</string>
     <string name="search_by_bookstorename">البحث حسب BookStoreName</string>
