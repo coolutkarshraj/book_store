@@ -42,7 +42,7 @@
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="220dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="16dp"
@@ -110,80 +110,95 @@
                         app:layout_constraintStart_toStartOf="@+id/tv_bookstore_tilte"
                         app:layout_constraintTop_toBottomOf="@+id/tv_bookstore_tilte" />
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/textInputLayout"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginLeft="16dp"
-                        android:visibility="gone"
-                        android:layout_marginEnd="16dp"
-                        android:layout_marginTop="16dp"
-                        android:scrollbarSize="4dp"
-                        app:layout_constraintStart_toStartOf="parent"
+                        android:orientation="vertical"
                         app:layout_constraintTop_toBottomOf="@+id/cardView2">
 
-                        <com.google.android.material.textfield.TextInputEditText
+                        <LinearLayout
+                            android:id="@+id/layout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Full Name"
-                            android:textSize="14dp" />
+                            android:orientation="vertical"
+                            android:visibility="gone">
 
-                    </com.google.android.material.textfield.TextInputLayout>
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/textInputLayout"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginLeft="16dp"
+                                android:layout_marginTop="16dp"
+                                android:layout_marginEnd="16dp"
+                                android:scrollbarSize="4dp">
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/textInputLayou"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_width="0dp"
-                        android:visibility="gone"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:scrollbarSize="4dp"
-                        app:layout_constraintEnd_toEndOf="@+id/textInputLayout"
-                        app:layout_constraintStart_toStartOf="@+id/textInputLayout"
-                        app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:hint="Full Name"
+                                    android:id="@+id/et_name"
+                                    android:textSize="14dp" />
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:layout_width="match_parent"
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/textInputLayou"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/textInputLayout"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginLeft="16dp"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginEnd="16dp"
+                                android:scrollbarSize="4dp">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:hint="Email"
+                                    android:id="@+id/et_email"
+                                    android:textSize="14dp" />
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/textInputLayout2"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginLeft="16dp"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginEnd="16dp"
+                                android:scrollbarSize="4dp">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:hint="Phone Number"
+                                    android:id="@+id/et_number"
+                                    android:inputType="number"
+                                    android:textSize="14dp" />
+                            </com.google.android.material.textfield.TextInputLayout>
+                        </LinearLayout>
+
+                        <Button
+                            android:id="@+id/btn_enrolll_now"
+                            android:layout_width="122dp"
                             android:layout_height="wrap_content"
-                            android:hint="Email"
-                            android:visibility="gone"
-                            android:textSize="14dp" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/textInputLayout2"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:scrollbarSize="4dp"
-                        app:layout_constraintEnd_toEndOf="@+id/textInputLayou"
-                        app:layout_constraintStart_toStartOf="@+id/textInputLayou"
-                        app:layout_constraintTop_toBottomOf="@+id/textInputLayou">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="Phone Number"
-                            android:textSize="14dp" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <Button
-                        android:id="@+id/btn_enrolll_now"
-                        android:layout_width="122dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="120dp"
-                        android:layout_marginBottom="20dp"
-                        android:layout_marginTop="40dp"
-                        android:background="@drawable/bt_gradient"
-                        android:text="Enroll Now"
-                        android:textColor="#fff"
-                        android:layout_gravity="center"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        tools:ignore="MissingConstraints" />
+                            android:layout_below="@+id/layout"
+                            android:layout_centerHorizontal="true"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="40dp"
+                            android:layout_marginEnd="120dp"
+                            android:layout_marginBottom="20dp"
+                            android:background="@drawable/bt_gradient"
+                            android:text="Enroll Now"
+                            android:textColor="#fff" />
+                    </RelativeLayout>
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

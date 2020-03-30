@@ -304,7 +304,7 @@ public class FavoriteItemsAdapter extends RecyclerView.Adapter<FavoriteItemsAdap
         dbHelper = new DbHelper(mContext);
         Cursor cursor = dbHelper.getData();
         if (cursor.getCount() == 0) {
-            Log.e("Error", "no Data");
+            Log.e("Error", "no GuestDataModel");
             return;
         }
         JSONArray resultSet = new JSONArray();

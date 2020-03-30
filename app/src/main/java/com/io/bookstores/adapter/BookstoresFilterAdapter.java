@@ -111,8 +111,9 @@ public class BookstoresFilterAdapter extends RecyclerView.Adapter<BookstoresFilt
                     });
                     dialog.show();
                } else {
-                    Uri gmmIntentUri = Uri.parse("geo:" + Lat + "," + Longi + "");
-                    Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                //Uri gmmIntentUri = Uri.parse("geo:" + Lat + "," + Longi + "");
+                Uri navigationIntentUri = Uri.parse("google.navigation:b=" + Lat + "," + Longi);
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, navigationIntentUri);
                     mapIntent.setPackage("com.google.android.apps.maps");
                     mContext.startActivity(mapIntent);
                 }

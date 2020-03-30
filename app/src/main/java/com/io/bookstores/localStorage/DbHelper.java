@@ -194,7 +194,7 @@ public class DbHelper extends SQLiteOpenHelper {
         }
     }
 
-    /* ---------------------------------------------------  Delete Data from table  -------------------------------------------------*/
+    /* ---------------------------------------------------  Delete GuestDataModel from table  -------------------------------------------------*/
 
     public boolean deleteData(String pid)
     {
@@ -210,7 +210,7 @@ public class DbHelper extends SQLiteOpenHelper {
         }
     }
 
-    /* ---------------------------------------------------  Delete Data from table  -------------------------------------------------*/
+    /* ---------------------------------------------------  Delete GuestDataModel from table  -------------------------------------------------*/
 
     public boolean deleteOneWishList(String pid)
     {

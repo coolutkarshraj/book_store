@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
-
     <string name="app_name">My BookStoresgit </string>
     <string name="recived">يستلم</string>
     <string name="title">عنوان</string>

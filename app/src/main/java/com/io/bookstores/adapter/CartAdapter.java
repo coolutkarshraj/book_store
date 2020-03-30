@@ -266,7 +266,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartHolder> {
         dbHelper = new DbHelper(activity);
         Cursor cursor = dbHelper.getData();
         if (cursor.getCount() == 0) {
-            Log.e("Error", "no Data");
+            Log.e("Error", "no GuestDataModel");
             item = null;
             notifyDataSetChanged();
             return;
@@ -450,7 +450,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartHolder> {
         dbHelper = new DbHelper(activity);
         Cursor cursor = dbHelper.getAllWishlist();
         if (cursor.getCount() == 0) {
-            Log.e("Error", "no Data");
+            Log.e("Error", "no GuestDataModel");
             return;
         }
         JSONArray resultSet = new JSONArray();

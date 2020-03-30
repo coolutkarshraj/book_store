@@ -451,7 +451,7 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.MyView
         dbHelper = new DbHelper(mContext);
         Cursor cursor = dbHelper.getData();
         if (cursor.getCount() == 0) {
-            Log.e("Error", "no Data");
+            Log.e("Error", "no GuestDataModel");
             return;
         }
         JSONArray resultSet = new JSONArray();
@@ -542,7 +542,7 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.MyView
         dbHelper = new DbHelper(mContext);
         Cursor cursor = dbHelper.getAllWishlist();
         if (cursor.getCount() == 0) {
-            Log.e("Error", "no Data");
+            Log.e("Error", "no GuestDataModel");
             return;
         }
         JSONArray resultSet = new JSONArray();
@@ -584,7 +584,7 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.MyView
         dbHelper = new DbHelper(mContext);
         Cursor cursor = dbHelper.getAllWishlist();
         if (cursor.getCount() == 0) {
-            Log.e("Error", "no Data");
+            Log.e("Error", "no GuestDataModel");
             return;
         }
         JSONArray resultSet = new JSONArray();

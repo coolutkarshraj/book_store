@@ -178,7 +178,7 @@ public class FavoriteItemsFragment extends Fragment implements SwipeRefreshLayou
         dbHelper = new DbHelper(getActivity());
         Cursor cursor = dbHelper.getAllWishlist();
         if (cursor.getCount() == 0) {
-            Log.e("Error", "no Data");
+            Log.e("Error", "no GuestDataModel");
             return;
         }
         JSONArray resultSet = new JSONArray();

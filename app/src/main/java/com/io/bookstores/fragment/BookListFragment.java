@@ -199,7 +199,7 @@ public class BookListFragment extends Fragment implements View.OnClickListener {
         dbHelper = new DbHelper(getActivity());
         Cursor cursor = dbHelper.getAllWishlist();
         if (cursor.getCount() == 0) {
-            Log.e("Error", "no Data");
+            Log.e("Error", "no GuestDataModel");
             return;
         }
         JSONArray resultSet = new JSONArray();

@@ -9,7 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,11 +20,13 @@ import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 import com.io.bookstores.Config;
 import com.io.bookstores.R;
-import com.io.bookstores.activity.authentication.GuestLoginActivity;
+import com.io.bookstores.activity.homeActivity.MainActivity;
 import com.io.bookstores.apicaller.ApiCaller;
 import com.io.bookstores.localStorage.LocalStorage;
 import com.io.bookstores.model.courseModel.CourseDataModel;
 import com.io.bookstores.model.courseModel.EnrollCourseResponseModel;
+import com.io.bookstores.model.guestModel.GuestEnrollCourseResponseModel;
+import com.io.bookstores.model.guestModel.GuestResponseModel;
 import com.io.bookstores.utility.NewProgressBar;
 import com.io.bookstores.utility.Utils;
 import com.io.bookstores.utility.userOnlineInfo;
@@ -38,10 +42,12 @@ public class CourseEnrollmentFragment extends Fragment implements View.OnClickLi
     private TextView tvCourseTitile, tvCourseDescription;
     private ImageView imageView;
     private Button btnEnroll;
+    private EditText etName, etEmail, etPhone;
     private String token;
     private LocalStorage localStorage;
     private userOnlineInfo user;
     private NewProgressBar dialog;
+    private LinearLayout layout;
 
     public CourseEnrollmentFragment(CourseDataModel courseDataModel) {
         this.courseDataModel = courseDataModel;
@@ -64,6 +70,10 @@ public class CourseEnrollmentFragment extends Fragment implements View.OnClickLi
         user = new userOnlineInfo();
         dialog = new NewProgressBar(activity);
         localStorage = new LocalStorage(activity);
+        layout = (LinearLayout) view.findViewById(R.id.layout);
+        etName = (EditText) view.findViewById(R.id.et_name);
+        etEmail = (EditText) view.findViewById(R.id.et_email);
+        etPhone = (EditText) view.findViewById(R.id.et_number);
         token = localStorage.getString(LocalStorage.token);
         imageView = (ImageView) view.findViewById(R.id.imageView21);
         tvCourseTitile = (TextView) view.findViewById(R.id.tv_bookstore_tilte);
@@ -81,11 +91,7 @@ public class CourseEnrollmentFragment extends Fragment implements View.OnClickLi
             case R.id.btn_enrolll_now:
 
                 if (token.equals("") || token == null) {
-                    localStorage.putBooleAan(LocalStorage.isEnroll, true);
-                    localStorage.course(courseDataModel);
-                    Intent i = new Intent(activity, GuestLoginActivity.class);
-                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(i);
+                    validateData();
                 } else {
                     enrollApiCall();
                 }
@@ -97,9 +103,17 @@ public class CourseEnrollmentFragment extends Fragment implements View.OnClickLi
 
 
     private void startWorking() {
-
-
+        ifGusestOrUser();
         corseDetialSetIntViews();
+    }
+
+    private void ifGusestOrUser() {
+
+        if (token.equals("") || token == null) {
+            layout.setVisibility(View.VISIBLE);
+        } else {
+            layout.setVisibility(View.GONE);
+        }
     }
 
     private void corseDetialSetIntViews() {
@@ -143,6 +157,76 @@ public class CourseEnrollmentFragment extends Fragment implements View.OnClickLi
         } else {
             Utils.showAlertDialog(getActivity(), "No Internet Connection");
         }
+    }
+
+    private void validateData() {
+
+        String strName = etName.getText().toString().trim();
+        String strEmail = etEmail.getText().toString().trim();
+        String strPhone = etPhone.getText().toString().trim();
+        if (strName.isEmpty() || strEmail.isEmpty() || strPhone.isEmpty()) {
+            Utils.showAlertDialog(activity, "please enter fields");
+        } else {
+            guestEnrollCourse(strName, strEmail, strPhone);
+        }
+
+    }
+
+    private void guestEnrollCourse(String strName, String strEmail, String strPhone) {
+
+
+        if (user.isOnline(getActivity())) {
+            dialog.show();
+            ApiCaller.guestApi(activity, Config.Url.guestCreate, strName, strEmail, strPhone, new FutureCallback<GuestResponseModel>() {
+                @Override
+                public void onCompleted(Exception e, GuestResponseModel result) {
+                    if (e != null) {
+                        Utils.showAlertDialog(getActivity(), "Something Went Wrong");
+                        dialog.dismiss();
+                    }
+
+                    if (result != null) {
+                        if (result.getStatus()) {
+                            dialog.dismiss();
+                            enrollCourseGuest(result.getData().getGuestId(), courseDataModel.getCourseId());
+                        }
+
+                    }
+                }
+            });
+        } else {
+            Utils.showAlertDialog(getActivity(), "No Internet Connection");
+        }
+
+
+    }
+
+    private void enrollCourseGuest(Long guestId, Integer courseId) {
+        if (user.isOnline(getActivity())) {
+
+            ApiCaller.guestEnrollCourse(activity, Config.Url.guestEnrollCourse, courseId, guestId, new FutureCallback<GuestEnrollCourseResponseModel>() {
+                @Override
+                public void onCompleted(Exception e, GuestEnrollCourseResponseModel result) {
+                    if (e != null) {
+                        Utils.showAlertDialog(getActivity(), "Something Went Wrong");
+
+                    }
+
+                    if (result != null) {
+                        if (result.getStatus()) {
+
+                            Toast.makeText(activity, result.getMessage(), Toast.LENGTH_SHORT).show();
+                            Intent i = new Intent(activity, MainActivity.class);
+                            startActivity(i);
+                        }
+
+                    }
+                }
+            });
+        } else {
+            Utils.showAlertDialog(getActivity(), "No Internet Connection");
+        }
+
     }
 
 }

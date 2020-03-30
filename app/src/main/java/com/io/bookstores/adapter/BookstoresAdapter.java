@@ -26,6 +26,7 @@ import com.io.bookstores.model.storeModel.Datum;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class BookstoresAdapter extends RecyclerView.Adapter<BookstoresAdapter.MyViewHolder> {
 
@@ -110,8 +111,10 @@ public class BookstoresAdapter extends RecyclerView.Adapter<BookstoresAdapter.My
                     });
                     dialog.show();
                 }else {
-                    Uri gmmIntentUri = Uri.parse("geo:"+Lat+","+Longi+"");
-                    Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                  //  Uri gmmIntentUri = Uri.parse("geo:"+Lat+","+Longi+"");
+
+                    Uri navigationIntentUri = Uri.parse("google.navigation:b=" + Lat + "," + Longi);
+                    Intent mapIntent = new Intent(Intent.ACTION_VIEW, navigationIntentUri);
                     mapIntent.setPackage("com.google.android.apps.maps");
                     mContext.startActivity(mapIntent);
                 }

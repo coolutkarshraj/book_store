@@ -54,6 +54,9 @@ public class Config {
         public static String contactus = "user/complain";
         public static String getAddsList = "discount/adlist";
         public static String updateDeviceToken = "store/update-token";
+        public static String guestCreate = "course/add-guest";
+        public static String guestEnrollCourse = "course/guest-enroll";
+        public static String orderqr = "order/add-qr";
     }
 
     public final static int splashTimeout = 3000;

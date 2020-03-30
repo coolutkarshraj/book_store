@@ -32,7 +32,10 @@ import com.io.bookstores.model.dilvery.GetDPriceResponseModel;
 import com.io.bookstores.model.editProfileResponseModel.EditProfileResponseModel;
 import com.io.bookstores.model.filterStore.FilterStoreResponseModel;
 import com.io.bookstores.model.getAddressResponseModel.AddressResponseModel;
+import com.io.bookstores.model.getAllOrder.QrResponseModel;
 import com.io.bookstores.model.getProfileResponseModel.GetProfileResponseModel;
+import com.io.bookstores.model.guestModel.GuestEnrollCourseResponseModel;
+import com.io.bookstores.model.guestModel.GuestResponseModel;
 import com.io.bookstores.model.insituteModel.InsituiteResponseModel;
 import com.io.bookstores.model.insituteModel.TrendingInstituteResponseModel;
 import com.io.bookstores.model.instituteDetial.InsituiteDetialResponseModel;
@@ -1120,6 +1123,72 @@ public class ApiCaller {
                 });
 
     }
+
+    public static void guestApi(Activity activity, String url, String name, String email, String Phone,
+                                final FutureCallback<GuestResponseModel> apiCallBack) {
+        final JsonObject json = new JsonObject();
+        json.addProperty("name", name);
+        json.addProperty("email ", email);
+        json.addProperty("phone", Phone);
+        final Gson gson = new Gson();
+        Ion.with(activity)
+                .load(UrlLocator.getFinalUrl(url))
+                .noCache()
+                .setJsonObjectBody(json)
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        GuestResponseModel guestResponseModel = gson.fromJson(result, GuestResponseModel.class);
+                        apiCallBack.onCompleted(e, guestResponseModel);
+                    }
+                });
+    }
+
+    public static void guestEnrollCourse(Activity activity, String url, int cId, Long gId,
+                                         final FutureCallback<GuestEnrollCourseResponseModel> apiCallBack) {
+
+        final JsonObject json = new JsonObject();
+        json.addProperty("cId", cId);
+        json.addProperty("gId", gId);
+        final Gson gson = new Gson();
+        Ion.with(activity)
+                .load(UrlLocator.getFinalUrl(url))
+                .noCache()
+                .setJsonObjectBody(json)
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        GuestEnrollCourseResponseModel guestEnrollCourseResponseModel = gson.fromJson(result, GuestEnrollCourseResponseModel.class);
+                        apiCallBack.onCompleted(e, guestEnrollCourseResponseModel);
+                    }
+                });
+    }
+
+    public static void qrCreator(Activity activity, String url, File file, String parmeter, String parmId, Long OId
+            ,final FutureCallback<QrResponseModel> apiCallBack) {
+
+        final Gson gson = new Gson();
+        List<Part> files = new ArrayList();
+
+            files.add(new FilePart("avatar", file));
+            Ion.with(activity)
+                    .load("POST",UrlLocator.getFinalUrl(url))
+                    .addMultipartParts(files)
+                    .setMultipartParameter(parmeter, parmId)
+                    .setMultipartParameter("oId", String.valueOf(OId))
+                    .asJsonObject()
+                    .setCallback(new FutureCallback<JsonObject>() {
+                        @Override
+                        public void onCompleted(Exception e, JsonObject result) {
+                            QrResponseModel qrResponseModel = gson.fromJson(result, QrResponseModel.class);
+                            apiCallBack.onCompleted(e, qrResponseModel);
+                        }
+                    });
+        }
+
+
 
 
 }

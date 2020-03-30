@@ -13,7 +13,6 @@
             android:layout_height="match_parent"
             android:layout_marginTop="@dimen/font_10">
 
-
             <RelativeLayout
                 android:visibility="visible"
                 android:layout_width="match_parent"
@@ -135,7 +134,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="45dp"
                                 android:fontFamily="@font/exo"
-                                android:text="5 Kd"
+                                android:text="3 Kd"
                                 android:textSize="@dimen/h1" />
 
                             <TextView
