@@ -3,8 +3,11 @@ package com.io.bookstores.activity.checkoutActivity;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -28,6 +31,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
 import com.io.bookstores.Config;
 import com.io.bookstores.R;
 import com.io.bookstores.StaticData;
@@ -42,9 +49,11 @@ import com.io.bookstores.model.deliveryPriceModel.DeliveryResponseModel;
 import com.io.bookstores.model.dilvery.DilveryAddressDataModel;
 import com.io.bookstores.model.dilvery.DilveryAdressResponseModel;
 import com.io.bookstores.model.dilvery.GetDPriceResponseModel;
+import com.io.bookstores.model.getAllOrder.QrResponseModel;
 import com.io.bookstores.utility.NewProgressBar;
 import com.io.bookstores.utility.Utils;
 import com.io.bookstores.utility.userOnlineInfo;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.koushikdutta.async.future.FutureCallback;
 import com.paypal.android.sdk.payments.PayPalConfiguration;
 import com.paypal.android.sdk.payments.PayPalPayment;
@@ -56,6 +65,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -82,6 +94,9 @@ public class CheckoutActivity extends AppCompatActivity {
     int totalprice;
     int totalpricessss;
     String spindata, spindistict;
+    JSONObject jsonObject1;
+    JSONArray jsonArrayy;
+    File file;
 
     private List<DilveryAddressDataModel> listdata = new ArrayList<>();
     List<String> listcity = new ArrayList<>();
@@ -104,6 +119,7 @@ public class CheckoutActivity extends AppCompatActivity {
     private void intilizeView() {
 
 
+        jsonArrayy = new JSONArray();
         totalprice = getIntent().getIntExtra("totalprice", 0);
         activity = CheckoutActivity.this;
         user = new userOnlineInfo();
@@ -367,6 +383,7 @@ public class CheckoutActivity extends AppCompatActivity {
                                 } else {
 
                                     if (result.getStatus() == true) {
+                                        qrcreator(result.getData().getOrderId());
                                         Intent intent = new Intent(CheckoutActivity.this, ProcessingActivity.class);
                                         startActivity(intent);
                                         finish();
@@ -442,6 +459,139 @@ public class CheckoutActivity extends AppCompatActivity {
         }
     }
 
+    private void qrcreator(Long orderId) {
+        DbHelper dbHelper;
+        dbHelper = new DbHelper(this);
+        Cursor cursor = dbHelper.getData();
+        if (cursor.getCount() == 0) {
+            Log.e("Error", "no Data");
+            return;
+        }
+        JSONArray resultSet = new JSONArray();
+        JSONObject returnObj = new JSONObject();
+
+        cursor.moveToFirst();
+        while (cursor.isAfterLast() == false) {
+
+            int totalColumn = cursor.getColumnCount();
+            JSONObject rowObject = new JSONObject();
+
+            for (int i = 0; i < totalColumn; i++) {
+                if (cursor.getColumnName(i) != null) {
+                    try {
+                        if (cursor.getString(i) != null) {
+                            Log.d("TAG_NAME2", cursor.getString(i));
+                            rowObject.put(cursor.getColumnName(i), cursor.getString(i));
+                        } else {
+                            rowObject.put(cursor.getColumnName(i), "");
+                        }
+                    } catch (Exception e) {
+                        Log.d("TAG_NAME1", e.getMessage());
+                    }
+                }
+            }
+            resultSet.put(rowObject);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        String datajson = resultSet.toString();
+        datajson.replaceAll("\\\\", "");
+        Log.d("datajson", datajson);
+        StaticData.CartData = datajson;
+        JSONArray jArray = null;
+
+        try {
+            jArray = new JSONArray(datajson);
+            for (int i = 0; i < jArray.length(); i++) {
+                JSONObject json_data = jArray.getJSONObject(i);
+                JsonObject jsonObject = new JsonObject();
+                jsonObject.addProperty("bookid", json_data.getString("P_ID"));
+                String pId = json_data.getString("P_ID");
+                createQR(pId, orderId);
+
+                jsonObject.addProperty("count", json_data.getString("Quantity"));
+                jsonArray.add(jsonObject);
+            }
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void createQR(String pId, Long orderId) {
+        String text = "qr_" + orderId + "_" + pId; // Whatever you need to encode in the QR code
+        MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
+        try {
+            BitMatrix bitMatrix = multiFormatWriter.encode(text, BarcodeFormat.QR_CODE, 200, 200);
+            BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
+            Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
+            String bitmap1 = saveToInternalStorage(bitmap, pId,orderId);
+            loadImageFromStorage(bitmap1, pId, orderId);
+        } catch (WriterException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private String saveToInternalStorage(Bitmap bitmapImage, String pId, Long orderId) {
+        ContextWrapper cw = new ContextWrapper(getApplicationContext());
+        // path to /data/data/yourapp/app_data/imageDir
+        File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
+        // Create imageDir
+        File mypath = new File(directory, "qr_" + orderId + "_" + pId + ".jpg");
+
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(mypath);
+            // Use the compress method on the BitMap object to write image to the OutputStream
+            bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                fos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return directory.getAbsolutePath();
+    }
+
+    private void loadImageFromStorage(String path, String pId, Long orderId) {
+        file = new File(path, "qr_" + orderId + "_" + pId + ".jpg");
+        apiCallQrCreator(file, "qr_" + orderId + "_" + pId + ".jpg", pId, orderId);
+
+
+    }
+
+    private void apiCallQrCreator(File f, String s, String pId, Long orderId) {
+
+        ApiCaller.qrCreator(activity, Config.Url.orderqr, f, s, pId, orderId, new FutureCallback<QrResponseModel>() {
+            @Override
+            public void onCompleted(Exception e, QrResponseModel result) {
+                if (e != null) {
+                    Utils.showAlertDialog(CheckoutActivity.this, "Something Went Wrong");
+                    return;
+                }
+                if (result != null) {
+
+                    if (result.getStatus() == true) {
+
+                        Toast.makeText(activity, result.getMessage(), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(CheckoutActivity.this, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+
+                    }
+                } else {
+                    Toast.makeText(activity, result.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+    }
+
     private void startWork() {
         getaddressListApi();
 
@@ -497,8 +647,6 @@ public class CheckoutActivity extends AppCompatActivity {
             addressAdapter = new AddressAdapter(CheckoutActivity.this, result.getData().getDeliveryAddresses());
             recyclerView.setAdapter(addressAdapter);
         }
-
-
     }
 
     private void dialogOpen() {
@@ -567,8 +715,8 @@ public class CheckoutActivity extends AppCompatActivity {
         btn_Add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              //  addAddressValidateData(etAddress, spindata, etState, etPinCode,dialog,spindistict);
-                addAddressValidateData(etAddress, spindata, etState, etPinCode,dialog,spindistict);
+                //  addAddressValidateData(etAddress, spindata, etState, etPinCode,dialog,spindistict);
+                addAddressValidateData(etAddress, spindata, etState, etPinCode, dialog, spindistict);
                 dialog.dismiss();
             }
         });
@@ -587,18 +735,18 @@ public class CheckoutActivity extends AppCompatActivity {
 
     private void addAddressValidateData(EditText etAddress, String spindata, EditText etState, EditText etPinCode, Dialog dialog, String spindistict) {
         String strAddress1 = etAddress.getText().toString().trim();
-       // String strCity = etCity.getText().toString().trim();
+        // String strCity = etCity.getText().toString().trim();
         String strState = etState.getText().toString().trim();
         String strPinCode = etPinCode.getText().toString().trim();
         if (strAddress1.isEmpty() || strState.isEmpty() || strPinCode.isEmpty()) {
             etAddress.setError("Please Enter Address 1");
 
-           // etCity.setError("Please Enter City");
+            // etCity.setError("Please Enter City");
             etState.setError("Please Enter State");
             etPinCode.setError("Please Enter PinCode");
         } else {
 
-            addDataIntoApi(strAddress1, spindata, strState, strPinCode,dialog,spindistict);
+            addDataIntoApi(strAddress1, spindata, strState, strPinCode, dialog, spindistict);
 
         }
     }
@@ -609,7 +757,7 @@ public class CheckoutActivity extends AppCompatActivity {
             this.dialog.show();
             final LocalStorage localStorage = new LocalStorage(this);
             ApiCaller.addAddress(activity, Config.Url.addAddress, " ", strAddress1, " ", strCity, strState, Integer.valueOf(strPinCode), " ",
-                    " ", " ", " ", localStorage.getString(LocalStorage.token),spindata,
+                    " ", " ", " ", localStorage.getString(LocalStorage.token), spindata,
                     new FutureCallback<AddAddressResponseModel>() {
                         @Override
                         public void onCompleted(Exception e, AddAddressResponseModel result) {
@@ -691,8 +839,6 @@ public class CheckoutActivity extends AppCompatActivity {
                 listDistict.add(data.get(i).getName());
 
             }
-
-
             Log.e("city", "" + listcity.size());
         }
 

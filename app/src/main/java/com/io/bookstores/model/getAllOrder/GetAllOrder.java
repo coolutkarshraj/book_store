@@ -8,17 +8,17 @@ import com.google.gson.annotations.SerializedName;
 public class GetAllOrder {
 
     @SerializedName("data")
-    private List<Datum> mData;
+    private List<QrDataModel> mData;
     @SerializedName("message")
     private String mMessage;
     @SerializedName("status")
     private Integer mStatus;
 
-    public List<Datum> getData() {
+    public List<QrDataModel> getData() {
         return mData;
     }
 
-    public void setData(List<Datum> data) {
+    public void setData(List<QrDataModel> data) {
         mData = data;
     }
 
