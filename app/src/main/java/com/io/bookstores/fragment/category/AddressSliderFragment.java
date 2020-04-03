@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.io.bookstores.R;
 import com.io.bookstores.activity.homeActivity.ui.home.HomeFragment;
 import com.io.bookstores.adapter.categoryAdapter.AddressSliderAdapter;
+import com.io.bookstores.model.dilvery.DilveryAddressDataModel;
 import com.io.bookstores.model.getAddressResponseModel.Datum;
 
 import java.util.ArrayList;
@@ -27,10 +28,10 @@ public class AddressSliderFragment extends Fragment {
     private RecyclerView recyclerView;
     int sizeo = 0;
     int i = 0;
-    private  List<Datum> listd = new ArrayList<>();
-    private  List<Datum> item = new ArrayList<>();
+    private  List<DilveryAddressDataModel> listd = new ArrayList<>();
+    private  List<DilveryAddressDataModel> item = new ArrayList<>();
 
-    public AddressSliderFragment(List<Datum> listd) {
+    public AddressSliderFragment(List<DilveryAddressDataModel> listd) {
        this.listd = listd;
     }
 
@@ -40,6 +41,7 @@ public class AddressSliderFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_address_slider, container, false);
+        setRetainInstance(true);
         intailizeViews(view);
         recyclerViewSetUp();
         return view;

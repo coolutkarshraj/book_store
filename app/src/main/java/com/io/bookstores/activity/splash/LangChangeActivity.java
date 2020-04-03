@@ -11,6 +11,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 
 import com.io.bookstores.R;
+import com.io.bookstores.StaticData;
 import com.io.bookstores.localStorage.LocalStorage;
 
 import java.util.Locale;
@@ -41,6 +42,7 @@ public class LangChangeActivity extends AppCompatActivity {
         btn_kuw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                StaticData.selectedLanguage = "kuwait";
                 Locale locale = new Locale("hi");
                 Locale.setDefault(locale);
                 Configuration config = new Configuration();
@@ -73,7 +75,7 @@ public class LangChangeActivity extends AppCompatActivity {
         btn_en.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                StaticData.selectedLanguage = "english";
                 Locale locale = new Locale("en");
                 Locale.setDefault(locale);
                 Configuration config = new Configuration();

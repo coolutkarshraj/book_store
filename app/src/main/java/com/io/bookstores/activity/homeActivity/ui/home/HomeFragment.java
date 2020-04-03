@@ -2,6 +2,7 @@ package com.io.bookstores.activity.homeActivity.ui.home;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.io.bookstores.Config;
 import com.io.bookstores.R;
+import com.io.bookstores.StaticData;
 import com.io.bookstores.adapter.AdSliderAdapter;
 import com.io.bookstores.adapter.CourseAdapter;
 import com.io.bookstores.adapter.SToreAdapter;
@@ -37,6 +39,7 @@ import com.io.bookstores.localStorage.DbHelper;
 import com.io.bookstores.localStorage.LocalStorage;
 import com.io.bookstores.model.bookListModel.WishListLocalResponseModel;
 import com.io.bookstores.model.dilvery.DilveryAddressDataModel;
+import com.io.bookstores.model.dilvery.DilveryAdressResponseModel;
 import com.io.bookstores.model.getAddressResponseModel.AddressResponseModel;
 import com.io.bookstores.model.getAddressResponseModel.Datum;
 import com.io.bookstores.model.insituteModel.TrendingInstituteDataModel;
@@ -54,6 +57,7 @@ import com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 
 public class HomeFragment extends Fragment implements RecyclerViewClickListener, SwipeRefreshLayout.OnRefreshListener {
@@ -100,12 +104,14 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener,
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_home, container, false);
+        setRetainInstance(true);
         intializeViews(root);
-        getStoreAddressList();
+        getAllCities();
         return root;
     }
 
     private void intializeViews(View root) {
+       // Toast.makeText(getActivity(), "selected lang = "+ StaticData.selectedLanguage, Toast.LENGTH_SHORT).show();
         recyclerViewClickListener = this;
         user = new userOnlineInfo();
         dbHelper = new DbHelper(getActivity());
@@ -285,7 +291,7 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener,
                             if (result.getStatus() == true) {
                                 dialog.dismiss();
                                 // Toast.makeText(getActivity(), "" + result.getMessage(), Toast.LENGTH_SHORT).show();
-                                makaAddressListScrollView(result);
+                                /*makaAddressListScrollView(result);*/
                             } else {
                                 dialog.dismiss();
                                 Toast.makeText(getContext(), "" + result.getMessage(), Toast.LENGTH_SHORT).show();
@@ -297,18 +303,52 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener,
             Utils.showAlertDialog(getActivity(), "No Internet Connection");
         }
     }
+    private void getAllCities () {
+        if (user.isOnline(getActivity())) {
+            ApiCaller.getdistic(getActivity(), Config.Url.disticGet,
+                    new FutureCallback<DilveryAdressResponseModel>() {
+                        @Override
+                        public void onCompleted(Exception e, DilveryAdressResponseModel result) {
 
-    private void makaAddressListScrollView(AddressResponseModel resultt) {
-        listd = resultt.getData();
+                            if (e != null) {
+                                Utils.showAlertDialog(getActivity(), "Something Went Wrong");
+                                return;
+                            }
+
+                            if (result != null) {
+                                if (result.getStatus()) {
+
+                                    makaAddressListScrollView(result.getData());
+                                } else {
+
+
+                                }
+                            }
+
+                        }
+                    });
+
+        } else {
+            Utils.showAlertDialog(getActivity(), "No Internet Connection");
+        }
+
+    }
+
+
+
+
+
+    private void makaAddressListScrollView(List<DilveryAddressDataModel>  resultt) {
+      //  listd = resultt.getData();
 
         CategoryFragmentAdapter adapter = new CategoryFragmentAdapter(((FragmentActivity) getActivity()).getSupportFragmentManager());
-        if (listd.size() % 6 == 0) {
-            sizee = listd.size() / 6;
+        if (resultt.size() % 6 == 0) {
+            sizee = resultt.size() / 6;
         } else {
-            sizee = listd.size() / 6 + 1;
+            sizee = resultt.size() / 6 + 1;
         }
         for (int p = 0; p < sizee; p++) {
-            adapter.addFragment(new AddressSliderFragment(listd));
+            adapter.addFragment(new AddressSliderFragment(resultt));
             adapter.notifyDataSetChanged();
 
         }

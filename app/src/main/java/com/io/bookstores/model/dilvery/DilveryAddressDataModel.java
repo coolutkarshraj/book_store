@@ -19,9 +19,14 @@ public class DilveryAddressDataModel {
     @SerializedName("districtId")
     @Expose
     private Integer districtId;
+
     @SerializedName("name")
     @Expose
     private String name;
+
+    @SerializedName("arabicName")
+    @Expose
+    private String arabicName;
     @SerializedName("cities")
     @Expose
     private List<City> cities = null;
@@ -72,5 +77,13 @@ public class DilveryAddressDataModel {
 
     public void setCities(List<City> cities) {
         this.cities = cities;
+    }
+
+    public String getArabicName() {
+        return arabicName;
+    }
+
+    public void setArabicName(String arabicName) {
+        this.arabicName = arabicName;
     }
 }

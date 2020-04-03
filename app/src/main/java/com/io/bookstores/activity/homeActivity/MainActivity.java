@@ -160,7 +160,7 @@ public class MainActivity extends AppCompatActivity implements
         iv_profile.setImageResource(R.drawable.profile);
         changeIconColor(MainActivity.this, R.drawable.ic_home, 0);
 
-        changeFrag(homeFragment, true);
+        changeFrag(homeFragment, false);
     }
 
     private void bindListner() {
@@ -376,7 +376,9 @@ public class MainActivity extends AppCompatActivity implements
                 radioButton = (RadioButton) dialog.findViewById(selectedId);
                 if (selectedId == -1) {
                 } else {
+
                     if (radioButton.getText().equals("English")) {
+                        StaticData.selectedLanguage = "english";
                         Locale locale = new Locale("en");
                         Locale.setDefault(locale);
                         Configuration config = new Configuration();
@@ -389,6 +391,7 @@ public class MainActivity extends AppCompatActivity implements
                         startWorking();
                         startActivity(new Intent(MainActivity.this,MainActivity.class));
                     } else {
+                        StaticData.selectedLanguage = "kuwait";
                         Locale locale = new Locale("hi");
                         Locale.setDefault(locale);
                         Configuration config = new Configuration();
@@ -436,8 +439,6 @@ public class MainActivity extends AppCompatActivity implements
                 localStorage.putBooleAan(LocalStorage.isEnroll, false);
                 localStorage.course(null);
                 changeFavouriteColorIcon();
-
-
             }
         });
 
