@@ -31,15 +31,15 @@
     <dimen name="zero_dp">0dp</dimen>
     <dimen name="eighty_dp">80dp</dimen>
 
-    <dimen name="btn_text">16dp</dimen>
-    <dimen name="text_head">20dp</dimen>
-    <dimen name="h1">16dp</dimen>
-    <dimen name="h2">14dp</dimen>
-    <dimen name="h3">12dp</dimen>
+    <dimen name="btn_text">16sp</dimen>
+    <dimen name="text_head">20sp</dimen>
+    <dimen name="h1">16sp</dimen>
+    <dimen name="h2">14sp</dimen>
+    <dimen name="h3">12sp</dimen>
     <dimen name="startmargin">20dp</dimen>
     <dimen name="endmargin">20dp</dimen>
     <dimen name="app_bar_height">180dp</dimen>
-    <dimen name="text_margin">16dp</dimen>
+    <dimen name="text_margin">16</dimen>
     <dimen name="fifteen_dp">15dp</dimen>
 
 

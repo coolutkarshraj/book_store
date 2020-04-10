@@ -17,7 +17,7 @@ import com.io.bookstores.adapter.schoolAdapter.AllSchoolsRvAdapter;
 import com.io.bookstores.listeners.ItemClickListner;
 
 
-public class ClassesFragment extends Fragment implements View.OnClickListener {
+public class SchoolCategoryFragment extends Fragment implements View.OnClickListener {
 
     private Activity activity;
     private RecyclerView rvAllClasses;
@@ -25,7 +25,7 @@ public class ClassesFragment extends Fragment implements View.OnClickListener {
     private ImageView iv_back;
     private ItemClickListner itemClickListner;
 
-    public ClassesFragment() {
+    public SchoolCategoryFragment() {
         // Required empty public constructor
     }
 
@@ -35,7 +35,7 @@ public class ClassesFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_classes, container, false);
+        View view = inflater.inflate(R.layout.fragment_school_categories, container, false);
         intializeAllViews(view);
         bindListner();
         startWorking();
