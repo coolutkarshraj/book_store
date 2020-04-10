@@ -103,8 +103,6 @@ public class BookstoresFragmentWithFilter extends Fragment {
     }
 
 
-
-
     private void setRecyclerViewData(FilterStoreResponseModel result) {
         LinearLayoutManager gridLayoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL,false);
         recyclerView.setLayoutManager(gridLayoutManager);
