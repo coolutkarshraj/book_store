@@ -35,7 +35,7 @@
             cardview:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:id="@+id/iv_bookstore_thumbnail"
+                android:id="@+id/iv_school_logo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="fitCenter"
@@ -47,7 +47,7 @@
 
 
         <TextView
-            android:id="@+id/tv_bookstore_tilte"
+            android:id="@+id/tv_school_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -71,7 +71,7 @@
             cardview:fontFamily="sans-serif"
             cardview:layout_constraintEnd_toStartOf="@+id/materialCardView"
             cardview:layout_constraintStart_toStartOf="parent"
-            cardview:layout_constraintTop_toBottomOf="@+id/tv_bookstore_tilte" />
+            cardview:layout_constraintTop_toBottomOf="@+id/tv_school_name" />
 
         <Button
             android:id="@+id/btn_browese"
