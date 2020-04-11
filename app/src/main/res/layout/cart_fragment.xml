@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <androidx.core.widget.NestedScrollView
@@ -11,38 +12,40 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/font_10">
+            android:layout_marginTop="@dimen/margin_15dp">
 
             <RelativeLayout
                 android:visibility="visible"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                tools:ignore="UselessParent">
 
                 <LinearLayout
                     android:id="@+id/ll0"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_height="@dimen/height_40dp"
                     android:background="@color/light_gray">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginStart="@dimen/font_10"
+                        android:layout_marginStart="@dimen/margin_15dp"
                         android:fontFamily="@font/exo_bold"
-                        android:text="Shopping cart"
+                        android:text="@string/shopping_cart"
                         android:textSize="@dimen/h2" />
 
                 </LinearLayout>
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView"
                     android:layout_below="@+id/tv_min"
-                    android:layout_marginTop="40dp"
+                    android:layout_marginTop="@dimen/height_40dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:labelFor="@+id/ll0">
+                    android:labelFor="@+id/ll0"
+                    tools:ignore="UnknownIdInLayout"/>
 
-                </androidx.recyclerview.widget.RecyclerView>
+
 
                 <LinearLayout
                     android:id="@+id/delivery"
@@ -57,15 +60,15 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/font_10"
                         android:fontFamily="@font/exo_bold"
-
-                        android:text="Delivery Method"
+                        android:text="@string/delivery_method"
                         android:textSize="@dimen/h2" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:weightSum="2">
+                        android:layout_marginTop="@dimen/margin_15dp"
+                        android:weightSum="2"
+                        tools:ignore="DisableBaselineAlignment">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -78,34 +81,30 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="start"
-                                android:layout_marginLeft="14dp"
-
+                                android:layout_marginStart="@dimen/margin_14dp"
                                 android:fontFamily="@font/exo"
                                 android:layoutDirection="ltr"
                                 android:text="@string/standard_delivery"
                                 android:textAlignment="textStart"
-                                android:textStyle="normal">
-
-
-                            </RadioButton>
+                                android:textStyle="normal"/>
 
                             <TextView
                                 android:id="@+id/tv_name_4"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="45dp"
+                                android:layout_marginStart="@dimen/margin_45dp"
                                 android:fontFamily="@font/exo"
-                                android:text="Depend's on Address"
+                                android:text="@string/depends_on_address"
                                 android:textSize="@dimen/h1" />
 
                             <TextView
                                 android:id="@+id/tv_name_3"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="45dp"
+                                android:layout_marginStart="@dimen/margin_45dp"
                                 android:layout_marginTop="5dp"
                                 android:fontFamily="@font/exo"
-                                android:text="From 4 to 9 pm" />
+                                android:text="@string/from_4_to_9" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -119,32 +118,31 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_gravity="start"
-                                android:layout_marginLeft="14dp"
+                                android:layout_marginStart="@dimen/margin_14dp"
                                 android:fontFamily="@font/exo"
                                 android:layoutDirection="ltr"
                                 android:text="@string/express_delivery"
                                 android:textAlignment="textStart"
-                                android:textStyle="normal">
-
-                            </RadioButton>
+                                android:textStyle="normal"/>
 
                             <TextView
                                 android:id="@+id/tv_name_7"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="45dp"
+                                android:layout_marginStart="@dimen/margin_45dp"
                                 android:fontFamily="@font/exo"
                                 android:text="3 Kd"
-                                android:textSize="@dimen/h1" />
+                                android:textSize="@dimen/h1"
+                                tools:ignore="HardcodedText" />
 
                             <TextView
                                 android:id="@+id/tv_name_8"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="45dp"
+                                android:layout_marginStart="@dimen/margin_45dp"
                                 android:layout_marginTop="5dp"
                                 android:fontFamily="@font/exo"
-                                android:text="Deliver within 2 hour" />
+                                android:text="@string/deliver_within_2_hours" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -155,9 +153,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/delivery"
-                    android:layout_marginTop="25dp"
+                    android:layout_marginTop="@dimen/margin_25dp"
                     android:orientation="horizontal"
-                    android:weightSum="2">
+                    android:weightSum="2"
+                    tools:ignore="DisableBaselineAlignment">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -172,7 +171,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/exo"
                             android:layout_gravity="end"
-                            android:text="Cart Subtotal"
+                            android:text="@string/cart_subtotal"
                             android:textSize="@dimen/h2" />
 
 
@@ -181,7 +180,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:fontFamily="@font/exo"
-                            android:text="Shipping"
+                            android:text="@string/shipping"
                             android:layout_gravity="end"
                             android:textSize="@dimen/h2" />
 
@@ -190,7 +189,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:fontFamily="@font/exo"
-                            android:text="Total"
+                            android:text="@string/total"
                             android:layout_gravity="end"
                             android:textSize="@dimen/h2" />
 
@@ -207,8 +206,6 @@
                             android:id="@+id/total_cost"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-
-                            android:text="12000"
                             android:fontFamily="@font/exo"
                             android:textSize="@dimen/h2" />
 
@@ -216,7 +213,7 @@
                             android:id="@+id/deliv_charge"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
+                            android:layout_marginTop="@dimen/margin_5dp"
                             android:fontFamily="@font/exo"
                             android:textSize="@dimen/h2" />
 
@@ -224,15 +221,11 @@
                             android:id="@+id/totalAll_cost"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-
-                            android:layout_marginTop="5dp"
-                            android:text="12004"
+                            android:layout_marginTop="@dimen/margin_5dp"
                             android:fontFamily="@font/exo"
                             android:textSize="@dimen/h2" />
 
-
                     </LinearLayout>
-
 
                 </LinearLayout>
 
@@ -253,10 +246,10 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/default_background"
                         android:gravity="center"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp"
+                        android:layout_marginLeft="@dimen/margin_20dp"
+                        android:layout_marginRight="@dimen/margin_20dp"
                         android:orientation="vertical"
-                        android:padding="10dp">
+                        android:padding="@dimen/margin_10dp">
                         <LinearLayout
                             android:weightSum="1"
                             android:layout_width="match_parent"
@@ -280,7 +273,7 @@
                                 android:layout_weight="0.4"
                                 android:layout_height="match_parent"
                                 android:layout_gravity="start"
-                                android:layout_marginLeft="14dp"
+                                android:layout_marginStart="@dimen/margin_14dp"
                                 android:fontFamily="@font/exo"
                                 android:layoutDirection="rtl"
                                 android:text="@string/within_2_hours"
@@ -293,7 +286,7 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="0dp"
                             android:gravity="center"
                             android:layout_weight="1"
                             android:orientation="horizontal">
@@ -303,7 +296,8 @@
                                 android:layout_weight="0.6"
                                 android:layout_height="wrap_content"
                                 android:text="@string/standard_delivery"
-                                android:textStyle="bold">
+                                android:textStyle="bold"
+                                tools:ignore="NestedWeights">
 
 
                             </TextView>
@@ -313,7 +307,7 @@
                                 android:layout_weight="0.4"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="start"
-                                android:layout_marginLeft="14dp"
+                                android:layout_marginStart="@dimen/margin_14dp"
                                 android:checked="true"
                                 android:fontFamily="@font/exo"
                                 android:layoutDirection="rtl"
@@ -345,22 +339,22 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="@dimen/margin_10dp"
+                        android:layout_marginBottom="@dimen/margin_10dp"
                         android:orientation="vertical">
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
-
-                            android:layout_marginTop="10dp"
-                            android:layout_marginRight="8dp">
+                            android:layout_marginLeft="@dimen/margin_8dp"
+                            android:layout_marginTop="@dimen/margin_10dp"
+                            android:layout_marginRight="@dimen/margin_8dp">
                             <TextView
                                 android:id="@+id/delivery_type"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentLeft="true"
-                                android:text="@string/standard_delivery">
+                                android:layout_alignParentStart="true"
+                                android:text="@string/standard_delivery"
+                                tools:ignore="RelativeOverlap">
 
                             </TextView>
 
@@ -368,24 +362,25 @@
                                 android:id="@+id/ship"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
-                                android:text="2k days">
+                                android:layout_alignParentEnd="true"
+                                android:text="2k days"
+                                tools:ignore="HardcodedText">
 
                             </TextView>
                         </RelativeLayout>
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginTop="8dp"
+                            android:layout_marginStart="@dimen/margin_8dp"
+                            android:layout_marginTop="@dimen/margin_8dp"
                             android:visibility="gone"
-                            android:layout_marginRight="8dp">
+                            android:layout_marginRight="@dimen/margin_8dp"
+                            tools:ignore="RtlHardcoded">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentLeft="true"
-                                android:text="GST Charge">
+                                android:layout_alignParentLeft="true">
 
                             </TextView>
 
@@ -394,22 +389,24 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentRight="true"
-                                android:text="">
+                                android:text=""
+                                tools:ignore="RelativeOverlap">
 
                             </TextView>
                         </RelativeLayout>
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginRight="8dp"
-                            android:layout_marginBottom="8dp">
+                            android:layout_marginLeft="@dimen/margin_8dp"
+                            android:layout_marginTop="@dimen/margin_8dp"
+                            android:layout_marginRight="@dimen/margin_8dp"
+                            android:layout_marginBottom="@dimen/margin_8dp">
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentLeft="true"
-                                android:text="Item Cost">
+                                android:text="Item Cost"
+                                tools:ignore="HardcodedText,RtlHardcoded">
 
                             </TextView>
 
@@ -418,7 +415,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentRight="true"
-                                android:text="">
+                                android:text=""
+                                tools:ignore="RelativeOverlap,RtlHardcoded">
 
                             </TextView>
                         </RelativeLayout>
@@ -434,7 +432,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentLeft="true"
+                                android:layout_alignParentStart="true"
                                 android:text="@string/total_cost">
 
                             </TextView>
@@ -443,8 +441,9 @@
                                 android:id="@+id/totalAll_cost1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
-                                android:text="">
+                                android:layout_alignParentEnd="true"
+                                android:text=""
+                                tools:ignore="RelativeOverlap">
 
                             </TextView>
                         </RelativeLayout>
@@ -457,11 +456,11 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/ll"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="40dp"
+                    android:layout_marginStart="@dimen/margin_40dp"
                     android:layout_marginTop="@dimen/twenty_four_dp"
-                    android:layout_marginRight="40dp"
+                    android:layout_marginEnd="@dimen/margin_40dp"
                     android:background="@drawable/round_corner_button_yellow"
-                    android:text="Proceed to Checkout"
+                    android:text="@string/proceed_to_checkout"
                     android:textAllCaps="false"
                     android:textColor="@color/white" />
 
@@ -479,8 +478,6 @@
         android:layout_height="wrap_content">
 
     </TextView>
-
-
 
 
 </RelativeLayout>

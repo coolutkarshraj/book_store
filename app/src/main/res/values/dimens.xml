@@ -14,11 +14,11 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="dots_height">30dp</dimen>
     <dimen name="dots_margin_bottom">20dp</dimen>
-    <dimen name="img_width_height">120dp</dimen>
+    <dimen name="img_height_height">120dp</dimen>
     <dimen name="slide_title">30dp</dimen>
     <dimen name="slide_desc">16dp</dimen>
     <dimen name="desc_padding">40dp</dimen>
-    <dimen name="eighteen_dp">18dp</dimen>
+    <dimen name="eighteen_dp">18sp</dimen>
     <dimen name="fourteen_sp">14sp</dimen>
     <dimen name="nav_header_vertical_spacing">8dp</dimen>
     <dimen name="nav_header_height">166dp</dimen>
@@ -33,7 +33,9 @@
 
     <dimen name="btn_text">16sp</dimen>
     <dimen name="text_head">20sp</dimen>
+    <dimen name="h20">20sp</dimen>
     <dimen name="h1">16sp</dimen>
+    <dimen name="h">18sp</dimen>
     <dimen name="h2">14sp</dimen>
     <dimen name="h3">12sp</dimen>
     <dimen name="startmargin">20dp</dimen>
@@ -45,4 +47,110 @@
 
     <dimen name="font_10">15sp</dimen>
     <dimen name="value_8">12dp</dimen>
+
+    <dimen name="elevation_1dp">1dp</dimen>
+    <dimen name="elevation_2dp">2dp</dimen>
+    <dimen name="elevation_3dp">3dp</dimen>
+    <dimen name="elevation_4dp">4dp</dimen>
+    <dimen name="elevation_5dp">5dp</dimen>
+    <dimen name="elevation_6dp">6dp</dimen>
+    <dimen name="elevation7dp">7dp</dimen>
+    <dimen name="elevation_8dp">8dp</dimen>
+    <dimen name="elevation_9dp">9dp</dimen>
+    <dimen name="elevation_10dp">10dp</dimen>
+
+
+    <dimen name="radius_1dp">1dp</dimen>
+    <dimen name="radius_2dp">2dp</dimen>
+    <dimen name="radius_3dp">3dp</dimen>
+    <dimen name="radius_4dp">4dp</dimen>
+    <dimen name="radius_5dp">5dp</dimen>
+    <dimen name="radius_6dp">6dp</dimen>
+    <dimen name="radius_7dp">7dp</dimen>
+    <dimen name="radius_8dp">8dp</dimen>
+    <dimen name="radius_9dp">9dp</dimen>
+    <dimen name="radius_10dp">10dp</dimen>
+
+    <dimen name="margin_1dp">1dp</dimen>
+    <dimen name="margin_2dp">2dp</dimen>
+    <dimen name="margin_3dp">3dp</dimen>
+    <dimen name="margin_4dp">4dp</dimen>
+    <dimen name="margin_5dp">5dp</dimen>
+    <dimen name="margin_6dp">6dp</dimen>
+    <dimen name="margin_7dp">7dp</dimen>
+    <dimen name="margin_8dp">8dp</dimen>
+    <dimen name="margin_9dp">9dp</dimen>
+    <dimen name="margin_10dp">10dp</dimen>
+    <dimen name="margin_14dp">14dp</dimen>
+    <dimen name="margin_15dp">15dp</dimen>
+    <dimen name="margin_16dp">16dp</dimen>
+    <dimen name="margin_18dp">18dp</dimen>
+    <dimen name="margin_20dp">20dp</dimen>
+    <dimen name="margin_24dp">24dp</dimen>
+    <dimen name="margin_25dp">25dp</dimen>
+    <dimen name="margin_30dp">30dp</dimen>
+    <dimen name="margin_35dp">35dp</dimen>
+    <dimen name="margin_40dp">40dp</dimen>
+    <dimen name="margin_45dp">45dp</dimen>
+    <dimen name="margin_48dp">48dp</dimen>
+    <dimen name="margin_50dp">50dp</dimen>
+    <dimen name="margin_60dp">60dp</dimen>
+
+    <dimen name="width_1dp">1dp</dimen>
+    <dimen name="width_2dp">2dp</dimen>
+    <dimen name="width_3dp">3dp</dimen>
+    <dimen name="width_4dp">4dp</dimen>
+    <dimen name="width_5dp">5dp</dimen>
+    <dimen name="width_6dp">6dp</dimen>
+    <dimen name="width_7dp">7dp</dimen>
+    <dimen name="width_8dp">8dp</dimen>
+    <dimen name="width_9dp">9dp</dimen>
+    <dimen name="width_10dp">10dp</dimen>
+    <dimen name="width_15dp">15dp</dimen>
+    <dimen name="width_20dp">20dp</dimen>
+    <dimen name="width_25dp">25dp</dimen>
+    <dimen name="width_30dp">30dp</dimen>
+    <dimen name="widtht_33dp">33dp</dimen>
+    <dimen name="width_40dp">40dp</dimen>
+    <dimen name="width_79dp">79dp</dimen>
+    <dimen name="width_80dp">80dp</dimen>
+    <dimen name="width_90dp">90dp</dimen>
+    <dimen name="width_100dp">100dp</dimen>
+    <dimen name="width_120dp">120dp</dimen>
+    <dimen name="width_170dp">170dp</dimen>
+    <dimen name="width_200dp">200dp</dimen>
+    <dimen name="width_250dp">250dp</dimen>
+    <dimen name="width_300dp">300dp</dimen>
+
+
+
+    <dimen name="height_1dp">1dp</dimen>
+    <dimen name="height_2dp">2dp</dimen>
+    <dimen name="height_3dp">3dp</dimen>
+    <dimen name="height_4dp">4dp</dimen>
+    <dimen name="height_5dp">5dp</dimen>
+    <dimen name="height_6dp">6dp</dimen>
+    <dimen name="height_7dp">7dp</dimen>
+    <dimen name="height_8dp">8dp</dimen>
+    <dimen name="height_9dp">9dp</dimen>
+    <dimen name="height_10dp">10dp</dimen>
+    <dimen name="height_15dp">15dp</dimen>
+    <dimen name="height_20dp">20dp</dimen>
+    <dimen name="height_25dp">25dp</dimen>
+    <dimen name="height_30dp">30dp</dimen>
+    <dimen name="height_33dp">33dp</dimen>
+    <dimen name="height_40dp">40dp</dimen>
+
+    <dimen name="height_79dp">79dp</dimen>
+    <dimen name="height_80dp">80dp</dimen>
+    <dimen name="height_90dp">90dp</dimen>
+    <dimen name="height_100dp">100dp</dimen>
+    <dimen name="height_120dp">120dp</dimen>
+    <dimen name="height_170dp">170dp</dimen>
+    <dimen name="height_200dp">200dp</dimen>
+    <dimen name="height_250dp">250dp</dimen>
+    <dimen name="height_300dp">300dp</dimen>
+
+
+
 </resources>

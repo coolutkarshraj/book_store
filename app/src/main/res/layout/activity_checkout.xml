@@ -21,50 +21,43 @@
             android:orientation="vertical">
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginLeft="60dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="60dp"
-                android:src="@drawable/way_delivery">
+                android:layout_height="@dimen/height_40dp"
+                android:layout_marginLeft="@dimen/margin_60dp"
+                android:layout_marginTop="@dimen/margin_10dp"
+                android:layout_marginRight="@dimen/margin_60dp"
+                android:src="@drawable/way_delivery"
+                tools:ignore="ContentDescription">
 
             </ImageView>
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
+                android:layout_height="@dimen/height_250dp"
                 android:scaleType="fitXY"
                 android:visibility="gone"
-                android:src="@drawable/payment">
-
-            </ImageView>
-
-
-
-
+                android:src="@drawable/payment"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginStart="@dimen/margin_20dp"
                 android:layout_marginTop="10dp"
                 android:text="Delivey Address"
                 android:textColor="@color/blue"
-                android:textSize="20dp">
-
-            </TextView>
+                android:textSize="@dimen/h20"
+                tools:ignore="HardcodedText"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp">
-
-            </androidx.recyclerview.widget.RecyclerView>
+                android:layout_margin="@dimen/margin_16dp"/>
 
             <LinearLayout
                 android:id="@+id/ll_add_address"
                 android:layout_width="match_parent"
-                android:layout_height="33dp"
+                android:layout_height="@dimen/height_33dp"
                 android:layout_marginBottom="@dimen/sixteen_dp"
                 android:background="@drawable/add_new_address_background">
 
@@ -73,26 +66,24 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="@dimen/sixteen_dp"
+                    android:layout_marginStart="@dimen/sixteen_dp"
                     android:layout_marginTop="@dimen/two_dp"
                     android:layout_marginRight="@dimen/fourteeen_dp"
                     android:text="+ Add New Address"
                     android:textColor="#545cd8"
-                    android:textSize="@dimen/sixteen_sp">
-
-                </TextView>
+                    android:textSize="@dimen/sixteen_sp"
+                    tools:ignore="HardcodedText,RtlHardcoded"/>
             </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="@dimen/margin_20dp"
                 android:layout_marginTop="10dp"
                 android:textColor="@color/blue"
-                android:text="Payment"
-                android:textSize="20dp">
-
-            </TextView>
+                android:text="@string/payment_method"
+                android:textSize="@dimen/h20"
+                tools:ignore="RtlHardcoded"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -105,8 +96,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:paddingStart="5dp"
-                    android:text="Cash on Delivery" />
+                    android:paddingStart="@dimen/margin_5dp"
+                    android:text="Cash on Delivery"
+                    tools:ignore="HardcodedText,RtlSymmetry" />
 
                 <RadioButton
                     android:layout_width="wrap_content"
@@ -119,7 +111,6 @@
                 android:id="@+id/deliv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/recyclerView"
                 android:layout_marginTop="@dimen/ten_dp"
                 android:gravity="center"
                 android:orientation="vertical">
@@ -128,20 +119,20 @@
 
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
+                    android:layout_marginLeft="@dimen/margin_16dp"
+                    android:layout_marginRight="@dimen/margin_16dp"
                     android:background="@drawable/default_background"
                     android:gravity="center"
                     android:orientation="vertical"
-                    >
+                    tools:ignore="UselessParent">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginLeft="@dimen/margin_8dp"
+                        android:layout_marginRight="@dimen/margin_8dp"
+                        android:layout_marginTop="@dimen/margin_5dp"
                         android:orientation="horizontal"
                         android:weightSum="1">
 
@@ -161,7 +152,7 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_gravity="start"
-                            android:layout_marginLeft="14dp"
+                            android:layout_marginStart="@dimen/margin_14dp"
                             android:layout_weight="0.4"
                             android:fontFamily="@font/exo"
                             android:layoutDirection="rtl"
@@ -175,11 +166,11 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginRight="8dp"
-                        android:layout_marginBottom="5dp"
+                        android:layout_marginLeft="@dimen/margin_8dp"
+                        android:layout_marginRight="@dimen/margin_8dp"
+                        android:layout_marginBottom="@dimen/margin_5dp"
                         android:gravity="center"
                         android:orientation="horizontal">
 
@@ -189,25 +180,21 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="0.6"
                             android:text="@string/standard_delivery"
-                            android:textStyle="bold">
-
-
-                        </TextView>
+                            android:textStyle="bold"
+                            tools:ignore="NestedWeights"/>
 
                         <RadioButton
                             android:id="@+id/rb_2nd"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="start"
-                            android:layout_marginLeft="14dp"
+                            android:layout_marginStart="@dimen/margin_14dp"
                             android:layout_weight="0.4"
                             android:fontFamily="@font/exo"
                             android:layoutDirection="rtl"
                             android:text="@string/within_2_hours"
                             android:textAlignment="textStart"
-                            android:textStyle="normal">
-
-                        </RadioButton>
+                            android:textStyle="normal"/>
 
                     </LinearLayout>
 
@@ -220,7 +207,6 @@
                 android:id="@+id/card_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/deliv"
                 android:layout_marginLeft="@dimen/sixteen_dp"
                 android:layout_marginTop="@dimen/ten_dp"
                 android:layout_marginRight="@dimen/sixteen_dp">
@@ -228,49 +214,48 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="@dimen/margin_10dp"
+                    android:layout_marginBottom="@dimen/margin_10dp"
                     android:orientation="vertical">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginRight="8dp">
+                        android:layout_marginStart="@dimen/margin_8dp"
+                        android:layout_marginTop="@dimen/margin_10dp"
+                        android:layout_marginEnd="@dimen/margin_8dp">
 
                         <TextView
                             android:id="@+id/delivery_type"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:text="@string/standard_delivery">
-
-                        </TextView>
+                            android:layout_alignParentStart="true"
+                            android:text="@string/standard_delivery"
+                            tools:ignore="RelativeOverlap"/>
 
                         <TextView
                             android:id="@+id/deliv_charge"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
-                            android:text="2k days">
-
-                        </TextView>
+                            android:text="2k days"
+                            tools:ignore="HardcodedText,RtlHardcoded" />
                     </RelativeLayout>
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginRight="8dp"
+                        android:layout_marginLeft="@dimen/margin_8dp"
+                        android:layout_marginTop="@dimen/margin_8dp"
+                        android:layout_marginRight="@dimen/margin_8dp"
                         android:visibility="gone">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:text="GST Charge">
+                            android:layout_alignParentStart="true"
+                            android:text="GST Charge"
+                            tools:ignore="HardcodedText">
 
                         </TextView>
 
@@ -279,7 +264,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
-                            android:text="">
+                            android:text=""
+                            tools:ignore="RelativeOverlap,RtlHardcoded">
 
                         </TextView>
                     </RelativeLayout>
@@ -287,51 +273,46 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginRight="8dp"
-                        android:layout_marginBottom="8dp">
+                        android:layout_marginLeft="@dimen/margin_8dp"
+                        android:layout_marginTop="@dimen/margin_8dp"
+                        android:layout_marginRight="@dimen/margin_8dp"
+                        android:layout_marginBottom="@dimen/margin_8dp">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:text="Item Cost">
-
-                        </TextView>
+                            android:layout_alignParentStart="true"
+                            android:text="@string/item_cost" />
 
                         <TextView
                             android:id="@+id/total_cost"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:text="">
-
-                        </TextView>
+                            android:layout_alignParentEnd="true"
+                            android:text=""
+                            tools:ignore="RelativeOverlap" />
                     </RelativeLayout>
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-
-                        android:layout_marginRight="8dp"
-                        android:layout_marginBottom="8dp">
+                        android:layout_marginLeft="@dimen/margin_8dp"
+                        android:layout_marginRight="@dimen/margin_8dp"
+                        android:layout_marginBottom="@dimen/margin_8dp">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:text="@string/total_cost">
-
-                        </TextView>
+                            android:layout_alignParentStart="true"
+                            android:text="@string/total_cost" />
 
                         <TextView
                             android:id="@+id/totalAll_cost"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:text="">
+                            android:layout_alignParentEnd="true"
+                            android:text=""
+                            tools:ignore="RelativeOverlap">
 
                         </TextView>
                     </RelativeLayout>
@@ -346,12 +327,13 @@
         android:layout_below="@+id/card_view"
         android:layout_alignParentBottom="true"
         android:layout_gravity="center"
-        android:layout_marginLeft="40dp"
+        android:layout_marginLeft="@dimen/margin_40dp"
         android:layout_marginTop="@dimen/twenty_four_dp"
-        android:layout_marginRight="40dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginRight="@dimen/margin_40dp"
+        android:layout_marginBottom="@dimen/margin_20dp"
         android:background="@drawable/round_corner_button_yellow"
-        android:text="Procced"
+        android:text="@string/proceed"
         android:textAllCaps="false"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        tools:ignore="NotSibling" />
 </RelativeLayout>

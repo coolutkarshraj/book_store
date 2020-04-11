@@ -19,56 +19,51 @@
                 android:id="@+id/iv_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="9dp"
+                android:layout_marginStart="@dimen/margin_15dp"
+                android:layout_marginTop="@dimen/margin_9dp"
                 android:background="@drawable/item_click_animation"
                 android:src="@drawable/ic_arrow_back_black_24dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="MissingConstraints" />
+                tools:ignore="ContentDescription,MissingConstraints" />
 
             <TextView
                 android:id="@+id/textView34"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Discover More Bookstores"
-                android:textColor="@color/black"
-                android:textSize="20sp"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:text="@string/discover_more_books"
+                android:textSize="@dimen/h20"
+                app:fontFamily="@font/arial_bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.appcompat.widget.SearchView
                 android:id="@+id/searchView2"
-                android:layout_width="300dp"
-                android:layout_height="39dp"
-
-                android:layout_marginTop="16dp"
-
-                android:elevation="10dp"
+                android:layout_width="@dimen/width_300dp"
+                android:layout_height="@dimen/height_40dp"
+                android:layout_marginTop="@dimen/margin_16dp"
+                android:background="@drawable/bg_searchview"
+                android:elevation="@dimen/elevation_10dp"
                 android:paddingStart="-10dp"
                 android:paddingLeft="-10dp"
                 app:iconifiedByDefault="false"
-                app:layout_constraintTop_toBottomOf="@+id/textView34"
-                android:background="@drawable/bg_searchview"
                 app:layout_constraintEnd_toEndOf="parent"
-
                 app:layout_constraintStart_toStartOf="parent"
-                app:queryHint="Search books..." />
+                app:layout_constraintTop_toBottomOf="@+id/textView34"
+                app:queryHint="@string/search_by_bookstorename"
+                tools:ignore="RtlHardcoded,RtlSymmetry,UnusedAttribute" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_cateory_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-
+                android:layout_marginTop="@dimen/margin_24dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/searchView2">
-
-            </androidx.recyclerview.widget.RecyclerView>
+                app:layout_constraintTop_toBottomOf="@+id/searchView2" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
@@ -82,6 +77,7 @@
         android:fontFamily="@font/exo_bold"
         android:text="books are not available in this category"
         android:textAlignment="center"
-        android:textSize="16dp"
-        android:visibility="gone" />
+        android:textSize="@dimen/h1"
+        android:visibility="gone"
+        tools:ignore="HardcodedText,RtlCompat" />
 </FrameLayout>

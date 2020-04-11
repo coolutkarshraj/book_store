@@ -1,5 +1,6 @@
 package com.io.bookstores.fragment;
 
+import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -36,12 +37,12 @@ import java.util.Objects;
  */
 public class BookstoresFragment extends Fragment implements View.OnClickListener {
 
-    private ArrayList lstBook;
+    private Activity activity;
     private RecyclerView recyclerView;
     private SearchView searchView2;
     private ImageView iv_back;
     private BookstoresAdapter bookstoresAdapter;
-    View root;
+    private View root;
     private userOnlineInfo user;
     private NewProgressBar dialog;
     private StoreModel data;
@@ -54,57 +55,57 @@ public class BookstoresFragment extends Fragment implements View.OnClickListener
     }
 
 
-
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_bookstores, container, false);
         initView();
-        getStoreList();
+        bindListner();
         startWorking();
         return root;
     }
 
-    private void startWorking() {
-
-        searchView2.setQueryHint("Search Books...");
-        searchView2.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String s) {
-                if (datachild == null || datachild.isEmpty()) {
-
-                } else {
-                    List<Datum> newlist = new ArrayList<>();
-                    for (Datum productList : datachild) {
-                        String name = productList.getName().toLowerCase();
-                        if (name.contains(s))
-                            newlist.add(productList);
-                    }
-                    bookstoresAdapter.setFilter(newlist);
-
-                }
-                return true;
-            }
-
-        });
-    }
+    /*--------------------------------------- intialize all views that are used in this fragment ------------------------------*/
 
     private void initView() {
+        activity = getActivity();
         user = new userOnlineInfo();
         dialog = new NewProgressBar(getActivity());
         itemClickListner = (ItemClickListner) getActivity();
         iv_back = root.findViewById(R.id.iv_back);
         recyclerView = root.findViewById(R.id.recyclerView_bookstore);
         searchView2 = root.findViewById(R.id.searchView2);
+    }
+
+    /*-------------------------------------- bind all views that are used in this fragment -----------------------------------*/
+
+    private void bindListner() {
         iv_back.setOnClickListener(this);
     }
 
+    /*--------------------------------------------------- on click listner ---------------------------------------------------*/
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.iv_back:
+                itemClickListner.onClick(6);
+                return;
+
+        }
+    }
+
+    /*----------------------------------------------------- start working ---------------------------------------------------*/
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    private void startWorking() {
+        getStoreList();
+        setUpofSearchView();
+    }
+
+
+    /*--------------------------------------------- get all Store List Api Call --------------------------------------------*/
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void getStoreList() {
@@ -137,25 +138,44 @@ public class BookstoresFragment extends Fragment implements View.OnClickListener
         }
     }
 
-
-
+    /*---------------------------------------------- api data set into recycler view -------------------------------------------*/
 
     private void setRecyclerViewData(List<Datum> result) {
-        LinearLayoutManager gridLayoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL,false);
+        LinearLayoutManager gridLayoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(gridLayoutManager);
-        bookstoresAdapter = new BookstoresAdapter(getActivity(),result);
+        bookstoresAdapter = new BookstoresAdapter(getActivity(), result);
         datachild = (ArrayList<Datum>) result;
         recyclerView.setAdapter(bookstoresAdapter);
     }
 
+    /*----------------------------------------------- set up of recycler view ------------------------------------------------*/
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.iv_back:
-                itemClickListner.onClick(6);
-                return;
+    private void setUpofSearchView() {
+        searchView2.setQueryHint("Search Books...");
+        searchView2.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
 
-        }
+            @Override
+            public boolean onQueryTextChange(String s) {
+                if (datachild == null || datachild.isEmpty()) {
+
+                } else {
+                    List<Datum> newlist = new ArrayList<>();
+                    for (Datum productList : datachild) {
+                        String name = productList.getName().toLowerCase();
+                        if (name.contains(s))
+                            newlist.add(productList);
+                    }
+                    bookstoresAdapter.setFilter(newlist);
+
+                }
+                return true;
+            }
+
+        });
     }
+
 }

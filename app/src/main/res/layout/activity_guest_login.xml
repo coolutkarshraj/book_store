@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,41 +8,27 @@
     tools:context=".activity.authentication.SignUpActivity">
 
 
-    <ImageView
-        android:id="@+id/ivDiagonal"
-        android:layout_width="118dp"
-        android:layout_height="113dp"
-        android:layout_gravity="center"
-        android:visibility="gone"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:src="@drawable/diagonal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
         android:id="@+id/textView37"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Fill Basic Detials"
+        android:layout_marginStart="@dimen/margin_48dp"
+        android:layout_marginTop="@dimen/margin_50dp"
+        android:text="@string/shipment_address"
         android:textColor="@color/blue"
-        android:textSize="18sp"
+        android:textSize="@dimen/h"
         android:textStyle="bold"
-        tools:ignore="MissingConstraints"
-       android:layout_marginStart="48dp"
-        android:layout_marginTop="50dp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        tools:ignore="MissingConstraints" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tvUserName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="48dp"
+        android:layout_marginStart="@dimen/margin_48dp"
+        android:layout_marginTop="@dimen/margin_24dp"
+        android:layout_marginEnd="@dimen/margin_48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView37">
@@ -60,7 +45,7 @@
             android:singleLine="true"
             android:textAlignment="viewStart"
             android:textDirection="locale"
-            android:textSize="14sp"
+            android:textSize="@dimen/h2"
 
             app:drawableStartCompat="@drawable/ic_user" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -69,7 +54,7 @@
         android:id="@+id/tvEmail"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/margin_8dp"
         app:layout_constraintEnd_toEndOf="@+id/tvUserName"
         app:layout_constraintStart_toStartOf="@+id/tvUserName"
         app:layout_constraintTop_toBottomOf="@+id/tvUserName">
@@ -86,7 +71,7 @@
             android:singleLine="true"
             android:textAlignment="viewStart"
             android:textDirection="locale"
-            android:textSize="14sp"
+            android:textSize="@dimen/h2"
             app:drawableStartCompat="@drawable/ic_mail" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -95,7 +80,7 @@
         android:id="@+id/tvPhone"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/margin_8dp"
         app:layout_constraintEnd_toEndOf="@+id/tvEmail"
         app:layout_constraintStart_toStartOf="@+id/tvEmail"
         app:layout_constraintTop_toBottomOf="@+id/tvEmail">
@@ -112,7 +97,7 @@
             android:paddingBottom="@dimen/value_8"
             android:textAlignment="viewStart"
             android:textDirection="locale"
-            android:textSize="14sp"
+            android:textSize="@dimen/h2"
             app:drawableStartCompat="@drawable/ic_phone_call" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -121,7 +106,7 @@
         android:id="@+id/tvPass"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/margin_8dp"
         app:layout_constraintEnd_toEndOf="@+id/tvPhone"
         app:layout_constraintStart_toStartOf="@+id/tvPhone"
         app:layout_constraintTop_toBottomOf="@+id/tvPhone"
@@ -146,8 +131,8 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tvAddress"
         android:layout_width="0dp"
-        android:layout_height="59dp"
-        android:layout_marginTop="8dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_8dp"
         app:layout_constraintEnd_toEndOf="@+id/tvPass"
         app:layout_constraintStart_toStartOf="@+id/tvPass"
         app:layout_constraintTop_toBottomOf="@+id/tvPass">
@@ -164,15 +149,15 @@
             android:singleLine="true"
             android:textAlignment="viewStart"
             android:textDirection="locale"
-            android:textSize="14sp"
+            android:textSize="@dimen/h2"
             app:drawableStartCompat="@drawable/ic_place_black_24dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btnSignUp"
-        android:layout_width="200dp"
+        android:layout_width="@dimen/height_200dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="@dimen/margin_48dp"
         android:background="@drawable/round_corner_button_yellow"
         android:fontFamily="@font/fontawesome"
         android:text="@string/next"
@@ -186,12 +171,12 @@
         android:id="@+id/textView38"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/margin_8dp"
         android:text="@string/already_have_an_account"
-        android:textColor="#000000"
-        android:textSize="14sp"
-        android:visibility="gone"
+        android:textColor="@color/white"
+        android:textSize="@dimen/h2"
         android:textStyle="normal"
+        android:visibility="gone"
         app:fontFamily="@font/fontawesome"
         app:layout_constraintEnd_toEndOf="@+id/btnSignUp"
         app:layout_constraintStart_toStartOf="@+id/btnSignUp"
@@ -200,33 +185,17 @@
     <TextView
         android:id="@+id/tvSignIn"
         android:layout_width="wrap_content"
-        android:layout_height="24dp"
-        android:layout_marginTop="8dp"
+        android:layout_height="@dimen/margin_24dp"
+        android:layout_marginTop="@dimen/margin_8dp"
         android:text="@string/sign_in_now"
         android:textColor="@color/colorAccent"
         android:textSize="14sp"
-        android:visibility="gone"
         android:textStyle="bold"
+        android:visibility="gone"
         app:fontFamily="@font/fontawesome"
         app:layout_constraintEnd_toEndOf="@+id/textView38"
         app:layout_constraintStart_toStartOf="@+id/textView38"
         app:layout_constraintTop_toBottomOf="@+id/textView38" />
-
-    <TextView
-        android:id="@+id/tvSkipp"
-        android:layout_width="wrap_content"
-        android:layout_height="24dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/skip"
-        android:visibility="gone"
-        android:textColor="#4CAF50"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:fontFamily="@font/fontawesome"
-        app:layout_constraintEnd_toEndOf="@+id/tvAddress"
-        app:layout_constraintStart_toStartOf="@+id/tvAddress"
-        app:layout_constraintTop_toBottomOf="@+id/tvAddress" />
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

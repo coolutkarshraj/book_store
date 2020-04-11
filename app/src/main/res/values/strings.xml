@@ -2,7 +2,7 @@
 
 <resources>
     <string name="app_name">My BookStores</string>
-    <string name="recived">Recieved</string>
+    <string name="recived">Received</string>
     <string name="title">Title</string>
     <string name="date">Date</string>
     <string name="desc">Message Description</string>
@@ -18,23 +18,23 @@
     <string name="settings">Settings</string>
 
 
-    <string name="play_again_desc">To see the welcome slider again, goto Settings -> apps -> welcome slider -> clear data</string>
-    <string name="play_again">Play Again</string>
-    <string name="all_fav">All Your Favourite</string>
-    <string name="title_activity_main">MainActivity</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Hello Guest</string>
-    <string name="nav_header_subtitle">Login or SignUp</string>
-    <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
+    <string name="play_again_desc" translatable="false">To see the welcome slider again, goto Settings -> apps -> welcome slider -> clear data</string>
+    <string name="play_again" translatable="false">Play Again</string>
+    <string name="all_fav" translatable="false">All Your Favourite</string>
+    <string name="title_activity_main" translatable="false">MainActivity</string>
+    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
+    <string name="nav_header_title" translatable="false">Hello Guest</string>
+    <string name="nav_header_subtitle" translatable="false">Login or SignUp</string>
+    <string name="nav_header_desc" translatable="false">Navigation header</string>
+    <string name="action_settings" translatable="false">Settings</string>
 
-    <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
-    <string name="menu_tools">Tools</string>
-    <string name="menu_share">Share</string>
-    <string name="menu_send">Send</string>
+    <string name="menu_home" translatable="false">Home</string>
+    <string name="menu_gallery" translatable="false">Gallery</string>
+    <string name="menu_slideshow" translatable="false">Slideshow</string>
+    <string name="menu_tools" translatable="false">Tools</string>
+    <string name="menu_share" translatable="false">Share</string>
+    <string name="menu_send" translatable="false">Send</string>
     <string name="notifications">Notifications</string>
     <string name="curse"><![CDATA[Courses & institution]]></string>
     <string name="proceed">Proceed</string>
@@ -70,7 +70,7 @@
     <string name="sign_up">Sign up</string>
     <string name="discover_more_items_in_this_bookstore">Discover more Items in this Bookstore</string>
     <string name="don_t_worry_about_school">Don\'t Worry about school</string>
-    <string name="favorite_items">Favorite Items</string>
+    <string name="favorite_items">Favorite Books</string>
     <string name="we_got_you_covered">We got you covered</string>
     <string name="thanks_for_purchasing">Thanks For Purchasing</string>
     <string name="please_logged_in_to_see_your_favourite_itemloggedin">Please Logged In To See Your Favourite ItemLoggedIn?</string>
@@ -98,20 +98,20 @@
     <string name="view_all">View All</string>
     <string name="pincode">Pincode</string>
     <string name="landmark">Landmark</string>
-    <string name="city">city</string>
+    <string name="city">City</string>
     <string name="add">Add</string>
     <string name="cancel">Cancel</string>
     <string name="express_delivery">Express Delivery</string>
     <string name="within_2_hours">Within 2 hours</string>
-    <string name="standard_delivery">Standard Delivery</string>
+    <string name="standard_delivery">Standard</string>
     <string name="bookstore_details">BookStore Details</string>
     <string name="address">Address</string>
     <string name="total_cost">Total Cost</string>
     <string name="no_items_added_in_the_cart">No Items Added in The Cart</string>
-    <string name="stores">Premium Stores</string>
+    <string name="stores">Bookstores</string>
     <string name="looks_up_through_all_bookstores">Looks up through all BookStores</string>
     <string name="in_kuwait">In Kuwait</string>
-    <string name="search_by_bookstorename">Search By BookStoreName</string>
+    <string name="search_by_bookstorename">Search By BookStore Name</string>
     <string name="password">Password</string>
     <string name="full_name">Full Name</string>
     <string name="mobile_number">Mobile Number</string>
@@ -121,23 +121,23 @@
     <string name="order">Orders</string>
     <string name="login">Login</string>
     <string name="user_id">Bookname</string>
-    <string name="sign_in_now"><u>Sign In Now</u></string>
-    <string name="sign_up_now"><u>Sign Up Now</u></string>
+    <string name="sign_in_now">Sign In Now</string>
+    <string name="sign_up_now">Sign Up Now</string>
     <string name="a_list_of_items_add_or_delete_any">A list of items, add or delete any</string>
     <string name="save">Save</string>
     <string name="please_logged_in_to_see_your_order_details">Please Logged In To See Your Order Details?</string>
-    <string name="please_logged_in_to_see_your_profile">Please Logged In To See Your Profile?</string>
+    <string name="please_logged_in_to_see_your_profile">You need to login, in order to view the profile</string>
     <string name="sign_in">Sign In</string>
     <string name="guest">Continue as a Guest</string>
     <string name="new_user">New User?</string>
     <string name="already_have_an_account">Already have an account?</string>
     <string name="and_yes_we_delivered">And Yes We Delivered</string>
     <string name="to_your_door_step">To Your Door Step</string>
-    <string name="book_stores">Book Stores</string>
+    <string name="book_stores" translatable="false">Book Stores</string>
     <string name="all_the_book_stores_in" translatable="false">All the Book Stores In Kuwait</string>
-    <string name="fast_delivery">Fast Delivery</string>
-    <string name="andyeswedeli">And yes..  We will Deliver To your Door Step</string>
-    <string name="dontworryaboutschoool">Don’t worry about School.. We got you Covered</string>
+    <string name="fast_delivery" translatable="false">Fast Delivery</string>
+    <string name="andyeswedeli" translatable="false">And yes..  We will Deliver To your Door Step</string>
+    <string name="dontworryaboutschoool" translatable="false">Don’t worry about School.. We got you Covered</string>
     <string name="onlinecourses">Online Courses</string>
     <string name="personal_info">Personal Info</string>
     <string name="delivery_address">Delivery Address</string>
@@ -149,6 +149,66 @@
     <string name="savedadd">Please Logged In To See Your Saved Address?</string>
     <string name="please_logged_in_to_see_your_enrolled_courseloggedin">Please Logged In To See Your Enrolled Course LoggedIn?</string>
     <string name="please_logged_in_to_see_your_contact">Please Logged In To See Your Contact Us?</string>
+    <string name="you_do_not_have_any_orders">You do not have any orders</string>
+    <string name="change_language">Change language</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="your_enrolled_courses">Your Enrolled Courses</string>
+    <string name="you_are_not_enrolled_any_course">You are Not Enrolled In Any Course</string>
+    <string name="shopping_cart">Shopping Cart</string>
+    <string name="delivery_method">Delivery Method</string>
+    <string name="standard">Standard</string>
+    <string name="from_4_to_9">From 4 to 9 pm</string>
+    <string name="depends_on_address">Depends on Address</string>
+    <string name="deliver_within_2_hours">Delivery within 2 hours</string>
+    <string name="cart_subtotal">Cart Subtotal</string>
+    <string name="shipping">Shipping</string>
+    <string name="total">Total</string>
+    <string name="proceed_to_checkout">Proceed to Checkout</string>
+    <string name="payment_method">Payment Method</string>
+    <string name="item_cost">Item Cost</string>
+    <string name="search_by_course_name">Search By Course Name</string>
+    <string name="course_details">Course Details</string>
+    <string name="course_name">Course Name</string>
+    <string name="course_description">Course Description</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="shipment_address">Shipment Address</string>
+    <string name="discover_more_institute">Discover More Institutes</string>
+    <string name="search_by_institue_name">Search By Institute Name</string>
+    <string name="delete">Delete</string>
+    <string name="normal_name">Name</string>
+    <string name="book_details">Book Details</string>
+    <string name="book_name">Book Name</string>
+    <string name="book_description">Book Description</string>
+    <string name="change_password">Change Password</string>
+    <string name="old_password">Old Password</string>
+    <string name="new_password">New Password</string>
+    <string name="institute_details">Institute Details</string>
+    <string name="state">State</string>
+    <string name="edit_book">Edit Book</string>
+    <string name="price">Price</string>
+    <string name="quantity">Quantity</string>
+    <string name="enroll_now">Enroll Now</string>
+    <string name="discover_more_books">Discover More Books</string>
+    <string name="search_by_book_name">Search By Book Name</string>
+    <string name="track_your_order">Track your Order</string>
+    <string name="pending">Pending</string>
+    <string name="accepted">Accepted</string>
+    <string name="shipped">Shipped</string>
+    <string name="out_for_delivery">Out For Delivery</string>
+    <string name="delivered">Delivered</string>
+    <string name="login_or_signup">Login or Signup</string>
+    <string name="hello_guests">Hello Guests</string>
+    <string name="update_order_status">Update Order Status</string>
+    <string name="rejected">Rejected</string>
+    <string name="you_have_no_items_added_to_wishlist">You have No Items Added to Wishlist</string>
+    <string name="search_by_bookstore_name_filter">Search By BookStore Name</string>
+    <string name="books">Books</string>
+    <string name="office_supplies">Office Supplies</string>
+    <string name="electronics">Electronics</string>
+    <string name="others">Others</string>
+    <string name="book_price">Book Price</string>
+    <string name="course_price">Course Price</string>
 
 
 </resources>

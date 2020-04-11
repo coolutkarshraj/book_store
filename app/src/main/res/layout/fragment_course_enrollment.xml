@@ -20,9 +20,9 @@
                 android:id="@+id/tv_enroll_heading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Discover More Courses"
-                android:textSize="20sp"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:text="@string/discover_more_courses"
+                android:textSize="@dimen/h20"
                 app:fontFamily="@font/arial_bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -30,30 +30,32 @@
 
             <SearchView
                 android:id="@+id/sv_enroll"
-                android:layout_width="300dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="16dp"
+                android:layout_width="@dimen/width_300dp"
+                android:layout_height="@dimen/height_40dp"
+                android:layout_marginTop="@dimen/margin_16dp"
                 android:background="@drawable/bg_searchview"
-                android:elevation="10dp"
+                android:elevation="@dimen/elevation_5dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_enroll_heading" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_enroll_heading"
+                tools:ignore="UnusedAttribute" />
 
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="15dp"
-                android:layout_marginRight="15dp"
+                android:layout_marginStart="@dimen/margin_15dp"
+                android:layout_marginLeft="@dimen/margin_15dp"
+                android:layout_marginTop="@dimen/margin_16dp"
+                android:layout_marginEnd="@dimen/margin_15dp"
+                android:layout_marginRight="@dimen/margin_15dp"
                 android:clickable="true"
-                android:elevation="15dp"
+                android:elevation="@dimen/font_10"
+                android:focusable="true"
                 android:foreground="?android:attr/selectableItemBackground"
                 app:cardBackgroundColor="@color/lightMediumGrey"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="10dp"
+                app:cardCornerRadius="@dimen/radius_8dp"
+                app:cardElevation="@dimen/elevation_10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/sv_enroll">
@@ -64,21 +66,22 @@
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/cardView2"
-                        android:layout_width="170dp"
-                        android:layout_height="100dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginRight="8dp"
-                        app:cardCornerRadius="8dp"
+                        android:layout_width="@dimen/width_170dp"
+                        android:layout_height="@dimen/height_100dp"
+                        android:layout_marginTop="@dimen/margin_8dp"
+                        android:layout_marginEnd="@dimen/margin_8dp"
+                        android:layout_marginRight="@dimen/margin_8dp"
+                        app:cardCornerRadius="@dimen/margin_8dp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="RtlHardcoded">
 
                         <ImageView
                             android:id="@+id/imageView21"
-                            android:layout_width="170dp"
-                            android:layout_height="100dp"
+                            android:layout_width="@dimen/width_170dp"
+                            android:layout_height="@dimen/height_100dp"
                             android:scaleType="centerCrop"
-                             />
+                            tools:ignore="ContentDescription" />
                     </androidx.cardview.widget.CardView>
 
 
@@ -86,14 +89,14 @@
                         android:id="@+id/tv_bookstore_tilte"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginStart="@dimen/margin_16dp"
+                        android:layout_marginTop="@dimen/margin_8dp"
                         android:fontFamily="@font/arial_bold"
                         android:text="Ofiice 365"
-                        android:textSize="18sp"
+                        android:textSize="@dimen/h"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="HardcodedText">
 
                     </TextView>
 
@@ -101,14 +104,14 @@
                         android:id="@+id/textView36"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:layout_marginRight="16dp"
+                        android:layout_marginTop="@dimen/margin_16dp"
+                        android:layout_marginEnd="@dimen/margin_16dp"
                         android:text="Learn everything about Office 365 "
-                        android:textSize="12sp"
+                        android:textSize="@dimen/h3"
                         app:layout_constraintEnd_toStartOf="@+id/cardView2"
                         app:layout_constraintStart_toStartOf="@+id/tv_bookstore_tilte"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_bookstore_tilte" />
+                        app:layout_constraintTop_toBottomOf="@+id/tv_bookstore_tilte"
+                        tools:ignore="HardcodedText" />
 
 
                     <RelativeLayout
@@ -129,18 +132,17 @@
                                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="16dp"
-                                android:layout_marginLeft="16dp"
-                                android:layout_marginTop="16dp"
-                                android:layout_marginEnd="16dp"
+                                android:layout_marginStart="@dimen/margin_16dp"
+                                android:layout_marginTop="@dimen/margin_16dp"
+                                android:layout_marginEnd="@dimen/margin_16dp"
                                 android:scrollbarSize="4dp">
 
                                 <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/et_name"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:hint="Full Name"
-                                    android:id="@+id/et_name"
-                                    android:textSize="14dp" />
+                                    android:hint="@string/full_name"
+                                    android:textSize="@dimen/h2" />
 
                             </com.google.android.material.textfield.TextInputLayout>
 
@@ -149,19 +151,17 @@
                                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_below="@+id/textInputLayout"
-                                android:layout_marginStart="16dp"
-                                android:layout_marginLeft="16dp"
-                                android:layout_marginTop="8dp"
-                                android:layout_marginEnd="16dp"
+                                android:layout_marginStart="@dimen/margin_16dp"
+                                android:layout_marginTop="@dimen/margin_8dp"
+                                android:layout_marginEnd="@dimen/margin_16dp"
                                 android:scrollbarSize="4dp">
 
                                 <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/et_email"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:hint="Email"
-                                    android:id="@+id/et_email"
-                                    android:textSize="14dp" />
+                                    android:hint="@string/email"
+                                    android:textSize="@dimen/h2" />
                             </com.google.android.material.textfield.TextInputLayout>
 
                             <com.google.android.material.textfield.TextInputLayout
@@ -169,34 +169,33 @@
                                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="16dp"
-                                android:layout_marginLeft="16dp"
-                                android:layout_marginTop="8dp"
-                                android:layout_marginEnd="16dp"
+                                android:layout_marginStart="@dimen/margin_16dp"
+                                android:layout_marginTop="@dimen/margin_8dp"
+                                android:layout_marginEnd="@dimen/margin_16dp"
                                 android:scrollbarSize="4dp">
 
                                 <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/et_number"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:hint="Phone Number"
-                                    android:id="@+id/et_number"
+                                    android:hint="@string/phone_number"
                                     android:inputType="number"
-                                    android:textSize="14dp" />
+                                    android:textSize="@dimen/h2" />
                             </com.google.android.material.textfield.TextInputLayout>
                         </LinearLayout>
 
                         <Button
                             android:id="@+id/btn_enrolll_now"
-                            android:layout_width="122dp"
+                            android:layout_width="@dimen/width_120dp"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/layout"
                             android:layout_centerHorizontal="true"
                             android:layout_gravity="center"
-                            android:layout_marginTop="40dp"
-                            android:layout_marginEnd="120dp"
-                            android:layout_marginBottom="20dp"
+                            android:layout_marginTop="@dimen/margin_40dp"
+                            android:layout_marginEnd="@dimen/width_120dp"
+                            android:layout_marginBottom="@dimen/margin_20dp"
                             android:background="@drawable/bt_gradient"
-                            android:text="Enroll Now"
+                            android:text="@string/enroll_now"
                             android:textColor="#fff" />
                     </RelativeLayout>
 

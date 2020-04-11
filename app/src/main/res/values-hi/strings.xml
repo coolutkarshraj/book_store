@@ -11,7 +11,7 @@
     <string name="start">فهمتك</string>
     <string name="item_name">اسم العنصر</string>
     <string name="item_price">سعر البند</string>
-    <string name="orders">الطلبات</string>
+    <string name="orders">"طلبات "</string>
     <string name="settings">الخيارات</string>
 
     <string name="all_fav">كل ما تبذلونه المفضلة</string>
@@ -33,16 +33,16 @@
 يرجى إدخال OTP الذي تلقيته على بريدك الإلكتروني / رقم هاتفك المحمول المسجل.
 </string>
     <string name="edit">تعديل</string>
-    <string name="browse">تصفح</string>
+    <string name="browse">"المنتجات "</string>
     <string name="phone">الاسم</string>
     <string name="personal_info">تعديل البيانات الشخصية</string>
-    <string name="location">موقعك</string>
+    <string name="location">العنوان</string>
     <string name="submit">إرسال</string>
     <string name="email">الايميل</string>
     <string name="resend_otp">إعادة إرسال OTP</string>
     <string name="delivery_address">عنوان التوصيل</string>
     <string name="next_btn">التالى</string>
-    <string name="payment">طرق الدفع</string>
+    <string name="payment">"الدفع "</string>
     <string name="skip_btn">تخطى</string>
     <string name="languages">اللغة</string>
     <string name="get_started">البدء</string>
@@ -52,7 +52,7 @@
     <string name="sign_up">سجل</string>
     <string name="discover_more_items_in_this_bookstore">اكتشاف المزيد من العناصر في هذه المكتبة</string>
     <string name="don_t_worry_about_school">لا تقلق بشأن المدرسة</string>
-    <string name="favorite_items">العناصر المفضلة</string>
+    <string name="favorite_items">"المفضلة "</string>
     <string name="we_got_you_covered">وصلنا لك مغطاة</string>
     <string name="thanks_for_purchasing">شكرا على الشراء</string>
     <string name="please_logged_in_to_see_your_favourite_itemloggedin">يرجى تسجيل الدخول لرؤية البند المفضل لديك؟</string>
@@ -65,10 +65,10 @@
     <string name="please_enter_your_email_or_mobile_in_order_to_reset_your_password">
 يرجى إدخال بريدك الإلكتروني أو هاتفك المحمول من أجل إعادة تعيين كلمة المرور الخاصة بك
 </string>
-    <string name="discover_more_bookstores">اكتشاف المزيد من المكتبات</string>
-    <string name="add_new_address">إضافة عنوان جديد</string>
+    <string name="discover_more_bookstores">المكتبات</string>
+    <string name="add_new_address">أضافة عنوان جديد+</string>
     <string name="mobile">التليفون المحمول</string>
-    <string name="discover_more_courses">اكتشاف المزيد من الدورات</string>
+    <string name="discover_more_courses">"الدورات "</string>
     <string name="send_request">ارسل طلب</string>
     <string name="checkout">الدفع</string>
     <string name="toast_lang_change">اللغة العربية المختارة</string>
@@ -78,42 +78,38 @@
     <string name="intro11">متاجر الكتب</string>
     <string name="intro22">توصيل سريع</string>
     <string name="intro33">دروس مباشرة على الإنترنت</string>
-    <string name="view_all">المزيد</string>
+    <string name="view_all">عرض الكل</string>
     <string name="pincode">الرقم السري</string>
     <string name="landmark">معلم معروف</string>
     <string name="city">مدينة</string>
     <string name="add">إضافة</string>
     <string name="cancel">إلغاء</string>
-    <string name="express_delivery">تسليم سريع</string>
+    <string name="express_delivery">توصيل سريع</string>
     <string name="within_2_hours">في غضون 2 ساعة</string>
-    <string name="standard_delivery">التسليم القياسية</string>
-    <string name="bookstore_details">تفاصيل BookStore</string>
-    <string name="address">عنوان</string>
+    <string name="standard_delivery">"اعتيادي "</string>
+    <string name="bookstore_details">تفاصيل متجر الكتب</string>
+    <string name="address">العنوان</string>
     <string name="total_cost">التكلفة الإجمالية</string>
     <string name="no_items_added_in_the_cart">لا توجد عناصر مضافة في السلة</string>
     <string name="stores">مكتبات</string>
     <string name="looks_up_through_all_bookstores">يبحث عن طريق جميع متاجر الكتب</string>
     <string name="in_kuwait">في الكويت</string>
-    <string name="search_by_bookstorename">البحث حسب BookStoreName</string>
-    <string name="password">كلمه السر</string>
-    <string name="full_name">الاسم الكامل</string>
+    <string name="search_by_bookstorename">بحث</string>
+    <string name="password">الباسورد</string>
+    <string name="full_name">"الأسم الكامل "</string>
     <string name="mobile_number">رقم الهاتف المحمول</string>
     <string name="enter_address">أدخل العنوان</string>
     <string name="phone_number">رقم الهاتف</string>
-    <string name="select_category_to_browse_bookstore">اختر الفئة لتصفح المكتبة</string>
+    <string name="select_category_to_browse_bookstore">"الأقسام"</string>
     <string name="order">الطلب #٪ s</string>
     <string name="login">تسجيل الدخول</string>
     <string name="user_id">اسم الكتاب</string>
-    <string name="sign_in_now">
-<u>Sign In Now</u>
-</string>
-    <string name="sign_up_now">
-<u>Sign Up Now</u>
-</string>
+    <string name="sign_in_now">قم بتسجيل دخولك الآن</string>
+    <string name="sign_up_now">أفتح حساب الأن</string>
     <string name="a_list_of_items_add_or_delete_any">قائمة العناصر ، إضافة أو حذف أي</string>
     <string name="save">حفظ</string>
     <string name="please_logged_in_to_see_your_order_details">يرجى تسجيل الدخول لمعرفة تفاصيل طلبك؟</string>
-    <string name="please_logged_in_to_see_your_profile">الرجاء تسجيل الدخول لمشاهدة ملف التعريف الخاص بك؟</string>
+    <string name="please_logged_in_to_see_your_profile">"جب عليك التسجيل، لمشاهدة ملفك الشخصي "</string>
     <string name="sign_in">تسجيل الدخول</string>
     <string name="new_user">مستخدم جديد؟</string>
     <string name="already_have_an_account">هل لديك حساب؟</string>
@@ -134,6 +130,65 @@
     <string name="savedadd">عنوانك المحفوظ؟ الرجاء تسجيل الدخول لمشاهدة</string>
     <string name="please_logged_in_to_see_your_enrolled_courseloggedin">مسجّل التسجيل الخاص بك؟ الرجاء تسجيل الدخول لمشاهدة </string>
     <string name="please_logged_in_to_see_your_contact">يرجى تسجيل الدخول لمشاهدة دورتك  المسجلة؟ </string>
-    <string name="guest">تواصل كضيف
-</string>
+    <string name="guest">"تواصل كضيف "</string>
+    <string name="you_do_not_have_any_orders">لا يوجد لديك أي طلبات مسبقة</string>
+    <string name="change_language">"اختار اللغة "</string>
+    <string name="yes">نعم</string>
+    <string name="no">لا</string>
+    <string name="your_enrolled_courses">"الدورات المسجلة "</string>
+    <string name="you_are_not_enrolled_any_course">أنت غير مسجل في أي دورة</string>
+    <string name="shopping_cart">"سلة التسوق "</string>
+    <string name="delivery_method">"نوع التوصيل "</string>
+    <string name="standard">اعتيادي</string>
+    <string name="from_4_to_9">"من 4 مساءا الى ٩ مساءا "</string>
+    <string name="depends_on_address">يعتمد على العنوان</string>
+    <string name="deliver_within_2_hours">بأي وقت، خلال ساعتين فقط</string>
+    <string name="cart_subtotal">"السعر "</string>
+    <string name="shipping">"التوصيل "</string>
+    <string name="total">السعر الإجمالي</string>
+    <string name="proceed_to_checkout">"المتابعة للدفع "</string>
+    <string name="payment_method">"طرق الدفع "</string>
+    <string name="item_cost">تكلفة البند</string>
+    <string name="search_by_course_name">البحث باسم الدورة التدريبية</string>
+    <string name="course_details">"معلومات الدورة "</string>
+    <string name="course_name">اسم الدورة</string>
+    <string name="course_description">وصف الدورة</string>
+    <string name="dismiss">"تجاهل "</string>
+    <string name="shipment_address">"عنوان الشحنة "</string>
+    <string name="discover_more_institute">المعاهد</string>
+    <string name="search_by_institue_name">بحث</string>
+    <string name="delete">حذف</string>
+    <string name="normal_name">اسم</string>
+    <string name="book_details">تفاصيل الكتاب</string>
+    <string name="book_name">اسم الكتاب</string>
+    <string name="book_description">شرح الكتاب</string>
+    <string name="change_password">تغيير كلمة السر</string>
+    <string name="old_password">كلمة المرور القديمة</string>
+    <string name="new_password">كلمة مرور جديدة</string>
+    <string name="institute_details">تفاصيل المعهد</string>
+    <string name="state">حالة</string>
+    <string name="edit_book">تحرير كتاب</string>
+    <string name="price">السعر</string>
+    <string name="quantity">كمية</string>
+    <string name="enroll_now">تسجيل الآن</string>
+    <string name="discover_more_books">اكتشف المزيد من الكتب</string>
+    <string name="search_by_book_name">البحث باسم الكتاب</string>
+    <string name="track_your_order">أتبع طلبك</string>
+    <string name="pending">قيد الانتظار</string>
+    <string name="accepted">قبلت</string>
+    <string name="shipped">شحنها</string>
+    <string name="out_for_delivery">خارج للتوصيل</string>
+    <string name="delivered">تم التوصيل</string>
+    <string name="login_or_signup">تسجيل الدخول أو الاشتراك</string>
+    <string name="hello_guests">مرحبا بالضيوف</string>
+    <string name="update_order_status">تحديث حالة الطلب</string>
+    <string name="rejected">مرفوض</string>
+    <string name="you_have_no_items_added_to_wishlist">لم يتم إضافة أي عناصر إلى قائمة الرغبات</string>
+    <string name="search_by_bookstore_name_filter">بحث عن مكتبة</string>
+    <string name="books">كتب</string>
+    <string name="office_supplies">اللوازم المكتبية</string>
+    <string name="electronics">إلكترونيات</string>
+    <string name="others">الآخرين</string>
+    <string name="book_price">سعر الكتاب</string>
+    <string name="course_price">السعر بالطبع</string>
 </resources>

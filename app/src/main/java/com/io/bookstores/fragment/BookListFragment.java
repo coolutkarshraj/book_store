@@ -1,6 +1,7 @@
 package com.io.bookstores.fragment;
 
 
+import android.app.Activity;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
@@ -43,7 +44,7 @@ import java.util.List;
  */
 public class BookListFragment extends Fragment implements View.OnClickListener {
 
-
+    private Activity activity;
     private RecyclerView recyclerView;
     private View root;
     private TextView notdata;
@@ -51,7 +52,7 @@ public class BookListFragment extends Fragment implements View.OnClickListener {
     private userOnlineInfo user;
     private SearchView searchView2;
     private List<Datum> data;
-    private List<Datum> childdata;
+    private List<Datum> childdata = new ArrayList<>();
     private LocalStorage localStorage;
     private BookListAdapter categoryAdapter;
     private ItemClickListner itemClickListner;
@@ -69,45 +70,67 @@ public class BookListFragment extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         root = inflater.inflate(R.layout.fragment_category_list, container, false);
         initView();
-
-        if (localStorage.getString(LocalStorage.token) == null ||
-                localStorage.getString(LocalStorage.token).equals("")) {
-            getBookList("",
-                    localStorage.getString(LocalStorage.StoreId),
-                    localStorage.getString(LocalStorage.CategoryId),"");
-        }else {
-            getBookList("",
-                    localStorage.getString(LocalStorage.StoreId),
-                    localStorage.getString(LocalStorage.CategoryId),localStorage.getString(LocalStorage.token));
-        }
-
+        bindViews();
         startWorking();
         return root;
     }
 
-    private void startWorking() {
-        searchViewSetUp();
-    }
+    /*------------------------------------------- intalize all views in this fragment -----------------------------------------*/
 
     private void initView() {
+        activity = getActivity();
+        user = new userOnlineInfo();
         localStorage = new LocalStorage(getActivity());
-        childdata = new ArrayList<>();
         recyclerView = root.findViewById(R.id.rv_cateory_list);
         searchView2 = root.findViewById(R.id.searchView2);
-        user = new userOnlineInfo();
         itemClickListner = (ItemClickListner) getActivity();
         iv_back = root.findViewById(R.id.iv_back);
         notdata = root.findViewById(R.id.notdata);
+    }
+
+    /*--------------------------------------- bind all views that are used in this fragment ----------------------------------*/
+    private void bindViews() {
         iv_back.setOnClickListener(this);
     }
 
+    /*---------------------------------------------------------- click listner ---------------------------------------------- */
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.iv_back:
+                itemClickListner.onClick(6);
+        }
+    }
 
+    /*--------------------------------------------------- start Working -----------------------------------------------------*/
+
+    private void startWorking() {
+        getAllBooksList();
+        searchViewSetUp();
+    }
+
+    /*-------------------------------------------------- get all book list ------------------------------------------------*/
+
+    private void getAllBooksList() {
+        if (localStorage.getString(LocalStorage.token) == null ||
+                localStorage.getString(LocalStorage.token).equals("")) {
+            getBookList("",
+                    localStorage.getString(LocalStorage.StoreId),
+                    localStorage.getString(LocalStorage.CategoryId), "");
+        } else {
+            getBookList("",
+                    localStorage.getString(LocalStorage.StoreId),
+                    localStorage.getString(LocalStorage.CategoryId), localStorage.getString(LocalStorage.token));
+        }
+    }
+
+    /*------------------------------------------ get all book list api call ------------------------------------------------*/
 
     private void getBookList(String name, String sId, String Cid, String token) {
         if (user.isOnline(getActivity())) {
             dialog = new NewProgressBar(getActivity());
             dialog.show();
-            ApiCaller.getBookModel(getActivity(), Config.Url.getAllBook+sId+"/"+Cid+"/", sId, Cid, name,token,
+            ApiCaller.getBookModel(getActivity(), Config.Url.getAllBook + sId + "/" + Cid + "/", sId, Cid, name, token,
                     new FutureCallback<BookListModel>() {
 
                         @Override
@@ -120,7 +143,7 @@ public class BookListFragment extends Fragment implements View.OnClickListener {
                             if (result != null) {
                                 if (result.getStatus() == null) {
                                     if (result.getMessage().equals("Unauthorized")) {
-                                        Utils.showAlertDialogLogout(getActivity(), "Your Session was expire. please Logout!",localStorage.getUserProfile().getData().getUser().getUserId());
+                                        Utils.showAlertDialogLogout(getActivity(), "Your Session was expire. please Logout!", localStorage.getUserProfile().getData().getUser().getUserId());
                                         dialog.dismiss();
                                     }
                                     dialog.dismiss();
@@ -137,9 +160,6 @@ public class BookListFragment extends Fragment implements View.OnClickListener {
                             }
 
 
-
-
-
                         }
                     });
         } else {
@@ -147,6 +167,7 @@ public class BookListFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    /*----------------------------- set up of book list recycler view and api data set into recyclerview ------------------------*/
 
     private void setRecyclerViewData(List<Datum> result) {
         if (result.isEmpty()) {
@@ -162,8 +183,9 @@ public class BookListFragment extends Fragment implements View.OnClickListener {
             childdata = (ArrayList<Datum>) result;
             recyclerView.setAdapter(categoryAdapter);
         }
-
     }
+
+    /*---------------------------------------------------- set up of search view --------------------------------------------------*/
 
     private void searchViewSetUp() {
         searchView2.setQueryHint("Search Books...");
@@ -192,96 +214,5 @@ public class BookListFragment extends Fragment implements View.OnClickListener {
 
         });
 
-    }
-
-    private void getWishList() {
-        DbHelper dbHelper;
-        dbHelper = new DbHelper(getActivity());
-        Cursor cursor = dbHelper.getAllWishlist();
-        if (cursor.getCount() == 0) {
-            Log.e("Error", "no GuestDataModel");
-            return;
-        }
-        JSONArray resultSet = new JSONArray();
-        JSONObject returnObj = new JSONObject();
-
-        cursor.moveToFirst();
-        while (cursor.isAfterLast() == false) {
-
-            int totalColumn = cursor.getColumnCount();
-            JSONObject rowObject = new JSONObject();
-
-            for (int i = 0; i < totalColumn; i++) {
-                if (cursor.getColumnName(i) != null) {
-                    try {
-                        if (cursor.getString(i) != null) {
-                            Log.d("TAG_NAME2", cursor.getString(i));
-                            rowObject.put(cursor.getColumnName(i), cursor.getString(i));
-                        } else {
-                            rowObject.put(cursor.getColumnName(i), "");
-                        }
-                    } catch (Exception e) {
-                        Log.d("TAG_NAME1", e.getMessage());
-                    }
-                }
-            }
-            resultSet.put(rowObject);
-            cursor.moveToNext();
-        }
-        cursor.close();
-        String datajson = resultSet.toString();
-        datajson.replaceAll("\\\\", "");
-        Log.d("wishlistAll", datajson);
-        getWishListAllData(datajson);
-
-    }
-
-    private void getWishListAllData(String datajson) {
-        JSONArray jArray = null;
-
-        try {
-            lists.clear();
-            jArray = new JSONArray(datajson);
-            if (jArray == null || jArray.length() == 0) {
-
-            } else {
-
-                for (int i = 0; i < jArray.length(); i++) {
-                    JSONObject json_data = jArray.getJSONObject(i);
-                    WishListLocalResponseModel shoppingBagModel = new WishListLocalResponseModel();
-                    shoppingBagModel.setId(json_data.getString("Id"));
-                    shoppingBagModel.setName(json_data.getString("Name"));
-                    shoppingBagModel.setQuantity(json_data.getString("Quantity"));
-                    shoppingBagModel.setPrice(json_data.getString("Price"));
-                    shoppingBagModel.setImage(json_data.getString("Image"));
-                    shoppingBagModel.setAvailibleQty(json_data.getString("avalible"));
-                    shoppingBagModel.setpID(json_data.getString("P_ID"));
-
-                    shoppingBagModel.setWishlist(json_data.getString("wishlist"));
-                    shoppingBagModel.setGst(json_data.getString("gstPrice"));
-
-                    lists.add(shoppingBagModel);
-
-                 /*   price = price + Integer.parseInt( json_data.getString("Price")) ;
-                    gst = Integer.parseInt(gst + json_data.getString("gstPrice"));*/
-                }
-
-              /*  tv_gst.setText(String.valueOf(gst));
-                total_cost.setText(String.valueOf(price));*/
-
-            }
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.iv_back:
-                itemClickListner.onClick(6);
-        }
     }
 }

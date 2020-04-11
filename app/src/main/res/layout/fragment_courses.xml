@@ -20,7 +20,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_arrow_back_black_24dp"
-                tools:ignore="MissingConstraints"
+                tools:ignore="ContentDescription,MissingConstraints"
                 android:background="@drawable/item_click_animation"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -31,9 +31,9 @@
                 android:id="@+id/tv_courses_heading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Discover More Courses"
-                android:textSize="20sp"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:text="@string/discover_more_courses"
+                android:textSize="@dimen/h20"
                 app:fontFamily="@font/arial_bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -41,32 +41,31 @@
 
             <androidx.appcompat.widget.SearchView
                 android:id="@+id/sv_courses"
-                android:layout_width="300dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="16dp"
+                android:layout_width="@dimen/width_300dp"
+                android:layout_height="@dimen/height_40dp"
+                android:layout_marginTop="@dimen/margin_16dp"
                 android:background="@drawable/bg_searchview"
-                android:elevation="10dp"
+                android:elevation="@dimen/elevation_10dp"
                 android:contentInsetStart="0dp"
                 app:contentInsetStart="0dp"
                 app:iconifiedByDefault="false"
-                app:queryHint="Search More Courses"
+                app:queryHint="@string/search_by_course_name"
                 android:paddingLeft="-16dp"
                 android:paddingStart="-16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_courses_heading" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_courses_heading"
+                tools:ignore="RtlHardcoded,RtlSymmetry,UnusedAttribute" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView_courses"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="@dimen/margin_24dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/sv_courses">
-
-            </androidx.recyclerview.widget.RecyclerView>
+                app:layout_constraintTop_toBottomOf="@+id/sv_courses" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

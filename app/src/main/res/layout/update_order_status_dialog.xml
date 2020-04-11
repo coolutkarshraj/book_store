@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center">
@@ -10,18 +11,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:elevation="5dp"
+        android:elevation="@dimen/elevation_5dp"
         app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="5dp">
+        app:cardCornerRadius="@dimen/radius_5dp"
+        tools:ignore="UnusedAttribute">
 
         <ImageView
             android:id="@+id/clear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:layout_marginTop="7dp"
-            android:layout_marginRight="7dp"
-            android:background="@drawable/cross" />
+            android:layout_marginTop="@dimen/margin_7dp"
+            android:layout_marginRight="@dimen/margin_7dp"
+            android:background="@drawable/cross"
+            tools:ignore="ContentDescription,RtlHardcoded" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -32,10 +35,10 @@
                 android:id="@+id/firstLinear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="25dp"
-                android:layout_marginTop="25dp"
-                android:layout_marginEnd="25dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginStart="@dimen/margin_25dp"
+                android:layout_marginTop="@dimen/margin_25dp"
+                android:layout_marginEnd="@dimen/margin_25dp"
+                android:layout_marginBottom="@dimen/margin_5dp"
                 android:orientation="horizontal">
 
 
@@ -43,79 +46,59 @@
                     android:id="@+id/chatdelete"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Update Order Status"
+                    android:text="@string/update_order_status"
                     android:textColor="@color/blue"
-                    android:textSize="@dimen/startmargin" />
-
+                    android:textSize="@dimen/h20" />
             </LinearLayout>
-
 
             <LinearLayout
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="25dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="25dp"
+                android:layout_marginStart="@dimen/margin_25dp"
+                android:layout_marginTop="@dimen/margin_10dp"
+                android:layout_marginEnd="@dimen/margin_25dp"
                 android:orientation="vertical">
 
 
-
-
                 <RadioGroup
+                    android:id="@+id/radioGroup"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/radioGroup">
+                    android:layout_height="wrap_content">
 
                     <RadioButton
                         android:id="@+id/r1_Accepted"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Accepted"
-                        android:paddingStart="20dp"
                         android:layout_marginTop="10dp"
                         android:checked="false"
-                        android:textSize="@dimen/h2" />
+                        android:paddingStart="@dimen/margin_20dp"
+                        android:text="Accepted"
+                        android:textSize="@dimen/h2"
+                        tools:ignore="HardcodedText,RtlSymmetry" />
+
                     <RadioButton
                         android:id="@+id/r1_Shipped"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_10dp"
+                        android:checked="false"
+                        android:paddingStart="@dimen/margin_20dp"
                         android:text="Shipped"
+                        android:textSize="@dimen/h2"
                         android:visibility="gone"
-                        android:paddingStart="20dp"
-                        android:layout_marginTop="10dp"
-                        android:checked="false"
-                        android:textSize="@dimen/h2" />
-                    <RadioButton
-                        android:id="@+id/r1_Out_For_Delivery"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Out For Delivery"
-                        android:visibility="gone"
-                        android:paddingStart="20dp"
-                        android:layout_marginTop="10dp"
-                        android:checked="false"
-                        android:textSize="@dimen/h2" />
-                    <RadioButton
-                        android:id="@+id/r1_Delivered"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Delivered"
-                        android:visibility="gone"
-                        android:paddingStart="20dp"
-                        android:layout_marginTop="10dp"
-                        android:checked="false"
-                        android:textSize="@dimen/h2" />
+                        tools:ignore="HardcodedText" />
 
                     <RadioButton
                         android:id="@+id/r2_Rejected"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:text="Rejected"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="@dimen/margin_10dp"
                         android:checked="false"
-                        android:paddingStart="20dp"
-                        android:textSize="@dimen/h2" />
+                        android:paddingStart="@dimen/margin_20dp"
+                        android:text="Rejected"
+                        android:textSize="@dimen/h2"
+                        tools:ignore="HardcodedText,RtlSymmetry" />
                 </RadioGroup>
 
             </LinearLayout>
@@ -124,28 +107,34 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:layout_marginStart="25dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginEnd="25dp"
-                android:layout_marginBottom="25dp"
-                android:orientation="horizontal">
+                android:layout_marginStart="@dimen/margin_25dp"
+                android:layout_marginTop="@dimen/margin_30dp"
+                android:layout_marginEnd="@dimen/width_25dp"
+                android:layout_marginBottom="@dimen/margin_25dp"
+                android:orientation="horizontal"
+                tools:ignore="RtlHardcoded">
 
                 <Button
                     android:id="@+id/no"
-                    android:layout_width="100dp"
+                    android:layout_width="@dimen/height_100dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="20dp"
-                    android:text="No"
+                    android:layout_marginRight="@dimen/margin_20dp"
                     android:background="@drawable/round_corner_light_gray"
-                    android:textSize="@dimen/h2" />
+                    android:text="@string/no"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/h2"
+                    tools:ignore="ButtonStyle" />
 
                 <Button
                     android:id="@+id/yes"
-                    android:layout_width="100dp"
+                    android:layout_width="@dimen/height_100dp"
                     android:layout_height="wrap_content"
-                    android:text="Yes"
                     android:background="@drawable/button_shape_red"
-                    android:textSize="@dimen/h2" />
+                    android:text="@string/yes"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/h2"
+                    tools:ignore="ButtonStyle" />
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
