@@ -6,7 +6,6 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center">
 
-
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -51,7 +50,6 @@
                     android:textSize="@dimen/h20" />
 
             </LinearLayout>
-
 
             <LinearLayout
 

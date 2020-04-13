@@ -2,12 +2,14 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/margin_15dp"
+    android:layout_marginEnd="@dimen/margin_15dp"
     android:layout_marginBottom="@dimen/font_10">
 
     <RelativeLayout
+        android:id="@+id/rl_root"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/rl_root"
         android:background="@color/bluee">
 
         <TextView

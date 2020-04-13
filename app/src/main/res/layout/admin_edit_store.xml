@@ -18,17 +18,18 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/iv_avatar"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
+                android:layout_width="@dimen/width_100dp"
+                android:layout_height="@dimen/width_100dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="@dimen/margin_32dp"
                 android:scaleType="centerCrop"
                 android:transitionName="profile"
                 app:civ_border_color="@color/colorPrimary"
-                app:civ_border_width="1dp"
+                app:civ_border_width="@dimen/height_1dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="UnusedAttribute" />
 
 
 
@@ -36,45 +37,49 @@
                 android:id="@+id/fab_editpic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="75dp"
-                android:layout_marginLeft="75dp"
-                android:layout_marginTop="75dp"
+                android:layout_marginStart="@dimen/margin_75dp"
+                android:layout_marginLeft="@dimen/margin_75dp"
+                android:layout_marginTop="@dimen/margin_75dp"
                 android:clickable="true"
                 android:src="@drawable/ic_picture"
                 app:layout_constraintBottom_toBottomOf="@+id/iv_avatar"
                 app:layout_constraintStart_toStartOf="@+id/iv_avatar"
-                app:layout_constraintTop_toTopOf="@+id/iv_avatar" />
+                app:layout_constraintTop_toTopOf="@+id/iv_avatar"
+                android:focusable="true"
+                tools:ignore="RtlHardcoded" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="@dimen/height_40dp"
             android:layout_gravity="center"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/margin_8dp"
             android:gravity="center"
             android:text="NaserKU"
             android:visibility="gone"
             android:textColor="@color/black"
-            android:textSize="18sp"
+            android:textSize="@dimen/h"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/iv_avatar"
             app:layout_constraintStart_toStartOf="@+id/iv_avatar"
-            app:layout_constraintTop_toBottomOf="@+id/iv_avatar" />
+            app:layout_constraintTop_toBottomOf="@+id/iv_avatar"
+            tools:ignore="HardcodedText" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="15dp">
+            android:layout_marginTop="@dimen/margin_15dp">
 
             <TextView
                 android:id="@+id/textView0"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:text="Name" />
+                android:layout_marginStart="@dimen/margin_20dp"
+                android:layout_marginEnd="@dimen/margin_20dp"
+                android:text="Name"
+                tools:ignore="HardcodedText" />
 
             <EditText
                 android:id="@+id/et_firstname"
@@ -82,148 +87,158 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                  android:layout_below="@+id/textView0"
-                android:layout_marginStart="20dp"
-                android:textSize="18sp"
+                android:layout_marginStart="@dimen/margin_20dp"
+                android:textSize="@dimen/h"
                 app:fontFamily="@font/droidsans_bold"
-                android:layout_marginEnd="20dp" />
+                android:layout_marginEnd="@dimen/margin_20dp"
+                tools:ignore="Autofill,LabelFor,TextFields" />
             <TextView
                 android:id="@+id/textView1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="@dimen/margin_20dp"
                 android:layout_below="@+id/et_firstname"
-                android:layout_marginEnd="20dp"
-                android:text="Description" />
+                android:layout_marginEnd="@dimen/margin_20dp"
+                android:text="Description"
+                tools:ignore="HardcodedText" />
 
             <EditText
                 android:id="@+id/et_username"
                 style="@android:style/Widget.Holo.Light.TextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:textSize="18sp"
+                android:layout_marginTop="@dimen/margin_5dp"
+                android:textSize="@dimen/h1"
                 android:layout_below="@+id/textView1"
                 app:fontFamily="@font/droidsans_bold"
-                tools:ignore="DuplicateIds,MissingConstraints"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp" />
+                tools:ignore="Autofill,DuplicateIds,LabelFor,MissingConstraints,TextFields"
+                android:layout_marginStart="@dimen/margin_20dp"
+                android:layout_marginEnd="@dimen/margin_20dp" />
 
 
             <TextView
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginStart="@dimen/margin_20dp"
+                android:layout_marginEnd="@dimen/margin_20dp"
+                android:layout_marginTop="@dimen/margin_10dp"
                 android:layout_below="@+id/et_username"
-                android:text="Phone" />
+                android:text="Phone"
+                tools:ignore="HardcodedText" />
 
             <EditText
                 android:id="@+id/et_phone"
                 style="@android:style/Widget.Holo.Light.TextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
+                android:textSize="@dimen/h"
                 android:inputType="phone"
                 android:maxLength="12"
                 android:layout_below="@+id/textView2"
                 app:fontFamily="@font/droidsans_bold"
-                tools:ignore="MissingConstraints"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp" />
+                tools:ignore="Autofill,LabelFor,MissingConstraints"
+                android:layout_marginStart="@dimen/margin_20dp"
+                android:layout_marginEnd="@dimen/margin_20dp" />
 
             <TextView
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginStart="@dimen/margin_20dp"
+                android:layout_marginEnd="@dimen/margin_20dp"
+                android:layout_marginTop="@dimen/margin_10dp"
                 android:layout_below="@+id/et_phone"
-                android:text="Email" />
+                android:text="Email"
+                tools:ignore="HardcodedText" />
 
             <EditText
                 android:id="@+id/et_email"
                 style="@android:style/Widget.Holo.Light.TextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
+                android:textSize="@dimen/h"
                 android:layout_below="@+id/textView3"
                 app:fontFamily="@font/droidsans_bold"
-                tools:ignore="MissingConstraints"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp" />
+                tools:ignore="Autofill,LabelFor,MissingConstraints,TextFields"
+                android:layout_marginStart="@dimen/margin_20dp"
+                android:layout_marginEnd="@dimen/margin_20dp" />
 
             <TextView
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginStart="@dimen/margin_20dp"
+                android:layout_marginEnd="@dimen/margin_20dp"
+                android:layout_marginTop="@dimen/margin_10dp"
                 android:layout_below="@+id/et_email"
-                android:text="Address" />
+                android:text="Address"
+                tools:ignore="HardcodedText" />
 
             <EditText
                 android:id="@+id/et_address"
                 style="@android:style/Widget.Holo.Light.TextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
+                android:textSize="@dimen/h"
                 android:layout_below="@+id/textView4"
                 app:fontFamily="@font/droidsans_bold"
-                tools:ignore="MissingConstraints"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp" />
+                tools:ignore="Autofill,LabelFor,MissingConstraints,TextFields"
+                android:layout_marginStart="@dimen/margin_20dp"
+                android:layout_marginEnd="@dimen/margin_20dp" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Save"
                 android:id="@+id/btn_save"
+                android:textColor="@color/white"
+                android:textAllCaps="false"
                 android:background="@drawable/button_shape_red"
                 android:backgroundTint="@color/colorPrimary"
                 android:layout_below="@+id/et_address"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"/>
+                android:layout_marginTop="@dimen/margin_10dp"
+                tools:ignore="HardcodedText,UnusedAttribute" />
 
             <TextView
                 android:id="@+id/textView27"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
+                android:layout_marginStart="@dimen/margin_20dp"
+                android:layout_marginEnd="@dimen/margin_20dp"
                 android:visibility="gone"
                 android:text="Recive Notifications"
-                android:layout_marginTop="10dp"
-                android:layout_below="@+id/et_address" />
+                android:layout_marginTop="@dimen/margin_10dp"
+                android:layout_below="@+id/et_address"
+                tools:ignore="HardcodedText" />
             <Switch
                 android:id="@+id/switch2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
+                android:layout_marginStart="@dimen/margin_20dp"
+                android:layout_marginEnd="@dimen/margin_20dp"
                 android:text="Enabled"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/margin_10dp"
                 android:visibility="gone"
-                android:layout_below="@+id/textView27" />
+                android:layout_below="@+id/textView27"
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:id="@+id/changepassword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginStart="@dimen/margin_20dp"
+                android:layout_marginEnd="@dimen/margin_20dp"
+                android:layout_marginTop="@dimen/margin_10dp"
                 android:layout_below="@+id/switch2"
                 android:text="Change Password"
                 android:visibility="gone"
                 android:textColor="@color/colorPrimary"
-                android:textSize="16dp"
+                android:textSize="@dimen/h1"
                 app:layout_constraintTop_toBottomOf="@+id/switch2"
-                tools:ignore="MissingConstraints"
-                tools:layout_editor_absoluteX="32dp" />
+                tools:ignore="HardcodedText,MissingConstraints"
+                tools:layout_editor_absoluteX="@dimen/margin_32dp" />
 
 
         </RelativeLayout>

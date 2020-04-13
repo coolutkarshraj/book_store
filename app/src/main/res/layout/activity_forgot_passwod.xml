@@ -1,153 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-
     tools:context=".activity.authentication.ForgotPasswodActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
+        android:layout_marginStart="@dimen/margin_15dp"
+        android:layout_marginTop="@dimen/margin_10dp"
+        android:layout_marginEnd="@dimen/margin_15dp"
         android:orientation="horizontal">
 
 
-        <ImageView android:layout_width="25dp"
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="25dp"
             android:layout_height="25dp"
+            android:layout_centerVertical="true"
+
             android:background="@drawable/back_arrow"
             android:backgroundTint="@color/black"
+            tools:ignore="ContentDescription,UnusedAttribute" />
 
-            android:id="@+id/back"
-            android:layout_centerVertical="true"/>
-
-        <TextView android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Forgot Password"
             android:layout_centerHorizontal="true"
-            android:textSize="@dimen/startmargin"
             android:fontFamily="@font/exo"
+            android:text="Forgot Password"
             android:textColor="@color/black"
-            />
+            android:textSize="@dimen/startmargin"
+            tools:ignore="HardcodedText,SpUsage" />
     </RelativeLayout>
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
+        android:layout_marginStart="@dimen/margin_15dp"
+        android:layout_marginEnd="@dimen/margin_15dp"
 
         android:orientation="vertical">
 
-        <TextView android:layout_width="match_parent"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/gray"
             android:layout_marginTop="25dp"
-            android:gravity="center"
-            android:textSize="14sp"
             android:fontFamily="@font/exo"
-            android:text="Please enter your email or mobile in order to reset your password"/>
+            android:gravity="center"
+            android:text="Please enter your email or mobile in order to reset your password"
+            android:textColor="@color/gray"
+            android:textSize="14sp"
+            tools:ignore="HardcodedText" />
 
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/text_input_layout"
             android:layout_width="match_parent"
-            android:layout_marginTop="15dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/iv_email"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_10dp"
+            android:layout_marginTop="@dimen/margin_15dp"
+            android:layout_marginEnd="@dimen/margin_10dp">
 
             <EditText
                 android:id="@+id/et_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/exo"
+                android:hint="@string/email"
+                android:singleLine="true"
                 android:textColor="@color/gray"
-                android:hint="Email"
                 android:textSize="@dimen/h2"
-                android:fontFamily="@font/exo"/>
+                tools:ignore="Autofill,TextFields" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <RelativeLayout android:layout_width="match_parent"
-            android:layout_height="22sp"
-            android:layout_marginTop="10dp"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_20dp"
             android:layout_marginStart="@dimen/startmargin"
-            android:visibility="gone"
-            android:layout_marginEnd="@dimen/endmargin">
+            android:layout_marginTop="@dimen/margin_10dp"
+            android:layout_marginEnd="@dimen/endmargin"
+            android:visibility="gone">
 
-            <TextView android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/ok"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="or"
-                android:textSize="14sp"
-                android:textColor="@color/gray"
-                android:fontFamily="@font/exo_bold"
                 android:layout_centerHorizontal="true"
-                android:id="@+id/ok"/>
-
-            <!-- <View android:layout_width="match_parent"
-                 android:layout_height="2dp"
-                 android:layout_toLeftOf="@id/ok"
-                 android:background="@color/grey"
-                 android:layout_centerVertical="true"
-                 android:layout_marginRight="16dp"></View>
-
-             <View android:layout_width="match_parent"
-                 android:layout_height="2dp"
-                 android:layout_toRightOf="@id/ok"
-                 android:background="@color/grey"
-                 android:layout_centerVertical="true"
-                 android:layout_marginLeft="16dp"
-                 ></View>-->
+                android:fontFamily="@font/exo_bold"
+                android:text="or"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/h2"
+                tools:ignore="HardcodedText" />
 
         </RelativeLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Mobile"
-            android:layout_marginTop="10dp"
-            android:textSize="@dimen/h2"
-            android:visibility="gone"
-            android:fontFamily="@font/exo"
-            android:textColor="@color/black"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"/>
-
-        <EditText
-            android:id="@+id/et_mobile"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textSize="@dimen/h3"
-            android:visibility="gone"
-            android:fontFamily="@font/exo"
-            android:maxLines="1"
-            android:maxLength="20"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:textColorHint="@color/black"/>
 
         <Button
+            android:id="@+id/btnrquest"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_forgotpassword"
-            android:layout_marginTop="30dp"
-            android:text="send request"
-            android:id="@+id/btnrquest"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:textSize="@dimen/h1"
-            android:fontFamily="@font/exo"
             android:layout_marginStart="@dimen/startmargin"
+            android:layout_marginTop="30dp"
             android:layout_marginEnd="@dimen/endmargin"
+            android:layout_marginBottom="@dimen/margin_10dp"
             android:background="@drawable/button_shape_red"
-            android:layout_marginBottom="10dp"/>
+            android:fontFamily="@font/exo"
+            android:text="send request"
+            android:textColor="@color/white"
+            android:textSize="@dimen/h1"
+            android:textStyle="bold"
+            tools:ignore="HardcodedText" />
     </LinearLayout>
 
 

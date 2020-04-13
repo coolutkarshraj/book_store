@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".fragment.BookstoresFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -19,86 +18,88 @@
                 android:id="@+id/iv_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
+                android:layout_marginStart="@dimen/margin_15dp"
                 android:layout_marginTop="22dp"
                 android:background="@drawable/item_click_animation"
                 android:src="@drawable/ic_arrow_back_black_24dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="MissingConstraints" />
+                tools:ignore="ContentDescription,MissingConstraints" />
 
             <TextView
                 android:id="@+id/textView34"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/margin_8dp"
                 android:text="Cloths"
                 android:textColor="@color/black"
-                android:textSize="20sp"
+                android:textSize="@dimen/h20"
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="HardcodedText" />
 
 
             <androidx.appcompat.widget.SearchView
                 android:id="@+id/search_all_classes"
-                android:layout_width="300dp"
-                android:layout_height="39dp"
-                android:layout_marginTop="16dp"
+                android:layout_width="@dimen/width_300dp"
+                android:layout_height="@dimen/height_40dp"
+                android:layout_marginTop="@dimen/margin_16dp"
                 android:background="@drawable/bg_searchview"
-                android:elevation="10dp"
+                android:elevation="@dimen/elevation_10dp"
                 android:paddingStart="-10dp"
-                android:paddingLeft="-10dp"
                 app:iconifiedByDefault="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-
                 app:layout_constraintTop_toBottomOf="@+id/textView34"
-                app:queryHint="choose your classes..." />
+                app:queryHint="choose your classes..."
+                tools:ignore="RtlSymmetry,UnusedAttribute" />
 
 
             <RelativeLayout
                 android:id="@+id/ll_btns"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="@dimen/margin_20dp"
                 android:orientation="horizontal"
                 app:layout_constraintTop_toBottomOf="@+id/search_all_classes"
                 tools:ignore="MissingConstraints">
 
                 <Button
-                    android:layout_width="120dp"
-                    android:layout_height="40dp"
+                    android:id="@+id/btn_male"
+                    android:layout_width="@dimen/width_120dp"
+                    android:layout_height="@dimen/height_40dp"
+                    android:layout_marginStart="@dimen/margin_30dp"
                     android:background="@drawable/selected_btn"
                     android:fontFamily="@font/exo_bold"
                     android:text="Male"
-                    android:id="@+id/btn_male"
-                    android:layout_marginStart="30dp"
+                    android:textAllCaps="false"
                     android:textColor="@color/white"
                     android:textSize="@dimen/h1"
                     tools:ignore="HardcodedText,SpUsage" />
 
                 <Button
-                    android:layout_width="120dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="right"
-                    android:layout_marginEnd="30dp"
+                    android:id="@+id/btn_female"
+                    android:layout_width="@dimen/width_120dp"
+                    android:layout_height="@dimen/height_40dp"
                     android:layout_alignParentEnd="true"
+                    android:layout_gravity="right"
+                    android:layout_marginEnd="@dimen/margin_30dp"
                     android:background="@drawable/unselected_btn"
                     android:fontFamily="@font/exo_bold"
                     android:text="Female"
-                    android:id="@+id/btn_female"
+                    android:textAllCaps="false"
                     android:textColor="@color/light_gray"
                     android:textSize="@dimen/h1"
-                    tools:ignore="HardcodedText,SpUsage" />
+                    tools:ignore="HardcodedText,RtlHardcoded,SpUsage" />
             </RelativeLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_all_classes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="@dimen/margin_24dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -115,11 +116,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_margin="20dp"
+        android:layout_margin="@dimen/margin_20dp"
         android:fontFamily="@font/exo_bold"
         android:text="books are not available in this category"
         android:textAlignment="center"
-        android:textSize="16dp"
+        android:textSize="@dimen/h1"
         android:visibility="gone"
-        tools:ignore="RtlCompat" />
+        tools:ignore="HardcodedText,RtlCompat" />
 </FrameLayout>

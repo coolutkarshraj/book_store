@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".fragment.InstituteFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -19,13 +18,13 @@
                 android:id="@+id/iv_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_arrow_back_black_24dp"
-                tools:ignore="ContentDescription,MissingConstraints"
+                android:layout_marginStart="@dimen/margin_15dp"
+                android:layout_marginTop="@dimen/margin_9dp"
                 android:background="@drawable/item_click_animation"
+                android:src="@drawable/ic_arrow_back_black_24dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginTop="@dimen/margin_9dp"
-                android:layout_marginStart="@dimen/margin_15dp"/>
+                tools:ignore="ContentDescription,MissingConstraints" />
 
             <TextView
                 android:id="@+id/tv_institute_heading"
@@ -46,13 +45,13 @@
                 android:layout_marginTop="@dimen/margin_16dp"
                 android:background="@drawable/bg_searchview"
                 android:elevation="@dimen/elevation_10dp"
-                android:paddingLeft="-16dp"
                 android:paddingStart="-16dp"
+                android:paddingLeft="-16dp"
                 app:iconifiedByDefault="false"
-                app:queryHint="@string/search_by_institue_name"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_institute_heading"
+                app:queryHint="@string/search_by_institue_name"
                 tools:ignore="RtlHardcoded,RtlSymmetry,UnusedAttribute" />
 
             <androidx.recyclerview.widget.RecyclerView

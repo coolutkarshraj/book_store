@@ -8,9 +8,9 @@
 
     <!-- TODO: Update blank fragment layout -->
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/nested"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/nested"
         android:visibility="gone">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,130 +21,129 @@
                 android:id="@+id/iv_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_arrow_back_black_24dp"
-                tools:ignore="MissingConstraints"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="9dp"
                 android:background="@drawable/item_click_animation"
+                android:src="@drawable/ic_arrow_back_black_24dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginTop="9dp"
-                android:layout_marginStart="15dp"/>
+                tools:ignore="ContentDescription,MissingConstraints" />
 
             <TextView
                 android:id="@+id/tv_institute_heading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/margin_8dp"
                 android:text="Contact Us"
                 android:textSize="20sp"
                 app:fontFamily="@font/arial_bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="HardcodedText" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_marginStart="30dp"
                 android:layout_marginEnd="30dp"
+                android:orientation="vertical"
                 app:layout_constraintTop_toBottomOf="@+id/tv_institute_heading"
                 tools:ignore="MissingConstraints">
 
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tvEmail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="100dp"
-                app:layout_constraintEnd_toEndOf="@+id/tvUserName"
-                app:layout_constraintStart_toStartOf="@+id/tvUserName"
-                >
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etEmailc"
-                    android:layout_width="fill_parent"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tvEmail"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawablePadding="@dimen/font_10"
-                    android:gravity="start"
-                    android:hint="@string/email"
-                    android:inputType="textEmailAddress"
-                    android:paddingBottom="@dimen/value_8"
-                    android:singleLine="true"
-                    android:textAlignment="viewStart"
-                    android:textDirection="locale"
-                    android:textSize="14sp"
-                    app:drawableStartCompat="@drawable/ic_mail" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_marginTop="100dp"
+                    app:layout_constraintEnd_toEndOf="@+id/tvUserName"
+                    app:layout_constraintStart_toStartOf="@+id/tvUserName">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tvUserName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                app:counterEnabled="true"
-                app:counterMaxLength="50"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvEmail">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etEmailc"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="@dimen/font_10"
+                        android:gravity="start"
+                        android:hint="@string/email"
+                        android:inputType="textEmailAddress"
+                        android:paddingBottom="@dimen/value_8"
+                        android:singleLine="true"
+                        android:textAlignment="viewStart"
+                        android:textDirection="locale"
+                        android:textSize="14sp"
+                        app:drawableStartCompat="@drawable/ic_mail" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etTitlec"
-                    android:layout_width="fill_parent"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tvUserName"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawablePadding="@dimen/font_10"
-                    android:gravity="start"
-                    android:hint="Title"
-                    android:maxLength="50"
-                    android:inputType="textPersonName"
-                    android:paddingBottom="@dimen/value_8"
-                    android:singleLine="true"
-                    android:textAlignment="viewStart"
-                    android:textDirection="locale"
-                    android:textSize="14sp"
+                    android:layout_marginTop="@dimen/margin_8dp"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="50"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvEmail">
 
-                    app:drawableStartCompat="@drawable/ic_user" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etTitlec"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="@dimen/font_10"
+                        android:gravity="start"
+                        android:hint="Title"
+                        android:inputType="textPersonName"
+                        android:maxLength="50"
+                        android:paddingBottom="@dimen/value_8"
+                        android:singleLine="true"
+                        android:textAlignment="viewStart"
+                        android:textDirection="locale"
+                        android:textSize="@dimen/h2"
+
+                        app:drawableStartCompat="@drawable/ic_user"
+                        tools:ignore="HardcodedText" />
+                </com.google.android.material.textfield.TextInputLayout>
 
 
-
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tvPhone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                app:counterEnabled="true"
-                app:counterMaxLength="150"
-               >
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etMessagec"
-                    android:layout_width="fill_parent"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tvPhone"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawablePadding="@dimen/font_10"
-                    android:gravity="start"
-                    android:hint="Description"
-                    android:inputType="text"
-                    android:maxLength="150"
-                    android:paddingBottom="@dimen/value_8"
-                    android:textAlignment="viewStart"
-                    android:textDirection="locale"
-                    android:textSize="14sp"
+                    android:layout_marginTop="@dimen/margin_8dp"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="150">
 
-                    app:drawableStartCompat="@drawable/ic_message_black_24dp" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etMessagec"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="@dimen/font_10"
+                        android:gravity="start"
+                        android:hint="Description"
+                        android:inputType="text"
+                        android:maxLength="150"
+                        android:paddingBottom="@dimen/value_8"
+                        android:textAlignment="viewStart"
+                        android:textDirection="locale"
+                        android:textSize="14sp"
+
+                        app:drawableStartCompat="@drawable/ic_message_black_24dp"
+                        tools:ignore="HardcodedText" />
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <Button
                     android:id="@+id/btnSubmit"
-                    android:layout_width="200dp"
+                    android:layout_width="@dimen/width_200dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="48dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/height_48dp"
                     android:background="@drawable/round_corner_button_yellow"
                     android:fontFamily="@font/fontawesome"
-                    android:text="Submit"
+                    android:text="@string/submit"
                     android:textColor="@android:color/white"
                     android:textStyle="bold"
-                    android:layout_gravity="center_horizontal"
                     app:layout_constraintEnd_toEndOf="@+id/tvAddress"
                     app:layout_constraintStart_toStartOf="@+id/tvAddress"
                     app:layout_constraintTop_toBottomOf="@+id/tvAddress" />
@@ -154,14 +153,15 @@
     </androidx.core.widget.NestedScrollView>
 
     <TextView
-        android:layout_width="match_parent"
-        android:textSize="16dp"
-        android:layout_gravity="center_vertical"
-        android:fontFamily="@font/exo_bold"
-        android:textAlignment="center"
         android:id="@+id/tv_login"
-      android:visibility="gone"
-        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="@dimen/margin_20dp"
+        android:fontFamily="@font/exo_bold"
         android:text="@string/please_logged_in_to_see_your_contact"
-        android:layout_height="wrap_content"/>
+        android:textAlignment="center"
+        android:textSize="@dimen/h1"
+        android:visibility="gone"
+        tools:ignore="RtlCompat,SpUsage" />
 </FrameLayout>

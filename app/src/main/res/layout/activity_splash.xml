@@ -10,11 +10,10 @@
         android:id="@+id/login_signup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginStart="@dimen/margin_16dp"
+        android:layout_marginTop="@dimen/margin_80dp"
         android:text="@string/all_fav"
-        android:textSize="22dp"
+        android:textSize="@dimen/h22"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -22,83 +21,82 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="10dp"
-        android:textSize="22dp"
+        android:layout_marginStart="@dimen/margin_40dp"
+        android:layout_marginTop="@dimen/margin_10dp"
         android:text="@string/bookstores_in_one_place"
+        android:textSize="@dimen/h22"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_signup" />
 
     <pl.droidsonroids.gif.GifImageView
         android:id="@+id/imageView3"
-        android:layout_width="210dp"
-        android:layout_height="210dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:scaleType="fitXY"
-        android:layout_marginTop="52dp"
-        android:src="@drawable/logo_transparent"
+        android:layout_width="@dimen/width_210dp"
+        android:layout_height="@dimen/height_210dp"
+        android:layout_marginLeft="@dimen/margin_30dp"
+        android:layout_marginTop="@dimen/height_50dp"
+        android:layout_marginRight="@dimen/margin_30dp"
         android:background="@android:color/white"
+        android:scaleType="fitXY"
+        android:src="@drawable/logo_transparent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginRight="80dp"
+        android:layout_marginTop="@dimen/margin_32dp"
+        android:layout_marginEnd="@dimen/margin_20dp"
         android:text="جميع مكتباتك المفضلة لديك"
-        android:textSize="22dp"
+        android:textSize="@dimen/h22"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView3"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="180dp"
-        android:layout_marginRight="180dp"
+        android:layout_marginTop="@dimen/margin_8dp"
+        android:layout_marginEnd="@dimen/margin_180dp"
         android:text="في مكان واحد"
-      android:textSize="22dp"
+        android:textSize="@dimen/h22"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        tools:ignore="HardcodedText" />
 
     <Button
         android:id="@+id/btn_en"
-        android:layout_width="98dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="44dp"
-        android:layout_marginLeft="44dp"
-        android:layout_marginTop="146dp"
-        android:layout_marginBottom="126dp"
+        android:layout_width="@dimen/height_98dp"
+        android:layout_height="@dimen/height_48dp"
+        android:layout_marginStart="@dimen/margin_44dp"
+        android:layout_marginTop="@dimen/margin_146dp"
+        android:layout_marginBottom="@dimen/margin_126dp"
         android:background="@drawable/lang_button_first_background"
         android:fontFamily="@font/exo_bold"
         android:text="EN"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        tools:ignore="HardcodedText" />
 
     <Button
         android:id="@+id/btn_kuw"
-        android:layout_width="98dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="146dp"
-        android:layout_marginEnd="44dp"
-        android:layout_marginRight="44dp"
-        android:layout_marginBottom="126dp"
+        android:layout_width="@dimen/height_98dp"
+        android:layout_height="@dimen/height_48dp"
+        android:layout_marginTop="@dimen/margin_146dp"
+        android:layout_marginEnd="@dimen/margin_44dp"
+        android:layout_marginRight="@dimen/margin_44dp"
+        android:layout_marginBottom="@dimen/margin_126dp"
         android:background="@drawable/lang_button_background"
         android:fontFamily="@font/exo_bold"
         android:text="واحد"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        tools:ignore="HardcodedText,RtlHardcoded" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

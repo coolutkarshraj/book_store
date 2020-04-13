@@ -8,8 +8,8 @@
 
     <include android:id="@+id/toolbar"
         layout="@layout/common_toolbar">
-
     </include>
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

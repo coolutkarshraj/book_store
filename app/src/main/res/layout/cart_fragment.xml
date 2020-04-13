@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nested_sc_view"
         android:layout_width="match_parent"
-        android:visibility="gone"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="@dimen/margin_15dp">
 
             <RelativeLayout
-                android:visibility="visible"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="visible"
                 tools:ignore="UselessParent">
 
                 <LinearLayout
@@ -36,15 +37,15 @@
                         android:textSize="@dimen/h2" />
 
                 </LinearLayout>
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView"
-                    android:layout_below="@+id/tv_min"
-                    android:layout_marginTop="@dimen/height_40dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_min"
+                    android:layout_marginTop="@dimen/height_40dp"
                     android:labelFor="@+id/ll0"
-                    tools:ignore="UnknownIdInLayout"/>
-
+                    tools:ignore="UnknownIdInLayout" />
 
 
                 <LinearLayout
@@ -86,7 +87,7 @@
                                 android:layoutDirection="ltr"
                                 android:text="@string/standard_delivery"
                                 android:textAlignment="textStart"
-                                android:textStyle="normal"/>
+                                android:textStyle="normal" />
 
                             <TextView
                                 android:id="@+id/tv_name_4"
@@ -123,7 +124,7 @@
                                 android:layoutDirection="ltr"
                                 android:text="@string/express_delivery"
                                 android:textAlignment="textStart"
-                                android:textStyle="normal"/>
+                                android:textStyle="normal" />
 
                             <TextView
                                 android:id="@+id/tv_name_7"
@@ -169,8 +170,8 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/exo"
                             android:layout_gravity="end"
+                            android:fontFamily="@font/exo"
                             android:text="@string/cart_subtotal"
                             android:textSize="@dimen/h2" />
 
@@ -178,19 +179,19 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="end"
                             android:layout_marginTop="5dp"
                             android:fontFamily="@font/exo"
                             android:text="@string/shipping"
-                            android:layout_gravity="end"
                             android:textSize="@dimen/h2" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="end"
                             android:layout_marginTop="5dp"
                             android:fontFamily="@font/exo"
                             android:text="@string/total"
-                            android:layout_gravity="end"
                             android:textSize="@dimen/h2" />
 
                     </LinearLayout>
@@ -198,8 +199,8 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:layout_marginStart="@dimen/font_10"
+                        android:layout_weight="1"
                         android:orientation="vertical">
 
                         <TextView
@@ -238,42 +239,45 @@
                     android:layout_below="@+id/delivery"
                     android:layout_marginTop="@dimen/ten_dp"
                     android:gravity="center"
-                    android:visibility="gone"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
                     <LinearLayout
 
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/default_background"
-                        android:gravity="center"
                         android:layout_marginLeft="@dimen/margin_20dp"
                         android:layout_marginRight="@dimen/margin_20dp"
+                        android:background="@drawable/default_background"
+                        android:gravity="center"
                         android:orientation="vertical"
                         android:padding="@dimen/margin_10dp">
+
                         <LinearLayout
-                            android:weightSum="1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:weightSum="1">
 
                             <TextView
                                 android:id="@+id/tv_name_1"
                                 android:layout_width="0dp"
-                                android:layout_weight="0.6"
-                                android:textStyle="bold"
                                 android:layout_height="wrap_content"
-                                android:text="@string/express_delivery">
+                                android:layout_weight="0.6"
+                                android:text="@string/express_delivery"
+                                android:textStyle="bold">
 
 
                             </TextView>
+
                             <RadioButton
                                 android:id="@+id/rb_1st"
                                 android:layout_width="0dp"
-                                android:layout_weight="0.4"
                                 android:layout_height="match_parent"
                                 android:layout_gravity="start"
                                 android:layout_marginStart="@dimen/margin_14dp"
+                                android:layout_weight="0.4"
                                 android:fontFamily="@font/exo"
                                 android:layoutDirection="rtl"
                                 android:text="@string/within_2_hours"
@@ -287,27 +291,29 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
-                            android:gravity="center"
                             android:layout_weight="1"
+                            android:gravity="center"
                             android:orientation="horizontal">
+
                             <TextView
                                 android:id="@+id/tv_name_2"
                                 android:layout_width="0dp"
-                                android:layout_weight="0.6"
                                 android:layout_height="wrap_content"
+                                android:layout_weight="0.6"
                                 android:text="@string/standard_delivery"
                                 android:textStyle="bold"
                                 tools:ignore="NestedWeights">
 
 
                             </TextView>
+
                             <RadioButton
                                 android:id="@+id/rb_2nd"
                                 android:layout_width="0dp"
-                                android:layout_weight="0.4"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="start"
                                 android:layout_marginStart="@dimen/margin_14dp"
+                                android:layout_weight="0.4"
                                 android:checked="true"
                                 android:fontFamily="@font/exo"
                                 android:layoutDirection="rtl"
@@ -322,8 +328,6 @@
                     </LinearLayout>
 
 
-
-
                 </LinearLayout>
 
                 <!-- total items-->
@@ -331,23 +335,26 @@
                     android:id="@+id/card_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
                     android:layout_below="@+id/deliv"
                     android:layout_marginLeft="@dimen/sixteen_dp"
                     android:layout_marginTop="@dimen/ten_dp"
-                    android:layout_marginRight="@dimen/sixteen_dp">
+                    android:layout_marginRight="@dimen/sixteen_dp"
+                    android:visibility="gone">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_10dp"
                         android:layout_marginBottom="@dimen/margin_10dp"
                         android:orientation="vertical">
+
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/margin_8dp"
                             android:layout_marginTop="@dimen/margin_10dp"
                             android:layout_marginRight="@dimen/margin_8dp">
+
                             <TextView
                                 android:id="@+id/delivery_type"
                                 android:layout_width="wrap_content"
@@ -368,13 +375,14 @@
 
                             </TextView>
                         </RelativeLayout>
+
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/margin_8dp"
                             android:layout_marginTop="@dimen/margin_8dp"
-                            android:visibility="gone"
                             android:layout_marginRight="@dimen/margin_8dp"
+                            android:visibility="gone"
                             tools:ignore="RtlHardcoded">
 
                             <TextView
@@ -394,6 +402,7 @@
 
                             </TextView>
                         </RelativeLayout>
+
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -401,6 +410,7 @@
                             android:layout_marginTop="@dimen/margin_8dp"
                             android:layout_marginRight="@dimen/margin_8dp"
                             android:layout_marginBottom="@dimen/margin_8dp">
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -471,11 +481,11 @@
 
     <TextView
         android:id="@+id/no_text_found"
-        android:textAlignment="center"
-        android:layout_centerInParent="true"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         android:text="@string/no_items_added_in_the_cart"
-        android:layout_height="wrap_content">
+        android:textAlignment="center">
 
     </TextView>
 

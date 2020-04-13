@@ -6,65 +6,61 @@
     android:layout_height="56dp"
     android:background="@android:color/white">
 
-
     <LinearLayout
         android:id="@+id/ivOpenDrawer"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="@dimen/width_60dp"
+        android:layout_height="@dimen/height_60dp"
         android:layout_marginStart="@dimen/ten_dp"
-        android:layout_marginLeft="@dimen/ten_dp"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
         <ImageView
             android:id="@+id/menu"
-            android:layout_width="28dp"
-            android:layout_height="19dp"
-
-            app:srcCompat="@drawable/menu" />
-
-
+            android:layout_width="@dimen/width_28dp"
+            android:layout_height="@dimen/height_19dp"
+            app:srcCompat="@drawable/menu"
+            tools:ignore="ContentDescription" />
     </LinearLayout>
 
 
     <ImageView
         android:id="@+id/imageView7"
-        android:layout_width="100dp"
+        android:layout_width="@dimen/width_100dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:layout_marginBottom="2dp"
+        android:layout_marginTop="@dimen/margin_2dp"
+        android:layout_marginBottom="@dimen/margin_2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/ivOpenDrawer"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo_transparent" />
+        app:srcCompat="@drawable/logo_transparent"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/iv_cart"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
+        android:layout_width="@dimen/width_30dp"
+        android:layout_height="@dimen/height_30dp"
+        android:layout_marginEnd="@dimen/margin_24dp"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_cart" />
+        app:srcCompat="@drawable/ic_cart"
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/tv_cart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:textColor="#545cd8"
-        android:textStyle="bold"
+        android:layout_marginTop="@dimen/margin_5dp"
+        android:layout_marginEnd="@dimen/margin_16dp"
         android:maxLength="3"
+        android:textColor="@color/blue"
+        android:textStyle="bold"
         android:visibility="visible"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -72,13 +68,13 @@
         android:id="@+id/tv_notif"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="28dp"
-        android:layout_marginRight="28dp"
+        android:layout_marginTop="@dimen/margin_16dp"
+        android:layout_marginEnd="@dimen/width_28dp"
         android:text="1"
-        android:textColor="#545cd8"
+        android:textColor="@color/blue"
         android:textStyle="bold"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText" />
 </androidx.constraintlayout.widget.ConstraintLayout>

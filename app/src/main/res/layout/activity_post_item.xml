@@ -18,24 +18,25 @@
     <ImageView
         android:id="@+id/imageView6"
         android:layout_width="0dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_height="@dimen/height_80dp"
+        android:layout_marginStart="@dimen/margin_16dp"
+        android:layout_marginLeft="@dimen/margin_16dp"
+        android:layout_marginTop="@dimen/margin_16dp"
+        android:layout_marginEnd="@dimen/margin_16dp"
+        android:layout_marginRight="@dimen/margin_16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar2"
-        app:srcCompat="@color/blue_profile" />
+        app:srcCompat="@color/blue_profile"
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/margin_8dp"
         android:text="@string/add_item"
-        android:textSize="30sp"
+        android:textSize="@dimen/h30"
         app:fontFamily="@font/exo_bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -45,13 +46,13 @@
         android:id="@+id/cardView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="8dp"
-        app:cardElevation="10dp"
+        android:layout_marginStart="@dimen/margin_16dp"
+        android:layout_marginLeft="@dimen/margin_16dp"
+        android:layout_marginTop="@dimen/margin_16dp"
+        android:layout_marginEnd="@dimen/margin_16dp"
+        android:layout_marginRight="@dimen/margin_16dp"
+        android:layout_marginBottom="@dimen/margin_8dp"
+        app:cardElevation="@dimen/elevation_10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -65,13 +66,13 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputLayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="265dp"
+                android:layout_width="@dimen/width_256dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
+                android:layout_marginStart="@dimen/margin_16dp"
+                android:layout_marginLeft="@dimen/margin_16dp"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:layout_marginEnd="@dimen/margin_16dp"
+                android:layout_marginRight="@dimen/margin_16dp"
                 android:scrollbarSize="4dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -81,16 +82,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/name"
-                    android:textSize="14dp" />
+                    android:textSize="@dimen/h2" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputLayout3"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="120dp"
+                android:layout_width="@dimen/width_120dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:scrollbarSize="4dp"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:scrollbarSize="@dimen/height_4dp"
                 app:layout_constraintStart_toStartOf="@+id/textInputLayout"
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
 
@@ -99,40 +100,42 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/item_price"
                     android:inputType="number"
-                    android:textSize="14dp" />
+                    android:textSize="@dimen/h2" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <ImageView
                 android:id="@+id/imageView11"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="82dp"
-                android:layout_marginLeft="82dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginStart="@dimen/margin_82dp"
+                android:layout_marginLeft="@dimen/margin_82dp"
+                android:layout_marginTop="@dimen/margin_82dp"
                 app:layout_constraintBottom_toBottomOf="@+id/textInputLayout3"
                 app:layout_constraintStart_toStartOf="@+id/textInputLayout3"
                 app:layout_constraintTop_toTopOf="@+id/textInputLayout3"
-                app:srcCompat="@drawable/ic_kd" />
+                app:srcCompat="@drawable/ic_kd"
+                tools:ignore="ContentDescription,RtlHardcoded,VectorDrawableCompat" />
 
 
             <Spinner
                 android:id="@+id/category_spinner"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_marginStart="24dp"
-                android:layout_marginLeft="24dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginStart="@dimen/margin_24dp"
+                android:layout_marginLeft="@dimen/margin_24dp"
+                android:layout_marginTop="@dimen/margin_8dp"
+                android:layout_marginBottom="@dimen/margin_8dp"
                 app:layout_constraintBottom_toBottomOf="@+id/textInputLayout3"
                 app:layout_constraintStart_toEndOf="@+id/textInputLayout3"
-                app:layout_constraintTop_toTopOf="@+id/textInputLayout3" />
+                app:layout_constraintTop_toTopOf="@+id/textInputLayout3"
+                tools:ignore="RtlHardcoded" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputLayout5"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
-                android:layout_height="100dp"
-                android:layout_marginTop="8dp"
+                android:layout_height="@dimen/height_100dp"
+                android:layout_marginTop="@dimen/margin_8dp"
                 app:layout_constraintEnd_toEndOf="@+id/textInputLayout"
                 app:layout_constraintStart_toStartOf="@+id/textInputLayout"
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
@@ -146,12 +149,13 @@
             <ImageView
                 android:id="@+id/imageView13"
                 android:layout_width="0dp"
-                android:layout_height="120dp"
-                android:layout_marginTop="8dp"
+                android:layout_height="@dimen/height_120dp"
+                android:layout_marginTop="@dimen/margin_8dp"
                 app:layout_constraintEnd_toEndOf="@+id/textInputLayout5"
                 app:layout_constraintStart_toStartOf="@+id/textInputLayout5"
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout5"
-                app:srcCompat="@color/blue_profile" />
+                app:srcCompat="@color/blue_profile"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:id="@+id/textView29"
@@ -172,21 +176,23 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/custom_button"
-                android:elevation="10dp"
+                android:elevation="@dimen/elevation_10dp"
                 android:text="@string/post"
                 android:textColor="@color/blue_profile"
-                android:textSize="18sp"
+                android:textSize="@dimen/h"
                 app:layout_constraintEnd_toEndOf="@+id/imageView13"
-                app:layout_constraintTop_toBottomOf="@+id/imageView13" />
+                app:layout_constraintTop_toBottomOf="@+id/imageView13"
+                tools:ignore="UnusedAttribute" />
 
             <ImageView
                 android:id="@+id/imageView14"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="@dimen/width_40dp"
+                android:layout_height="@dimen/height_40dp"
                 app:layout_constraintBottom_toBottomOf="@+id/materialButton2"
                 app:layout_constraintStart_toStartOf="@+id/imageView13"
                 app:layout_constraintTop_toBottomOf="@+id/imageView13"
-                app:srcCompat="@drawable/ic_backspace_black" />
+                app:srcCompat="@drawable/ic_backspace_black"
+                tools:ignore="ContentDescription,VectorDrawableCompat" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -196,36 +202,38 @@
         android:id="@+id/imageView15"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="@dimen/margin_16dp"
+        android:layout_marginLeft="@dimen/margin_16dp"
+        android:layout_marginTop="@dimen/margin_8dp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView6"
         app:layout_constraintStart_toStartOf="@+id/imageView6"
         app:layout_constraintTop_toBottomOf="@+id/toolbar2"
-        app:srcCompat="@drawable/avatar" />
+        app:srcCompat="@drawable/avatar"
+        tools:ignore="ContentDescription,RtlHardcoded" />
 
     <TextView
         android:id="@+id/textView30"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
+        android:layout_marginStart="@dimen/margin_32dp"
         android:text="Sanfer"
         android:textColor="@color/white"
-        android:textSize="18sp"
+        android:textSize="@dimen/h"
         app:fontFamily="@font/droidsans_bold"
         app:layout_constraintStart_toEndOf="@+id/imageView15"
-        app:layout_constraintTop_toTopOf="@+id/imageView15" />
+        app:layout_constraintTop_toTopOf="@+id/imageView15"
+        tools:ignore="HardcodedText" />
 
     <ImageView
         android:id="@+id/imageView17"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
+        android:layout_width="@dimen/width_40dp"
+        android:layout_height="@dimen/height_40dp"
+        android:layout_marginEnd="@dimen/margin_32dp"
+        android:layout_marginRight="@dimen/margin_32dp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView6"
         app:layout_constraintEnd_toEndOf="@+id/imageView6"
         app:layout_constraintTop_toTopOf="@+id/imageView6"
-        app:srcCompat="@drawable/ic_add_black_24dp" />
+        app:srcCompat="@drawable/ic_add_black_24dp"
+        tools:ignore="ContentDescription,RtlHardcoded,VectorDrawableCompat" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

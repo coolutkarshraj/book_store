@@ -11,194 +11,193 @@
         android:orientation="vertical">
 
 
-    <TextView
-        android:id="@+id/textView17"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/username"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/textView17"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_32dp"
+            android:layout_marginTop="@dimen/margin_16dp"
+            android:text="@string/username"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/et_username"
-        style="@android:style/Widget.Holo.Light.TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="8dp"
-        android:textSize="18sp"
-        app:fontFamily="@font/droidsans_bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView17" />
+        <TextView
+            android:id="@+id/et_username"
+            style="@android:style/Widget.Holo.Light.TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_32dp"
+            android:layout_marginTop="@dimen/margin_8dp"
+            android:textSize="@dimen/h"
+            app:fontFamily="@font/droidsans_bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView17" />
 
         <TextView
             android:id="@+id/edit1"
             android:layout_width="wrap_content"
-            android:layout_height="18dp"
-            android:layout_marginEnd="32dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_32dp"
             android:onClick="editProfile"
             android:text="Edit"
             android:textColor="@color/colorAccent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/et_username" />
+            app:layout_constraintTop_toTopOf="@+id/et_username"
+            tools:ignore="HardcodedText" />
 
-    <TextView
-        android:id="@+id/edit2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        android:text="Edit"
-        android:onClick="editProfile"
-        android:textColor="@color/colorAccent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/et_phone" />
+        <TextView
+            android:id="@+id/edit2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_32dp"
+            android:onClick="editProfile"
+            android:text="Edit"
+            android:textColor="@color/colorAccent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/et_phone"
+            tools:ignore="HardcodedText" />
 
-    <TextView
-        android:id="@+id/et_email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="8dp"
-        android:textSize="18sp"
-        app:fontFamily="@font/droidsans_bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView23" />
+        <TextView
+            android:id="@+id/et_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_32dp"
+            android:layout_marginTop="@dimen/margin_8dp"
+            android:textSize="@dimen/h"
+            app:fontFamily="@font/droidsans_bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView23" />
 
-    <TextView
-        android:id="@+id/textView20"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/phone"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_username" />
+        <TextView
+            android:id="@+id/textView20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_32dp"
+            android:layout_marginLeft="@dimen/margin_32dp"
+            android:layout_marginTop="@dimen/margin_16dp"
+            android:text="@string/phone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_username"
+            tools:ignore="RtlHardcoded" />
 
-    <TextView
-        android:id="@+id/textView23"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/email"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_phone" />
+        <TextView
+            android:id="@+id/textView23"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_32dp"
+            android:layout_marginTop="@dimen/margin_16dp"
+            android:text="@string/email"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_phone" />
 
-    <TextView
-        android:id="@+id/et_phone"
-        style="@style/Widget.AppCompat.TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="8dp"
-        android:textSize="18sp"
-        app:fontFamily="@font/droidsans_bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView20" />
+        <TextView
+            android:id="@+id/et_phone"
+            style="@style/Widget.AppCompat.TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_32dp"
+            android:layout_marginTop="@dimen/margin_8dp"
+            android:textSize="@dimen/h"
+            app:fontFamily="@font/droidsans_bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView20" />
 
-    <TextView
-        android:id="@+id/edit3"
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        android:text="Edit"
-        android:onClick="editProfile"
-        android:textColor="@color/colorAccent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/et_email" />
+        <TextView
+            android:id="@+id/edit3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_32dp"
+            android:onClick="editProfile"
+            android:text="Edit"
+            android:textColor="@color/colorAccent"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/et_email"
+            tools:ignore="HardcodedText" />
 
-    <TextView
-        android:id="@+id/textView26"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/delivery_address"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_email" />
+        <TextView
+            android:id="@+id/textView26"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_32dp"
+            android:layout_marginLeft="@dimen/margin_32dp"
+            android:layout_marginTop="@dimen/margin_16dp"
+            android:text="@string/delivery_address"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_email"
+            tools:ignore="RtlHardcoded" />
 
 
-    <TextView
-        android:id="@+id/et_address"
-        style="@style/Widget.AppCompat.TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="8dp"
-        android:textSize="18sp"
-        app:fontFamily="@font/droidsans_bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView26" />
+        <TextView
+            android:id="@+id/et_address"
+            style="@style/Widget.AppCompat.TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_32dp"
+            android:layout_marginLeft="@dimen/margin_32dp"
+            android:layout_marginTop="@dimen/margin_8dp"
+            android:textSize="@dimen/h"
+            app:fontFamily="@font/droidsans_bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView26"
+            tools:ignore="RtlHardcoded" />
 
-    <TextView
-        android:id="@+id/edit4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        android:text="Edit"
-        android:onClick="editProfile"
-        android:textColor="@color/colorAccent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/et_address" />
+        <TextView
+            android:id="@+id/edit4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_32dp"
+            android:onClick="editProfile"
+            android:text="Edit"
+            android:textColor="@color/colorAccent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/et_address"
+            tools:ignore="HardcodedText" />
 
-    <TextView
-        android:id="@+id/textView27"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:visibility="gone"
-        android:layout_marginTop="16dp"
-        android:text="Recieve notifications"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_address" />
+        <TextView
+            android:id="@+id/textView27"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_32dp"
+            android:layout_marginLeft="@dimen/margin_32dp"
+            android:layout_marginTop="@dimen/margin_16dp"
+            android:text="Recieve notifications"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_address"
+            tools:ignore="HardcodedText,RtlHardcoded" />
 
-    <Switch
-        android:id="@+id/switch2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:visibility="gone"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
-        android:text="Enabled"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView27" />
+        <Switch
+            android:id="@+id/switch2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_32dp"
+            android:layout_marginLeft="@dimen/margin_32dp"
+            android:layout_marginTop="@dimen/margin_8dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginRight="24dp"
+            android:text="Enabled"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView27"
+            tools:ignore="HardcodedText,RtlHardcoded" />
 
         <TextView
             android:id="@+id/changepassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_32dp"
             android:layout_marginTop="10dp"
-            android:textColor="@color/blue"
             android:text="Change Password"
-            android:textSize="16dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginLeft="32dp"
-            app:layout_constraintTop_toBottomOf="@+id/switch2"
+            android:textColor="@color/blue"
+            android:textSize="@dimen/h1"
             app:layout_constraintStart_toStartOf="parent"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="32dp" />
+            app:layout_constraintTop_toBottomOf="@+id/switch2"
+            tools:ignore="HardcodedText,MissingConstraints,SpUsage"
+            tools:layout_editor_absoluteX="@dimen/margin_32dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 
 </androidx.core.widget.NestedScrollView>

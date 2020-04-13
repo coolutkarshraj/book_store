@@ -10,61 +10,64 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/btnLoginToDashBoard">
+        android:layout_above="@+id/btnLoginToDashBoard"
+        tools:ignore="UnknownIdInLayout">
+
         <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:visibility="gone"
-            android:id="@+id/linearLayout"
-            >
+            android:visibility="gone">
 
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
+                android:layout_height="@dimen/height_250dp"
                 android:scaleType="fitXY"
+                android:src="@drawable/payment"
                 android:visibility="gone"
-                android:src="@drawable/payment">
+                tools:ignore="ContentDescription">
 
             </ImageView>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                tools:ignore="UseCompoundDrawables">
+
                 <ImageView
                     android:id="@+id/iv_back"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="10dp"
                     android:layout_gravity="bottom"
+                    android:layout_marginStart="@dimen/margin_15dp"
+                    android:layout_marginTop="@dimen/margin_10dp"
                     android:background="@drawable/item_click_animation"
                     android:src="@drawable/ic_arrow_back_black_24dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="MissingConstraints" />
+                    tools:ignore="ContentDescription,MissingConstraints" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
-                    android:text="Delivey Address"
-                    android:textSize="20dp">
-
-                </TextView>
+                    android:layout_marginLeft="@dimen/margin_10dp"
+                    android:layout_marginTop="@dimen/margin_10dp"
+                    android:text="@string/delivery_address"
+                    android:textSize="@dimen/h20"
+                    tools:ignore="RtlHardcoded" />
             </LinearLayout>
-
 
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-               android:layout_marginTop="16dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginStart="@dimen/margin_10dp"
+                android:layout_marginTop="@dimen/margin_16dp"
+                android:layout_marginEnd="@dimen/margin_10dp"
                 android:layout_marginBottom="@dimen/font_10">
 
             </androidx.recyclerview.widget.RecyclerView>
@@ -86,22 +89,23 @@
                     android:layout_marginRight="@dimen/fourteeen_dp"
                     android:text="+ Add New Address"
                     android:textColor="#545cd8"
-                    android:textSize="@dimen/sixteen_sp">
-
-                </TextView>
+                    android:textSize="@dimen/sixteen_sp"
+                    tools:ignore="HardcodedText,RtlHardcoded" />
             </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+
     <TextView
+        android:id="@+id/loggedih"
         android:layout_width="match_parent"
-        android:textSize="16dp"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_gravity="center_vertical"
+        android:layout_margin="@dimen/margin_20dp"
         android:fontFamily="@font/exo_bold"
-        android:textAlignment="center"
-     android:visibility="gone"
-        android:id="@+id/loggedih"
-        android:layout_margin="20dp"
         android:text="@string/savedadd"
-        android:layout_height="wrap_content"/>
+        android:textAlignment="center"
+        android:textSize="@dimen/h20"
+        android:visibility="gone"
+        tools:ignore="RtlCompat" />
 </RelativeLayout>

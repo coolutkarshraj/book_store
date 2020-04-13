@@ -6,7 +6,6 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center">
 
-
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,7 +14,6 @@
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="@dimen/radius_2dp"
         tools:ignore="UnusedAttribute">
-
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -64,8 +62,6 @@
                 android:id="@+id/et_address"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
-                android:textSize="@dimen/h3"
-                android:padding="@dimen/five_dp"
                 android:layout_marginStart="@dimen/margin_16dp"
                 android:layout_marginLeft="@dimen/margin_16dp"
                 android:layout_marginTop="@dimen/margin_16dp"
@@ -76,6 +72,8 @@
                 android:ems="10"
                 android:gravity="start|top"
                 android:inputType="textMultiLine"
+                android:padding="@dimen/five_dp"
+                android:textSize="@dimen/h3"
                 app:layout_constraintBottom_toTopOf="@+id/textView26"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -99,17 +97,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/height_80dp"
                 android:layout_marginStart="@dimen/margin_16dp"
-                android:textSize="@dimen/h3"
-                android:paddingLeft="@dimen/five_dp"
                 android:layout_marginLeft="@dimen/margin_16dp"
                 android:layout_marginTop="0dp"
                 android:layout_marginEnd="@dimen/margin_16dp"
                 android:layout_marginRight="@dimen/margin_16dp"
-                android:textColor="@color/text_color"
                 android:layout_marginBottom="@dimen/margin_8dp"
                 android:background="@drawable/layout_bg_on_focus"
                 android:ems="10"
                 android:inputType="text"
+                android:paddingLeft="@dimen/five_dp"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/h3"
                 app:layout_constraintBottom_toTopOf="@+id/textView27"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -122,8 +120,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/email"
                 android:visibility="gone"
-                tools:layout_editor_absoluteY="237dp"
-                tools:ignore="MissingConstraints" />
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteY="237dp" />
 
             <TextView
                 android:id="@+id/et_state"
@@ -155,8 +153,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_16dp"
                 android:layout_marginTop="@dimen/margin_8dp"
-                android:visibility="gone"
                 android:text="@string/phone"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/et_state" />
 
@@ -166,17 +164,17 @@
                 android:layout_height="@dimen/height_40dp"
                 android:layout_marginStart="@dimen/margin_16dp"
                 android:layout_marginLeft="@dimen/margin_16dp"
-                android:visibility="gone"
                 android:layout_marginTop="@dimen/margin_8dp"
                 android:layout_marginEnd="@dimen/margin_16dp"
-                android:textColor="@color/text_color"
-                android:textSize="@dimen/h3"
-                android:paddingLeft="@dimen/five_dp"
                 android:layout_marginRight="16dp"
                 android:background="@drawable/layout_bg_on_focus"
                 android:ems="10"
                 android:importantForAutofill="no"
                 android:inputType="textPersonName"
+                android:paddingLeft="@dimen/five_dp"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/h3"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView28"
@@ -192,8 +190,8 @@
                 android:layout_marginBottom="@dimen/margin_8dp"
                 android:background="@drawable/round_corner_button_yellow"
                 android:text="@string/dismiss"
-                android:textColor="@color/white"
                 android:textAllCaps="false"
+                android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/et_city"

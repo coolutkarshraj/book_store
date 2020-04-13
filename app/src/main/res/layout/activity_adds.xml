@@ -6,39 +6,36 @@
     android:layout_height="match_parent"
     tools:context=".activity.splash.AddsActivity">
 
-
-
-
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_adds"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-
-        android:id="@+id/rv_adds"/>
+        android:layout_height="match_parent" />
 
     <Button
         android:id="@+id/btn_skip"
-        android:layout_width="50dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="20dp"
-       android:background="@drawable/round_corner_button_yellow"
-      android:layout_alignParentEnd="true"
+        android:layout_width="@dimen/width_50dp"
+        android:layout_height="@dimen/height_30dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="@dimen/margin_16dp"
+        android:layout_marginTop="@dimen/margin_20dp"
+        android:layout_marginEnd="@dimen/margin_16dp"
+        android:layout_marginBottom="@dimen/margin_16dp"
+        android:background="@drawable/round_corner_button_yellow"
         android:text="@string/skip_btn"
-        android:textSize="12sp"
-        android:textColor="@color/white"
         android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="@dimen/h3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
     <ImageView
         android:id="@+id/imageView7"
-        android:layout_width="57dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginBottom="2dp"
+        android:layout_width="@dimen/height_57dp"
+        android:layout_height="@dimen/height_50dp"
         android:layout_margin="@dimen/font_10"
-        android:background="@drawable/logo_transparent" />
+        android:layout_marginTop="@dimen/margin_2dp"
+        android:layout_marginBottom="@dimen/margin_2dp"
+        android:background="@drawable/logo_transparent"
+        tools:ignore="ContentDescription" />
 
 </RelativeLayout>

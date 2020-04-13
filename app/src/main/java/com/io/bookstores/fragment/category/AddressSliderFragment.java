@@ -23,16 +23,15 @@ import java.util.List;
 public class AddressSliderFragment extends Fragment {
 
 
-
     private Activity activity;
     private RecyclerView recyclerView;
     int sizeo = 0;
     int i = 0;
-    private  List<DilveryAddressDataModel> listd = new ArrayList<>();
-    private  List<DilveryAddressDataModel> item = new ArrayList<>();
+    private List<DilveryAddressDataModel> listd = new ArrayList<>();
+    private List<DilveryAddressDataModel> item = new ArrayList<>();
 
     public AddressSliderFragment(List<DilveryAddressDataModel> listd) {
-       this.listd = listd;
+        this.listd = listd;
     }
 
 
@@ -46,7 +45,6 @@ public class AddressSliderFragment extends Fragment {
         recyclerViewSetUp();
         return view;
     }
-
 
 
     private void intailizeViews(View view) {
@@ -70,11 +68,12 @@ public class AddressSliderFragment extends Fragment {
             }
         }
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
-        AddressSliderAdapter addressSliderAdapter = new AddressSliderAdapter(getActivity(),item);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        AddressSliderAdapter addressSliderAdapter = new AddressSliderAdapter(getActivity(), item);
         recyclerView.setAdapter(addressSliderAdapter);
 
     }
+
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);

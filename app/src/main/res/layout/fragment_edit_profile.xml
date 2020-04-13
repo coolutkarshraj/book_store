@@ -13,39 +13,40 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white">
+
         <ImageView
             android:id="@+id/iv_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="10dp"
             android:layout_gravity="bottom"
+            android:layout_marginStart="@dimen/margin_15dp"
+            android:layout_marginTop="@dimen/margin_10dp"
             android:background="@drawable/item_click_animation"
             android:src="@drawable/ic_arrow_back_black_24dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="MissingConstraints" />
+            tools:ignore="ContentDescription,MissingConstraints" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_avatar"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
+            android:layout_width="@dimen/width_120dp"
+            android:layout_height="@dimen/width_120dp"
             android:layout_gravity="center"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="@dimen/margin_32dp"
             android:scaleType="centerCrop"
             android:transitionName="profile"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="UnusedAttribute" />
 
         <EditText
             android:id="@+id/et_firstname"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="@dimen/height_40dp"
             android:layout_gravity="center"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="32dp"
-            android:visibility="gone"
+            android:layout_marginTop="@dimen/margin_16dp"
+            android:layout_marginEnd="@dimen/margin_32dp"
             android:defaultFocusHighlightEnabled="true"
             android:gravity="center"
             android:inputType="text"
@@ -53,74 +54,81 @@
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"
+            android:visibility="gone"
             app:layout_constraintEnd_toStartOf="@+id/et_lastname"
             app:layout_constraintStart_toStartOf="@+id/iv_avatar"
-            app:layout_constraintTop_toBottomOf="@+id/iv_avatar" />
+            app:layout_constraintTop_toBottomOf="@+id/iv_avatar"
+            tools:ignore="Autofill,HardcodedText,LabelFor,UnusedAttribute" />
 
 
         <EditText
             android:id="@+id/et_lastname"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="@dimen/width_40dp"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="Kuwait"
-            android:visibility="gone"
             android:inputType="text"
+            android:text="Kuwait"
             android:textColor="@color/black"
-            android:textSize="18sp"
+            android:textSize="@dimen/h"
             android:textStyle="bold"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="@+id/iv_avatar"
             app:layout_constraintStart_toEndOf="@+id/et_firstname"
-            app:layout_constraintTop_toTopOf="@+id/et_firstname" />
+            app:layout_constraintTop_toTopOf="@+id/et_firstname"
+            tools:ignore="Autofill,HardcodedText,LabelFor" />
 
         <TextView
             android:id="@+id/textView17"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginLeft="32dp"
-            android:layout_marginTop="32dp"
-            android:text="Username"
+            android:layout_marginStart="@dimen/margin_32dp"
+            android:layout_marginLeft="@dimen/margin_32dp"
+            android:layout_marginTop="@dimen/margin_32dp"
             android:inputType="text"
+            android:text="Username"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_firstname" />
+            app:layout_constraintTop_toBottomOf="@+id/et_firstname"
+            tools:ignore="HardcodedText,RtlHardcoded,TextViewEdits" />
 
         <EditText
             android:id="@+id/et_username"
             style="@android:style/Widget.Holo.Light.TextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
-            android:layout_marginTop="6dp"
-            android:textSize="18sp"
+            android:layout_marginStart="@dimen/margin_32dp"
+            android:layout_marginTop="@dimen/height_6dp"
+            android:layout_marginEnd="@dimen/margin_32dp"
+            android:textSize="@dimen/h"
             app:fontFamily="@font/droidsans_bold"
             app:layout_constraintStart_toStartOf="@+id/textView17"
-            app:layout_constraintTop_toBottomOf="@+id/textView17" />
+            app:layout_constraintTop_toBottomOf="@+id/textView17"
+            tools:ignore="Autofill,LabelFor,TextFields" />
 
 
         <EditText
             android:id="@+id/et_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:textSize="18sp"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginStart="@dimen/margin_32dp"
+            android:layout_marginTop="@dimen/margin_6dp"
+            android:layout_marginEnd="@dimen/margin_32dp"
             android:inputType="textEmailAddress"
+            android:textSize="@dimen/h"
             app:fontFamily="@font/droidsans_bold"
             app:layout_constraintStart_toStartOf="@+id/textView23"
-            app:layout_constraintTop_toBottomOf="@+id/textView23" />
+            app:layout_constraintTop_toBottomOf="@+id/textView23"
+            tools:ignore="Autofill,LabelFor" />
 
         <TextView
             android:id="@+id/textView20"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="@dimen/margin_6dp"
             android:text="Phone"
             app:layout_constraintStart_toStartOf="@+id/et_username"
-            app:layout_constraintTop_toBottomOf="@+id/et_username" />
+            app:layout_constraintTop_toBottomOf="@+id/et_username"
+            tools:ignore="HardcodedText" />
 
         <TextView
             android:id="@+id/textView23"
@@ -129,21 +137,23 @@
             android:layout_marginTop="6dp"
             android:text="Email"
             app:layout_constraintStart_toStartOf="@+id/et_phone"
-            app:layout_constraintTop_toBottomOf="@+id/et_phone" />
+            app:layout_constraintTop_toBottomOf="@+id/et_phone"
+            tools:ignore="HardcodedText" />
 
         <EditText
             android:id="@+id/et_phone"
             style="@style/Widget.AppCompat.TextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginStart="@dimen/margin_32dp"
+            android:layout_marginTop="@dimen/margin_6dp"
+            android:layout_marginEnd="@dimen/margin_32dp"
             android:inputType="phone"
-            android:textSize="18sp"
+            android:textSize="@dimen/h"
             app:fontFamily="@font/droidsans_bold"
             app:layout_constraintStart_toStartOf="@+id/textView20"
-            app:layout_constraintTop_toBottomOf="@+id/textView20" />
+            app:layout_constraintTop_toBottomOf="@+id/textView20"
+            tools:ignore="Autofill,LabelFor" />
 
 
         <TextView
@@ -153,7 +163,8 @@
             android:layout_marginTop="6dp"
             android:text="Delivery Address"
             app:layout_constraintStart_toStartOf="@+id/et_email"
-            app:layout_constraintTop_toBottomOf="@+id/et_email" />
+            app:layout_constraintTop_toBottomOf="@+id/et_email"
+            tools:ignore="HardcodedText" />
 
 
         <EditText
@@ -161,14 +172,15 @@
             style="@style/Widget.AppCompat.TextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
+            android:layout_marginStart="@dimen/margin_32dp"
+            android:layout_marginTop="@dimen/margin_6dp"
+            android:layout_marginEnd="@dimen/margin_32dp"
             android:inputType="textPostalAddress"
             android:textSize="18sp"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
             app:fontFamily="@font/droidsans_bold"
             app:layout_constraintStart_toStartOf="@+id/textView26"
-            app:layout_constraintTop_toBottomOf="@+id/textView26" />
+            app:layout_constraintTop_toBottomOf="@+id/textView26"
+            tools:ignore="Autofill,LabelFor" />
 
 
         <Button
@@ -177,9 +189,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:background="@drawable/round_corner_button_yellow"
-            android:text="Save"
+            android:text="@string/save"
+            android:textAllCaps="false"
             android:textColor="#FFFFFF"
-            android:textSize="18sp"
+            android:textSize="@dimen/h1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/et_deliver_address" />
@@ -188,15 +201,17 @@
             android:id="@+id/fab_chooseimage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="75dp"
-            android:layout_marginLeft="75dp"
-            android:layout_marginTop="75dp"
-            android:clickable="true"
-            android:src="@drawable/ic_picture"
+            android:layout_marginStart="@dimen/margin_75dp"
+            android:layout_marginLeft="@dimen/margin_75dp"
+            android:layout_marginTop="@dimen/margin_75dp"
             android:backgroundTint="@color/colorPrimary"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/ic_picture"
             app:layout_constraintBottom_toBottomOf="@+id/iv_avatar"
             app:layout_constraintStart_toStartOf="@+id/iv_avatar"
-            app:layout_constraintTop_toTopOf="@+id/iv_avatar" />
+            app:layout_constraintTop_toTopOf="@+id/iv_avatar"
+            tools:ignore="RtlHardcoded,UnusedAttribute" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

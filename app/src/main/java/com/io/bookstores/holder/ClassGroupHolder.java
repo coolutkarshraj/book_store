@@ -11,13 +11,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.io.bookstores.R;
 
 
-public class SchoolCategoriesHolder extends RecyclerView.ViewHolder
+public class ClassGroupHolder extends RecyclerView.ViewHolder
         implements View.OnClickListener  {
     public TextView tvClassName;
     public RelativeLayout rlRoot;
 
 
-    public SchoolCategoriesHolder(View view) {
+    public ClassGroupHolder(View view) {
 
         super(view);
         tvClassName = view.findViewById(R.id.tv_class_name);

@@ -48,7 +48,7 @@
 
         <TextView
             android:id="@+id/tv_school_name"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
@@ -57,7 +57,10 @@
             android:textSize="16sp"
             cardview:fontFamily="@font/arial_bold"
             cardview:layout_constraintStart_toStartOf="parent"
-            cardview:layout_constraintTop_toTopOf="parent" />
+            cardview:layout_constraintTop_toTopOf="parent"
+            cardview:layout_constraintStart_toEndOf="@+id/materialCardView"
+            cardview:layout_constraintEnd_toEndOf="@+id/materialCardView"
+            cardview:layout_constraintEnd_toStartOf="@+id/materialCardView" />
 
         <TextView
             android:id="@+id/tv_school_description"
@@ -66,6 +69,8 @@
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="12dp"
+            android:ellipsize="end"
+            android:maxLines="3"
             android:text="Books, Clothes, WorkBooks"
             android:textSize="12sp"
             cardview:fontFamily="sans-serif"

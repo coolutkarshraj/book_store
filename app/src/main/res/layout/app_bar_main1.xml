@@ -12,11 +12,8 @@
         <LinearLayout
             android:id="@+id/ll_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
-            <include layout="@layout/drawer_toolbar_book_store">
-
-            </include>
+            android:layout_height="wrap_content">
+            <include layout="@layout/drawer_toolbar_book_store" />
         </LinearLayout>
 
         <FrameLayout

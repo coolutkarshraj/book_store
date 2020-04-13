@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.io.bookstores.R;
 import com.io.bookstores.holder.ClothHolder;
-import com.io.bookstores.holder.SchoolCategoriesHolder;
 import com.io.bookstores.model.insituteModel.TrendingInstituteDataModel;
 
 import java.util.List;

@@ -9,13 +9,13 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.io.bookstores.R;
-import com.io.bookstores.holder.SchoolCategoriesHolder;
+import com.io.bookstores.holder.ClassGroupHolder;
 import com.io.bookstores.model.insituteModel.TrendingInstituteDataModel;
 
 import java.util.List;
 
 
-public class SchoolDetialRvAdapter extends RecyclerView.Adapter<SchoolCategoriesHolder> {
+public class SchoolDetialRvAdapter extends RecyclerView.Adapter<ClassGroupHolder> {
 
     private Activity activity;
     private List<TrendingInstituteDataModel> list;
@@ -27,13 +27,13 @@ public class SchoolDetialRvAdapter extends RecyclerView.Adapter<SchoolCategories
     }
 
     @Override
-    public SchoolCategoriesHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ClassGroupHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(activity).inflate(R.layout.item_school_detial_list, parent, false);
-        return new SchoolCategoriesHolder(view);
+        return new ClassGroupHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(SchoolCategoriesHolder holder, final int position) {
+    public void onBindViewHolder(ClassGroupHolder holder, final int position) {
         TrendingInstituteDataModel model = list.get(position);
 
 

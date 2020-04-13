@@ -30,7 +30,7 @@
             android:layout_weight="4"
             android:text="@string/checkout"
             android:textAllCaps="true"
-            android:textColor="#4a5157"
+            android:textColor="@color/text_color_ligh_black"
             android:textSize="@dimen/eighteen_dp"
             android:textStyle="bold"
             tools:ignore="SpUsage" />

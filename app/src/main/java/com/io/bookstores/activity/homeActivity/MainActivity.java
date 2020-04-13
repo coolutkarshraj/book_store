@@ -31,6 +31,7 @@ import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -58,6 +59,8 @@ import com.io.bookstores.fragment.CourseEnrollmentFragment;
 import com.io.bookstores.fragment.EnrollCourseListFragment;
 import com.io.bookstores.fragment.FavoriteItemsFragment;
 import com.io.bookstores.fragment.category.CategoryGridFragment;
+import com.io.bookstores.fragment.schoolFragments.AllClassesFragment;
+import com.io.bookstores.fragment.schoolFragments.AllSchoolsFragment;
 import com.io.bookstores.listeners.ItemClickListner;
 import com.io.bookstores.localStorage.DbHelper;
 import com.io.bookstores.localStorage.LocalStorage;
@@ -89,6 +92,8 @@ public class MainActivity extends AppCompatActivity implements
     HomeFragment homeFragment;
     CartFragment cartFragment;
     OrderFragment orderFragment;
+    AllSchoolsFragment allSchoolsFragment;
+    AllClassesFragment allClassesFragment;
     TextView notification;
     userOnlineInfo user;
     NewProgressBar dialog;
@@ -121,8 +126,10 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         initView();
         bindListner();
         startWorking();
@@ -132,10 +139,10 @@ public class MainActivity extends AppCompatActivity implements
     private void startWorking() {
         if (localStorage.getBoolean(LocalStorage.isCart)) {
             changeFrag(cartFragment, true);
-        } else if(localStorage.getBoolean(LocalStorage.isEnroll)) {
+        } else if (localStorage.getBoolean(LocalStorage.isEnroll)) {
             courseEnrollmentFragment = new CourseEnrollmentFragment(localStorage.getcourse());
             changeFrag(courseEnrollmentFragment, true);
-        }else {
+        } else {
             startHome();
         }
     }
@@ -164,7 +171,7 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private void bindListner() {
-        localStorage.putString(LocalStorage.addressId,"");
+        localStorage.putString(LocalStorage.addressId, "");
         navigationView.setNavigationItemSelectedListener(MainActivity.this);
 
         menu.setOnClickListener(
@@ -351,7 +358,6 @@ public class MainActivity extends AppCompatActivity implements
     }
 
 
-
     private void changeLanguageDialog() {
 
         final Dialog dialog = new Dialog(this);
@@ -389,7 +395,9 @@ public class MainActivity extends AppCompatActivity implements
                         initView();
                         bindListner();
                         startWorking();
-                        startActivity(new Intent(MainActivity.this,MainActivity.class));
+                        Intent i = new  Intent(MainActivity.this, MainActivity.class);
+                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(i);
                     } else {
                         StaticData.selectedLanguage = "kuwait";
                         Locale locale = new Locale("hi");
@@ -398,7 +406,9 @@ public class MainActivity extends AppCompatActivity implements
                         config.locale = locale;
                         getBaseContext().getResources().updateConfiguration(config, null);
                         dialog.dismiss();
-                      startActivity(new Intent(MainActivity.this,MainActivity.class));
+                        Intent i = new  Intent(MainActivity.this, MainActivity.class);
+                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(i);
 
                     }
                 }
@@ -598,6 +608,8 @@ public class MainActivity extends AppCompatActivity implements
         homeFragment = new HomeFragment();
         cartFragment = new CartFragment();
         orderFragment = new OrderFragment();
+        allSchoolsFragment = new AllSchoolsFragment();
+        allClassesFragment = new AllClassesFragment();
 
         favoriteItemsFragment = new FavoriteItemsFragment();
         deliveryAddressFragment = new DeliveryAddressFragment();
@@ -625,7 +637,7 @@ public class MainActivity extends AppCompatActivity implements
         categoryListFragment = new CategoryListFragment();
         bookListFragment = new BookListFragment();
         bookstoresFragmentWithFilter = new BookstoresFragmentWithFilter();
-            loginModel = localStorage.getUserProfile();
+        loginModel = localStorage.getUserProfile();
         navigationHeader();
         getSqliteData1();
     }
@@ -658,7 +670,7 @@ public class MainActivity extends AppCompatActivity implements
             m.setCustomAnimations(R.anim.fade_in,
                     R.anim.fade_out);
         }
-        m.commit();
+        m.commitAllowingStateLoss();
     }
 
     @Override
@@ -690,6 +702,18 @@ public class MainActivity extends AppCompatActivity implements
         }
         if (position == 6) {
             onBackPressed();
+        }
+        if (position == 7) {
+            MainActivity.this.getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.content_view, allSchoolsFragment)
+                    .addToBackStack(null)
+                    .commit();
+        }
+        if (position == 8) {
+            MainActivity.this.getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.content_view, allClassesFragment)
+                    .addToBackStack(null)
+                    .commit();
         }
     }
 
@@ -789,7 +813,7 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
-    private void colorAllBlack(){
+    private void colorAllBlack() {
         Drawable unwrappedDrawable = AppCompatResources.getDrawable(MainActivity.this, R.drawable.hearts);
         assert unwrappedDrawable != null;
         Drawable wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable);
@@ -815,7 +839,7 @@ public class MainActivity extends AppCompatActivity implements
         ivCart.setImageResource(R.drawable.ic_local_mall_black_24dp);
     }
 
-    private void payment(){
+    private void payment() {
         Drawable unwrappedDrawable = AppCompatResources.getDrawable(MainActivity.this, R.drawable.hearts);
         assert unwrappedDrawable != null;
         Drawable wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable);
@@ -837,14 +861,13 @@ public class MainActivity extends AppCompatActivity implements
     }
 
 
-
     @Override
     public void onBackPressed() {
-            if (localStorage.getBoolean(LocalStorage.isCart)) {
-                CartFragment.rb_1st.setChecked(false);
-                CartFragment.rb_2nd.setChecked(false);
-                CartFragment.dilvery = 0;
-            }
+        if (localStorage.getBoolean(LocalStorage.isCart)) {
+            CartFragment.rb_1st.setChecked(false);
+            CartFragment.rb_2nd.setChecked(false);
+            CartFragment.dilvery = 0;
+        }
 
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
