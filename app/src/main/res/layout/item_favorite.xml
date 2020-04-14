@@ -2,43 +2,42 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:cardview="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="180dp"
-
-    android:layout_marginBottom="5dp"
-    android:layout_height="wrap_content">
+    android:layout_width="@dimen/margin_180dp"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/margin_5dp">
 
     <ImageView
         android:id="@+id/imageView19"
         android:layout_width="0dp"
-        android:layout_height="190dp"
-
+        android:layout_height="@dimen/height_190dp"
         cardview:layout_constraintBottom_toBottomOf="parent"
         cardview:layout_constraintEnd_toEndOf="parent"
         cardview:layout_constraintHorizontal_bias="0.0"
         cardview:layout_constraintStart_toEndOf="@+id/cardview_id_item"
         cardview:layout_constraintTop_toTopOf="parent"
-
         cardview:layout_constraintVertical_bias="0.714"
-        cardview:srcCompat="@color/blackOlive" />
+        cardview:srcCompat="@color/blackOlive"
+        tools:ignore="ContentDescription" />
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardview_id_item"
-        android:layout_width="130dp"
-        android:layout_height="190dp"
-
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="10dp"
+        android:layout_width="@dimen/margin_130dp"
+        android:layout_height="@dimen/height_190dp"
+        android:layout_marginStart="@dimen/margin_20dp"
+        android:layout_marginTop="@dimen/margin_20dp"
+        android:layout_marginEnd="@dimen/margin_20dp"
+        android:layout_marginBottom="@dimen/margin_10dp"
         android:clickable="true"
-        android:elevation="5dp"
+        android:elevation="@dimen/margin_5dp"
+        android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"
         cardview:cardBackgroundColor="@color/lightMediumGrey"
-        cardview:cardCornerRadius="4dp"
-        cardview:cardElevation="10dp"
+        cardview:cardCornerRadius="@dimen/radius_4dp"
+        cardview:cardElevation="@dimen/elevation_10dp"
         cardview:layout_constraintBottom_toBottomOf="parent"
         cardview:layout_constraintStart_toStartOf="parent"
-        cardview:layout_constraintTop_toTopOf="parent">
+        cardview:layout_constraintTop_toTopOf="parent"
+        tools:ignore="UnusedAttribute">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -49,18 +48,17 @@
 
             <ImageView
                 android:id="@+id/iv_favorite"
-                android:layout_width="100dp"
-                android:layout_height="140dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:background="#2d2d2d"
+                android:layout_width="@dimen/height_100dp"
+                android:layout_height="@dimen/height_140dp"
+                android:layout_marginStart="@dimen/margin_16dp"
+                android:layout_marginEnd="@dimen/margin_8dp"
+                android:background="@color/blackOlive"
                 android:scaleType="centerCrop"
                 cardview:layout_constraintBottom_toBottomOf="parent"
                 cardview:layout_constraintEnd_toEndOf="parent"
                 cardview:layout_constraintStart_toStartOf="parent"
-                cardview:layout_constraintTop_toTopOf="parent" />
+                cardview:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -71,40 +69,41 @@
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
         android:layout_marginBottom="40dp"
+        android:ellipsize="end"
+        android:maxLength="10"
         android:orientation="horizontal"
         android:rotation="-90"
         android:text="My Books"
-        android:maxLength="10"
         android:textColor="#FFFFFF"
-        android:textSize="16dp"
-        android:ellipsize="end"
+        android:textSize="@dimen/h1"
         cardview:fontFamily="@font/arial_bold"
         cardview:layout_constraintBottom_toBottomOf="@+id/imageView19"
         cardview:layout_constraintEnd_toEndOf="parent"
-        cardview:layout_constraintStart_toEndOf="@+id/cardview_id_item" />
+        cardview:layout_constraintStart_toEndOf="@+id/cardview_id_item"
+        tools:ignore="HardcodedText,SpUsage" />
 
     <ImageView
         android:id="@+id/imageView20"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="@dimen/margin_24dp"
+        android:layout_height="@dimen/margin_24dp"
+        android:layout_marginTop="@dimen/margin_8dp"
         android:rotation="-90"
         cardview:layout_constraintEnd_toEndOf="parent"
         cardview:layout_constraintTop_toTopOf="@+id/imageView19"
         cardview:srcCompat="@drawable/ic_favorite_blue_24dp"
-        tools:ignore="VectorDrawableCompat" />
+        tools:ignore="ContentDescription,VectorDrawableCompat" />
 
     <ImageView
         android:id="@+id/imageView21"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginTop="32dp"
+        android:layout_width="@dimen/margin_24dp"
+        android:layout_height="@dimen/margin_24dp"
+        android:layout_marginTop="@dimen/margin_32dp"
+        android:background="@drawable/cart"
+        android:backgroundTint="@color/blue"
         android:rotation="-90"
         cardview:layout_constraintEnd_toEndOf="parent"
         cardview:layout_constraintTop_toTopOf="@+id/imageView19"
-        android:backgroundTint="#00ACEE"
-        android:background="@drawable/cart"
-        tools:ignore="VectorDrawableCompat" />
+        tools:ignore="ContentDescription,UnusedAttribute,VectorDrawableCompat" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

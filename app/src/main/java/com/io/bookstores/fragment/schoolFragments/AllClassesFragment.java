@@ -16,14 +16,12 @@ import android.widget.TextView;
 
 import com.io.bookstores.Config;
 import com.io.bookstores.R;
-import com.io.bookstores.adapter.schoolAdapter.AllSchoolsRvAdapter;
 import com.io.bookstores.adapter.schoolAdapter.ClassGroupRvAdapter;
 import com.io.bookstores.apicaller.ApiCaller;
 import com.io.bookstores.listeners.ItemClickListner;
+import com.io.bookstores.localStorage.LocalStorage;
 import com.io.bookstores.model.classModel.ClassDataModel;
 import com.io.bookstores.model.classModel.ClassResponseModel;
-import com.io.bookstores.model.schoolModel.GetAllSchollResponseModel;
-import com.io.bookstores.model.schoolModel.GetAllSchoolDataModel;
 import com.io.bookstores.utility.NewProgressBar;
 import com.io.bookstores.utility.Utils;
 import com.io.bookstores.utility.userOnlineInfo;
@@ -31,6 +29,7 @@ import com.koushikdutta.async.future.FutureCallback;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 
 public class AllClassesFragment extends Fragment implements View.OnClickListener {
@@ -40,11 +39,12 @@ public class AllClassesFragment extends Fragment implements View.OnClickListener
     private ClassGroupRvAdapter adapter;
     private ImageView iv_back;
     private TextView notdata;
-    private userOnlineInfo user;
     private SearchView search_all_classes;
     private NewProgressBar dialog;
+    private userOnlineInfo user;
     private List<ClassDataModel> listData;
     private ItemClickListner itemClickListner;
+    private LocalStorage localStorage;
 
     public AllClassesFragment() {
         // Required empty public constructor
@@ -69,6 +69,7 @@ public class AllClassesFragment extends Fragment implements View.OnClickListener
         user = new userOnlineInfo();
         dialog = new NewProgressBar(activity);
         listData = new ArrayList<>();
+        localStorage = new LocalStorage(activity);
         itemClickListner = (ItemClickListner) getActivity();
         rvAllClasses = view.findViewById(R.id.rv_all_classes);
         iv_back = view.findViewById(R.id.iv_back);
@@ -105,7 +106,8 @@ public class AllClassesFragment extends Fragment implements View.OnClickListener
     private void allClassGroupApi() {
         if (user.isOnline(activity)) {
             dialog.show();
-            ApiCaller.getclassApi(getActivity(), Config.Url.getclass,
+
+            ApiCaller.getclassApi(getActivity(), Config.Url.getclass, localStorage.getString(LocalStorage.schoolId),
                     new FutureCallback<ClassResponseModel>() {
 
                         @Override

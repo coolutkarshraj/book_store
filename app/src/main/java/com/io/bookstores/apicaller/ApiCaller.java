@@ -18,6 +18,7 @@ import com.io.bookstores.model.adminResponseModel.DeleteBookResponseModel;
 import com.io.bookstores.model.bookListModel.BookListModel;
 import com.io.bookstores.model.categoryModel.CategoryModel;
 import com.io.bookstores.model.changePasswordOtpModel.ChangePasswordVerifyOtpModel;
+import com.io.bookstores.model.classModel.ClassCategoryModel;
 import com.io.bookstores.model.classModel.ClassResponseModel;
 import com.io.bookstores.model.contactUs.AdsResponseModel;
 import com.io.bookstores.model.contactUs.ContactUsResponseModel;
@@ -44,7 +45,7 @@ import com.io.bookstores.model.loginModel.LoginModel;
 import com.io.bookstores.model.myOrder.MyOrderResponseModel;
 import com.io.bookstores.model.orderModel.OrderStatusChangeResponseModel;
 import com.io.bookstores.model.registerModel.RegisterModel;
-import com.io.bookstores.model.schoolModel.GetAllSchollResponseModel;
+import com.io.bookstores.model.schoolModel.GetAllSchoolResponseModel;
 import com.io.bookstores.model.sliderAdModel.AdModel;
 import com.io.bookstores.model.store.EditStoreDetialResponseModel;
 import com.io.bookstores.model.store.StoreDetailResponseModel;
@@ -1196,17 +1197,18 @@ public class ApiCaller {
     /*------------------------------------------------------- get schools Api------------------------------------------------------------*/
 
     public static void getSchoolApi(Activity activity, String url,
-                                    final FutureCallback<GetAllSchollResponseModel> apiCallBack) {
+                                    final FutureCallback<GetAllSchoolResponseModel> apiCallBack) {
 
         final Gson gson = new Gson();
         Ion.with(activity)
                 .load(UrlLocator.getFinalUrl(url))
                 .noCache()
+
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
                     public void onCompleted(Exception e, JsonObject result) {
-                        GetAllSchollResponseModel allSchollResponseModel = gson.fromJson(result, GetAllSchollResponseModel.class);
+                        GetAllSchoolResponseModel allSchollResponseModel = gson.fromJson(result, GetAllSchoolResponseModel.class);
                         apiCallBack.onCompleted(e, allSchollResponseModel);
                     }
                 });
@@ -1214,19 +1216,42 @@ public class ApiCaller {
 
     /*------------------------------------------------------- get class group Api------------------------------------------------------------*/
 
-    public static void getclassApi(Activity activity, String url,
+    public static void getclassApi(Activity activity, String url, String schoolId,
                                    final FutureCallback<ClassResponseModel> apiCallBack) {
-
+        final JsonObject json = new JsonObject();
+        json.addProperty("schoolId", schoolId);
         final Gson gson = new Gson();
         Ion.with(activity)
                 .load(UrlLocator.getFinalUrl(url))
                 .noCache()
+                .setJsonObjectBody(json)
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
                     public void onCompleted(Exception e, JsonObject result) {
                         ClassResponseModel classResponseModel = gson.fromJson(result, ClassResponseModel.class);
                         apiCallBack.onCompleted(e, classResponseModel);
+                    }
+                });
+    }
+
+    /*------------------------------------------------------- get class ategory Api------------------------------------------------------------*/
+
+    public static void getclassCategoryApi(Activity activity, String url, String classGroupId,
+                                           final FutureCallback<ClassCategoryModel> apiCallBack) {
+        final JsonObject json = new JsonObject();
+        json.addProperty("classGroupId", classGroupId);
+        final Gson gson = new Gson();
+        Ion.with(activity)
+                .load("POST",UrlLocator.getFinalUrl(url))
+                .noCache()
+                .setJsonObjectBody(json)
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        ClassCategoryModel classCategoryModel = gson.fromJson(result, ClassCategoryModel.class);
+                        apiCallBack.onCompleted(e, classCategoryModel);
                     }
                 });
     }

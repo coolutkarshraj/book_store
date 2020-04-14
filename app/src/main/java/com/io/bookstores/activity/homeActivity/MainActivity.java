@@ -61,6 +61,8 @@ import com.io.bookstores.fragment.FavoriteItemsFragment;
 import com.io.bookstores.fragment.category.CategoryGridFragment;
 import com.io.bookstores.fragment.schoolFragments.AllClassesFragment;
 import com.io.bookstores.fragment.schoolFragments.AllSchoolsFragment;
+import com.io.bookstores.fragment.schoolFragments.ClassCategoryFragment;
+import com.io.bookstores.fragment.schoolFragments.ClothsFragment;
 import com.io.bookstores.listeners.ItemClickListner;
 import com.io.bookstores.localStorage.DbHelper;
 import com.io.bookstores.localStorage.LocalStorage;
@@ -101,7 +103,9 @@ public class MainActivity extends AppCompatActivity implements
 
     CategoryListFragment categoryListFragment;
     FavoriteItemsFragment favoriteItemsFragment;
+    ClassCategoryFragment classCategoryFragment;
     CategoryGridFragment categoryGridFragment;
+    ClothsFragment clothsFragment;
     FloatingActionButton fabSave;
     ImageView iv_cart;
     TextView nav_user, nav_Email, tv_logout;
@@ -395,7 +399,7 @@ public class MainActivity extends AppCompatActivity implements
                         initView();
                         bindListner();
                         startWorking();
-                        Intent i = new  Intent(MainActivity.this, MainActivity.class);
+                        Intent i = new Intent(MainActivity.this, MainActivity.class);
                         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(i);
                     } else {
@@ -406,7 +410,7 @@ public class MainActivity extends AppCompatActivity implements
                         config.locale = locale;
                         getBaseContext().getResources().updateConfiguration(config, null);
                         dialog.dismiss();
-                        Intent i = new  Intent(MainActivity.this, MainActivity.class);
+                        Intent i = new Intent(MainActivity.this, MainActivity.class);
                         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(i);
 
@@ -608,9 +612,10 @@ public class MainActivity extends AppCompatActivity implements
         homeFragment = new HomeFragment();
         cartFragment = new CartFragment();
         orderFragment = new OrderFragment();
+        clothsFragment = new ClothsFragment();
         allSchoolsFragment = new AllSchoolsFragment();
         allClassesFragment = new AllClassesFragment();
-
+        classCategoryFragment = new ClassCategoryFragment();
         favoriteItemsFragment = new FavoriteItemsFragment();
         deliveryAddressFragment = new DeliveryAddressFragment();
         dbHelper = new DbHelper(this);
@@ -712,6 +717,18 @@ public class MainActivity extends AppCompatActivity implements
         if (position == 8) {
             MainActivity.this.getSupportFragmentManager().beginTransaction()
                     .replace(R.id.content_view, allClassesFragment)
+                    .addToBackStack(null)
+                    .commit();
+        }
+        if (position == 9) {
+            MainActivity.this.getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.content_view, classCategoryFragment)
+                    .addToBackStack(null)
+                    .commit();
+        }
+        if (position == 10) {
+            MainActivity.this.getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.content_view, clothsFragment)
                     .addToBackStack(null)
                     .commit();
         }
@@ -872,6 +889,7 @@ public class MainActivity extends AppCompatActivity implements
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
+            localStorage.putString(LocalStorage.clothType, "");
             super.onBackPressed();
         }
 

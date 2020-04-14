@@ -37,12 +37,12 @@
                 android:textSize="@dimen/h2" />
 
             <TextView
+                android:id="@+id/tv_pending"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/pending"
                 android:textColor="@color/black"
-                android:textSize="@dimen/h1"
-                android:id="@+id/tv_pending" />
+                android:textSize="@dimen/h1" />
         </LinearLayout>
 
 
@@ -51,9 +51,9 @@
             android:layout_width="@dimen/width_1dp"
             android:layout_height="@dimen/height_80dp"
             android:layout_below="@id/ll0"
-            android:orientation="horizontal"
             android:layout_marginStart="@dimen/margin_35dp"
             android:background="@color/light_gray"
+            android:orientation="horizontal"
             tools:ignore="ContentDescription" />
 
         <LinearLayout
@@ -73,12 +73,12 @@
                 android:textSize="@dimen/h1" />
 
             <TextView
+                android:id="@+id/tv_accepted"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/accepted"
                 android:textColor="@color/black"
-                android:textSize="@dimen/h1"
-                android:id="@+id/tv_accepted" />
+                android:textSize="@dimen/h1" />
 
         </LinearLayout>
 
@@ -86,11 +86,11 @@
             android:id="@+id/view1"
             android:layout_width="@dimen/width_1dp"
             android:layout_height="@dimen/height_80dp"
-            android:orientation="horizontal"
             android:layout_below="@id/ll1"
             android:layout_marginStart="@dimen/margin_35dp"
-        
             android:background="@color/light_gray"
+
+            android:orientation="horizontal"
             tools:ignore="ContentDescription" />
 
         <LinearLayout
@@ -110,12 +110,12 @@
                 android:textSize="@dimen/h2" />
 
             <TextView
+                android:id="@+id/tv_shipped"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/shipped"
                 android:textColor="@color/black"
-                android:textSize="@dimen/h1"
-                android:id="@+id/tv_shipped" />
+                android:textSize="@dimen/h1" />
         </LinearLayout>
 
 
@@ -125,8 +125,8 @@
             android:layout_height="@dimen/height_80dp"
             android:layout_below="@id/ll2"
             android:layout_marginStart="@dimen/margin_35dp"
-           android:orientation="vertical"
             android:background="@color/light_gray"
+            android:orientation="vertical"
             tools:ignore="ContentDescription" />
 
         <LinearLayout
@@ -148,12 +148,12 @@
                 android:textSize="@dimen/h2" />
 
             <TextView
+                android:id="@+id/tv_out_for_dilvery"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/out_for_delivery"
                 android:textColor="@color/black"
-                android:textSize="@dimen/h1"
-                android:id="@+id/tv_out_for_dilvery" />
+                android:textSize="@dimen/h1" />
         </LinearLayout>
 
         <ImageView
@@ -161,9 +161,9 @@
             android:layout_width="@dimen/width_1dp"
             android:layout_height="@dimen/height_80dp"
             android:layout_below="@id/ll3"
-            android:orientation="vertical"
             android:layout_marginStart="@dimen/margin_35dp"
             android:background="@color/light_gray"
+            android:orientation="vertical"
             tools:ignore="ContentDescription" />
 
         <LinearLayout
@@ -184,12 +184,12 @@
 
 
             <TextView
+                android:id="@+id/tv_delivered"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/delivered"
                 android:textColor="@color/black"
-                android:textSize="@dimen/h1"
-                android:id="@+id/tv_delivered" />
+                android:textSize="@dimen/h1" />
         </LinearLayout>
     </RelativeLayout>
 

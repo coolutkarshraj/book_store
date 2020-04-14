@@ -20,6 +20,9 @@ public class LocalStorage {
     public static String isEnroll ="isEnroll";
     public static String isEnrllValue ="isEnrllValue";
     public static String StoreId ="StoreId";
+    public static String schoolId ="SchoolId";
+    public static String classGroupId ="classGroupId";
+    public static String clothType ="clothType";
     public static String CategoryId ="CategoryId";
     public static String addressId = "addressId";
     public static String token = "Token";

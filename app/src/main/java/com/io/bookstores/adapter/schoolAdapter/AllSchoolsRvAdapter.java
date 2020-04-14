@@ -5,20 +5,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.io.bookstores.Config;
 import com.io.bookstores.R;
-import com.io.bookstores.holder.CoursesHolder;
 import com.io.bookstores.holder.SchoolsHolder;
 import com.io.bookstores.listeners.ItemClickListner;
-import com.io.bookstores.listeners.RecyclerViewClickListener;
 import com.io.bookstores.localStorage.LocalStorage;
-import com.io.bookstores.model.bookListModel.Datum;
-import com.io.bookstores.model.insituteModel.TrendingInstituteDataModel;
 import com.io.bookstores.model.schoolModel.GetAllSchoolDataModel;
+import com.io.bookstores.model.schoolModel.GetAllSchoolResponseModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +40,7 @@ public class AllSchoolsRvAdapter extends RecyclerView.Adapter<SchoolsHolder> {
 
     @Override
     public void onBindViewHolder(SchoolsHolder holder, final int position) {
-        GetAllSchoolDataModel model = list.get(position);
+        final GetAllSchoolDataModel model = list.get(position);
         holder.tvSchoolName.setText(model.getSchoolName());
         holder.tvSchoolDesc.setText(model.getDescription());
         Glide.with(activity).load(Config.imageUrl + model.getAvatarPath()).into(holder.iv_school_logo);
@@ -52,6 +48,8 @@ public class AllSchoolsRvAdapter extends RecyclerView.Adapter<SchoolsHolder> {
             @Override
             public void onClick(View v) {
                 itemClickListner = (ItemClickListner) activity;
+                LocalStorage localStorage = new LocalStorage(activity);
+                localStorage.putString(LocalStorage.schoolId, String.valueOf(model.getSchoolId()));
                 itemClickListner.onClick(8);
             }
         });

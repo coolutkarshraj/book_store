@@ -20,7 +20,7 @@ public class SchoolDetailsHolder extends RecyclerView.ViewHolder
     public SchoolDetailsHolder(View view) {
 
         super(view);
-        tv_School_Detail_ = view.findViewById(R.id.tv_School_Detail_);
+       // tv_School_Detail_ = view.findViewById(R.id.tv_School_Detail_);
         iv_school_icon = view.findViewById(R.id.iv_school_detail);
 
     }

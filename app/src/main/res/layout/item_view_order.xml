@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="5dp"
-    android:layout_marginStart="5dp"
-    android:layout_marginEnd="5dp"
-    app:cardCornerRadius="5dp"
-    app:cardElevation="3dp">
+    android:layout_marginStart="@dimen/margin_5dp"
+    android:layout_marginTop="@dimen/margin_5dp"
+    android:layout_marginEnd="@dimen/margin_5dp"
+    app:cardCornerRadius="@dimen/margin_5dp"
+    app:cardElevation="@dimen/elevation_3dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -18,48 +18,51 @@
             android:id="@+id/textView9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginStart="@dimen/margin_16dp"
+            android:layout_marginTop="@dimen/margin_16dp"
             android:fontFamily="@font/exo_bold"
             android:text="Order -#4217"
-            android:textSize="20sp"
+            android:textSize="@dimen/h20"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="HardcodedText" />
 
         <TextView
             android:id="@+id/textView10"
-            android:layout_width="135dp"
-            android:layout_height="19dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_width="@dimen/width_135dp"
+            android:layout_height="@dimen/height_19dp"
+            android:layout_marginStart="@dimen/margin_16dp"
+            android:layout_marginTop="@dimen/margin_8dp"
             android:fontFamily="@font/exo"
-            android:visibility="gone"
             android:text="Pilot Paint , Color mix"
-            android:textSize="14sp"
+            android:textSize="@dimen/h2"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView9" />
+            app:layout_constraintTop_toBottomOf="@+id/textView9"
+            tools:ignore="HardcodedText" />
 
         <TextView
             android:id="@+id/textView11"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginStart="@dimen/margin_16dp"
+            android:layout_marginTop="@dimen/margin_8dp"
+            android:layout_marginEnd="@dimen/margin_8dp"
             android:fontFamily="@font/exo"
             android:text="Order Date : Friday 13th dec 2019"
-            android:textSize="14sp"
+            android:textSize="@dimen/h2"
             app:layout_constraintEnd_toStartOf="@+id/linearLayout"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView10" />
+            app:layout_constraintTop_toBottomOf="@+id/textView10"
+            tools:ignore="HardcodedText" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/linearLayout"
-            android:layout_width="95dp"
-            android:layout_height="100dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="16dp"
+            android:layout_width="@dimen/width_95dp"
+            android:layout_height="@dimen/height_100dp"
+            android:layout_marginStart="@dimen/margin_8dp"
+            android:layout_marginTop="@dimen/width_20dp"
+            android:layout_marginEnd="@dimen/margin_16dp"
             android:background="@color/light_gray"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
@@ -72,6 +75,7 @@
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
                 app:srcCompat="@drawable/defaultimage"
+                tools:ignore="ContentDescription"
                 tools:layout_editor_absoluteX="258dp"
                 tools:layout_editor_absoluteY="20dp" />
 
@@ -90,11 +94,11 @@
                 android:id="@+id/textView12"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginBottom="25dp"
+                android:layout_marginStart="@dimen/margin_16dp"
+                android:layout_marginTop="@dimen/margin_24dp"
+                android:layout_marginBottom="@dimen/margin_25dp"
                 android:fontFamily="@font/exo"
-                android:text="Details"
+                android:text="@string/details"
                 android:textColor="@android:color/holo_blue_light"
                 android:textSize="@dimen/h2"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -103,31 +107,30 @@
                 android:id="@+id/textView13"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginStart="@dimen/margin_16dp"
+                android:layout_marginTop="@dimen/margin_24dp"
                 android:layout_toEndOf="@+id/textView12"
                 android:fontFamily="@font/exo"
-                android:text="Track"
-                android:visibility="gone"
+                android:text="@string/track"
                 android:textColor="@android:color/holo_blue_light"
-                android:textSize="@dimen/h2" />
+                android:textSize="@dimen/h2"
+                android:visibility="gone" />
 
             <ImageView
                 android:id="@+id/iv_editOrder"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="@dimen/width_20dp"
+                android:layout_height="@dimen/height_20dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/margin_10dp"
                 android:layout_toEndOf="@+id/textView13"
                 android:background="@drawable/ic_edit_black_24dp"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="10dp"
                 android:backgroundTint="@color/colorPrimary"
 
-                tools:ignore="MissingConstraints" />
+                tools:ignore="ContentDescription,MissingConstraints,UnusedAttribute" />
         </RelativeLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 
 </androidx.cardview.widget.CardView>

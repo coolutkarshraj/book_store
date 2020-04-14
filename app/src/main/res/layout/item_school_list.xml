@@ -5,16 +5,18 @@
     android:id="@+id/cardview_item_bookstore"
     android:layout_width="match_parent"
     android:layout_height="160dp"
-    android:layout_margin="10dp"
+    android:layout_margin="@dimen/margin_10dp"
     android:clickable="true"
-    android:elevation="15dp"
+    android:elevation="@dimen/margin_15dp"
+    android:focusable="true"
     android:foreground="?android:attr/selectableItemBackground"
     cardview:cardBackgroundColor="@color/lightMediumGrey"
-    cardview:cardCornerRadius="8dp"
-    cardview:cardElevation="10dp"
+    cardview:cardCornerRadius="@dimen/margin_8dp"
+    cardview:cardElevation="@dimen/margin_10dp"
     cardview:layout_constraintEnd_toEndOf="parent"
     cardview:layout_constraintStart_toStartOf="parent"
-    cardview:layout_constraintTop_toTopOf="parent">
+    cardview:layout_constraintTop_toTopOf="parent"
+    tools:ignore="UnusedAttribute">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -25,12 +27,11 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/materialCardView"
-            android:layout_width="170dp"
-            android:layout_height="100dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            cardview:cardCornerRadius="8dp"
+            android:layout_width="@dimen/width_170dp"
+            android:layout_height="@dimen/height_100dp"
+            android:layout_marginTop="@dimen/margin_8dp"
+            android:layout_marginEnd="@dimen/margin_8dp"
+            cardview:cardCornerRadius="@dimen/margin_8dp"
             cardview:layout_constraintEnd_toEndOf="parent"
             cardview:layout_constraintTop_toTopOf="parent">
 
@@ -41,7 +42,8 @@
                 android:scaleType="fitCenter"
                 android:src="@drawable/defaultimage"
                 cardview:layout_constraintEnd_toEndOf="parent"
-                cardview:layout_constraintTop_toTopOf="parent" />
+                cardview:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription" />
 
         </com.google.android.material.card.MaterialCardView>
 
@@ -50,25 +52,22 @@
             android:id="@+id/tv_school_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="8dp"
-            android:text="TextView"
-            android:textSize="16sp"
+            android:layout_marginStart="@dimen/margin_8dp"
+            android:layout_marginTop="@dimen/margin_8dp"
+            android:textSize="@dimen/h1"
             cardview:fontFamily="@font/arial_bold"
-            cardview:layout_constraintStart_toStartOf="parent"
-            cardview:layout_constraintTop_toTopOf="parent"
-            cardview:layout_constraintStart_toEndOf="@+id/materialCardView"
             cardview:layout_constraintEnd_toEndOf="@+id/materialCardView"
-            cardview:layout_constraintEnd_toStartOf="@+id/materialCardView" />
+            cardview:layout_constraintEnd_toStartOf="@+id/materialCardView"
+            cardview:layout_constraintStart_toEndOf="@+id/materialCardView"
+            cardview:layout_constraintStart_toStartOf="parent"
+            cardview:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_school_description"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginStart="@dimen/margin_8dp"
+            android:layout_marginTop="@dimen/margin_12dp"
             android:ellipsize="end"
             android:maxLines="3"
             android:text="Books, Clothes, WorkBooks"
@@ -76,36 +75,33 @@
             cardview:fontFamily="sans-serif"
             cardview:layout_constraintEnd_toStartOf="@+id/materialCardView"
             cardview:layout_constraintStart_toStartOf="parent"
-            cardview:layout_constraintTop_toBottomOf="@+id/tv_school_name" />
+            cardview:layout_constraintTop_toBottomOf="@+id/tv_school_name"
+            tools:ignore="HardcodedText" />
 
         <Button
             android:id="@+id/btn_browese"
             android:layout_width="wrap_content"
-            android:layout_height="32dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginBottom="8dp"
+            android:layout_height="@dimen/margin_32dp"
+            android:layout_marginStart="@dimen/margin_16dp"
+            android:layout_marginBottom="@dimen/margin_8dp"
             android:background="@drawable/custom_button"
-            android:text="Browse"
+            android:text="@string/browse"
             android:textColor="@color/colorAccent"
-            android:textSize="12sp"
+            android:textSize="@dimen/h3"
             cardview:layout_constraintBottom_toBottomOf="parent"
             cardview:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/button4"
             android:layout_width="wrap_content"
-            android:layout_height="32dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginLeft="32dp"
+            android:layout_height="@dimen/margin_32dp"
+            android:layout_marginStart="@dimen/margin_32dp"
             android:background="@drawable/custom_button"
-            android:text="Details"
+            android:text="@string/details"
             android:textColor="@color/colorAccent"
-            android:textSize="12sp"
+            android:textSize="@dimen/h3"
             cardview:layout_constraintBottom_toBottomOf="@+id/btn_browese"
-            cardview:layout_constraintStart_toEndOf="@+id/btn_browese">
-
-        </Button>
+            cardview:layout_constraintStart_toEndOf="@+id/btn_browese" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

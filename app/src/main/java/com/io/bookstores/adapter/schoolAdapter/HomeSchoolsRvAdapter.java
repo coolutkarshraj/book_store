@@ -11,7 +11,6 @@ import com.bumptech.glide.Glide;
 import com.io.bookstores.Config;
 import com.io.bookstores.R;
 import com.io.bookstores.holder.HomeSchoolHolder;
-import com.io.bookstores.holder.StoresHolder;
 import com.io.bookstores.listeners.ItemClickListner;
 import com.io.bookstores.localStorage.LocalStorage;
 import com.io.bookstores.model.schoolModel.GetAllSchoolDataModel;
@@ -38,13 +37,15 @@ public class HomeSchoolsRvAdapter extends RecyclerView.Adapter<HomeSchoolHolder>
 
     @Override
     public void onBindViewHolder(HomeSchoolHolder holder, final int position) {
-        GetAllSchoolDataModel data = list.get(position);
+        final GetAllSchoolDataModel data = list.get(position);
         holder.name.setText(data.getSchoolName());
         Glide.with(activity).load(Config.imageUrl + data.getAvatarPath()).into(holder.image);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 itemClickListner = (ItemClickListner) activity;
+                LocalStorage localStorage = new LocalStorage(activity);
+                localStorage.putString(LocalStorage.schoolId, String.valueOf(data.getSchoolId()));
                 itemClickListner.onClick(8);
             }
         });

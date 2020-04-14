@@ -11,7 +11,6 @@
         android:layout_width="@dimen/width_170dp"
         android:layout_height="@dimen/width_170dp"
         android:layout_marginStart="@dimen/margin_130dp"
-
         android:layout_marginLeft="@dimen/margin_130dp"
         android:layout_marginTop="@dimen/margin_35dp"
         android:layout_marginEnd="@dimen/margin_130dp"

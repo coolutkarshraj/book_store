@@ -58,7 +58,8 @@ public class Config {
         public static String guestEnrollCourse = "course/guest-enroll";
         public static String orderqr = "order/add-qr";
         public static String getSchools = "school/list";
-        public static String getclass = "class-group/list";
+        public static String getclass = "class-group/getSchoolClasses";
+        public static String getclassCategory = "class-category/getCategories";
     }
 
     public final static int splashTimeout = 3000;

@@ -1,221 +1,204 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="20dp"
-    android:layout_marginRight="30dp"
+    android:layout_marginStart="@dimen/margin_20dp"
+    android:layout_marginEnd="@dimen/margin_30dp"
     android:background="@android:color/white"
     android:orientation="vertical">
 
-    <include layout="@layout/nav_header_main"></include>
+    <include layout="@layout/nav_header_main" />
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#D3D3D3">
+        android:layout_height="@dimen/height_1dp"
+        android:background="@color/lightMediumGrey">
 
     </View>
 
     <RelativeLayout
         android:id="@+id/ll_personal_info"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/margin_50dp"
         android:layout_gravity="center"
-        android:layout_margin="8dp"
+        android:layout_margin="@dimen/margin_8dp"
         android:background="@drawable/dotted_border"
         android:orientation="horizontal"
         android:weightSum="3">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_weight="0.3"
             android:id="@+id/personal"
-            android:src="@drawable/ic_person_black_24dp">
-
-        </ImageView>
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/margin_50dp"
+            android:src="@drawable/ic_person_black_24dp"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/sixteen_dp"
-            android:layout_weight="2.7"
+            android:layout_marginStart="@dimen/sixteen_dp"
             android:layout_toEndOf="@+id/personal"
             android:gravity="center_vertical"
-            android:text="@string/personal_info"></TextView>
+            android:text="@string/personal_info" />
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/ll_address"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:visibility="gone"
+        android:layout_height="@dimen/margin_50dp"
         android:layout_gravity="center"
-        android:layout_margin="8dp"
+        android:layout_margin="@dimen/margin_8dp"
         android:background="@drawable/dotted_border"
         android:orientation="horizontal"
+        android:visibility="gone"
         android:weightSum="3">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_weight="0.3"
             android:id="@+id/map"
-            android:src="@drawable/ic_add_location_black_24dp">
-
-        </ImageView>
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/margin_50dp"
+            android:src="@drawable/ic_add_location_black_24dp"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/sixteen_dp"
-            android:layout_weight="2.7"
+            android:layout_marginStart="@dimen/sixteen_dp"
             android:layout_toEndOf="@+id/map"
             android:gravity="center_vertical"
-            android:text="@string/delivery_address"></TextView>
+            android:text="@string/delivery_address" />
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/ll_payment"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/margin_50dp"
         android:layout_gravity="center"
-
-        android:layout_margin="8dp"
+        android:layout_margin="@dimen/margin_8dp"
         android:background="@drawable/dotted_border"
         android:orientation="horizontal"
         android:weightSum="3">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_weight="0.3"
             android:id="@+id/pay"
-            android:src="@drawable/ic_format_list_bulleted_black_24dp">
-
-        </ImageView>
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/margin_50dp"
+            android:src="@drawable/ic_format_list_bulleted_black_24dp"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/sixteen_dp"
+            android:layout_marginStart="@dimen/sixteen_dp"
             android:layout_toEndOf="@id/pay"
-            android:layout_weight="2.7"
             android:gravity="center_vertical"
-            android:text="@string/payment"></TextView>
+            android:text="@string/payment" />
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/language"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/margin_50dp"
         android:layout_gravity="center"
-        android:layout_margin="8dp"
+        android:layout_margin="@dimen/margin_8dp"
         android:background="@drawable/dotted_border"
         android:orientation="horizontal"
         android:weightSum="3">
 
         <ImageView
-
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_weight="0.3"
             android:id="@+id/lan"
-            android:src="@drawable/ic_language_black_24dp">
-
-        </ImageView>
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/margin_50dp"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_language_black_24dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/sixteen_dp"
-            android:layout_weight="2.7"
+            android:layout_marginStart="@dimen/sixteen_dp"
             android:layout_toEndOf="@+id/lan"
             android:gravity="center_vertical"
-            android:text="@string/languages"></TextView>
+            android:text="@string/languages" />
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/country"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:visibility="gone"
+        android:layout_height="@dimen/margin_50dp"
         android:layout_gravity="center"
-        android:layout_margin="8dp"
+        android:layout_margin="@dimen/margin_8dp"
         android:background="@drawable/dotted_border"
         android:orientation="horizontal"
+        android:visibility="gone"
         android:weightSum="3">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_weight="0.3"
             android:id="@+id/locc"
-            android:src="@drawable/ic_location_on_black_24dp">
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/margin_50dp"
+            android:src="@drawable/ic_location_on_black_24dp"
+            tools:ignore="ContentDescription">
 
         </ImageView>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/sixteen_dp"
+            android:layout_marginStart="@dimen/sixteen_dp"
             android:layout_toEndOf="@id/locc"
-            android:layout_weight="2.7"
-
             android:gravity="center_vertical"
-            android:text="@string/country"></TextView>
+            android:text="@string/country" />
     </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/logout"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/margin_50dp"
         android:layout_gravity="center"
-        android:layout_margin="8dp"
+        android:layout_margin="@dimen/margin_8dp"
         android:background="@drawable/dotted_border"
         android:orientation="horizontal"
         android:weightSum="3">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_weight="0.3"
             android:id="@+id/log"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/margin_50dp"
+            android:src="@drawable/ic_arrow_back_black_24dp"
             android:tint="#637381"
-            android:src="@drawable/ic_arrow_back_black_24dp">
+            tools:ignore="ContentDescription">
 
         </ImageView>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/sixteen_dp"
-            android:layout_weight="2.7"
+            android:layout_marginStart="@dimen/sixteen_dp"
             android:layout_toEndOf="@+id/log"
             android:gravity="center_vertical"
-            android:text="@string/logout"></TextView>
+            android:text="@string/logout" />
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_margin="8dp"
+        android:layout_height="@dimen/height_60dp"
+        android:layout_margin="@dimen/margin_8dp"
         android:background="@drawable/search_view_background"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        android:gravity="left">
-
+        android:gravity="left"
+        tools:ignore="RtlHardcoded">
 
         <TextView
             android:id="@+id/autoCompleteTextView"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-
+            android:layout_marginStart="@dimen/margin_5dp"
             android:gravity="center_vertical"
             android:hint="@string/notifications"
-            android:layout_marginStart="5dp"
-            android:textColor="@color/black">
-            <!--                        <requestFocus />-->
-        </TextView>
+            android:textColor="@color/black"
+            tools:ignore="RelativeOverlap" />
 
         <Switch
             android:id="@+id/iv_search"
@@ -228,28 +211,30 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_margin="8dp"
+        android:layout_height="@dimen/width_70dp"
+        android:layout_margin="@dimen/margin_8dp"
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:gravity="center">
 
         <ImageView
-            android:layout_width="70dp"
+            android:layout_width="@dimen/width_70dp"
             android:layout_height="wrap_content"
-            android:src="@drawable/facebook" />
+            android:src="@drawable/facebook"
+            tools:ignore="ContentDescription" />
 
         <ImageView
-            android:layout_width="70dp"
+            android:layout_width="@dimen/width_70dp"
             android:layout_height="wrap_content"
-            android:src="@drawable/twitter" />
+            android:src="@drawable/twitter"
+            tools:ignore="ContentDescription" />
 
         <ImageView
-            android:layout_width="70dp"
+            android:layout_width="@dimen/width_70dp"
             android:layout_height="wrap_content"
-            android:src="@drawable/g" />
+            android:src="@drawable/g"
+            tools:ignore="ContentDescription" />
     </LinearLayout>
-
 
 
 </LinearLayout>

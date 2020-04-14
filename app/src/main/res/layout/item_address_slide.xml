@@ -3,20 +3,18 @@
     android:id="@+id/ll_layout"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginStart="10dp"
-    android:layout_marginTop="10dp"
-    android:layout_marginBottom="10dp"
-    android:background="@drawable/background_rounded_theme_address"
-    android:orientation="vertical">
+    android:layout_marginStart="@dimen/margin_10dp"
+    android:layout_marginTop="@dimen/margin_10dp"
+    android:layout_marginBottom="@dimen/margin_10dp"
+    android:background="@drawable/background_rounded_theme_address">
 
     <TextView
         android:id="@+id/tv_name_a"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/font_10"
+        android:layout_marginTop="@dimen/margin_5dp"
         android:layout_marginEnd="@dimen/font_10"
-        android:layout_marginTop="5dp"
-        android:textColor="@color/white"
         android:layout_marginBottom="5dp"
-        />
+        android:textColor="@color/white" />
 </LinearLayout>

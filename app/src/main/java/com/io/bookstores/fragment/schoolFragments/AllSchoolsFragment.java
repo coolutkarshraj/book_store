@@ -5,7 +5,6 @@ import android.os.Bundle;
 
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,12 +18,10 @@ import android.widget.Toast;
 import com.io.bookstores.Config;
 import com.io.bookstores.R;
 import com.io.bookstores.adapter.schoolAdapter.AllSchoolsRvAdapter;
-import com.io.bookstores.adapter.schoolAdapter.HomeSchoolsRvAdapter;
 import com.io.bookstores.apicaller.ApiCaller;
 import com.io.bookstores.listeners.ItemClickListner;
-import com.io.bookstores.model.bookListModel.Datum;
-import com.io.bookstores.model.schoolModel.GetAllSchollResponseModel;
 import com.io.bookstores.model.schoolModel.GetAllSchoolDataModel;
+import com.io.bookstores.model.schoolModel.GetAllSchoolResponseModel;
 import com.io.bookstores.utility.NewProgressBar;
 import com.io.bookstores.utility.Utils;
 import com.io.bookstores.utility.userOnlineInfo;
@@ -110,10 +107,10 @@ public class AllSchoolsFragment extends Fragment implements View.OnClickListener
         if (user.isOnline(activity)) {
             dialog.show();
             ApiCaller.getSchoolApi(getActivity(), Config.Url.getSchools,
-                    new FutureCallback<GetAllSchollResponseModel>() {
+                    new FutureCallback<GetAllSchoolResponseModel>() {
 
                         @Override
-                        public void onCompleted(Exception e, GetAllSchollResponseModel result) {
+                        public void onCompleted(Exception e, GetAllSchoolResponseModel result) {
                             if (e != null) {
                                 dialog.dismiss();
                                 Utils.showAlertDialog(getActivity(), "Something Went Wrong");

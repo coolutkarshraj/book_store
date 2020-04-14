@@ -5,14 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.io.bookstores.R;
 import com.io.bookstores.holder.ClassGroupHolder;
+import com.io.bookstores.listeners.ItemClickListner;
+import com.io.bookstores.localStorage.LocalStorage;
 import com.io.bookstores.model.classModel.ClassDataModel;
-import com.io.bookstores.model.insituteModel.TrendingInstituteDataModel;
-import com.io.bookstores.model.schoolModel.GetAllSchoolDataModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +20,7 @@ import java.util.List;
 public class ClassGroupRvAdapter extends RecyclerView.Adapter<ClassGroupHolder> {
     private Activity activity;
     private List<ClassDataModel> list;
+    private ItemClickListner itemClickListner;
 
 
     public ClassGroupRvAdapter(Activity activity, List<ClassDataModel> list) {
@@ -37,8 +37,18 @@ public class ClassGroupRvAdapter extends RecyclerView.Adapter<ClassGroupHolder> 
 
     @Override
     public void onBindViewHolder(ClassGroupHolder holder, final int position) {
-        ClassDataModel model = list.get(position);
+        final ClassDataModel model = list.get(position);
         holder.tvClassName.setText(model.getName());
+        holder.rlRoot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itemClickListner = (ItemClickListner) activity;
+
+                LocalStorage localStorage = new LocalStorage(activity);
+                localStorage.putString(LocalStorage.classGroupId, String.valueOf(model.getClassGroupId()));
+                itemClickListner.onClick(9);
+            }
+        });
     }
 
     public void setFilter(List<ClassDataModel> newlist) {
@@ -46,6 +56,7 @@ public class ClassGroupRvAdapter extends RecyclerView.Adapter<ClassGroupHolder> 
         list.addAll(newlist);
         notifyDataSetChanged();
     }
+
     @Override
     public int getItemCount() {
         return list.size();

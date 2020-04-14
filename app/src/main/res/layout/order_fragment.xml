@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="horizontal">
 
     <LinearLayout
 
+        android:id="@+id/hide"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/hide"
-        android:visibility="gone"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <RelativeLayout
+            android:id="@+id/rl_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/font_10"
-            android:id="@+id/rl_layout"
             android:orientation="horizontal">
 
             <ImageView
@@ -26,38 +26,39 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-
-                android:layout_marginStart="15dp"
+                android:layout_marginStart="@dimen/margin_15dp"
                 android:background="@drawable/item_click_animation"
                 android:src="@drawable/ic_arrow_back_black_24dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="MissingConstraints" />
+                tools:ignore="ContentDescription,MissingConstraints" />
 
             <TextView
                 android:id="@+id/tv_courses_heading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-
                 android:text="Your Order History"
-                android:textSize="20sp"
+                android:textSize="@dimen/h20"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="HardcodedText" />
         </RelativeLayout>
-            <SearchView
-                android:id="@+id/sv_courses"
-                android:layout_width="300dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:visibility="gone"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/bg_searchview"
-                android:elevation="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_courses_heading" />
+
+        <SearchView
+            android:id="@+id/sv_courses"
+            android:layout_width="@dimen/height_30dp"
+            android:layout_height="@dimen/width_40dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/margin_16dp"
+            android:background="@drawable/bg_searchview"
+            android:elevation="@dimen/elevation_10dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_courses_heading"
+            tools:ignore="UnusedAttribute" />
 
 
         <androidx.recyclerview.widget.RecyclerView
@@ -65,29 +66,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_min"
-
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp">
-
-        </androidx.recyclerview.widget.RecyclerView>
-
+            android:layout_marginLeft="@dimen/margin_10dp"
+            android:layout_marginTop="@dimen/margin_10dp"
+            android:layout_marginRight="@dimen/margin_10dp"
+            tools:ignore="ObsoleteLayoutParam" />
 
 
     </LinearLayout>
 
     <TextView
+        android:id="@+id/loggedih"
         android:layout_width="match_parent"
-        android:textSize="16dp"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_gravity="center_vertical"
-        android:fontFamily="@font/exo_bold"
-        android:textAlignment="center"
-        android:visibility="gone"
-        android:id="@+id/loggedih"
         android:layout_margin="20dp"
+        android:fontFamily="@font/exo_bold"
         android:text="@string/please_logged_in_to_see_your_order_details"
-        android:layout_height="wrap_content"/>
+        android:textAlignment="center"
+        android:textSize="@dimen/h1"
+        android:visibility="gone"
+        tools:ignore="ObsoleteLayoutParam,RtlCompat" />
 
 
 </LinearLayout>

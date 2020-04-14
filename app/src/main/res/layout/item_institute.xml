@@ -4,17 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cardview_item_institute"
     android:layout_width="match_parent"
-    android:layout_height="160dp"
-    android:layout_margin="10dp"
+    android:layout_height="@dimen/height_160dp"
+    android:layout_margin="@dimen/margin_10dp"
     android:clickable="true"
-    android:elevation="15dp"
+    android:elevation="@dimen/margin_15dp"
+    android:focusable="true"
     android:foreground="?android:attr/selectableItemBackground"
     cardview:cardBackgroundColor="@color/lightMediumGrey"
-    cardview:cardCornerRadius="8dp"
-    cardview:cardElevation="10dp"
+    cardview:cardCornerRadius="@dimen/margin_8dp"
+    cardview:cardElevation="@dimen/margin_10dp"
     cardview:layout_constraintEnd_toEndOf="parent"
     cardview:layout_constraintStart_toStartOf="parent"
-    cardview:layout_constraintTop_toTopOf="parent">
+    cardview:layout_constraintTop_toTopOf="parent"
+    tools:ignore="UnusedAttribute">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -25,10 +27,10 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/materialCardView_institute"
-            android:layout_width="170dp"
-            android:layout_height="100dp"
-           android:layout_margin="@dimen/font_10"
-            cardview:cardCornerRadius="8dp"
+            android:layout_width="@dimen/width_170dp"
+            android:layout_height="@dimen/height_100dp"
+            android:layout_margin="@dimen/font_10"
+            cardview:cardCornerRadius="@dimen/radius_8dp"
             cardview:layout_constraintEnd_toEndOf="parent"
             cardview:layout_constraintTop_toTopOf="parent">
 
@@ -36,10 +38,11 @@
                 android:id="@+id/iv_institute_thumbnail"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="fitXY"
+                android:scaleType="fitCenter"
                 android:src="@drawable/defaultimage"
                 cardview:layout_constraintEnd_toEndOf="parent"
-                cardview:layout_constraintTop_toTopOf="parent" />
+                cardview:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription" />
 
         </com.google.android.material.card.MaterialCardView>
 
@@ -49,9 +52,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/font_10"
-            android:text="TextView"
-
-            android:textSize="16sp"
+            android:textSize="@dimen/h1"
             cardview:fontFamily="@font/arial_bold"
             cardview:layout_constraintStart_toStartOf="parent"
             cardview:layout_constraintTop_toTopOf="parent" />
@@ -60,10 +61,9 @@
             android:id="@+id/tv_institute_desc"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="12dp"
-            android:layout_marginTop="12dp"
-            android:textSize="12sp"
+            android:layout_marginStart="@dimen/margin_8dp"
+            android:layout_marginTop="@dimen/margin_12dp"
+            android:textSize="@dimen/h3"
             cardview:fontFamily="sans-serif"
             cardview:layout_constraintEnd_toStartOf="@+id/materialCardView_institute"
             cardview:layout_constraintStart_toStartOf="parent"
@@ -72,31 +72,29 @@
         <Button
             android:id="@+id/bv_institute_browse"
             android:layout_width="wrap_content"
-            android:layout_height="32dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginBottom="8dp"
+            android:layout_height="@dimen/margin_32dp"
+            android:layout_marginStart="@dimen/margin_16dp"
+            android:layout_marginBottom="@dimen/margin_8dp"
             android:background="@drawable/custom_button"
-            android:text="Browse"
+            android:text="@string/browse"
             android:textColor="@color/colorAccent1"
-            android:textSize="12sp"
+            android:textSize="@dimen/h3"
             cardview:layout_constraintBottom_toBottomOf="parent"
             cardview:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/bv_institute_location"
             android:layout_width="wrap_content"
-            android:layout_height="32dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginLeft="32dp"
+            android:layout_height="@dimen/margin_32dp"
+            android:layout_marginStart="@dimen/margin_32dp"
+            android:layout_marginLeft="@dimen/margin_32dp"
             android:background="@drawable/custom_button"
-            android:text="Location"
+            android:text="@string/location"
             android:textColor="@color/colorAccent1"
             android:textSize="12sp"
             cardview:layout_constraintBottom_toBottomOf="@+id/bv_institute_browse"
-            cardview:layout_constraintStart_toEndOf="@+id/bv_institute_browse">
-
-        </Button>
+            cardview:layout_constraintStart_toEndOf="@+id/bv_institute_browse"
+            tools:ignore="RtlHardcoded" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.io.bookstores.R;
 import com.io.bookstores.holder.ClothHolder;
 import com.io.bookstores.model.insituteModel.TrendingInstituteDataModel;
+import com.io.bookstores.model.staticModel.ClothModel;
 
 import java.util.List;
 
@@ -18,10 +19,10 @@ import java.util.List;
 public class ClothRvAdapter extends RecyclerView.Adapter<ClothHolder> {
 
     private Activity activity;
-    private List<TrendingInstituteDataModel> list;
+    private List<ClothModel> list;
 
 
-    public ClothRvAdapter(FragmentActivity activity, List<TrendingInstituteDataModel> list) {
+    public ClothRvAdapter(Activity activity, List<ClothModel> list) {
         this.activity = activity;
         this.list = list;
     }
@@ -34,7 +35,9 @@ public class ClothRvAdapter extends RecyclerView.Adapter<ClothHolder> {
 
     @Override
     public void onBindViewHolder(ClothHolder holder, final int position) {
-        TrendingInstituteDataModel model = list.get(position);
+        ClothModel model = list.get(position);
+        holder.ivClothImage.setBackgroundResource(model.getImage());
+        holder.tv_price.setText(model.getName());
 
 
     }

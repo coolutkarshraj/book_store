@@ -12,8 +12,8 @@ import com.io.bookstores.R;
 
 public class ClothHolder extends RecyclerView.ViewHolder
         implements View.OnClickListener {
-    public TextView tv_cloth_size,tv_price;
-    public ImageView ivClothImage,mark_fav,mark_fav_red,mark_cart;
+    public TextView tv_cloth_size, tv_price;
+    public ImageView ivClothImage, mark_fav, mark_fav_red, mark_cart;
 
 
     public ClothHolder(View view) {

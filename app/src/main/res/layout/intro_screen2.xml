@@ -11,7 +11,6 @@
         android:layout_width="@dimen/width_170dp"
         android:layout_height="@dimen/width_170dp"
         android:layout_marginStart="@dimen/margin_130dp"
-
         android:layout_marginLeft="@dimen/margin_130dp"
         android:layout_marginTop="@dimen/margin_35dp"
         android:layout_marginEnd="@dimen/margin_130dp"
@@ -60,33 +59,35 @@
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="@dimen/five_dp"
-        android:textSize="@dimen/fourteen_sp"
-        android:fontFamily="@font/exo"
         android:layout_marginStart="@dimen/height_160dp"
         android:layout_marginLeft="@dimen/height_160dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="165dp"
         android:layout_marginRight="165dp"
+        android:fontFamily="@font/exo"
+        android:padding="@dimen/five_dp"
         android:text="@string/we_got_you_covered"
+        android:textSize="@dimen/fourteen_sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintTop_toBottomOf="@+id/textView5"
+        tools:ignore="RtlHardcoded" />
 
     <ImageView
         android:id="@+id/imageView4"
-        android:layout_width="194dp"
-        android:layout_height="142dp"
-        android:layout_marginStart="23dp"
-        android:layout_marginLeft="23dp"
-        android:layout_marginTop="2@dimen/margin_32dp"
-        android:layout_marginEnd="650dp"
-        android:layout_marginRight="650dp"
+        android:layout_width="@dimen/width_194dp"
+        android:layout_height="@dimen/height_142dp"
+        android:layout_marginStart="@dimen/margin_23dp"
+        android:layout_marginLeft="@dimen/margin_23dp"
+        android:layout_marginTop="@dimen/margin_232dp"
+        android:layout_marginEnd="@dimen/margin_650dp"
+        android:layout_marginRight="@dimen/margin_650dp"
         android:scaleType="fitXY"
         app:layout_constraintBottom_toTopOf="@+id/imageView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView2"
         app:layout_constraintTop_toBottomOf="@+id/imageView3"
-        app:srcCompat="@drawable/cycle" />
+        app:srcCompat="@drawable/cycle"
+        tools:ignore="ContentDescription,RtlHardcoded" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

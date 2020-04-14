@@ -3,7 +3,7 @@ package com.io.bookstores.model.schoolModel;
 import java.util.List;
 import com.google.gson.annotations.SerializedName;
 
-public class GetAllSchollResponseModel{
+public class GetAllSchoolResponseModel{
 
 	@SerializedName("data")
 	private List<GetAllSchoolDataModel> data;

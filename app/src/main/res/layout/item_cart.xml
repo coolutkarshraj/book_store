@@ -13,7 +13,7 @@
         <View
             android:id="@+id/view0"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="@dimen/height_1dp"
             android:layout_below="@+id/imageView5"
             android:background="@color/light_gray" />
 
@@ -35,7 +35,7 @@
             <ImageView
                 android:id="@+id/imageView9"
                 android:layout_width="@dimen/width_20dp"
-                android:layout_height="@dimen/height_200dp"
+                android:layout_height="@dimen/height_20dp"
                 android:layout_margin="@dimen/margin_5dp"
                 android:background="@drawable/item_click_animation"
                 android:backgroundTint="@color/black"
@@ -64,7 +64,7 @@
                 <ImageView
                     android:id="@+id/mark_fav"
                     android:layout_width="@dimen/width_25dp"
-                    android:layout_height="@dimen/height_250dp"
+                    android:layout_height="@dimen/height_25dp"
                     android:backgroundTint="@color/black"
                     android:padding="@dimen/margin_5dp"
                     android:src="@drawable/heratoutline"
@@ -215,7 +215,7 @@
                             android:layout_marginTop="@dimen/margin_2dp"
                             android:layout_marginBottom="5dp"
                             android:background="@drawable/ic_add_black_24dp"
-                            tools:ignore="UnknownIdInLayout" />
+                            tools:ignore="UnknownId,UnknownIdInLayout" />
                     </RelativeLayout>
                 </RelativeLayout>
 

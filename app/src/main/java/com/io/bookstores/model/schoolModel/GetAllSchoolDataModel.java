@@ -2,6 +2,8 @@ package com.io.bookstores.model.schoolModel;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class GetAllSchoolDataModel {
 
     @SerializedName("avatarName")
@@ -19,6 +21,9 @@ public class GetAllSchoolDataModel {
     @SerializedName("avatarPath")
     private String avatarPath;
 
+    @SerializedName("classThrough")
+    private List<ClassThroughItem> classThrough;
+
     @SerializedName("description")
     private String description;
 
@@ -34,82 +39,91 @@ public class GetAllSchoolDataModel {
     @SerializedName("addressId")
     private int addressId;
 
-    public String getAvatarName() {		return avatarName;
-    }
-
-    public void setAvatarName(String avatarName) {
+    public void setAvatarName(String avatarName){
         this.avatarName = avatarName;
     }
 
-    public String getCreatedDate() {
-        return createdDate;
+    public String getAvatarName(){
+        return avatarName;
     }
 
-    public void setCreatedDate(String createdDate) {
+    public void setCreatedDate(String createdDate){
         this.createdDate = createdDate;
     }
 
-    public String getCity() {
-        return city;
+    public String getCreatedDate(){
+        return createdDate;
     }
 
-    public void setCity(String city) {
+    public void setCity(String city){
         this.city = city;
     }
 
-    public int getSchoolId() {
-        return schoolId;
+    public String getCity(){
+        return city;
     }
 
-    public void setSchoolId(int schoolId) {
+    public void setSchoolId(int schoolId){
         this.schoolId = schoolId;
     }
 
-    public String getAvatarPath() {
-        return avatarPath;
+    public int getSchoolId(){
+        return schoolId;
     }
 
-    public void setAvatarPath(String avatarPath) {
+    public void setAvatarPath(String avatarPath){
         this.avatarPath = avatarPath;
     }
 
-    public String getDescription() {
-        return description;
+    public String getAvatarPath(){
+        return avatarPath;
     }
 
-    public void setDescription(String description) {
+    public void setClassThrough(List<ClassThroughItem> classThrough){
+        this.classThrough = classThrough;
+    }
+
+    public List<ClassThroughItem> getClassThrough(){
+        return classThrough;
+    }
+
+    public void setDescription(String description){
         this.description = description;
     }
 
-    public String getState() {
-        return state;
+    public String getDescription(){
+        return description;
     }
 
-    public void setState(String state) {
+    public void setState(String state){
         this.state = state;
     }
 
-    public String getSchoolName() {
-        return schoolName;
+    public String getState(){
+        return state;
     }
 
-    public void setSchoolName(String schoolName) {
+    public void setSchoolName(String schoolName){
         this.schoolName = schoolName;
     }
 
-    public int getAddedById() {
-        return addedById;
+    public String getSchoolName(){
+        return schoolName;
     }
 
-    public void setAddedById(int addedById) {
+    public void setAddedById(int addedById){
         this.addedById = addedById;
     }
 
-    public int getAddressId() {
-        return addressId;
+    public int getAddedById(){
+        return addedById;
     }
 
-    public void setAddressId(int addressId) {
+    public void setAddressId(int addressId){
         this.addressId = addressId;
+    }
+
+    public int getAddressId(){
+        return addressId;
     }
 }

@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:layout_marginLeft="@dimen/four_dp"
     android:layout_marginRight="@dimen/four_dp"
-    app:cardCornerRadius="@dimen/two_dp"
     android:layout_marginBottom="@dimen/four_dp"
-    android:layout_height="wrap_content">
+    app:cardCornerRadius="@dimen/two_dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:elevation="@dimen/five_dp"
+        android:orientation="horizontal"
         android:padding="@dimen/eight_dp"
-        android:orientation="horizontal">
+        tools:ignore="UnusedAttribute">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -21,34 +23,37 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:orientation="vertical"
-            android:padding="5dp">
+            android:padding="@dimen/margin_5dp"
+            tools:ignore="UseCompoundDrawables">
 
             <ImageView
                 android:id="@+id/ivNotification"
                 android:layout_width="@dimen/fiftyeight_dp"
                 android:layout_height="@dimen/fiftyeight_dp"
                 android:layout_gravity="center"
-                android:src="@drawable/notify_payment_recieved" />
+                android:src="@drawable/notify_payment_recieved"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:id="@+id/tvIconText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:fontFamily="@font/exo"
                 android:gravity="center"
                 android:text="@string/recived"
-                android:textSize="@dimen/twelve_dp"
-                android:fontFamily="@font/exo"
+                android:textSize="@dimen/h3"
                 android:textStyle="bold"
-                android:visibility="gone" />
+                android:visibility="gone"
+                tools:ignore="SpUsage" />
 
         </LinearLayout>
 
         <View
             android:layout_width="@dimen/one_dp"
             android:layout_height="@dimen/one_dp"
-            android:layout_marginLeft="@dimen/five_dp"
-            android:layout_marginRight="@dimen/one_dp"
+            android:layout_marginStart="@dimen/five_dp"
+            android:layout_marginEnd="@dimen/one_dp"
             android:background="@color/text_color" />
 
         <LinearLayout
@@ -67,19 +72,20 @@
                     android:id="@+id/tvTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/title"
                     android:fontFamily="@font/exo"
-                    android:textSize="@dimen/sixteen_dp" />
+                    android:text="@string/title"
+                    android:textSize="@dimen/h1" />
 
                 <TextView
                     android:id="@+id/tvDate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/exo"
                     android:gravity="right"
                     android:text="@string/date"
-                    android:fontFamily="@font/exo"
-                    android:textSize="@dimen/sixteen_dp"
-                    android:visibility="visible" />
+                    android:textSize="@dimen/h1"
+                    android:visibility="visible"
+                    tools:ignore="RtlHardcoded,SpUsage" />
             </LinearLayout>
 
             <LinearLayout
@@ -91,12 +97,12 @@
                     android:id="@+id/tvMessage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/desc"
-                    android:textSize="@dimen/sixteen_dp"
-                    android:paddingTop="@dimen/five_dp"
-                    android:paddingBottom="@dimen/five_dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/exo"
+                    android:paddingTop="@dimen/five_dp"
+                    android:paddingBottom="@dimen/five_dp"
+                    android:text="@string/desc"
+                    android:textSize="@dimen/h1"
                     android:textStyle="bold" />
 
                 <TextView
@@ -104,15 +110,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="4"
+                    android:fontFamily="@font/exo"
                     android:gravity="right"
-                    android:text="60 ₹"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
-                    android:textSize="@dimen/sixteen_dp"
-                    android:textStyle="bold"
+                    android:text="60 ₹"
                     android:textColor="@color/text_color"
-                    android:fontFamily="@font/exo"
-                    android:visibility="gone" />
+                    android:textSize="@dimen/h1"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    tools:ignore="HardcodedText,RtlHardcoded" />
             </LinearLayout>
 
 

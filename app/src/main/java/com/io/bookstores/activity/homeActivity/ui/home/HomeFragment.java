@@ -3,13 +3,11 @@ package com.io.bookstores.activity.homeActivity.ui.home;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -23,32 +21,28 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.io.bookstores.Config;
 import com.io.bookstores.R;
-import com.io.bookstores.StaticData;
 import com.io.bookstores.adapter.AdSliderAdapter;
 import com.io.bookstores.adapter.CourseAdapter;
 import com.io.bookstores.adapter.SToreAdapter;
 import com.io.bookstores.adapter.categoryAdapter.CategoryFragmentAdapter;
 import com.io.bookstores.adapter.schoolAdapter.HomeSchoolsRvAdapter;
 import com.io.bookstores.apicaller.ApiCaller;
-import com.io.bookstores.fragment.BookstoresFragment;
 import com.io.bookstores.fragment.CourseEnrollmentFragment;
 import com.io.bookstores.fragment.CoursesFragment;
 import com.io.bookstores.fragment.InstituteFragment;
 import com.io.bookstores.fragment.category.AddressSliderFragment;
-import com.io.bookstores.fragment.category.CategoryGridFragment;
 import com.io.bookstores.listeners.ItemClickListner;
 import com.io.bookstores.listeners.RecyclerViewClickListener;
 import com.io.bookstores.localStorage.DbHelper;
 import com.io.bookstores.localStorage.LocalStorage;
-import com.io.bookstores.model.bookListModel.WishListLocalResponseModel;
 import com.io.bookstores.model.dilvery.DilveryAddressDataModel;
 import com.io.bookstores.model.dilvery.DilveryAdressResponseModel;
 import com.io.bookstores.model.getAddressResponseModel.AddressResponseModel;
 import com.io.bookstores.model.getAddressResponseModel.Datum;
 import com.io.bookstores.model.insituteModel.TrendingInstituteDataModel;
 import com.io.bookstores.model.insituteModel.TrendingInstituteResponseModel;
-import com.io.bookstores.model.schoolModel.GetAllSchollResponseModel;
 import com.io.bookstores.model.schoolModel.GetAllSchoolDataModel;
+import com.io.bookstores.model.schoolModel.GetAllSchoolResponseModel;
 import com.io.bookstores.model.sliderAdModel.AdModel;
 import com.io.bookstores.model.storeModel.StoreModel;
 import com.io.bookstores.utility.NewProgressBar;
@@ -63,7 +57,6 @@ import com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 
 public class HomeFragment extends Fragment implements RecyclerViewClickListener, SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
@@ -336,10 +329,10 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener,
         if (user.isOnline(activity)) {
 
             ApiCaller.getSchoolApi(getActivity(), Config.Url.getSchools,
-                    new FutureCallback<GetAllSchollResponseModel>() {
+                    new FutureCallback<GetAllSchoolResponseModel>() {
 
                         @Override
-                        public void onCompleted(Exception e, GetAllSchollResponseModel result) {
+                        public void onCompleted(Exception e, GetAllSchoolResponseModel result) {
                             if (e != null) {
                                 Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                             }

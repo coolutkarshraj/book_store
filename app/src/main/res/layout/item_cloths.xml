@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
-    cardview:cardElevation="5dp">
+    android:layout_margin="@dimen/margin_5dp"
+    cardview:cardElevation="@dimen/margin_5dp">
 
     <LinearLayout
         android:layout_width="110dp"
@@ -20,7 +20,8 @@
             <ImageView
                 android:id="@+id/iv_image"
                 android:layout_width="match_parent"
-                android:layout_height="140dp"
+                android:layout_height="@dimen/height_140dp"
+                android:contentDescription="@null"
                 android:scaleType="centerCrop" />
 
             <TextView
@@ -29,10 +30,13 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:ellipsize="end"
-                android:paddingStart="5dp"
-                android:paddingEnd="5dp"
+                android:paddingStart="@dimen/margin_5dp"
+                android:paddingEnd="@dimen/margin_5dp"
                 android:singleLine="true"
-                android:textSize="12dp" />
+                android:text="Size 1-4"
+                android:textColor="@color/blue"
+                android:textSize="@dimen/h3"
+                tools:ignore="HardcodedText" />
 
         </FrameLayout>
 
@@ -45,11 +49,11 @@
             <ImageView
                 android:id="@+id/mark_fav"
                 android:layout_width="0dp"
-                android:layout_height="25dp"
+                android:layout_height="@dimen/height_25dp"
                 android:layout_weight="0.2"
-                android:padding="5dp"
-
-                android:src="@drawable/heratoutline">
+                android:padding="@dimen/margin_5dp"
+                android:src="@drawable/heratoutline"
+                tools:ignore="ContentDescription">
 
             </ImageView>
 
@@ -57,35 +61,31 @@
             <ImageView
                 android:id="@+id/mark_fav_red"
                 android:layout_width="0dp"
-                android:layout_height="25dp"
+                android:layout_height="@dimen/width_25dp"
                 android:layout_weight="0.2"
-                android:backgroundTint="#f00000"
-                android:padding="5dp"
+                android:backgroundTint="@color/color_red"
+                android:padding="@dimen/margin_5dp"
                 android:src="@drawable/heartpink"
-                android:visibility="gone">
-
-            </ImageView>
+                android:visibility="gone"
+                tools:ignore="ContentDescription,UnusedAttribute" />
 
             <ImageView
                 android:id="@+id/mark_cart"
                 android:layout_width="0dp"
-                android:layout_height="25dp"
+                android:layout_height="@dimen/width_25dp"
                 android:layout_weight="0.3"
                 android:background="@drawable/item_click_animation"
+                android:contentDescription="@null"
                 android:padding="@dimen/five_dp"
-                android:src="@drawable/cart">
-
-            </ImageView>
+                android:src="@drawable/cart" />
 
             <TextView
                 android:id="@+id/tv_price"
                 android:layout_width="0dp"
-                android:layout_height="25dp"
+                android:layout_height="@dimen/width_25dp"
                 android:layout_weight="0.5"
                 android:gravity="center"
-                android:textSize="12sp">
-
-            </TextView>
+                android:textSize="12sp" />
 
 
         </LinearLayout>
