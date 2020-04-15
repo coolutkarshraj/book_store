@@ -28,7 +28,7 @@ public class ForgotPasswodActivity extends AppCompatActivity implements View.OnC
     Activity activity;
     userOnlineInfo user;
     NewProgressBar dialog;
-    String endPoint,strEmail;
+    String endPoint, strEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +42,9 @@ public class ForgotPasswodActivity extends AppCompatActivity implements View.OnC
     private void initializeViews() {
         user = new userOnlineInfo();
         activity = ForgotPasswodActivity.this;
-        back = (ImageView)findViewById(R.id.back);
-        etEmail = (EditText)findViewById(R.id.et_email);
-        btnRequest = (Button)findViewById(R.id.btnrquest);
+        back = (ImageView) findViewById(R.id.back);
+        etEmail = (EditText) findViewById(R.id.et_email);
+        btnRequest = (Button) findViewById(R.id.btnrquest);
 
     }
 
@@ -58,12 +58,12 @@ public class ForgotPasswodActivity extends AppCompatActivity implements View.OnC
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.back :
+        switch (v.getId()) {
+            case R.id.back:
                 onBackPressed();
                 return;
 
-            case R.id.btnrquest :
+            case R.id.btnrquest:
                 forgotPasswordView();
                 return;
         }
@@ -73,23 +73,23 @@ public class ForgotPasswodActivity extends AppCompatActivity implements View.OnC
     /* --------------------------------------------------------Validate data----------------------------------------------*/
 
     private void forgotPasswordView() {
-     strEmail = etEmail.getText().toString().trim();
-     if(strEmail.equals("")){
-         Utils.showAlertDialog(activity, "Please Enter Email-Id");
-     }else {
-         forgotPasswordApi();
-     }
+        strEmail = etEmail.getText().toString().trim();
+        if (strEmail.equals("")) {
+            Utils.showAlertDialog(activity, "Please Enter Email-Id");
+        } else {
+            forgotPasswordApi();
+        }
     }
 
 
-    private  void apiUrl(){
+    private void apiUrl() {
         endPoint = Config.Url.forgotPassword;
     }
 
     /*------------------------------------------------------- forgot api ---------------------------------------------------*/
 
     private void forgotPasswordApi() {
-        if(user.isOnline(activity)){
+        if (user.isOnline(activity)) {
             dialog = new NewProgressBar(activity);
             dialog.show();
             apiUrl();
@@ -97,22 +97,22 @@ public class ForgotPasswodActivity extends AppCompatActivity implements View.OnC
                     FutureCallback<ChangePasswordVerifyOtpModel>() {
                         @Override
                         public void onCompleted(Exception e, ChangePasswordVerifyOtpModel result) {
-                            if(e!=null){
+                            if (e != null) {
                                 Utils.showAlertDialog(activity, "Something Went Wrong");
                                 return;
                             }
 
-                            if(result != null){
-                                if(result.getStatus()){
-                                    Intent i =new Intent(activity, LoginActivity.class);
+                            if (result != null) {
+                                if (result.getStatus()) {
+                                    Intent i = new Intent(activity, LoginActivity.class);
                                     startActivity(i);
                                 }
                             }
                         }
                     });
 
-        }else {
-
+        } else {
+            Utils.showAlertDialog(this, "No Internet Connection");
         }
 
 

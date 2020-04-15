@@ -52,19 +52,18 @@ import static android.app.Activity.RESULT_OK;
 
 public class AdminEditStoreFragment extends Fragment implements View.OnClickListener {
 
-    Activity activity;
+    private Activity activity;
     public static CircleImageView iv_avatar;
     private TextView loggedih, tvName, tvPhone, tvAddress, tvFirstName, tvEmail, tvEdit1, edit1, edit2, edit3, edit4, changepassword;
     private LinearLayout ll_main_view;
     private ImageView edi_profile;
-    Button btn_save;
-    FloatingActionButton fab_editpic;
-    ProfileAdminFragment profileAdminFragment;
+    private Button btn_save;
+    private FloatingActionButton fab_editpic;
+    private ProfileAdminFragment profileAdminFragment;
     private LocalStorage localStorage;
     private LoginModel loginModel;
-    private int storeId,strAddressId,strZip;
-    private String strStoreName, strDescrption, strPhone, strEmail, strAddrss,
-            strImage,strAddresLocality,strAddCity,strLandarrk,strAddressJson;
+    private int storeId, strAddressId, strZip;
+    private String strStoreName, strDescrption, strPhone, strEmail, strAddrss, strImage, strAddresLocality, strAddCity, strLandarrk, strAddressJson;
     private NewProgressBar dialog;
     private userOnlineInfo user;
     private static final int REQUEST_WRITE_STORAGE = 1004;
@@ -74,8 +73,8 @@ public class AdminEditStoreFragment extends Fragment implements View.OnClickList
     private ImageUtility imageUtility;
     private File destination;
     private Uri outputFileUri;
-    int CameraPicker = 124;
-    File imagefile;
+    private int CameraPicker = 124;
+    private File imagefile;
     private File imgFile;
 
     public AdminEditStoreFragment() {
@@ -91,6 +90,8 @@ public class AdminEditStoreFragment extends Fragment implements View.OnClickList
         startWorking();
         return view;
     }
+
+    /*---------------------------------------- intialize all views that are used in this activity -----------------------------*/
 
     private void intializeViews(View view) {
         activity = getActivity();
@@ -111,14 +112,16 @@ public class AdminEditStoreFragment extends Fragment implements View.OnClickList
         changepassword = view.findViewById(R.id.changepassword);
         btn_save = view.findViewById(R.id.btn_save);
         fab_editpic = view.findViewById(R.id.fab_editpic);
-
     }
+
+    /*------------------------------------------- bind all views that are used in this fragment -------------------------------*/
 
     private void bindListner() {
         btn_save.setOnClickListener(this);
         fab_editpic.setOnClickListener(this);
     }
 
+    /*------------------------------------------------- on click listner -----------------------------------------------------*/
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -127,14 +130,14 @@ public class AdminEditStoreFragment extends Fragment implements View.OnClickList
 
                 return;
             }
-            case R.id.fab_editpic:{
+            case R.id.fab_editpic: {
                 galleryIntent();
                 return;
             }
         }
     }
 
-
+    /*----------------------------------------------------- start Working -----------------------------------------------------*/
 
     private void startWorking() {
         readWritePermission();
@@ -143,10 +146,33 @@ public class AdminEditStoreFragment extends Fragment implements View.OnClickList
         getStoreDetialApiCall();
     }
 
+    /*--------------------------------------------- read and write permission ------------------------------------------------*/
+
+    private void readWritePermission() {
+        boolean hasPermission = (ContextCompat.checkSelfPermission(getActivity(),
+                Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED);
+        if (!hasPermission) {
+            ActivityCompat.requestPermissions(getActivity(),
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    REQUEST_WRITE_STORAGE);
+        }
+    }
+
+    /*----------------------------------------------- multiple permissions -------------------------------------------------*/
+
+    private void multiplePermission() {
+        if (!permissionFile.checkLocStorgePermission(getActivity())) {
+            permissionFile.checkLocStorgePermission(getActivity());
+        }
+    }
+
+    /* ---------------------------------------------get data from local Storage -------------------------------------------*/
+
     private void getDataFromLocalStorage() {
         storeId = loginModel.getData().getUser().getStoreId();
-
     }
+
+    /* ------------------------------------------- get store detial Api Call ----------------------------------------------*/
 
     private void getStoreDetialApiCall() {
         if (user.isOnline(activity)) {
@@ -176,7 +202,6 @@ public class AdminEditStoreFragment extends Fragment implements View.OnClickList
                             }
 
 
-
                         }
                     });
 
@@ -184,6 +209,8 @@ public class AdminEditStoreFragment extends Fragment implements View.OnClickList
             Utils.showAlertDialog(activity, "No Internet Connection");
         }
     }
+
+    /*--------------------------------------------- api all data set into Strings -------------------------------------------*/
 
     private void getdataSetIntoViews(StoreDetailResponseModel result) {
         if (result.getStatus() == true) {
@@ -207,6 +234,8 @@ public class AdminEditStoreFragment extends Fragment implements View.OnClickList
         }
     }
 
+    /*-------------------------------------------- data set Into Edit Text Views -------------------------------------------*/
+
     private void dataSetEditText() {
         tvPhone.setText(strPhone);
         tvEmail.setText(strEmail);
@@ -214,23 +243,10 @@ public class AdminEditStoreFragment extends Fragment implements View.OnClickList
         tvFirstName.setText(strStoreName);
         tvName.setText(strDescrption);
         Glide.with(activity).load(Config.imageUrl + strImage).into(iv_avatar);
-
-    }
-    private void readWritePermission() {
-        boolean hasPermission = (ContextCompat.checkSelfPermission(getActivity(),
-                Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED);
-        if (!hasPermission) {
-            ActivityCompat.requestPermissions(getActivity(),
-                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    REQUEST_WRITE_STORAGE);
-        }
     }
 
-    private void multiplePermission() {
-        if (!permissionFile.checkLocStorgePermission(getActivity())) {
-            permissionFile.checkLocStorgePermission(getActivity());
-        }
-    }
+
+    /*------------------------------------------------ pick Images from Gallery -------------------------------------------*/
 
     private void galleryIntent() {
         Intent pickIntent = new Intent(Intent.ACTION_PICK);
@@ -238,6 +254,7 @@ public class AdminEditStoreFragment extends Fragment implements View.OnClickList
         startActivityForResult(pickIntent, GalleryPicker);
     }
 
+    /*------------------------------------------ on activity result Image data get ---------------------------------------*/
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -252,9 +269,9 @@ public class AdminEditStoreFragment extends Fragment implements View.OnClickList
         }
     }
 
-    /* --------------------------------- get the actual storage path of image (Camera an dgallery) ----------------------------------*/
+    /* -------------------------------- get the actual storage path of image (Camera an dgallery) -------------------------*/
 
-    void onCaptureImageResult(Intent data, String imageType) {
+    public void onCaptureImageResult(Intent data, String imageType) {
         if (imageType.equals("camera")) {
             licenseFile = imageUtility.compressImage(destination.getPath());
             Log.e("camerapic", licenseFile);
@@ -277,42 +294,45 @@ public class AdminEditStoreFragment extends Fragment implements View.OnClickList
         }
     }
 
+    /*------------------------------------------- validate data on Edit texts is empty or not --------------------------------*/
+
     private void validateData() {
         strStoreName = tvFirstName.getText().toString();
         strDescrption = tvName.getText().toString();
         strPhone = tvPhone.getText().toString();
         strEmail = tvEmail.getText().toString();
         strAddrss = tvAddress.getText().toString();
-        if(strStoreName.equals("") || strDescrption.equals("")||strEmail.equals("")|| strAddrss.equals("") || strPhone.equals("")){
+        if (strStoreName.equals("") || strDescrption.equals("") || strEmail.equals("") || strAddrss.equals("") || strPhone.equals("")) {
             Toast.makeText(activity, "please enter all fields", Toast.LENGTH_SHORT).show();
-        }else {
-            getAddressJson();
-            editProfile(strStoreName,strDescrption,strPhone,strAddressJson,imgFile);
+        } else {
+            createAddress();
+            editProfile(strStoreName, strDescrption, strPhone, strAddressJson, imgFile);
         }
-
     }
 
-    private void getAddressJson() {
+    /*-------------------------------------------------- create address json -------------------------------------------------*/
+
+    private void createAddress() {
         JSONObject postData = new JSONObject();
         try {
-            postData.put("addressId",strAddressId );
+            postData.put("addressId", strAddressId);
             postData.put("address", strAddrss);
             postData.put("locality", strAddresLocality);
-            postData.put("city",strAddCity);
+            postData.put("city", strAddCity);
             postData.put("zipcode", strZip);
             strAddressJson = postData.toString();
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
+    /*-------------------------------------------------- edit store Detail Api Call ------------------------------------------*/
 
-
-    private void editProfile(String strStoreName, String strDescrption, String strPhone, String strAddressJson, File imgFile){
+    private void editProfile(String strStoreName, String strDescrption, String strPhone, String strAddressJson, File imgFile) {
         if (user.isOnline(getActivity())) {
             dialog = new NewProgressBar(getActivity());
             dialog.show();
             final LocalStorage localStorage = new LocalStorage(getActivity());
-            ApiCaller.editstoreDetial(getActivity(),Config.Url.storeEdit,strStoreName,strDescrption,strPhone,localStorage.getString(LocalStorage.token),imgFile,strAddressJson,
+            ApiCaller.editstoreDetial(getActivity(), Config.Url.storeEdit, strStoreName, strDescrption, strPhone, localStorage.getString(LocalStorage.token), imgFile, strAddressJson,
                     new FutureCallback<EditStoreDetialResponseModel>() {
                         @Override
                         public void onCompleted(Exception e, EditStoreDetialResponseModel result) {
@@ -343,8 +363,6 @@ public class AdminEditStoreFragment extends Fragment implements View.OnClickList
 
                                 }
                             }
-
-
 
 
                         }

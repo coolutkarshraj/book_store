@@ -81,7 +81,7 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
     private AdminBookListAdapter adapter;
     private List<AdminBookDataModel> item;
     private NewProgressBar dialog;
-    SearchView searchView;
+    private SearchView searchView;
     private userOnlineInfo user;
     private Dialog dialogs;
     private static final int REQUEST_WRITE_STORAGE = 1004;
@@ -91,20 +91,16 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
     private ImageUtility imageUtility;
     private File destination;
     private Uri outputFileUri;
-    int CameraPicker = 124;
-    ImageView imageView, ivFilter;
-    Spinner spin;
-
-    String strName, strDesc, strImage, strPrice, strQuantity, strCategory,strAuthor;
-    String spindata = "-1",deviceToken;
-    LocalStorage localStorage;
-    List<String> items =new ArrayList<>();
-    List<String> categoryId =new ArrayList<>();
-   /* private String[] items = {" Select Category ", "Arabic Books", "English Books", "Computer Supplies", "Games toys", "School Supplies",
-            "Kids", "Office", "Art", "Smartphones"};
-    String[] categoryId = {" ", "1", "2", "3", "4", "5", "6", "7", "8", "9"};*/
+    private int CameraPicker = 124;
+    private ImageView imageView, ivFilter;
+    private Spinner spin;
+    private String strName, strDesc, strImage, strPrice, strQuantity, strCategory, strAuthor;
+    private String spindata = "-1", deviceToken;
+    private LocalStorage localStorage;
+    private List<String> items = new ArrayList<>();
+    private List<String> categoryId = new ArrayList<>();
     private FloatingActionButton floatingActionButton;
-    File imagefile;
+    private File imagefile;
     private File imgFile;
     private SwipeRefreshLayout swipeRefreshLayout;
 
@@ -120,9 +116,9 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
         bindListner();
         startWorking();
         return view;
-
     }
 
+    /*-------------------------------------- intialize all views  that are used in this fragment -----------------------------*/
 
     private void intializeViews(View view) {
         activity = getActivity();
@@ -146,56 +142,59 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
                 });
     }
 
+    /*--------------------------------------- bind all views that are used in this fragment --------------------------------*/
+
     private void bindListner() {
         floatingActionButton.setOnClickListener(this);
         ivFilter.setOnClickListener(this);
         swipeRefreshLayout.setOnRefreshListener(this);
     }
 
+    /*------------------------------------------------- click Listner ------------------------------------------------------*/
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.floating:
                 dialogOpenForAddBook();
-                return;
+
 
             case R.id.iv_filter:
                 dialogOfFilter();
-                return;
-        }
 
+        }
     }
 
+    /*----------------------------------------------------- start Working ------------------------------------------------*/
 
     private void startWorking() {
         updateDevceToken();
         getBookList();
         getCategoryList();
         searchViewSetUp();
-
     }
+
+    /*------------------------------------------------ update Device Token ap call  ------------------------------------*/
 
     private void updateDevceToken() {
         if (user.isOnline(getActivity())) {
-            ApiCaller.updateDevice(getActivity(), Config.Url.updateDeviceToken ,localStorage.getString(LocalStorage.token),deviceToken,
+            ApiCaller.updateDevice(getActivity(), Config.Url.updateDeviceToken, localStorage.getString(LocalStorage.token), deviceToken,
                     new FutureCallback<UpdateDeviceToken>() {
 
                         @Override
                         public void onCompleted(Exception e, UpdateDeviceToken result) {
-                            if(result != null){
+                            if (result != null) {
 
-                                if(result.getStatus()== null){
-                                    if(result.getMessage().equals("Unauthorized")){
-                                        Utils.showAlertDialogAdminLogout(getActivity(), "Your Session was expire. please Logout!",localStorage.getInt(LocalStorage.userId));
-
+                                if (result.getStatus() == null) {
+                                    if (result.getMessage().equals("Unauthorized")) {
+                                        Utils.showAlertDialogAdminLogout(getActivity(), "Your Session was expire. please Logout!", localStorage.getInt(LocalStorage.userId));
                                     }
 
-                                }else {
+                                } else {
 
-
+                                    Toast.makeText(activity, result.getMessage(), Toast.LENGTH_SHORT).show();
                                 }
-                            }else {
+                            } else {
                                 dialog.dismiss();
                                 Toast.makeText(getActivity(), "No Data Found", Toast.LENGTH_SHORT).show();
                             }
@@ -206,31 +205,31 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
         }
     }
 
+    /*----------------------------------------------- get all Book List Api Call --------------------------------------------*/
     private void getBookList() {
         if (user.isOnline(getActivity())) {
             dialog = new NewProgressBar(getActivity());
             dialog.show();
-            ApiCaller.getAdminBookList(getActivity(), Config.Url.getAllBook + localStorage.getInt(LocalStorage.userId) + "/" + spindata,localStorage.getString(LocalStorage.token),
+            ApiCaller.getAdminBookList(getActivity(), Config.Url.getAllBook + localStorage.getInt(LocalStorage.userId) + "/" + spindata, localStorage.getString(LocalStorage.token),
                     new FutureCallback<AdminBookListResponseModel>() {
 
                         @Override
                         public void onCompleted(Exception e, AdminBookListResponseModel result) {
-                            if(result != null){
-                                if(result.getStatus()== null){
-                                    if(result.getMessage().equals("Unauthorized")){
-                                        Utils.showAlertDialogAdminLogout(getActivity(), "Your Session was expire. please Logout!",localStorage.getInt(LocalStorage.userId));
+                            if (result != null) {
+                                if (result.getStatus() == null) {
+                                    if (result.getMessage().equals("Unauthorized")) {
+                                        Utils.showAlertDialogAdminLogout(getActivity(), "Your Session was expire. please Logout!", localStorage.getInt(LocalStorage.userId));
                                         dialog.dismiss();
                                     }
                                     dialog.dismiss();
-                                }else {
+                                } else {
                                     setRecyclerViewData(result);
                                     dialog.dismiss();
 
                                 }
-                            }else {
+                            } else {
                                 Toast.makeText(getActivity(), "No Data Found", Toast.LENGTH_SHORT).show();
                             }
-
 
 
                         }
@@ -240,24 +239,24 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
         }
     }
 
+    /*----------------------------------------- all books set into the recycler View ------------------------------------------*/
 
     @SuppressLint("WrongConstant")
     private void setRecyclerViewData(AdminBookListResponseModel result) {
         rvBookStore.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false));
-        if(result.getData().size() == 0 ) {
-
-        }else {
+        if (result.getData().size() == 0) {
+            Toast.makeText(activity, "Data Not Found", Toast.LENGTH_SHORT).show();
+        } else {
             adapter = new AdminBookListAdapter(activity, result.getData(), this);
             item = result.getData();
             rvBookStore.setAdapter(adapter);
         }
-
-
     }
+
+    /*-----------------------------------------------get all category list api call ---------------------------------------- */
 
     private void getCategoryList() {
         if (user.isOnline(getActivity())) {
-
             ApiCaller.getCategoryModel(getActivity(), Config.Url.getCategoryModel, "",
                     new FutureCallback<CategoryModel>() {
 
@@ -272,8 +271,8 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
 
                                 items.clear();
                                 categoryId.clear();
-                                for(int i = 0;i<result.getData().size();i++){
-                                    String name= result.getData().get(i).getName();
+                                for (int i = 0; i < result.getData().size(); i++) {
+                                    String name = result.getData().get(i).getName();
                                     items.add(name);
                                     categoryId.add(String.valueOf(result.getData().get(i).getCategoryId()));
                                 }
@@ -290,6 +289,8 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
             Utils.showAlertDialog(getActivity(), "No Internet Connection");
         }
     }
+
+    /*----------------------------------------------- create and  open dialog of add books ----------------------------------*/
 
     private void dialogOpenForAddBook() {
         dialogs = new Dialog(activity, R.style.dialogTheme);
@@ -362,9 +363,9 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
             }
         });
         dialogs.show();
-
-
     }
+
+    /*-------------------------------------------------- check data is empty or not --------------------------------------------*/
 
     private void addBook(String strBookName, String strDescrpition, String strPrice, String strQuantity, ImageView imageView,
                          String file, String licenseFile, String author, Dialog dialogs) {
@@ -389,14 +390,15 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
         }
     }
 
+    /*------------------------------------------------- check multiple permissions -------------------------------------------*/
+
     private void multiplePermission() {
         if (!permissionFile.checkLocStorgePermission(activity)) {
             permissionFile.checkLocStorgePermission(activity);
         }
     }
 
-
-    /*---------------------------------------------- pick Image from the gallery using intent ---------------------------------------*/
+    /*------------------------------------- pick Image from the gallery using intent ---------------------------------------*/
 
     private void galleryIntent() {
         Intent pickIntent = new Intent(Intent.ACTION_PICK);
@@ -404,6 +406,7 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
         startActivityForResult(pickIntent, GalleryPicker);
     }
 
+    /*------------------------------------------- on activity result get Image Data ---------------------------------------*/
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -418,9 +421,9 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
         }
     }
 
-    /* --------------------------------- get the actual storage path of image (Camera an dgallery) ----------------------------------*/
+    /* --------------------------------- get the actual storage path of image (Camera an dgallery) -----------------------------*/
 
-    void onCaptureImageResult(Intent data, String imageType) {
+    public void onCaptureImageResult(Intent data, String imageType) {
         if (imageType.equals("camera")) {
             licenseFile = imageUtility.compressImage(destination.getPath());
             Toast.makeText(activity, "submit", Toast.LENGTH_SHORT).show();
@@ -430,7 +433,6 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
                 Bitmap myBitmap = BitmapFactory.decodeFile(imagefile.getAbsolutePath());
                 imageView.setImageBitmap(myBitmap);
             }
-
         } else {
             licenseFile = imageUtility.compressImage(imageUtility.getRealPathFromURI(activity, data.getData()));
             Toast.makeText(activity, "submit", Toast.LENGTH_SHORT).show();
@@ -445,6 +447,7 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
         }
     }
 
+    /*----------------------------------------------------- add book api call -----------------------------------------------*/
 
     private void addDataIntoApi(String strBookName, String strDescrpition, String strPrice,
                                 String strQuantity, String licenseFile, String spindata,
@@ -461,13 +464,13 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
                         return;
                     }
 
-                    if(result != null){
-                        if(result.getStatus()== null){
-                            if(result.getMessage().equals("Unauthorized")){
-                                Utils.showAlertDialogAdminLogout(getActivity(), "Your Session was expire. please Logout!",localStorage.getInt(LocalStorage.userId));
+                    if (result != null) {
+                        if (result.getStatus() == null) {
+                            if (result.getMessage().equals("Unauthorized")) {
+                                Utils.showAlertDialogAdminLogout(getActivity(), "Your Session was expire. please Logout!", localStorage.getInt(LocalStorage.userId));
                                 dialog.dismiss();
                             }
-                        }else {
+                        } else {
                             if (result.getStatus() == true) {
                                 dialog.dismiss();
                                 dialogs.dismiss();
@@ -480,17 +483,15 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
 
                         }
                     }
-
-
                 }
             });
 
         } else {
             Utils.showAlertDialog(getActivity(), "No Internet Connection");
         }
-
-
     }
+
+    /*---------------------------------------------------- search view setup -------------------------------------------------*/
 
     private void searchViewSetUp() {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -512,9 +513,9 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
             }
 
         });
-
-
     }
+
+    /*--------------------------------------------------- create dialog for filter ---------------------------------------------*/
 
     private void dialogOfFilter() {
         final Dialog dialog = new Dialog(activity);
@@ -530,7 +531,6 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
         final Button No = (Button) dialog.findViewById(R.id.no);
         final ImageView image = (ImageView) dialog.findViewById(R.id.clear);
         spin = (Spinner) dialog.findViewById(R.id.category_spinner);
-
 
         image.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -571,24 +571,26 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
 
     }
 
+    /*------------------------------------------------ get book List According to filter -------------------------------------*/
+
     private void getBookListFilter(String spindata) {
         if (user.isOnline(getActivity())) {
             dialog = new NewProgressBar(getActivity());
             dialog.show();
-            ApiCaller.getAdminBookList(getActivity(), Config.Url.getAllBook + localStorage.getInt(LocalStorage.userId) + "/" + spindata,localStorage.getString(LocalStorage.token),
+            ApiCaller.getAdminBookList(getActivity(), Config.Url.getAllBook + localStorage.getInt(LocalStorage.userId) + "/" + spindata, localStorage.getString(LocalStorage.token),
                     new FutureCallback<AdminBookListResponseModel>() {
 
                         @Override
                         public void onCompleted(Exception e, AdminBookListResponseModel result) {
 
-                            if(result != null){
-                                if(result.getStatus()== null){
-                                    if(result.getMessage().equals("Unauthorized")){
-                                        Utils.showAlertDialogAdminLogout(getActivity(), "Your Session was expire. please Logout!",localStorage.getInt(LocalStorage.userId));
+                            if (result != null) {
+                                if (result.getStatus() == null) {
+                                    if (result.getMessage().equals("Unauthorized")) {
+                                        Utils.showAlertDialogAdminLogout(getActivity(), "Your Session was expire. please Logout!", localStorage.getInt(LocalStorage.userId));
                                         dialog.dismiss();
                                     }
                                     dialog.dismiss();
-                                }else {
+                                } else {
                                     dialog.dismiss();
                                     setRecyclerViewData(result);
                                     dialog.dismiss();
@@ -597,13 +599,14 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
                             }
 
 
-
                         }
                     });
         } else {
             Utils.showAlertDialog(getActivity(), "No Internet Connection");
         }
     }
+
+    /*-------------------------------------------- create dialog for edit book detail -----------------------------------------*/
 
     private void dialogOpenForAddBook1(final int position) {
         dialogs = new Dialog(activity, R.style.dialogTheme);
@@ -642,15 +645,6 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
         author.setText(strAuthor);
         //
         Glide.with(activity).load(Config.imageUrl + item.get(position).getAvatarPath()).into(imageView);
-
-        /*for (int i = 0; i < items.length; i++) {
-            if (items[i].toLowerCase().equals(item.get(position).getCategory().getName().toLowerCase())) {
-                spin.setSelection(i);
-                break;
-            }
-        }*/
-
-
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -684,7 +678,7 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
                 strAuthor = author.getText().toString().trim();
                 Toast.makeText(activity, "postionspiner " + spindata, Toast.LENGTH_SHORT).show();
 
-                editBook(strName, strDesc, strPrice, strQuantity, imageView, licenseFile, spindata, item.get(position).getBookId(), dialogs,strAuthor);
+                editBook(strName, strDesc, strPrice, strQuantity, imageView, licenseFile, spindata, item.get(position).getBookId(), dialogs, strAuthor);
             }
         });
         No.setOnClickListener(new View.OnClickListener() {
@@ -702,18 +696,20 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
             }
         });
         dialogs.show();
-
-
     }
+
+    /*--------------------------------------------------- edit book detail validtae  -----------------------------------------*/
 
     private void editBook(String name, String descrption, String price, String quantity, ImageView imageView, String licenseFile, String spindata, Integer bookId, Dialog dialogs, String strAuthor) {
         if (name.isEmpty() || descrption.isEmpty() || price.isEmpty() || quantity.isEmpty() || spindata.equals(" ")) {
             Toast.makeText(activity, "please enter data" + bookId, Toast.LENGTH_SHORT).show();
         } else {
-            editDataIntoApi(name, descrption, price, quantity, licenseFile, spindata, bookId, dialogs,strAuthor);
+            editDataIntoApi(name, descrption, price, quantity, licenseFile, spindata, bookId, dialogs, strAuthor);
 
         }
     }
+
+    /*--------------------------------------------------- edit book detial Api Caller ----------------------------------------*/
 
     private void editDataIntoApi(String name, String descrption, String price, String quantity, String licenseFile, String spindata, Integer bookId, final Dialog dialogs, String strAuthor) {
         if (user.isOnline(getActivity())) {
@@ -721,7 +717,7 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
             dialog.show();
             ApiCaller.editBookDetial(activity, Config.Url.editBookDetial,
                     name, descrption, spindata, quantity, price, localStorage.getString(LocalStorage.token),
-                    imgFile, bookId,strAuthor,
+                    imgFile, bookId, strAuthor,
                     new FutureCallback<EditBookResponseModel>() {
                         @Override
                         public void onCompleted(Exception e, EditBookResponseModel result) {
@@ -732,14 +728,14 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
                                 return;
                             }
 
-                            if(result != null){
-                                if(result.getStatus()== null){
-                                    if(result.getMessage().equals("Unauthorized")){
-                                        Utils.showAlertDialogAdminLogout(getActivity(), "Your Session was expire. please Logout!",localStorage.getInt(LocalStorage.userId));
+                            if (result != null) {
+                                if (result.getStatus() == null) {
+                                    if (result.getMessage().equals("Unauthorized")) {
+                                        Utils.showAlertDialogAdminLogout(getActivity(), "Your Session was expire. please Logout!", localStorage.getInt(LocalStorage.userId));
                                         dialog.dismiss();
                                     }
 
-                                }else {
+                                } else {
                                     if (result.getStatus() == true) {
                                         dialog.dismiss();
                                         dialogs.dismiss();
@@ -762,12 +758,14 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
         }
     }
 
+    /*------------------------------------------------ edit Button Clickable Recycler view -----------------------------------*/
+
     @Override
     public void onClickPosition(int position) {
         dialogOpenForAddBook1(position);
-
     }
 
+    /*----------------------------------------------------- on Swipe refresh ------------------------------------------------*/
     @Override
     public void onRefresh() {
         new Handler().postDelayed(new Runnable() {
