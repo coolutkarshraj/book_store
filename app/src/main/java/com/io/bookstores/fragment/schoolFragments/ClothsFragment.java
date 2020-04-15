@@ -45,7 +45,7 @@ public class ClothsFragment extends Fragment implements View.OnClickListener {
     private ItemClickListner itemClickListner;
 
     public ClothsFragment() {
-        // Required empty public constructor
+
     }
 
 

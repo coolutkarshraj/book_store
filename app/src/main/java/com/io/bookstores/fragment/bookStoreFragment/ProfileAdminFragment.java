@@ -35,20 +35,21 @@ import com.koushikdutta.async.future.FutureCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileAdminFragment extends Fragment implements View.OnClickListener {
 
-    Activity activity;
+    private Activity activity;
     public static CircleImageView iv_avatar;
-    private TextView loggedih, tvName, tvPhone, tvAddress,tvFirstName, tvEmail, tvEdit1, edit1, edit2, edit3, edit4, changepassword;
+    private TextView loggedih, tvName, tvPhone, tvAddress, tvFirstName, tvEmail, tvEdit1, edit1, edit2, edit3, edit4, changepassword;
     private LinearLayout ll_main_view;
     private ImageView edi_profile;
     AdminEditStoreFragment adminEditStoreFragment;
     private LocalStorage localStorage;
     private LoginModel loginModel;
     private int storeId;
-    private String strOldPassword,strNewPassword;
+    private String strOldPassword, strNewPassword;
     private NewProgressBar dialog;
     private userOnlineInfo user;
 
@@ -66,6 +67,7 @@ public class ProfileAdminFragment extends Fragment implements View.OnClickListen
 
     }
 
+    /*-------------------------------------- intialize all views that are used in this fragment ------------------------------- */
 
     private void intializeViews(View view) {
         activity = getActivity();
@@ -90,12 +92,15 @@ public class ProfileAdminFragment extends Fragment implements View.OnClickListen
 
     }
 
+    /*---------------------------------------- bind all views that are used in this fragment ------------------------------------*/
+
     private void bindListner() {
         loggedih.setOnClickListener(this);
         changepassword.setOnClickListener(this);
         edi_profile.setOnClickListener(this);
     }
 
+    /*------------------------------------------------------- on click listner -------------------------------------------------*/
 
     @Override
     public void onClick(View view) {
@@ -118,13 +123,14 @@ public class ProfileAdminFragment extends Fragment implements View.OnClickListen
 
     }
 
+    /*----------------------------------------------------- start Working --------------------------------------------------*/
+
     private void startWorking() {
         getDataFromLocalStorage();
         getStoreDetialApiCall();
-
     }
 
-
+    /*------------------------------------------------- get data from local storage ----------------------------------------*/
 
     private void getDataFromLocalStorage() {
         if (loginModel == null) {
@@ -137,11 +143,14 @@ public class ProfileAdminFragment extends Fragment implements View.OnClickListen
 
         }
     }
+
+    /*------------------------------------------------- get store detial api call ---------------------------------------------*/
+
     private void getStoreDetialApiCall() {
         if (user.isOnline(activity)) {
             dialog = new NewProgressBar(activity);
             dialog.show();
-            ApiCaller.getStoreDetial(activity, Config.Url.getStoreDetail+storeId,
+            ApiCaller.getStoreDetial(activity, Config.Url.getStoreDetail + storeId,
                     new FutureCallback<StoreDetailResponseModel>() {
                         @Override
                         public void onCompleted(Exception e, StoreDetailResponseModel result) {
@@ -151,22 +160,19 @@ public class ProfileAdminFragment extends Fragment implements View.OnClickListen
                                 return;
                             }
 
-                            if(result != null){
-                                if(result.getStatus()== null){
-                                    if(result.getMessage().equals("Unauthorized")){
-                                        Utils.showAlertDialogLogout(getActivity(), "Your Session was expire. please Logout!",localStorage.getInt(LocalStorage.userId));
+                            if (result != null) {
+                                if (result.getStatus() == null) {
+                                    if (result.getMessage().equals("Unauthorized")) {
+                                        Utils.showAlertDialogLogout(getActivity(), "Your Session was expire. please Logout!", localStorage.getInt(LocalStorage.userId));
 
                                         dialog.dismiss();
                                     }
                                     dialog.dismiss();
-                                }else {
+                                } else {
                                     dialog.dismiss();
                                     getdataSetIntoViews(result);
                                 }
                             }
-
-
-
                         }
                     });
 
@@ -175,22 +181,25 @@ public class ProfileAdminFragment extends Fragment implements View.OnClickListen
         }
     }
 
+    /*----------------------------------------- all api data set Into Text Views ---------------------------------------------*/
+
     private void getdataSetIntoViews(StoreDetailResponseModel result) {
-        if(result.getStatus() == true){
+        if (result.getStatus()) {
             tvPhone.setText(result.getData().getPhone());
             tvEmail.setText(result.getData().getEmail());
             tvAddress.setText(result.getData().getAddress().getAddress());
             tvFirstName.setText(result.getData().getName());
             tvName.setText(result.getData().getDescription());
-            Glide.with(activity).load(Config.imageUrl +result.getData().getAvatarPath()).into(iv_avatar);
-        }else {
-            Toast.makeText(activity, ""+result.getMessage(), Toast.LENGTH_SHORT).show();
+            Glide.with(activity).load(Config.imageUrl + result.getData().getAvatarPath()).into(iv_avatar);
+        } else {
+            Toast.makeText(activity, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
     /*------------------------------------------------- change password dialog---------------------------------------------*/
-    public void changePassword() {
-        final Dialog dialog = new Dialog(getActivity());
+
+    private void changePassword() {
+        final Dialog dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         DisplayMetrics metrics = getResources().getDisplayMetrics();
         int width = metrics.widthPixels;
@@ -228,7 +237,7 @@ public class ProfileAdminFragment extends Fragment implements View.OnClickListen
         dialog.show();
 
     }
-    /*--------------------------------------------------- Change Password validate data---------------------------------------*/
+    /*----------------------------------------------- Change Password validate data---------------------------------------*/
 
     private void changePasswordValidateData(EditText oldPassword, EditText newPassword, Dialog dialog) {
         strOldPassword = oldPassword.getText().toString().trim();
@@ -236,13 +245,15 @@ public class ProfileAdminFragment extends Fragment implements View.OnClickListen
         if (strOldPassword.equals("") || strNewPassword.equals("")) {
             oldPassword.setError("Please enter old password");
             newPassword.setError("Please enter new password");
-        }else if(strNewPassword.length()<5){
+        } else if (strNewPassword.length() < 5) {
             oldPassword.setError("Please Enter Minimum 6 Digit Password");
         } else {
             changePasswordApi(dialog);
         }
 
     }
+
+    /*---------------------------------------------------- change password Api Call --------------------------------------------*/
 
     private void changePasswordApi(final Dialog dialog) {
         if (user.isOnline(getActivity())) {
@@ -252,19 +263,19 @@ public class ProfileAdminFragment extends Fragment implements View.OnClickListen
                     new FutureCallback<UpdatePasswordModel>() {
                         @Override
                         public void onCompleted(Exception e, UpdatePasswordModel result) {
-                            if(e!=null){
+                            if (e != null) {
                                 Utils.showAlertDialog(activity, "Something Went Wrong");
                                 return;
                             }
 
-                            if(result != null){
-                                if(result.getStatus()== null){
-                                    if(result.getMessage().equals("Unauthorized")){
-                                        Utils.showAlertDialogAdminLogout(getActivity(), "Your Session was expire. please Logout!",localStorage.getInt(LocalStorage.userId));
+                            if (result != null) {
+                                if (result.getStatus() == null) {
+                                    if (result.getMessage().equals("Unauthorized")) {
+                                        Utils.showAlertDialogAdminLogout(getActivity(), "Your Session was expire. please Logout!", localStorage.getInt(LocalStorage.userId));
                                         dialog.dismiss();
                                     }
                                     dialog.dismiss();
-                                }else {
+                                } else {
                                     ProfileAdminFragment.this.dialog.dismiss();
                                     dialog.dismiss();
                                     changePasswordData(result);
@@ -278,8 +289,10 @@ public class ProfileAdminFragment extends Fragment implements View.OnClickListen
         }
     }
 
+    /*--------------------------------------------------- change password Data Api -------------------------------------------*/
+
     private void changePasswordData(UpdatePasswordModel result) {
-        if (result.getStatus() == true) {
+        if (result.getStatus()) {
             Toast.makeText(getActivity(), "" + result.getMessage(), Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(getActivity(), "" + result.getMessage(), Toast.LENGTH_SHORT).show();

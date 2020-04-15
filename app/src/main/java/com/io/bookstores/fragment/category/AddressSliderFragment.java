@@ -25,8 +25,8 @@ public class AddressSliderFragment extends Fragment {
 
     private Activity activity;
     private RecyclerView recyclerView;
-    int sizeo = 0;
-    int i = 0;
+    private int sizeo = 0;
+    private int i = 0;
     private List<DilveryAddressDataModel> listd = new ArrayList<>();
     private List<DilveryAddressDataModel> item = new ArrayList<>();
 
@@ -46,11 +46,13 @@ public class AddressSliderFragment extends Fragment {
         return view;
     }
 
+    /*----------------------------------------------- intialize all views that are used ---------------------------------------*/
 
     private void intailizeViews(View view) {
         recyclerView = view.findViewById(R.id.rv_address);
-
     }
+
+    /*---------------------------------------------- set up of recycler View -------------------------------------------------*/
 
     private void recyclerViewSetUp() {
         item.clear();
@@ -67,12 +69,11 @@ public class AddressSliderFragment extends Fragment {
                 item.add(listd.get(i));
             }
         }
-
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         AddressSliderAdapter addressSliderAdapter = new AddressSliderAdapter(getActivity(), item);
         recyclerView.setAdapter(addressSliderAdapter);
-
     }
+
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {

@@ -26,8 +26,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class OrderListBookFragment extends Fragment {
 
-    Activity activity;
-    LocalStorage localStorage;
+    private Activity activity;
+    private LocalStorage localStorage;
     public static RecyclerView recyclerView;
     public static AdminOrderAdapter orderAdapter;
 
@@ -44,18 +44,26 @@ public class OrderListBookFragment extends Fragment {
         return view;
     }
 
+    /*----------------------------------- intialize all Views that are used in this fragment -----------------------------------*/
+
     private void intializeViews(View view) {
         activity = getActivity();
         localStorage = new LocalStorage(activity);
         recyclerView = view.findViewById(R.id.recyclerView);
     }
 
+    /*------------------------------------------- bind all views that are used in this fragment ------------------------------*/
+
     private void bindListner() {
     }
+
+    /*--------------------------------------------------- start Working -----------------------------------------------------*/
 
     private void startWorking() {
         getOrderList();
     }
+
+    /*----------------------------------------------- get all order list api call -------------------------------------------*/
 
     private void getOrderList() {
         userOnlineInfo user;
@@ -77,7 +85,7 @@ public class OrderListBookFragment extends Fragment {
                             if (result != null) {
                                 if (result.getStatus() == null) {
                                     if (result.getMessage().equals("Unauthorized")) {
-                                        Utils.showAlertDialogAdminLogout(getActivity(), "Your Session was expire. please Logout!",localStorage.getInt(LocalStorage.userId));
+                                        Utils.showAlertDialogAdminLogout(getActivity(), "Your Session was expire. please Logout!", localStorage.getInt(LocalStorage.userId));
                                         dialog.dismiss();
                                     }
 
@@ -100,6 +108,7 @@ public class OrderListBookFragment extends Fragment {
         }
     }
 
+    /*---------------------------------------- all order list  stored into recycler view --------------------------------------*/
     private void setRecyclerViewData(GetAdminOrderListResponseModel result) {
         LinearLayoutManager gridLayoutManager = new LinearLayoutManager(getActivity(),
                 RecyclerView.VERTICAL, false);

@@ -36,7 +36,6 @@ public class AllSchoolsFragment extends Fragment implements View.OnClickListener
     private Activity activity;
     private RecyclerView rvAllSchools;
     private AllSchoolsRvAdapter adapter;
-
     private ImageView iv_back;
     private TextView notdata;
     private userOnlineInfo user;

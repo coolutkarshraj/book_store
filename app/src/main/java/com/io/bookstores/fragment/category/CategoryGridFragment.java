@@ -47,16 +47,17 @@ public class CategoryGridFragment extends Fragment implements View.OnClickListen
     private CategoryListFragment categoryListFragment;
     private NewProgressBar dialog;
     private userOnlineInfo user;
-    SpringDotsIndicator dotsIndicator;
+    private SpringDotsIndicator dotsIndicator;
     List<CategoryData> data = new ArrayList<>();
     List<CategoryData> item1 = new ArrayList<>();
     List<CategoryData> item2 = new ArrayList<>();
-    private  LocalStorage localStorage;
+    private LocalStorage localStorage;
 
-    int sizee = 0;
+    private int sizee = 0;
     private BookListFragment bookListFragment;
     private ItemClickListner itemClickListner;
     private ImageView iv_image;
+
     public CategoryGridFragment() {
 
     }
@@ -72,6 +73,7 @@ public class CategoryGridFragment extends Fragment implements View.OnClickListen
         return view;
     }
 
+    /*------------------------------------- intailize all Views that are used in this fragment ------------------------------*/
 
     private void intializeViews(View view) {
         activity = getActivity();
@@ -79,24 +81,27 @@ public class CategoryGridFragment extends Fragment implements View.OnClickListen
         localStorage = new LocalStorage(activity);
         recyclerView1 = view.findViewById(R.id.recycler1);
         recyclerView2 = view.findViewById(R.id.recycler2);
-        itemClickListner = (ItemClickListner)getActivity();
-        iv_image =(ImageView)view.findViewById(R.id.iv_back);
+        itemClickListner = (ItemClickListner) getActivity();
+        iv_image = (ImageView) view.findViewById(R.id.iv_back);
         viewPager = (ViewPager) view.findViewById(R.id.viewpager);
         dotsIndicator = (SpringDotsIndicator) view.findViewById(R.id.dots_indicator);
         rlViewAllCategory = (RelativeLayout) view.findViewById(R.id.iv_view_all_category);
-
     }
+
+    /*---------------------------------------- bind all views that are used in this fragment --------------------------------*/
 
     private void bindListner() {
         rlViewAllCategory.setOnClickListener(this);
         iv_image.setOnClickListener(this);
     }
 
+    /*------------------------------------------------ on click Listner ----------------------------------------------------*/
+
     @Override
     public void onClick(View v) {
         switch ((v.getId())) {
             case R.id.iv_view_all_category:
-                localStorage.putString(LocalStorage.CategoryId,"-1");
+                localStorage.putString(LocalStorage.CategoryId, "-1");
                 bookListFragment = new BookListFragment();
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.content_view, bookListFragment)
@@ -110,8 +115,10 @@ public class CategoryGridFragment extends Fragment implements View.OnClickListen
         }
     }
 
+    /*---------------------------------------------- get All category api call -------------------------------------------- */
+
     private void getCategoryList() {
-        if (user.isOnline(getActivity())) {
+        if (user.isOnline(activity)) {
             dialog = new NewProgressBar(getActivity());
             dialog.show();
             ApiCaller.getCategoryModel(getActivity(), Config.Url.getCategoryModel, "",
@@ -140,6 +147,8 @@ public class CategoryGridFragment extends Fragment implements View.OnClickListen
         }
     }
 
+    /*------------------------------------------------ data set Into Recycler View ------------------------------------------*/
+
     private void recyclerViewData(List<CategoryData> data) {
         CategoryFragmentAdapter adapter = new CategoryFragmentAdapter(((FragmentActivity) activity).getSupportFragmentManager());
         if (data.size() % 10 == 0) {
@@ -154,10 +163,10 @@ public class CategoryGridFragment extends Fragment implements View.OnClickListen
         }
         item1.clear();
         item2.clear();
-        for ( int i = 0; i <= data.size() - 1; i++) {
-            if (i <  3) {
+        for (int i = 0; i <= data.size() - 1; i++) {
+            if (i < 3) {
                 item1.add(data.get(i));
-            } else if (i <  3 + 3) {
+            } else if (i < 3 + 3) {
                 item2.add(data.get(i));
             }
         }
@@ -174,8 +183,6 @@ public class CategoryGridFragment extends Fragment implements View.OnClickListen
         CategoryGridAdapter adapter2 = new CategoryGridAdapter(getActivity(), item2);
         recyclerView2.setAdapter(adapter2);
     }
-
-
 
 
 }

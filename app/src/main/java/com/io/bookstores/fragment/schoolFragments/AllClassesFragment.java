@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.io.bookstores.Config;
 import com.io.bookstores.R;
@@ -47,7 +48,7 @@ public class AllClassesFragment extends Fragment implements View.OnClickListener
     private LocalStorage localStorage;
 
     public AllClassesFragment() {
-        // Required empty public constructor
+
     }
 
 
@@ -156,7 +157,7 @@ public class AllClassesFragment extends Fragment implements View.OnClickListener
             @Override
             public boolean onQueryTextChange(String s) {
                 if (listData == null || listData.isEmpty()) {
-
+                    Toast.makeText(activity, "Data Not Found", Toast.LENGTH_SHORT).show();
                 } else {
                     List<ClassDataModel> newlist = new ArrayList<>();
                     for (ClassDataModel productList : listData) {
