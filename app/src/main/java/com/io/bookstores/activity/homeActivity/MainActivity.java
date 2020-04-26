@@ -31,7 +31,6 @@ import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -50,15 +49,15 @@ import com.io.bookstores.activity.homeActivity.ui.order.OrderFragment;
 import com.io.bookstores.activity.profile.EditProfileFragment;
 import com.io.bookstores.activity.profile.ProfileFragment;
 import com.io.bookstores.apicaller.ApiCaller;
-import com.io.bookstores.fragment.BookListFragment;
-import com.io.bookstores.fragment.BookstoresFragment;
-import com.io.bookstores.fragment.BookstoresFragmentWithFilter;
-import com.io.bookstores.fragment.CategoryListFragment;
-import com.io.bookstores.fragment.ContactUsFragment;
-import com.io.bookstores.fragment.CourseEnrollmentFragment;
-import com.io.bookstores.fragment.EnrollCourseListFragment;
-import com.io.bookstores.fragment.FavoriteItemsFragment;
-import com.io.bookstores.fragment.category.CategoryGridFragment;
+import com.io.bookstores.fragment.basicFragment.CategoryListFragment;
+import com.io.bookstores.fragment.basicFragment.ContactUsFragment;
+import com.io.bookstores.fragment.basicFragment.FavoriteItemsFragment;
+import com.io.bookstores.fragment.bookStoreFragments.AllBookStoresFragment;
+import com.io.bookstores.fragment.bookStoreFragments.BookListFragment;
+import com.io.bookstores.fragment.bookStoreFragments.BookstoresFragmentWithFilter;
+import com.io.bookstores.fragment.bookStoreFragments.CategoryGridFragment;
+import com.io.bookstores.fragment.courseFragment.CourseEnrollFragment;
+import com.io.bookstores.fragment.courseFragment.EnrollCourseListFragment;
 import com.io.bookstores.fragment.schoolFragments.AllClassesFragment;
 import com.io.bookstores.fragment.schoolFragments.AllSchoolsFragment;
 import com.io.bookstores.fragment.schoolFragments.ClassCategoryFragment;
@@ -115,11 +114,11 @@ public class MainActivity extends AppCompatActivity implements
     ProfileFragment profileFragment;
     ArrayList<CartLocalListResponseMode> item = new ArrayList<>();
     EditProfileFragment editProfileFragment;
-    BookstoresFragment bookstoresFragment;
+    AllBookStoresFragment allBookStoresFragment;
     BookstoresFragmentWithFilter bookstoresFragmentWithFilter;
     BookListFragment bookListFragment;
     EnrollCourseListFragment enrollCourseListFragment;
-    CourseEnrollmentFragment courseEnrollmentFragment;
+    CourseEnrollFragment courseEnrollFragment;
     DeliveryAddressFragment deliveryAddressFragment;
     LocalStorage localStorage;
     public static TextView tvcart;
@@ -130,10 +129,9 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
+        setContentView(R.layout.activity_main);
         initView();
         bindListner();
         startWorking();
@@ -144,8 +142,8 @@ public class MainActivity extends AppCompatActivity implements
         if (localStorage.getBoolean(LocalStorage.isCart)) {
             changeFrag(cartFragment, true);
         } else if (localStorage.getBoolean(LocalStorage.isEnroll)) {
-            courseEnrollmentFragment = new CourseEnrollmentFragment(localStorage.getcourse());
-            changeFrag(courseEnrollmentFragment, true);
+            courseEnrollFragment = new CourseEnrollFragment(localStorage.getcourse());
+            changeFrag(courseEnrollFragment, true);
         } else {
             startHome();
         }
@@ -681,9 +679,9 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onClick(int position) {
         if (position == 1) {
-            bookstoresFragment = new BookstoresFragment();
+            allBookStoresFragment = new AllBookStoresFragment();
             MainActivity.this.getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.content_view, bookstoresFragment)
+                    .replace(R.id.content_view, allBookStoresFragment)
                     .addToBackStack(null)
                     .commit();
         }

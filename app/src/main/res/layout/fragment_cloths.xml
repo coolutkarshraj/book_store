@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.BookstoresFragment">
+    tools:context=".fragment.bookStoreFragments.AllBookStoresFragment">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -42,7 +42,7 @@
 
 
             <androidx.appcompat.widget.SearchView
-                android:id="@+id/search_all_classes"
+                android:id="@+id/search_all_items"
                 android:layout_width="@dimen/width_300dp"
                 android:layout_height="@dimen/height_40dp"
                 android:layout_marginTop="@dimen/margin_16dp"
@@ -53,7 +53,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView34"
-                app:queryHint="choose your classes..."
+                app:queryHint="@string/search"
                 tools:ignore="RtlSymmetry,UnusedAttribute" />
 
 
@@ -63,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
 
-                app:layout_constraintTop_toBottomOf="@+id/search_all_classes"
+                app:layout_constraintTop_toBottomOf="@+id/search_all_items"
                 tools:ignore="MissingConstraints">
 
                 <RelativeLayout
@@ -83,6 +83,7 @@
                         android:background="@drawable/selected_btn"
                         android:fontFamily="@font/exo_bold"
                         android:text="Male"
+                        android:visibility="gone"
                         android:textAllCaps="false"
                         android:textColor="@color/white"
                         android:textSize="@dimen/h1"
@@ -98,24 +99,45 @@
                         android:background="@drawable/unselected_btn"
                         android:fontFamily="@font/exo_bold"
                         android:text="Female"
+                        android:visibility="gone"
                         android:textAllCaps="false"
                         android:textColor="@color/light_gray"
                         android:textSize="@dimen/h1"
                         tools:ignore="HardcodedText,RtlHardcoded,SpUsage" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_subcategory"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true" />
                 </RelativeLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_cloths"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_24dp"
+                    android:layout_marginTop="@dimen/margin_15dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/ll_btns"
+
                     tools:ignore="NotSibling">
 
+
+
                 </androidx.recyclerview.widget.RecyclerView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="No Data Found"
+                    android:visibility="gone"
+                    android:id="@+id/tv_no_data_found_cloth"
+                    android:textSize="@dimen/h1"
+                    android:fontFamily="@font/arial_bold"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/height_250dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -124,7 +146,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:visibility="gone"
-                app:layout_constraintTop_toBottomOf="@+id/search_all_classes"
+                app:layout_constraintTop_toBottomOf="@+id/search_all_items"
                 tools:ignore="MissingConstraints">
 
 

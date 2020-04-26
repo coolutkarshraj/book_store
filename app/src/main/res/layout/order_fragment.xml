@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,11 +7,10 @@
     android:orientation="horizontal">
 
     <LinearLayout
-
+        android:orientation="vertical"
         android:id="@+id/hide"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:visibility="gone">
 
         <RelativeLayout
@@ -39,6 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:text="Your Order History"
+                android:fontFamily="@font/arial_bold"
                 android:textSize="@dimen/h20"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -60,19 +60,88 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_courses_heading"
             tools:ignore="UnusedAttribute" />
 
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_min"
-            android:layout_marginLeft="@dimen/margin_10dp"
-            android:layout_marginTop="@dimen/margin_10dp"
-            android:layout_marginRight="@dimen/margin_10dp"
-            tools:ignore="ObsoleteLayoutParam" />
+            android:layout_height="match_parent">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/ll_book_order"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_10dp"
+                        android:layout_marginTop="@dimen/margin_20dp"
+                        android:fontFamily="@font/arial_bold"
+                        android:text="Book Store Order"
+                        android:textColor="@color/blue"
+                        android:textSize="@dimen/h1" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_min"
+                        android:layout_marginLeft="@dimen/margin_10dp"
+                        android:layout_marginTop="@dimen/margin_10dp"
+                        android:layout_marginRight="@dimen/margin_10dp"
+                        tools:ignore="ObsoleteLayoutParam" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_school_order"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_10dp"
+                        android:layout_marginTop="@dimen/margin_20dp"
+                        android:fontFamily="@font/arial_bold"
+                        android:text="School Order"
+                        android:textColor="@color/blue"
+                        android:textSize="@dimen/h1" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_schoolOrder"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_min"
+                        android:layout_marginLeft="@dimen/margin_10dp"
+                        android:layout_marginTop="@dimen/margin_10dp"
+                        android:layout_marginRight="@dimen/margin_10dp"
+                        tools:ignore="ObsoleteLayoutParam" />
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_no_order"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="20dp"
+        android:fontFamily="@font/exo_bold"
+        android:text="@string/you_do_not_have_any_orders"
+        android:textAlignment="center"
+        android:textSize="@dimen/h1"
+        android:visibility="gone"
+        tools:ignore="ObsoleteLayoutParam,RtlCompat" />
 
     <TextView
         android:id="@+id/loggedih"
@@ -89,4 +158,4 @@
         tools:ignore="ObsoleteLayoutParam,RtlCompat" />
 
 
-</LinearLayout>
+</RelativeLayout>

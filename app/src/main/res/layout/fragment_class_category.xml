@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.BookstoresFragment">
+    tools:context=".fragment.bookStoreFragments.AllBookStoresFragment">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -52,7 +52,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView34"
-                app:queryHint="choose your classes..."
+                app:queryHint="@string/search"
                 tools:ignore="RtlSymmetry,UnusedAttribute" />
 
             <androidx.recyclerview.widget.RecyclerView

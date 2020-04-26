@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.google.android.material.tabs.TabLayout;
 import com.io.bookstores.R;
-import com.io.bookstores.adapter.IntroViewPagerAdapter;
+import com.io.bookstores.adapter.resuseAdapter.IntroViewPagerAdapter;
 import com.io.bookstores.localStorage.LocalStorage;
 import com.io.bookstores.model.ScreenItem;
 

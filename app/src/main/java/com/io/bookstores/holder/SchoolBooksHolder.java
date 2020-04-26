@@ -12,7 +12,7 @@ import com.io.bookstores.R;
 
 public class SchoolBooksHolder extends RecyclerView.ViewHolder
         implements View.OnClickListener {
-    public TextView tv_cloth_size, tv_price;
+    public TextView tv_p_name, tv_price;
     public ImageView ivClothImage, mark_fav, mark_fav_red, mark_cart,mark_setting;
 
 
@@ -20,6 +20,7 @@ public class SchoolBooksHolder extends RecyclerView.ViewHolder
 
         super(view);
         tv_price = view.findViewById(R.id.tv_price);
+        tv_p_name = view.findViewById(R.id.tv_p_name);
         ivClothImage = view.findViewById(R.id.iv_favorite);
         mark_fav = view.findViewById(R.id.mark_fav);
         mark_fav_red = view.findViewById(R.id.mark_fav_red);

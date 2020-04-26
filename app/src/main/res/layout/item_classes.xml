@@ -10,7 +10,7 @@
         android:id="@+id/rl_root"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/bluee">
+        android:background="@color/blue_profile">
 
         <TextView
             android:id="@+id/tv_class_name"

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -43,9 +44,10 @@ public class ClassGroupRvAdapter extends RecyclerView.Adapter<ClassGroupHolder> 
             @Override
             public void onClick(View v) {
                 itemClickListner = (ItemClickListner) activity;
-
                 LocalStorage localStorage = new LocalStorage(activity);
+               // Toast.makeText(activity, "classgroupId" + model.getClassGroupId(), Toast.LENGTH_SHORT).show();
                 localStorage.putString(LocalStorage.classGroupId, String.valueOf(model.getClassGroupId()));
+                localStorage.putString(LocalStorage.TYPE, "school");
                 itemClickListner.onClick(9);
             }
         });

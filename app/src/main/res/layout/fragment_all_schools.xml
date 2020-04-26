@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.BookstoresFragment">
+    tools:context=".fragment.bookStoreFragments.AllBookStoresFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <androidx.core.widget.NestedScrollView
@@ -32,7 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_8dp"
-                android:text="All Private Schools"
+                android:text="@string/all_private_school"
                 android:textSize="@dimen/h20"
                 app:fontFamily="@font/arial_bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -52,7 +52,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView34"
-                app:queryHint="Search..."
+                app:queryHint="@string/search"
                 tools:ignore="RtlSymmetry,UnusedAttribute" />
 
             <androidx.recyclerview.widget.RecyclerView

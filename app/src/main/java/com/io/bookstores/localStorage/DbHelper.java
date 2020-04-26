@@ -22,6 +22,8 @@ public class DbHelper extends SQLiteOpenHelper {
     private final static String PRODUCT_PRICE="Price";
     private final static String PRODUCT_AQTY="avalible";
     private final static String WISHLIST="wishlist";
+    private final static String TYPE = "type";
+    private final static String Size = "size";
 
     private SQLiteDatabase database;
 
@@ -35,7 +37,8 @@ public class DbHelper extends SQLiteOpenHelper {
             description +" TEXT,"+
             gstPrice +" TEXT,"+
             PRODUCT_AQTY +" TEXT,"+
-            PRODUCT_Id +" TEXT,"+WISHLIST +" TEXT);";
+            PRODUCT_Id + " TEXT," + WISHLIST + " TEXT," + TYPE + " TEXT," + Size + " TEXT);";
+
 
     String CREATE_TABLE1 = "create table "+TABLE_NAME1+"("+ ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"+
             PRODUCT_NAME + " TEXT,"+
@@ -45,7 +48,7 @@ public class DbHelper extends SQLiteOpenHelper {
             description +" TEXT,"+
             gstPrice +" TEXT,"+
             PRODUCT_AQTY +" TEXT,"+
-            PRODUCT_Id +" TEXT,"+WISHLIST +" TEXT);";
+            PRODUCT_Id + " TEXT," + WISHLIST + " TEXT," + TYPE + " TEXT," + Size + " TEXT);";
 
     public DbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -69,7 +72,7 @@ public class DbHelper extends SQLiteOpenHelper {
     /* ----------------------------------------------------insert data in table -----------------------------------------------------*/
 
     public boolean insertData(String name, String avatarPath, Long bookId, int qty,
-                              Long price, String description, String gstPrice, int avalibleqty, String s){
+                              Long price, String description, String gstPrice, int avalibleqty, String s, String type, String size) {
         database = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("Name",name);
@@ -81,6 +84,8 @@ public class DbHelper extends SQLiteOpenHelper {
         values.put("P_ID",bookId);
         values.put("avalible",avalibleqty);
         values.put("wishlist",s);
+        values.put("type", type);
+        values.put("size", size);
         long result = database.insert(TABLE_NAME,null,values);
         if(result==-1){
             return false;
@@ -90,7 +95,7 @@ public class DbHelper extends SQLiteOpenHelper {
     }
 
     public boolean insertWishList(String name, String avatarPath, Long bookId, int qty,
-                                  Long price, String description, String  gstPrice, int avalibleqty, String s){
+                                  Long price, String description, String gstPrice, int avalibleqty, String s, String type, String size) {
         database = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("Name",name);
@@ -102,6 +107,8 @@ public class DbHelper extends SQLiteOpenHelper {
         values.put("P_ID",bookId);
         values.put("avalible",avalibleqty);
         values.put("wishlist",s);
+        values.put("type", type);
+        values.put("size", size);
         long result = database.insert(TABLE_NAME1,null,values);
         if(result==-1){
             return false;

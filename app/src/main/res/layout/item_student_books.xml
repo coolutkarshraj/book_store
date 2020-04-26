@@ -21,16 +21,26 @@
             android:scaleType="centerCrop"
             tools:ignore="ContentDescription" />
 
+        <TextView
+            android:id="@+id/tv_p_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-10dp"
+            android:layout_marginEnd="@dimen/elevation_3dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingStart="3dp"
+            android:textSize="@dimen/h3" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:weightSum="1">
+            android:weightSum="1.2">
 
             <ImageView
                 android:id="@+id/mark_fav"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/margin_25dp"
-                android:layout_weight="0.2"
+                android:layout_weight="0.3"
                 android:padding="@dimen/margin_5dp"
                 android:src="@drawable/heratoutline"
                 tools:ignore="ContentDescription" />
@@ -40,7 +50,7 @@
                 android:id="@+id/mark_fav_red"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/margin_25dp"
-                android:layout_weight="0.2"
+                android:layout_weight="0.3"
                 android:backgroundTint="@color/color_red"
                 android:padding="5dp"
                 android:src="@drawable/heartpink"
@@ -62,11 +72,12 @@
                 android:id="@+id/tv_price"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/margin_25dp"
-                android:layout_weight="0.3"
+                android:layout_gravity="center_vertical"
                 android:gravity="center"
-                android:textSize="12sp">
+                android:layout_weight="0.4"
+                android:paddingTop="@dimen/radius_2dp"
+                android:textSize="@dimen/h4" />
 
-            </TextView>
 
             <ImageView
                 android:id="@+id/mark_setting"
@@ -75,6 +86,7 @@
                 android:layout_weight="0.2"
                 android:padding="@dimen/margin_5dp"
                 android:src="@drawable/ic_more_vert_black_24dp"
+                android:background="@drawable/item_click_animation"
                 tools:ignore="ContentDescription" />
 
         </LinearLayout>

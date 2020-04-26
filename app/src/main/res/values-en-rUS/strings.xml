@@ -2,7 +2,7 @@
 
 <resources>
     <string name="app_name">My BookStores</string>
-    <string name="recived">Received</string>
+    <string name="recived">Recieved</string>
     <string name="title">Title</string>
     <string name="date">Date</string>
     <string name="desc">Message Description</string>
@@ -65,7 +65,7 @@
     <string name="languages">Languages</string>
     <string name="get_started">Get Started</string>
     <string name="country">Contact Us</string>
-    <string name="recieve_notifications">Receive notifications</string>
+    <string name="recieve_notifications">Recieve notifications</string>
     <string name="enabled">Enabled</string>
     <string name="sign_up">Sign up</string>
     <string name="discover_more_items_in_this_bookstore">Discover more Items in this Bookstore</string>
@@ -210,4 +210,19 @@
     <string name="others">Others</string>
     <string name="book_price">Book Price</string>
     <string name="course_price">Course Price</string>
+    <string name="remove_book">Remove Book</string>
+    <string name="are_you_sure_remove_book_from_favourite">Are you sure to remove this book from Favourite list ?</string>
+    <string name="remove">Remove</string>
+    <string name="phone_number_must_be_of_8">Phone Number Must of length 8</string>
+    <string name="email_not_valid">Email Address Is Not Valid</string>
+    <string name="agree_with_terms_and_conditions">I agree with terms and conditions</string>
+    <string name="p_store">Premium Stores</string>
+    <string name="p_school">Private School</string>
+
+    <string name="search">Search</string>
+    <string name="all_private_school">All Private Schools</string>
+    <string name="choose_your_class">choose your class</string>
+    <string name="clothes">Clothes</string>
+
+
 </resources>

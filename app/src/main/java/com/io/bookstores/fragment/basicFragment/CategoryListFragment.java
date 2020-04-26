@@ -1,0 +1,112 @@
+package com.io.bookstores.fragment.basicFragment;
+
+
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.io.bookstores.Config;
+import com.io.bookstores.R;
+import com.io.bookstores.adapter.categoryAdapter.CategoryAdapter;
+import com.io.bookstores.apicaller.ApiCaller;
+import com.io.bookstores.listeners.ItemClickListner;
+import com.io.bookstores.model.categoryModel.CategoryModel;
+import com.io.bookstores.utility.NewProgressBar;
+import com.io.bookstores.utility.Utils;
+import com.io.bookstores.utility.userOnlineInfo;
+import com.koushikdutta.async.future.FutureCallback;
+
+
+public class CategoryListFragment extends Fragment {
+
+    private RecyclerView recyclerView;
+    private CategoryAdapter categoryAdapter;
+    private ItemClickListner itemClickListner;
+    private View root;
+    private NewProgressBar dialog;
+    private userOnlineInfo user;
+    private ImageView iv_image;
+
+
+    public CategoryListFragment() {
+
+    }
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        root = inflater.inflate(R.layout.fragment_category_list1, container, false);
+        initView();
+        getCategoryList();
+        bindListner();
+        return root;
+    }
+
+    /*------------------------------------ intailize all Views that are used in this Fragments -------------------------------*/
+    private void initView() {
+        recyclerView = root.findViewById(R.id.rv_cateory_list);
+        user = new userOnlineInfo();
+        itemClickListner = (ItemClickListner)getActivity();
+        iv_image =(ImageView)root.findViewById(R.id.iv_back);
+    }
+
+
+
+    private void bindListner() {
+        iv_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itemClickListner.onClick(6);
+            }
+        });
+    }
+
+
+    private void getCategoryList() {
+        if (user.isOnline(getActivity())) {
+            dialog = new NewProgressBar(getActivity());
+            dialog.show();
+            ApiCaller.getCategoryModel(getActivity(), Config.Url.getCategoryModel, "",
+                    new FutureCallback<CategoryModel>() {
+
+                        @Override
+                        public void onCompleted(Exception e, CategoryModel result) {
+                            if (e != null) {
+                                dialog.dismiss();
+                                Utils.showAlertDialog(getActivity(), "Something Went Wrong");
+                                return;
+                            }
+                            if (result.getStatus() == true) {
+                                dialog.dismiss();
+                                setRecyclerViewData(result);dialog.dismiss();
+                                setRecyclerViewData(result);
+                            } else {
+                                dialog.dismiss();
+                                Toast.makeText(getActivity(), "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+
+
+                        }
+                    });
+        } else {
+            Utils.showAlertDialog(getActivity(), "No Internet Connection");
+        }
+    }
+
+        private void setRecyclerViewData(CategoryModel result) {
+        categoryAdapter = new CategoryAdapter(getActivity(),result.getData());
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),3));
+        recyclerView.setAdapter(categoryAdapter);
+
+    }
+
+}

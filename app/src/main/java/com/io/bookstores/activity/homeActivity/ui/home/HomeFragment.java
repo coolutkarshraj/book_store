@@ -11,7 +11,6 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -21,16 +20,16 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.io.bookstores.Config;
 import com.io.bookstores.R;
-import com.io.bookstores.adapter.AdSliderAdapter;
-import com.io.bookstores.adapter.CourseAdapter;
-import com.io.bookstores.adapter.SToreAdapter;
+import com.io.bookstores.adapter.homeAdapter.AdSliderAdapter;
 import com.io.bookstores.adapter.categoryAdapter.CategoryFragmentAdapter;
-import com.io.bookstores.adapter.schoolAdapter.HomeSchoolsRvAdapter;
+import com.io.bookstores.adapter.homeAdapter.HomeCourseRvAdapter;
+import com.io.bookstores.adapter.homeAdapter.HomeSchoolsRvAdapter;
+import com.io.bookstores.adapter.homeAdapter.HomeStoreRvAdapter;
 import com.io.bookstores.apicaller.ApiCaller;
-import com.io.bookstores.fragment.CourseEnrollmentFragment;
-import com.io.bookstores.fragment.CoursesFragment;
-import com.io.bookstores.fragment.InstituteFragment;
-import com.io.bookstores.fragment.category.AddressSliderFragment;
+import com.io.bookstores.fragment.courseFragment.CourseEnrollFragment;
+import com.io.bookstores.fragment.courseFragment.AllCoursesListFragment;
+import com.io.bookstores.fragment.courseFragment.AllInstituteListFragment;
+import com.io.bookstores.fragment.bookStoreFragments.AddressSliderFragment;
 import com.io.bookstores.listeners.ItemClickListner;
 import com.io.bookstores.listeners.RecyclerViewClickListener;
 import com.io.bookstores.localStorage.DbHelper;
@@ -47,7 +46,6 @@ import com.io.bookstores.model.sliderAdModel.AdModel;
 import com.io.bookstores.model.storeModel.StoreModel;
 import com.io.bookstores.utility.NewProgressBar;
 import com.io.bookstores.utility.Utils;
-
 import com.io.bookstores.utility.userOnlineInfo;
 import com.koushikdutta.async.future.FutureCallback;
 import com.smarteist.autoimageslider.IndicatorAnimations;
@@ -64,11 +62,11 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener,
     private Activity activity;
     private List<TrendingInstituteDataModel> list = new ArrayList<>();
     private RecyclerView recycler_view_store, reccycler_ciew_course, recyclerView_courses,reccycler_schools;
-    private CourseAdapter courseAdapter;
-    private SToreAdapter sToreAdapter;
-    private CoursesFragment coursesFragment;
-    private CourseEnrollmentFragment courseEnrollmentFragment;
-    private InstituteFragment instituteFragment;
+    private HomeCourseRvAdapter courseAdapter;
+    private HomeStoreRvAdapter homeStoreRvAdapter;
+    private AllCoursesListFragment allCoursesListFragment;
+    private CourseEnrollFragment courseEnrollFragment;
+    private AllInstituteListFragment allInstituteListFragment;
     private RelativeLayout iv_viewall_instutues, iv_viewall_schools, iv_view_all_stores;
     private ItemClickListner itemClickListner;
     private RecyclerViewClickListener recyclerViewClickListener;
@@ -141,9 +139,9 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener,
               break;
 
             case R.id.iv_viewall_instutues:
-                instituteFragment = new InstituteFragment();
+                allInstituteListFragment = new AllInstituteListFragment();
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.content_view, instituteFragment)
+                        .replace(R.id.content_view, allInstituteListFragment)
                         .addToBackStack(null)
                         .commit();
                 break;
@@ -240,7 +238,7 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener,
             sizee = resultt.size() / 6 + 1;
         }
         for (int p = 0; p < sizee; p++) {
-            adapter.addFragment(new AddressSliderFragment(resultt));
+          adapter.addFragment(new AddressSliderFragment(resultt));
             adapter.notifyDataSetChanged();
 
         }
@@ -281,8 +279,8 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener,
     private void setRecyclerView(StoreModel result) {
         GridLayoutManager gridLayoutManager1 = new GridLayoutManager(getActivity(), 2);
         recycler_view_store.setLayoutManager(gridLayoutManager1);
-        sToreAdapter = new SToreAdapter(getActivity(), result.getData());
-        recycler_view_store.setAdapter(sToreAdapter);
+        homeStoreRvAdapter = new HomeStoreRvAdapter(getActivity(), result.getData());
+        recycler_view_store.setAdapter(homeStoreRvAdapter);
     }
 
     /*------------------------------------------------ get all institute Api Call ---------------------------------------------*/
@@ -317,8 +315,7 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener,
     private void setRecyclerViewData(TrendingInstituteResponseModel result) {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
         reccycler_ciew_course.setLayoutManager(gridLayoutManager);
-
-        courseAdapter = new CourseAdapter((FragmentActivity) getActivity(), result.getData(), recyclerViewClickListener);
+        courseAdapter = new HomeCourseRvAdapter((FragmentActivity) getActivity(), result.getData(), recyclerViewClickListener);
         list = result.getData();
         reccycler_ciew_course.setAdapter(courseAdapter);
     }
@@ -363,9 +360,9 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener,
 
     @Override
     public void onClickPosition(int position) {
-        coursesFragment = new CoursesFragment(list.get(position).getInstituteId());
+        allCoursesListFragment = new AllCoursesListFragment(list.get(position).getInstituteId());
         getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_view, coursesFragment)
+                .replace(R.id.content_view, allCoursesListFragment)
                 .addToBackStack(null)
                 .commit();
 

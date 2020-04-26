@@ -26,9 +26,13 @@ public class Config {
         public static String addAddress = "order/add-address";
         public static String getAddressList = "user/detail";
         public static String placePrder = "order/placed";
+        public static String placePrderSchool = "school-order/place";
         public static String getAllOrder = "user/orders/";
+        public static String getAllUserListSchool = "user/school-orders";
         public static String addorremoveWishlist = "book/add-remove-wishlist/?id=";
+        public static String addorremoveWishlistSchool = "product/add-remove-wishlist/?id=";
         public static String getWishList = "book/wishlist";
+        public static String getWishListSchool = "product/wishlist";
         public static String adminDeleteBook = "book/delete";
         public static String addbook = "book/add/";
         public static String editBookDetial = "book/edit/";
@@ -57,9 +61,13 @@ public class Config {
         public static String guestCreate = "course/add-guest";
         public static String guestEnrollCourse = "course/guest-enroll";
         public static String orderqr = "order/add-qr";
+        public static String schoolQr = "school-order/add-qr";
         public static String getSchools = "school/list";
         public static String getclass = "class-group/getSchoolClasses";
         public static String getclassCategory = "class-category/getCategories";
+        public static String getClassSubCategory = "class-sub-category/getAllByCategory";
+        public static String schoolProducts = "product/list";
+        public static String schoolDetail = "school/detail?id=";
     }
 
     public final static int splashTimeout = 3000;

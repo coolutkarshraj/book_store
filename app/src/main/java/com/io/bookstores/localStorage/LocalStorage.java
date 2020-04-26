@@ -22,6 +22,7 @@ public class LocalStorage {
     public static String StoreId ="StoreId";
     public static String schoolId ="SchoolId";
     public static String classGroupId ="classGroupId";
+    public static String classCategoryId ="classCategoryId";
     public static String clothType ="clothType";
     public static String CategoryId ="CategoryId";
     public static String addressId = "addressId";
@@ -32,6 +33,11 @@ public class LocalStorage {
     public static final String isFirstLaunch = "isFirstLaunch";
     public static final String isFirstLaunch1 = "isFirstLaunch1";
     public static final String Dummy_Store_ID = "Dummy_ID";
+    public static final String Dummy_School_ID = "Dummy_School_ID";
+    public static final String TYPE = "type";
+    public static final String SIZEEID = "sizeId";
+    public static final String PQUANTITY = "pQuantity";
+
 
 
     public LocalStorage(Context context) {

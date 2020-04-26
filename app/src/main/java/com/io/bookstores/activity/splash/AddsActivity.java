@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.io.bookstores.Config;
 import com.io.bookstores.R;
 import com.io.bookstores.activity.homeActivity.MainActivity;
-import com.io.bookstores.adapter.admin.AddsAdapter;
+import com.io.bookstores.adapter.adminAdapter.AddsAdapter;
 import com.io.bookstores.apicaller.ApiCaller;
 import com.io.bookstores.bookStore.BookStoreMainActivity;
 import com.io.bookstores.localStorage.LocalStorage;

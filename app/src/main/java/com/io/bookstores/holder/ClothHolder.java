@@ -8,12 +8,14 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.io.bookstores.R;
+import com.io.bookstores.listeners.RecyclerViewClickListener;
 
 
 public class ClothHolder extends RecyclerView.ViewHolder
         implements View.OnClickListener {
     public TextView tv_cloth_size, tv_price;
     public ImageView ivClothImage, mark_fav, mark_fav_red, mark_cart;
+    public RecyclerViewClickListener recyclerViewClickListener;
 
 
     public ClothHolder(View view) {
@@ -25,6 +27,7 @@ public class ClothHolder extends RecyclerView.ViewHolder
         mark_fav = view.findViewById(R.id.mark_fav);
         mark_fav_red = view.findViewById(R.id.mark_fav_red);
         mark_cart = view.findViewById(R.id.mark_cart);
+
 
     }
 

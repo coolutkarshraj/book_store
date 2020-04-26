@@ -156,7 +156,7 @@ public class AllSchoolsFragment extends Fragment implements View.OnClickListener
             @Override
             public boolean onQueryTextChange(String s) {
                 if (listData == null || listData.isEmpty()) {
-                    Toast.makeText(activity, "No Data Found", Toast.LENGTH_SHORT).show();
+                //    Toast.makeText(activity, "No Data Found", Toast.LENGTH_SHORT).show();
                 } else {
                     List<GetAllSchoolDataModel> newlist = new ArrayList<>();
                     for (GetAllSchoolDataModel productList : listData) {

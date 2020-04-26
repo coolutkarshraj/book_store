@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.io.bookstores.Config;
 import com.io.bookstores.R;
+import com.io.bookstores.StaticData;
 import com.io.bookstores.listeners.ItemClickListner;
 import com.io.bookstores.localStorage.LocalStorage;
 import com.io.bookstores.model.categoryModel.CategoryData;
@@ -21,8 +22,8 @@ import java.util.List;
 
 public class CategoryGridAdapter extends RecyclerView.Adapter<CategoryGridAdapter.MyViewHolder> {
 
-    private Context mContext ;
-    private List<CategoryData> mData ;
+    private Context mContext;
+    private List<CategoryData> mData;
     private ItemClickListner itemClickListner;
 
     public CategoryGridAdapter(Context mContext, List<CategoryData> mData) {
@@ -33,17 +34,20 @@ public class CategoryGridAdapter extends RecyclerView.Adapter<CategoryGridAdapte
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View view ;
+        View view;
         LayoutInflater mInflater = LayoutInflater.from(mContext);
-        view = mInflater.inflate(R.layout.item_category_grid,parent,false);
+        view = mInflater.inflate(R.layout.item_category_grid, parent, false);
         return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-
-        holder.tv_category.setText(mData.get(position).getName());
-        Glide.with(mContext).load(Config.imageUrl +mData.get(position).getImagePath()).into(holder.iv_category);
+        if (StaticData.selectedLanguage.equals("kuwait")) {
+            holder.tv_category.setText(mData.get(position).getArabicName());
+        } else {
+            holder.tv_category.setText(mData.get(position).getName());
+        }
+        Glide.with(mContext).load(Config.imageUrl + mData.get(position).getImagePath()).into(holder.iv_category);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,7 +81,7 @@ public class CategoryGridAdapter extends RecyclerView.Adapter<CategoryGridAdapte
 
         TextView tv_category;
         ImageView iv_category;
-        CardView cardView ;
+        CardView cardView;
 
         public MyViewHolder(View itemView) {
             super(itemView);

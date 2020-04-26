@@ -51,6 +51,35 @@ public class LoginActivity extends AppCompatActivity {
         initView();
         bindListner();
     }
+
+    /*------------------------------------ intialize all Views that are used in this activity -----------------------------------*/
+
+    private void initView() {
+        tvSignUp = findViewById(R.id.tvSignUp);
+        btn_gust = findViewById(R.id.btn_gust);
+        tv_forgotpassword = findViewById(R.id.tvForgotPass);
+        tv_tnc = findViewById(R.id.tvSkip);
+        login_btn = findViewById(R.id.btnSignIn);
+        activity = this;
+        user = new userOnlineInfo();
+        localStorage = new LocalStorage(activity);
+        email = findViewById(R.id.etEmailLogin);
+        pass = findViewById(R.id.etPassLogin);
+        if (localStorage.getBoolean(LocalStorage.isCart) == true) {
+            btn_gust.setVisibility(View.VISIBLE);
+        }
+        FirebaseApp.initializeApp(this);
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
+                    @Override
+                    public void onSuccess(InstanceIdResult instanceIdResult) {
+                        deviceToken = instanceIdResult.getToken();
+                    }
+                });
+    }
+
+    /*------------------------------------------ bind all views that are used in this activity --------------------------------*/
+
     private void bindListner() {
         tv_forgotpassword.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,29 +118,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void initView() {
-        tvSignUp = findViewById(R.id.tvSignUp);
-        btn_gust = findViewById(R.id.btn_gust);
-        tv_forgotpassword = findViewById(R.id.tvForgotPass);
-        tv_tnc = findViewById(R.id.tvSkip);
-        login_btn = findViewById(R.id.btnSignIn);
-        activity = this;
-        user = new userOnlineInfo();
-        localStorage = new LocalStorage(activity);
-        email = findViewById(R.id.etEmailLogin);
-        pass = findViewById(R.id.etPassLogin);
-        if (localStorage.getBoolean(LocalStorage.isCart) == true) {
-            btn_gust.setVisibility(View.VISIBLE);
-        }
-        FirebaseApp.initializeApp(this);
-        FirebaseInstanceId.getInstance().getInstanceId()
-                .addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
-                    @Override
-                    public void onSuccess(InstanceIdResult instanceIdResult) {
-                        deviceToken = instanceIdResult.getToken();
-                    }
-                });
-    }
+    /*----------------------------------------------- login Api Call ----------------------------------------------------------*/
 
     private void loginApi() {
         userNaame = email.getText().toString().trim();
@@ -157,8 +164,8 @@ public class LoginActivity extends AppCompatActivity {
                 Utils.showAlertDialog(activity, "No Internet Connection");
             }
         }
-
     }
+    /*------------------------------------------ Go to user portal or Book store portal ----------------------------------------*/
 
     private void navigateToHomeActivit(LoginModel result) {
         localStorage.putInt(LocalStorage.role,result.getData().getRole());
@@ -174,6 +181,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    /* ------------------------------------------- login data save into Local storage --------------------------------------------*/
     private void saveLoginData(LoginModel result) {
         Gson gson = new Gson();
         String json = gson.toJson(result);

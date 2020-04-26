@@ -13,15 +13,19 @@ public class CategoryData {
     @SerializedName("name")
     @Expose
     private String name;
-    @SerializedName("image")
+    @SerializedName("avatarName")
     @Expose
     private String image;
-    @SerializedName("imagePath")
+    @SerializedName("avatarPath")
     @Expose
     private String imagePath;
     @SerializedName("description")
     @Expose
     private String description;
+
+    @SerializedName("arabicName")
+    @Expose
+    private String arabicName;
 
     public String getCreatedDate() {
         return createdDate;
@@ -72,5 +76,13 @@ public class CategoryData {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getArabicName() {
+        return arabicName;
+    }
+
+    public void setArabicName(String arabicName) {
+        this.arabicName = arabicName;
     }
 }

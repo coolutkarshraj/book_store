@@ -29,6 +29,10 @@ public class CartLocalListResponseMode {
     private String gst;
     @SerializedName("wishlist")
     private String wishlist;
+    @SerializedName("type")
+    private String type;
+    @SerializedName("size")
+    private String size;
 
     public String getWishlist() {
         return wishlist;
@@ -118,5 +122,21 @@ public class CartLocalListResponseMode {
 
     public void setAvailibleQty(String availibleQty) {
         this.availibleQty = availibleQty;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
     }
 }

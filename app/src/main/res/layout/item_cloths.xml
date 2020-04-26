@@ -5,39 +5,38 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/margin_5dp"
+    cardview:cardCornerRadius="@dimen/margin_5dp"
     cardview:cardElevation="@dimen/margin_5dp">
 
     <LinearLayout
-        android:layout_width="110dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="140dp"
-            android:orientation="vertical">
+            android:layout_height="@dimen/height_140dp">
 
             <ImageView
                 android:id="@+id/iv_image"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/height_140dp"
-                android:contentDescription="@null"
-                android:scaleType="centerCrop" />
+                android:scaleType="centerCrop"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:id="@+id/tv_cloth_size"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-                android:ellipsize="end"
-                android:paddingStart="@dimen/margin_5dp"
-                android:paddingEnd="@dimen/margin_5dp"
-                android:singleLine="true"
                 android:text="Size 1-4"
-                android:textColor="@color/blue"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:padding="@dimen/margin_5dp"
+                android:paddingEnd="@dimen/margin_5dp"
                 android:textSize="@dimen/h3"
+                android:textColor="@color/blue"
                 tools:ignore="HardcodedText" />
-
         </FrameLayout>
 
 
@@ -49,22 +48,20 @@
             <ImageView
                 android:id="@+id/mark_fav"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/height_25dp"
+                android:layout_height="@dimen/margin_25dp"
                 android:layout_weight="0.2"
                 android:padding="@dimen/margin_5dp"
                 android:src="@drawable/heratoutline"
-                tools:ignore="ContentDescription">
-
-            </ImageView>
+                tools:ignore="ContentDescription" />
 
 
             <ImageView
                 android:id="@+id/mark_fav_red"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/width_25dp"
+                android:layout_height="@dimen/margin_25dp"
                 android:layout_weight="0.2"
                 android:backgroundTint="@color/color_red"
-                android:padding="@dimen/margin_5dp"
+                android:padding="5dp"
                 android:src="@drawable/heartpink"
                 android:visibility="gone"
                 tools:ignore="ContentDescription,UnusedAttribute" />
@@ -72,21 +69,33 @@
             <ImageView
                 android:id="@+id/mark_cart"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/width_25dp"
+                android:layout_height="@dimen/margin_25dp"
                 android:layout_weight="0.3"
                 android:background="@drawable/item_click_animation"
                 android:contentDescription="@null"
                 android:padding="@dimen/five_dp"
-                android:src="@drawable/cart" />
+                android:src="@drawable/cart"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:id="@+id/tv_price"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/width_25dp"
+                android:layout_height="@dimen/margin_25dp"
                 android:layout_weight="0.5"
                 android:gravity="center"
-                android:textSize="12sp" />
+                android:textSize="12sp">
 
+            </TextView>
+
+            <ImageView
+                android:id="@+id/mark_setting"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/margin_25dp"
+                android:layout_weight="0.0"
+                android:background="@drawable/ic_more_vert_black_24dp"
+                android:backgroundTint="@color/white"
+                android:padding="@dimen/margin_5dp"
+                tools:ignore="ContentDescription" />
 
         </LinearLayout>
     </LinearLayout>

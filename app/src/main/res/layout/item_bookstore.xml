@@ -48,12 +48,13 @@
 
         <TextView
             android:id="@+id/tv_bookstore_tilte"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_8dp"
             android:layout_marginTop="@dimen/margin_8dp"
             android:text="TextView"
             android:textSize="16sp"
+            cardview:layout_constraintEnd_toStartOf="@+id/materialCardView"
             cardview:fontFamily="@font/arial_bold"
             cardview:layout_constraintStart_toStartOf="parent"
             cardview:layout_constraintTop_toTopOf="parent"

@@ -18,6 +18,8 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -38,18 +40,20 @@ import com.google.zxing.common.BitMatrix;
 import com.io.bookstores.Config;
 import com.io.bookstores.R;
 import com.io.bookstores.StaticData;
-import com.io.bookstores.adapter.AddressAdapter;
+import com.io.bookstores.adapter.basicAdapter.AddressAdapter;
 import com.io.bookstores.apicaller.ApiCaller;
 import com.io.bookstores.localStorage.DbHelper;
 import com.io.bookstores.localStorage.LocalStorage;
 import com.io.bookstores.model.PlaceOrderModel.OrderModel;
 import com.io.bookstores.model.addAddressResponseModel.AddAddressResponseModel;
 import com.io.bookstores.model.addAddressResponseModel.GetAddressListResponseModel;
+import com.io.bookstores.model.bookListModel.CartLocalListResponseMode;
 import com.io.bookstores.model.deliveryPriceModel.DeliveryResponseModel;
 import com.io.bookstores.model.dilvery.DilveryAddressDataModel;
 import com.io.bookstores.model.dilvery.DilveryAdressResponseModel;
 import com.io.bookstores.model.dilvery.GetDPriceResponseModel;
 import com.io.bookstores.model.getAllOrder.QrResponseModel;
+import com.io.bookstores.model.placeOrderSchoolModel.PlaceOrderResponseModel;
 import com.io.bookstores.utility.NewProgressBar;
 import com.io.bookstores.utility.Utils;
 import com.io.bookstores.utility.userOnlineInfo;
@@ -76,6 +80,7 @@ public class CheckoutActivity extends AppCompatActivity {
     Button btnLoginToDashBoard;
     Activity activity;
     ImageView iv_back;
+    CheckBox agreeTermsConditons;
     userOnlineInfo user;
     NewProgressBar dialog;
     private TextView tv_address;
@@ -83,12 +88,14 @@ public class CheckoutActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     public static TextView tv_name_1, tv_name_2, no_text_found;
     private AddressAdapter addressAdapter;
-    private JsonArray jsonArray;
+    private JsonArray jsonArray, jsonArraySchool;
+    String type = "";
     public static TextView delivery_type, deliv_charge, tv_gst, total_cost, totalAll_cost;
     private String deliveryType;
     private DeliveryResponseModel deliveryModel;
     RadioButton rb_1st, rb_2nd;
     public static int dilvery = 2;
+    public static ArrayList<CartLocalListResponseMode> list = new ArrayList<>();
     LocalStorage localStorage;
     String message = "";
     int totalprice;
@@ -97,7 +104,7 @@ public class CheckoutActivity extends AppCompatActivity {
     JSONObject jsonObject1;
     JSONArray jsonArrayy;
     File file;
-
+    Boolean isSelected = false;
     private List<DilveryAddressDataModel> listdata = new ArrayList<>();
     List<String> listcity = new ArrayList<>();
     List<String> listDistict = new ArrayList<>();
@@ -109,16 +116,14 @@ public class CheckoutActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout);
+
         intilizeView();
         bindListner();
         startWork();
-
     }
 
-
     private void intilizeView() {
-
-
+        getSqliteAll();
         jsonArrayy = new JSONArray();
         totalprice = getIntent().getIntExtra("totalprice", 0);
         activity = CheckoutActivity.this;
@@ -137,52 +142,14 @@ public class CheckoutActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         iv_back = findViewById(R.id.iv_back);
         tv_address = findViewById(R.id.tv_address);
+        agreeTermsConditons = findViewById(R.id.agreeTermsConditons);
         btnLoginToDashBoard = findViewById(R.id.btnLoginToDashBoard);
         total_cost.setText(String.valueOf(totalprice) + "KD");
         startService();
         callApiToGetDeliveryCharge();
         getAllCities();
+
     }
-
-    private void callApiToGetDeliveryCharge() {
-        if (user.isOnline(this)) {
-
-            ApiCaller.getDileveryPrice(this, Config.Url.getDeliverCharge,
-                    new FutureCallback<DeliveryResponseModel>() {
-
-                        @Override
-                        public void onCompleted(Exception e, DeliveryResponseModel result) {
-                            if (e != null) {
-
-                                Utils.showAlertDialog(CheckoutActivity.this, "Something Went Wrong");
-                                return;
-                            }
-                            if (result.getStatus() == true) {
-
-                                deliveryModel = result;
-                                rb_1st.setChecked(true);
-                                tv_name_1.setText(result.getData().get(0).getType() + " Delivery");
-                                rb_1st.setText(result.getData().get(0).getPrice() + result.getData().get(0).getUnit());
-                                rb_2nd.setText("0KD");
-                                tv_name_2.setText(result.getData().get(1).getType() + " Delivery");
-                                delivery_type.setText(deliveryModel.getData().get(0).getType() + " Delivery");
-                                deliveryType = deliveryModel.getData().get(0).getType();
-                                deliv_charge.setText(deliveryModel.getData().get(0).getPrice() + deliveryModel.getData().get(0).getUnit());
-                                totalpricessss = totalprice + deliveryModel.getData().get(0).getPrice();
-                                totalAll_cost.setText(totalpricessss + "KD");
-                            } else {
-
-                                Toast.makeText(activity, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-
-                        }
-                    });
-        } else {
-
-            Utils.showAlertDialog(activity, "No Internet Connection");
-        }
-    }
-
 
     private void bindListner() {
         btnLoginToDashBoard.setOnClickListener(new View.OnClickListener() {
@@ -191,7 +158,17 @@ public class CheckoutActivity extends AppCompatActivity {
                 if (localStorage.getString(LocalStorage.addressId).equals("")) {
                     Utils.showAlertDialog(activity, "please select delivery address");
                 } else {
-                    callApiToPlaceOrder();
+                    if (!isSelected) {
+                        Toast.makeText(activity, "Oops! please check terms and conditions", Toast.LENGTH_SHORT).show();
+                    } else {
+                        if (type.equals("store")) {
+                            callApiToPlaceOrder();
+                        } else {
+
+                            callApiToPlaceOrderSchool();
+                        }
+                    }
+
                 }
 
             }
@@ -249,8 +226,66 @@ public class CheckoutActivity extends AppCompatActivity {
             }
         });
 
+        agreeTermsConditons.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (buttonView.isChecked()) {
+                    isSelected = true;
+                } else {
+                    isSelected = false;
+                }
+            }
+
+        });
+
 
     }
+
+    private void startWork() {
+        getaddressListApi();
+
+    }
+
+
+    private void callApiToGetDeliveryCharge() {
+        if (user.isOnline(this)) {
+
+            ApiCaller.getDileveryPrice(this, Config.Url.getDeliverCharge,
+                    new FutureCallback<DeliveryResponseModel>() {
+
+                        @Override
+                        public void onCompleted(Exception e, DeliveryResponseModel result) {
+                            if (e != null) {
+
+                                Utils.showAlertDialog(CheckoutActivity.this, "Something Went Wrong");
+                                return;
+                            }
+                            if (result.getStatus() == true) {
+
+                                deliveryModel = result;
+                                rb_1st.setChecked(true);
+                                tv_name_1.setText(result.getData().get(0).getType() + " Delivery");
+                                rb_1st.setText(result.getData().get(0).getPrice() + result.getData().get(0).getUnit());
+                                rb_2nd.setText("0KD");
+                                tv_name_2.setText(result.getData().get(1).getType() + " Delivery");
+                                delivery_type.setText(deliveryModel.getData().get(0).getType() + " Delivery");
+                                deliveryType = deliveryModel.getData().get(0).getType();
+                                deliv_charge.setText(deliveryModel.getData().get(0).getPrice() + deliveryModel.getData().get(0).getUnit());
+                                totalpricessss = totalprice + deliveryModel.getData().get(0).getPrice();
+                                totalAll_cost.setText(totalpricessss + "KD");
+                            } else {
+
+                                Toast.makeText(activity, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+
+                        }
+                    });
+        } else {
+
+            Utils.showAlertDialog(activity, "No Internet Connection");
+        }
+    }
+
 
     private void getApiDPrice() {
         if (user.isOnline(activity)) {
@@ -329,9 +364,6 @@ public class CheckoutActivity extends AppCompatActivity {
                     jsonObject = new JSONObject(paydetial);
 
 
-
-
-
                     // Toast.makeText(activity, "" + jsonObject.getJSONObject("response"), Toast.LENGTH_SHORT).show();
 
                 } catch (JSONException e) {
@@ -392,8 +424,6 @@ public class CheckoutActivity extends AppCompatActivity {
                                         Toast.makeText(CheckoutActivity.this, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
                                     }
                                 }
-
-
                             }
                         }
                     });
@@ -412,7 +442,6 @@ public class CheckoutActivity extends AppCompatActivity {
         }
         JSONArray resultSet = new JSONArray();
         JSONObject returnObj = new JSONObject();
-
         cursor.moveToFirst();
         while (cursor.isAfterLast() == false) {
 
@@ -442,7 +471,6 @@ public class CheckoutActivity extends AppCompatActivity {
         Log.d("datajson", datajson);
         StaticData.CartData = datajson;
         JSONArray jArray = null;
-
         try {
             jArray = new JSONArray(datajson);
             for (int i = 0; i < jArray.length(); i++) {
@@ -452,8 +480,114 @@ public class CheckoutActivity extends AppCompatActivity {
                 jsonObject.addProperty("count", json_data.getString("Quantity"));
                 jsonArray.add(jsonObject);
             }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void callApiToPlaceOrderSchool() {
+        final LocalStorage localStorage = new LocalStorage(this);
+        JsonObject jsonObject1 = new JsonObject();
+        jsonArraySchool = new JsonArray();
+        jsonObject1.addProperty("schoolId", localStorage.getString(LocalStorage.Dummy_School_ID));
+        jsonObject1.addProperty("deliveryType", deliveryType);
+        jsonObject1.addProperty("deliveryAddressId", localStorage.getString(LocalStorage.addressId));
+        jsonObject1.addProperty("totalPrice", totalpricessss);
+        getSqliteDataDataForSchoolOrder();
+        jsonObject1.add("items", jsonArraySchool);
+
+        Log.e("jsonob", "" + jsonObject1);
+        if (user.isOnline(this)) {
+            dialog = new NewProgressBar(this);
+            dialog.show();
+            ApiCaller.procedorderSchool(this, Config.Url.placePrderSchool, jsonObject1, localStorage.getString(LocalStorage.token),
+                    new FutureCallback<PlaceOrderResponseModel>() {
+
+                        @Override
+                        public void onCompleted(Exception e, PlaceOrderResponseModel result) {
+                            dialog.dismiss();
+                            if (e != null) {
+                                dialog.dismiss();
+                                Utils.showAlertDialog(CheckoutActivity.this, "Something Went Wrong");
+                                return;
+                            }
+
+                            if (result != null) {
 
 
+                                if (result.isStatus() == true) {
+                                    qrcreatorSchool(Long.valueOf(result.getData().getOrderId()));
+                                    Intent intent = new Intent(CheckoutActivity.this, ProcessingActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                } else {
+                                    if (result.getMessage().equals("Unauthorized")) {
+                                        Utils.showAlertDialogLogout(activity, "Your Session was expire. please Logout!", localStorage.getUserProfile().getData().getUser().getUserId());
+                                        dialog.dismiss();
+                                    } else {
+                                        dialog.dismiss();
+                                        Toast.makeText(CheckoutActivity.this, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            }
+
+                        }
+                    });
+        } else {
+            Utils.showAlertDialog(this, "No Internet Connection");
+        }
+
+    }
+
+    private void getSqliteDataDataForSchoolOrder() {
+        DbHelper dbHelper;
+        dbHelper = new DbHelper(this);
+        Cursor cursor = dbHelper.getData();
+        if (cursor.getCount() == 0) {
+            Log.e("Error", "no Data");
+            return;
+        }
+        JSONArray resultSet = new JSONArray();
+        JSONObject returnObj = new JSONObject();
+        cursor.moveToFirst();
+        while (cursor.isAfterLast() == false) {
+
+            int totalColumn = cursor.getColumnCount();
+            JSONObject rowObject = new JSONObject();
+
+            for (int i = 0; i < totalColumn; i++) {
+                if (cursor.getColumnName(i) != null) {
+                    try {
+                        if (cursor.getString(i) != null) {
+                            Log.d("TAG_NAME2", cursor.getString(i));
+                            rowObject.put(cursor.getColumnName(i), cursor.getString(i));
+                        } else {
+                            rowObject.put(cursor.getColumnName(i), "");
+                        }
+                    } catch (Exception e) {
+                        Log.d("TAG_NAME1", e.getMessage());
+                    }
+                }
+            }
+            resultSet.put(rowObject);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        String datajson = resultSet.toString();
+        datajson.replaceAll("\\\\", "");
+        Log.d("datajson", datajson);
+        StaticData.CartData = datajson;
+        JSONArray jArray = null;
+        try {
+            jArray = new JSONArray(datajson);
+            for (int i = 0; i < jArray.length(); i++) {
+                JSONObject json_data = jArray.getJSONObject(i);
+                JsonObject jsonObject = new JsonObject();
+                jsonObject.addProperty("productId", json_data.getString("P_ID"));
+                jsonObject.addProperty("count", json_data.getString("Quantity"));
+                jsonObject.addProperty("sizeId", json_data.getString("size"));
+                jsonArraySchool.add(jsonObject);
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -519,6 +653,65 @@ public class CheckoutActivity extends AppCompatActivity {
         }
     }
 
+    private void qrcreatorSchool(Long orderId) {
+        DbHelper dbHelper;
+        dbHelper = new DbHelper(this);
+        Cursor cursor = dbHelper.getData();
+        if (cursor.getCount() == 0) {
+            Log.e("Error", "no Data");
+            return;
+        }
+        JSONArray resultSet = new JSONArray();
+        JSONObject returnObj = new JSONObject();
+
+        cursor.moveToFirst();
+        while (cursor.isAfterLast() == false) {
+
+            int totalColumn = cursor.getColumnCount();
+            JSONObject rowObject = new JSONObject();
+
+            for (int i = 0; i < totalColumn; i++) {
+                if (cursor.getColumnName(i) != null) {
+                    try {
+                        if (cursor.getString(i) != null) {
+                            Log.d("TAG_NAME2", cursor.getString(i));
+                            rowObject.put(cursor.getColumnName(i), cursor.getString(i));
+                        } else {
+                            rowObject.put(cursor.getColumnName(i), "");
+                        }
+                    } catch (Exception e) {
+                        Log.d("TAG_NAME1", e.getMessage());
+                    }
+                }
+            }
+            resultSet.put(rowObject);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        String datajson = resultSet.toString();
+        datajson.replaceAll("\\\\", "");
+        Log.d("datajson", datajson);
+        StaticData.CartData = datajson;
+        JSONArray jArray = null;
+
+        try {
+            jArray = new JSONArray(datajson);
+            for (int i = 0; i < jArray.length(); i++) {
+                JSONObject json_data = jArray.getJSONObject(i);
+                JsonObject jsonObject = new JsonObject();
+                jsonObject.addProperty("productId", json_data.getString("P_ID"));
+                String pId = json_data.getString("P_ID");
+                createQR(pId, orderId);
+                jsonObject.addProperty("count", json_data.getString("Quantity"));
+                jsonArraySchool.add(jsonObject);
+            }
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void createQR(String pId, Long orderId) {
         String text = "qr_" + orderId + "_" + pId; // Whatever you need to encode in the QR code
         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
@@ -561,7 +754,11 @@ public class CheckoutActivity extends AppCompatActivity {
 
     private void loadImageFromStorage(String path, String pId, Long orderId) {
         file = new File(path, "qr_" + orderId + "_" + pId + ".jpg");
-        apiCallQrCreator(file, "qr_" + orderId + "_" + pId + ".jpg", pId, orderId);
+        if (type.equals("store")) {
+            apiCallQrCreator(file, "qr_" + orderId + "_" + pId + ".jpg", pId, orderId);
+        } else {
+            apiCallQrCreatorSchool(file, "qr_" + orderId + "_" + pId + ".jpg", pId, orderId);
+        }
 
 
     }
@@ -592,10 +789,32 @@ public class CheckoutActivity extends AppCompatActivity {
         });
     }
 
-    private void startWork() {
-        getaddressListApi();
+    private void apiCallQrCreatorSchool(File f, String s, String pId, Long orderId) {
 
+        ApiCaller.qrCreator(activity, Config.Url.schoolQr, f, s, pId, orderId, new FutureCallback<QrResponseModel>() {
+            @Override
+            public void onCompleted(Exception e, QrResponseModel result) {
+                if (e != null) {
+                    Utils.showAlertDialog(CheckoutActivity.this, "Something Went Wrong");
+                    return;
+                }
+                if (result != null) {
+
+                    if (result.getStatus() == true) {
+
+                        Toast.makeText(activity, result.getMessage(), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(CheckoutActivity.this, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+
+                    }
+                } else {
+                    Toast.makeText(activity, result.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
     }
+
 
     private void getaddressListApi() {
         if (user.isOnline(activity)) {
@@ -794,53 +1013,53 @@ public class CheckoutActivity extends AppCompatActivity {
     }
 
 
-        private void getAllCities () {
-            if (user.isOnline(activity)) {
-                final LocalStorage localStorage = new LocalStorage(this);
-                ApiCaller.getdistic(activity, Config.Url.disticGet,
-                        new FutureCallback<DilveryAdressResponseModel>() {
-                            @Override
-                            public void onCompleted(Exception e, DilveryAdressResponseModel result) {
-                                if (e != null) {
-                                    dialog.dismiss();
-                                    Utils.showAlertDialog(activity, "Something Went Wrong");
-                                    return;
-                                }
-                                if (e != null) {
-                                    Utils.showAlertDialog(activity, "Something Went Wrong");
-                                    return;
-                                }
+    private void getAllCities() {
+        if (user.isOnline(activity)) {
+            final LocalStorage localStorage = new LocalStorage(this);
+            ApiCaller.getdistic(activity, Config.Url.disticGet,
+                    new FutureCallback<DilveryAdressResponseModel>() {
+                        @Override
+                        public void onCompleted(Exception e, DilveryAdressResponseModel result) {
+                            if (e != null) {
+                                dialog.dismiss();
+                                Utils.showAlertDialog(activity, "Something Went Wrong");
+                                return;
+                            }
+                            if (e != null) {
+                                Utils.showAlertDialog(activity, "Something Went Wrong");
+                                return;
+                            }
 
-                                if (result != null) {
-                                    if (result.getStatus()) {
+                            if (result != null) {
+                                if (result.getStatus()) {
+                                    dialog.dismiss();
+                                    listData(result.getData());
+                                } else {
+                                    if (result.getMessage().equals("Unauthorized")) {
+                                        Utils.showAlertDialogLogout(CheckoutActivity.this, "Your Session was expire. please Logout!", localStorage.getUserProfile().getData().getUser().getUserId());
                                         dialog.dismiss();
-                                        listData(result.getData());
-                                    } else {
-                                        if (result.getMessage().equals("Unauthorized")) {
-                                            Utils.showAlertDialogLogout(CheckoutActivity.this, "Your Session was expire. please Logout!", localStorage.getUserProfile().getData().getUser().getUserId());
-                                            dialog.dismiss();
-                                        }
                                     }
                                 }
-
                             }
-                        });
 
-            } else {
-                Utils.showAlertDialog(activity, "No Internet Connection");
-            }
+                        }
+                    });
 
+        } else {
+            Utils.showAlertDialog(activity, "No Internet Connection");
         }
 
-        private void listData (List < DilveryAddressDataModel > data) {
-            listdata = data;
-            for (int i = 0; i < data.size(); i++) {
+    }
 
-                listDistict.add(data.get(i).getName());
+    private void listData(List<DilveryAddressDataModel> data) {
+        listdata = data;
+        for (int i = 0; i < data.size(); i++) {
 
-            }
-            Log.e("city", "" + listcity.size());
+            listDistict.add(data.get(i).getName());
+
         }
+        Log.e("city", "" + listcity.size());
+    }
 
 
     @Override
@@ -848,4 +1067,86 @@ public class CheckoutActivity extends AppCompatActivity {
         stopService(new Intent(this, PayPalService.class));
         super.onDestroy();
     }
+
+    private void getSqliteAll() {
+        DbHelper dbHelper;
+        dbHelper = new DbHelper(CheckoutActivity.this);
+        Cursor cursor = dbHelper.getData();
+        if (cursor.getCount() == 0) {
+            Log.e("Error", "no Data");
+            return;
+        }
+        JSONArray resultSet = new JSONArray();
+        JSONObject returnObj = new JSONObject();
+
+        cursor.moveToFirst();
+        while (cursor.isAfterLast() == false) {
+
+            int totalColumn = cursor.getColumnCount();
+            JSONObject rowObject = new JSONObject();
+
+            for (int i = 0; i < totalColumn; i++) {
+                if (cursor.getColumnName(i) != null) {
+                    try {
+                        if (cursor.getString(i) != null) {
+                            Log.d("TAG_NAME2", cursor.getString(i));
+                            rowObject.put(cursor.getColumnName(i), cursor.getString(i));
+                        } else {
+                            rowObject.put(cursor.getColumnName(i), "");
+                        }
+                    } catch (Exception e) {
+                        Log.d("TAG_NAME1", e.getMessage());
+                    }
+                }
+            }
+            resultSet.put(rowObject);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        String datajson = resultSet.toString();
+        datajson.replaceAll("\\\\", "");
+        Log.d("datajson", datajson);
+        StaticData.CartData = datajson;
+        setRecyclerViewData(datajson);
+    }
+
+    private void setRecyclerViewData(String datajson) {
+        JSONArray jArray = null;
+
+        try {
+            list.clear();
+            jArray = new JSONArray(datajson);
+            int price = 0;
+            int gst = 0;
+            int qty = 0;
+            int sum = 0;
+
+            for (int i = 0; i < jArray.length(); i++) {
+                JSONObject json_data = jArray.getJSONObject(i);
+                CartLocalListResponseMode shoppingBagModel = new CartLocalListResponseMode();
+                shoppingBagModel.setId(json_data.getString("Id"));
+                shoppingBagModel.setName(json_data.getString("Name"));
+                shoppingBagModel.setQuantity(json_data.getString("Quantity"));
+                shoppingBagModel.setPrice(json_data.getString("Price"));
+                shoppingBagModel.setImage(json_data.getString("Image"));
+                shoppingBagModel.setAvailibleQty(json_data.getString("avalible"));
+                shoppingBagModel.setWishlist(json_data.getString("wishlist"));
+                shoppingBagModel.setSize(json_data.getString("size"));
+                shoppingBagModel.setType(json_data.getString("type"));
+                type = json_data.getString("type");
+                shoppingBagModel.setPID(json_data.getString("P_ID"));
+                shoppingBagModel.setGst(json_data.getString("gstPrice"));
+
+
+                list.add(shoppingBagModel);
+
+            }
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }

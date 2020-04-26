@@ -1,7 +1,5 @@
 package com.io.bookstores.activity.authentication;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
 import com.io.bookstores.Config;
@@ -55,6 +55,20 @@ public class SignUpActivity extends AppCompatActivity {
         bindListner();
     }
 
+    /*----------------------------------- intialize all Views that are used in this activity -----------------------------------*/
+    private void initView() {
+        activity = SignUpActivity.this;
+        localStorage = new LocalStorage(activity);
+        firstname = findViewById(R.id.etFullName);
+        email = findViewById(R.id.etEmail);
+        number = findViewById(R.id.etPhoneSignUp);
+        pass = findViewById(R.id.etPassLogin);
+        et_address = findViewById(R.id.etAddressSignUp);
+        tvLogin = findViewById(R.id.tvSignIn);
+        tv_tnc = findViewById(R.id.tvSkipp);
+        signup_btn = findViewById(R.id.btnSignUp);
+        user = new userOnlineInfo();
+    }
 
     private void bindListner() {
         tvLogin.setOnClickListener(new View.OnClickListener() {
@@ -78,23 +92,6 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
     }
-
-    private void initView() {
-        activity = SignUpActivity.this;
-        localStorage = new LocalStorage(activity);
-        firstname = findViewById(R.id.etFullName);
-       // lastName = findViewById(R.id.lastName);
-        email = findViewById(R.id.etEmail);
-      //  username = findViewById(R.id.username);
-        number = findViewById(R.id.etPhoneSignUp);
-        pass = findViewById(R.id.etPassLogin);
-        et_address = findViewById(R.id.etAddressSignUp);
-        tvLogin = findViewById(R.id.tvSignIn);
-        tv_tnc = findViewById(R.id.tvSkipp);
-        signup_btn = findViewById(R.id.btnSignUp);
-        user = new userOnlineInfo();
-    }
-
 
     /* --------------------------------------------------registration validation----------------------------------------------*/
 
@@ -159,6 +156,8 @@ public class SignUpActivity extends AppCompatActivity {
         }
 
     }
+
+    /*-------------------------------------------------------- login Api Caller --------------------------------------------------*/
 
     private void loginApi(String u_emael, String password) {
 

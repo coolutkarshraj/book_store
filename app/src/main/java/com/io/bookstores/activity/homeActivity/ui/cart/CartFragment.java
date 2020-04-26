@@ -23,7 +23,7 @@ import com.io.bookstores.R;
 import com.io.bookstores.StaticData;
 import com.io.bookstores.activity.authentication.LoginActivity;
 import com.io.bookstores.activity.checkoutActivity.CheckoutActivity;
-import com.io.bookstores.adapter.CartAdapter;
+import com.io.bookstores.adapter.basicAdapter.CartAdapter;
 import com.io.bookstores.apicaller.ApiCaller;
 import com.io.bookstores.localStorage.DbHelper;
 import com.io.bookstores.localStorage.LocalStorage;
@@ -42,7 +42,7 @@ import java.util.ArrayList;
 
 
 public class CartFragment extends Fragment {
-    Button card_view;
+    private Button card_view;
     private NewProgressBar dialog;
     private userOnlineInfo user;
     public static RecyclerView recyclerView;
@@ -67,6 +67,8 @@ public class CartFragment extends Fragment {
         return root;
     }
 
+    /* -------------------------------intialize all views that are used in this fragment -------------------------------------*/
+
     private void initView(View root) {
         tv_name_1 =  root.findViewById(R.id.tv_name_1);
         total_cost =  root.findViewById(R.id.total_cost);
@@ -79,7 +81,6 @@ public class CartFragment extends Fragment {
         tv_name_2 =  root.findViewById(R.id.tv_name_2);
         rb_1st =  root.findViewById(R.id.rb_1st1);
         rb_2nd =  root.findViewById(R.id.rb_2nd2);
-
         localStorage = new LocalStorage(getActivity());
         localStorage.putBooleAan(LocalStorage.isCart,false);
         user = new userOnlineInfo();
@@ -90,6 +91,8 @@ public class CartFragment extends Fragment {
         callApiToGetDeliveryCharge();
         deliv_charge.setText("0KD");
     }
+
+    /*-------------------------------------------------- get Delivery Price Api call ---------------------------------------*/
 
     private void callApiToGetDeliveryCharge() {
         if (user.isOnline(getActivity())) {
@@ -174,7 +177,6 @@ public class CartFragment extends Fragment {
                             deliveryType = deliveryModel.getData().get(0).getType();
                         } else {
                             deliveryType = deliveryModel.getData().get(1).getType();
-
                         }
                         int total = price;
                         Intent intent = new Intent(getActivity(), CheckoutActivity.class);
@@ -262,6 +264,8 @@ public class CartFragment extends Fragment {
                     shoppingBagModel.setImage(json_data.getString("Image"));
                     shoppingBagModel.setAvailibleQty(json_data.getString("avalible"));
                     shoppingBagModel.setWishlist(json_data.getString("wishlist"));
+                    shoppingBagModel.setSize(json_data.getString("size"));
+                    shoppingBagModel.setType(json_data.getString("type"));
                     shoppingBagModel.setPID(json_data.getString("P_ID"));
                     shoppingBagModel.setGst(json_data.getString("gstPrice"));
                     price = Integer.parseInt(json_data.getString("Price"));

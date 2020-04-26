@@ -35,7 +35,7 @@ import com.io.bookstores.Config;
 import com.io.bookstores.R;
 import com.io.bookstores.StaticData;
 import com.io.bookstores.activity.authentication.LoginActivity;
-import com.io.bookstores.adapter.AddressCheckoutAdapter;
+import com.io.bookstores.adapter.basicAdapter.AddressCheckoutAdapter;
 import com.io.bookstores.apicaller.ApiCaller;
 import com.io.bookstores.listeners.ItemClickListner;
 import com.io.bookstores.localStorage.DbHelper;

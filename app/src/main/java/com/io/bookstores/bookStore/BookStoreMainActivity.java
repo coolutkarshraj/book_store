@@ -43,14 +43,14 @@ import com.io.bookstores.activity.homeActivity.ui.deliveryAddress.DeliveryAddres
 import com.io.bookstores.activity.profile.EditProfileFragment;
 import com.io.bookstores.activity.profile.ProfileFragment;
 import com.io.bookstores.apicaller.ApiCaller;
-import com.io.bookstores.fragment.BookListFragment;
-import com.io.bookstores.fragment.BookstoresFragment;
-import com.io.bookstores.fragment.BookstoresFragmentWithFilter;
-import com.io.bookstores.fragment.CategoryListFragment;
-import com.io.bookstores.fragment.FavoriteItemsFragment;
-import com.io.bookstores.fragment.bookStoreFragment.HomeBookFragment;
-import com.io.bookstores.fragment.bookStoreFragment.OrderListBookFragment;
-import com.io.bookstores.fragment.bookStoreFragment.ProfileAdminFragment;
+import com.io.bookstores.fragment.bookStoreFragments.BookListFragment;
+import com.io.bookstores.fragment.bookStoreFragments.AllBookStoresFragment;
+import com.io.bookstores.fragment.bookStoreFragments.BookstoresFragmentWithFilter;
+import com.io.bookstores.fragment.basicFragment.CategoryListFragment;
+import com.io.bookstores.fragment.basicFragment.FavoriteItemsFragment;
+import com.io.bookstores.fragment.adminBookStoreFragment.HomeBookFragment;
+import com.io.bookstores.fragment.adminBookStoreFragment.OrderListBookFragment;
+import com.io.bookstores.fragment.adminBookStoreFragment.ProfileAdminFragment;
 import com.io.bookstores.listeners.ItemClickListner;
 import com.io.bookstores.localStorage.LocalStorage;
 import com.io.bookstores.model.LogoutResponseModel;
@@ -86,7 +86,7 @@ public class BookStoreMainActivity extends AppCompatActivity implements
     ImageView ivHome, ivHeart, ivCart, iv_profile;
     ProfileFragment profileFragment;
     EditProfileFragment editProfileFragment;
-    BookstoresFragment bookstoresFragment;
+    AllBookStoresFragment allBookStoresFragment;
     BookstoresFragmentWithFilter bookstoresFragmentWithFilter;
     BookListFragment bookListFragment;
     DeliveryAddressFragment deliveryAddressFragment;
@@ -470,7 +470,7 @@ public class BookStoreMainActivity extends AppCompatActivity implements
     @Override
     public void onClick(int position) {
         if (position == 1) {
-            bookstoresFragment = new BookstoresFragment();
+            allBookStoresFragment = new AllBookStoresFragment();
             BookStoreMainActivity.this.getSupportFragmentManager().beginTransaction()
                     .replace(R.id.content_view, homeBookFragment)
                     .addToBackStack(null)

@@ -6,10 +6,6 @@ import android.os.Bundle;
 
 import com.io.bookstores.R;
 
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.io.bookstores.adapter.BookstoreBooksAdapter;
 import com.io.bookstores.model.BookModel;
 
 import java.util.ArrayList;
@@ -42,10 +38,10 @@ public class BookstoreBooksActivity extends AppCompatActivity {
         lstBook.add(new BookModel(20,R.drawable.themartian));
         lstBook.add(new BookModel(15,R.drawable.hediedwith));
 
-        RecyclerView myrv = (RecyclerView) findViewById(R.id.recyclerview_id);
+       /* RecyclerView myrv = (RecyclerView) findViewById(R.id.recyclerview_id);
         BookstoreBooksAdapter myAdapter = new BookstoreBooksAdapter(this,lstBook);
         myrv.setLayoutManager(new GridLayoutManager(this,3));
-        myrv.setAdapter(myAdapter);
+        myrv.setAdapter(myAdapter);*/
 
 
     }

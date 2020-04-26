@@ -6,18 +6,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.io.bookstores.R;
 import com.io.bookstores.StaticData;
 import com.io.bookstores.holder.ClassCategoryHolder;
-import com.io.bookstores.holder.ClassGroupHolder;
 import com.io.bookstores.listeners.ItemClickListner;
 import com.io.bookstores.localStorage.LocalStorage;
 import com.io.bookstores.model.classModel.ClassCategoryDataModel;
-import com.io.bookstores.model.classModel.ClassDataModel;
-import com.io.bookstores.model.insituteModel.TrendingInstituteDataModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,14 +45,14 @@ public class ClassCategoryRvAdapter extends RecyclerView.Adapter<ClassCategoryHo
             @Override
             public void onClick(View v) {
                 itemClickListner = (ItemClickListner) activity;
-
                 if (model.getName().equals("Clothes")) {
                     StaticData.type = 1;
-
                 } else {
                     StaticData.type = 2;
 
                 }
+                LocalStorage localStorage = new LocalStorage(activity);
+                localStorage.putString(LocalStorage.classCategoryId, String.valueOf(model.getClassCategoryId()));
                 itemClickListner.onClick(10);
 
             }
@@ -65,6 +61,7 @@ public class ClassCategoryRvAdapter extends RecyclerView.Adapter<ClassCategoryHo
             @Override
             public void onClick(View v) {
                 itemClickListner = (ItemClickListner) activity;
+               // Toast.makeText(activity, "classCategoryId" + model.getClassCategoryId(), Toast.LENGTH_SHORT).show();
                 if (model.getName().equals("Clothes")) {
                     StaticData.type = 1;
 
@@ -72,6 +69,8 @@ public class ClassCategoryRvAdapter extends RecyclerView.Adapter<ClassCategoryHo
                     StaticData.type = 2;
 
                 }
+                LocalStorage localStorage = new LocalStorage(activity);
+                localStorage.putString(LocalStorage.classCategoryId, String.valueOf(model.getClassCategoryId()));
                 itemClickListner.onClick(10);
 
             }

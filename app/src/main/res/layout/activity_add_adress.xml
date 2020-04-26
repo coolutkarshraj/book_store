@@ -243,7 +243,7 @@
 
             <Button
                 android:id="@+id/btn_cancel"
-                android:layout_width="@dimen/width_1dp"
+                android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_marginTop="@dimen/margin_16dp"
                 android:layout_marginEnd="@dimen/margin_8dp"

@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,8 +20,8 @@ import com.google.android.material.tabs.TabLayout;
 import com.io.bookstores.R;
 import com.io.bookstores.activity.authentication.LoginActivity;
 import com.io.bookstores.activity.homeActivity.ui.order.OrderFragment;
-import com.io.bookstores.adapter.ProfilePagerAdapter;
-import com.io.bookstores.fragment.SettingsFragment;
+import com.io.bookstores.adapter.basicAdapter.ProfilePagerAdapter;
+import com.io.bookstores.fragment.basicFragment.SettingsFragment;
 import com.io.bookstores.listeners.ItemClickListner;
 import com.io.bookstores.localStorage.LocalStorage;
 import com.io.bookstores.model.loginModel.LoginModel;
