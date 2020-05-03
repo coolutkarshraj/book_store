@@ -26,6 +26,9 @@ import com.io.bookstores.utility.Utils;
 import com.io.bookstores.utility.userOnlineInfo;
 import com.koushikdutta.async.future.FutureCallback;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Created by Utkarsh Raj 10/12/2019.
  */
@@ -109,14 +112,38 @@ public class SignUpActivity extends AppCompatActivity {
             Utils.showAlertDialog(SignUpActivity.this, "Please Enter Your Information Properly");
             return;
         }
-        else {
-
-            if(et_number.equals("") || et_number.isEmpty()){
-                registrationApi(f_name, u_emael, " ", password, address);
-            }else {
-                registrationApi(f_name, u_emael, et_number, password, address);
-            }
+        if (!isEmailValid(u_emael)) {
+            Utils.showAlertDialog(activity, getResources().getString(R.string.email_not_valid));
+            return;
         }
+        if (et_number.length() != 8) {
+            Utils.showAlertDialog(activity, getResources().getString(R.string.phone_number_must_be_of_8));
+            return;
+        }
+
+        registrationApi(f_name, u_emael, et_number, password, address);
+
+
+    }
+
+    public boolean isEmailValid(String email) {
+        String regExpn =
+                "^(([\\w-]+\\.)+[\\w-]+|([a-zA-Z]{1}|[\\w-]{2,}))@"
+                        + "((([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
+                        + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\."
+                        + "([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
+                        + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])){1}|"
+                        + "([a-zA-Z]+[\\w-]+\\.)+[a-zA-Z]{2,4})$";
+
+        CharSequence inputStr = email;
+
+        Pattern pattern = Pattern.compile(regExpn, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(inputStr);
+
+        if (matcher.matches())
+            return true;
+        else
+            return false;
     }
 
     /*----------------------------------------------- Registration Api------------------------------------------------------*/

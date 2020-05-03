@@ -138,7 +138,6 @@ public class AllInstituteListFragment extends Fragment implements RecyclerViewCl
     /*---------------------------------------------------- set up of search view --------------------------------------------*/
 
     private void searchViewSetUp() {
-        searchView.setQueryHint("Search More Institue");
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {

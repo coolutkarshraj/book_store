@@ -107,7 +107,7 @@
             android:gravity="start"
             android:hint="@string/phone_number"
             android:inputType="number"
-            android:maxLength="10"
+            android:maxLength="8"
             android:paddingBottom="@dimen/value_8"
             android:textAlignment="viewStart"
             android:textDirection="locale"

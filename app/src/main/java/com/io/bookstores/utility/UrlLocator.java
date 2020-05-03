@@ -25,11 +25,11 @@ public class UrlLocator {
 
     public static String getFinalUrl(String url) {
         String ip = getBaseIP();
-        return "http://" + ip + "/api/" + url;
+        return "https://" + ip + "/api/" + url;
     }
 
     public static String getFinalUrl(String url, String params) {
         String ip = getBaseIP();
-        return "http://" + ip + "/api/" + url + params;
+        return "https://" + ip + "/api/" + url + params;
     }
 }

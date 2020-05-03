@@ -74,11 +74,13 @@ public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.MyViewHo
                 dialog.setContentView(R.layout.course_dialog);
                 dialog.setTitle("");
                 final Button btn_Add = (Button) dialog.findViewById(R.id.yes);
-                final Button btn_cancel = (Button) dialog.findViewById(R.id.btn_cancel);
+                final ImageView clear = (ImageView) dialog.findViewById(R.id.clear);
                 final TextView etAddress = (TextView) dialog.findViewById(R.id.tv_cname);
                 final TextView etPinCode = (TextView) dialog.findViewById(R.id.tv_cd);
+                final TextView tv_cprice = (TextView) dialog.findViewById(R.id.tv_cprice);
                 etAddress.setText(mData.get(position).getCourseName());
                 etPinCode.setText(mData.get(position).getCourseDescription() );
+                tv_cprice.setText("" + mData.get(position).getPrice());
 
                 btn_Add.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -87,7 +89,12 @@ public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.MyViewHo
                         dialog.dismiss();
                     }
                 });
-
+                clear.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
 
                 dialog.show();
             }

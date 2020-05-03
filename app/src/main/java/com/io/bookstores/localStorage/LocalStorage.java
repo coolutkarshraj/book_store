@@ -22,12 +22,14 @@ public class LocalStorage {
     public static String StoreId ="StoreId";
     public static String schoolId ="SchoolId";
     public static String classGroupId ="classGroupId";
+    public static String classId ="classId";
     public static String classCategoryId ="classCategoryId";
     public static String clothType ="clothType";
     public static String CategoryId ="CategoryId";
     public static String addressId = "addressId";
     public static String token = "Token";
     public static String role ="ROLE";
+    public static String guestId ="guestId";
     private static LocalStorage instance;
     private SharedPreferences storage;
     public static final String isFirstLaunch = "isFirstLaunch";

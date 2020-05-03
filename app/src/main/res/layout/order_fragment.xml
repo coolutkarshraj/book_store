@@ -37,7 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:text="Your Order History"
+                android:text="@string/order_history"
                 android:fontFamily="@font/arial_bold"
                 android:textSize="@dimen/h20"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -82,7 +82,7 @@
                         android:layout_marginStart="@dimen/margin_10dp"
                         android:layout_marginTop="@dimen/margin_20dp"
                         android:fontFamily="@font/arial_bold"
-                        android:text="Book Store Order"
+                        android:text="@string/bookstoreOrder"
                         android:textColor="@color/blue"
                         android:textSize="@dimen/h1" />
 
@@ -110,7 +110,7 @@
                         android:layout_marginStart="@dimen/margin_10dp"
                         android:layout_marginTop="@dimen/margin_20dp"
                         android:fontFamily="@font/arial_bold"
-                        android:text="School Order"
+                        android:text="@string/schoolOrder"
                         android:textColor="@color/blue"
                         android:textSize="@dimen/h1" />
 

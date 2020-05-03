@@ -1,7 +1,5 @@
 package com.io.bookstores.activity.authentication;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
 import com.io.bookstores.Config;
@@ -24,6 +24,9 @@ import com.io.bookstores.utility.NewProgressBar;
 import com.io.bookstores.utility.Utils;
 import com.io.bookstores.utility.userOnlineInfo;
 import com.koushikdutta.async.future.FutureCallback;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class GuestLoginActivity extends AppCompatActivity {
     private TextView tvLogin,tv_tnc ;
@@ -49,20 +52,7 @@ public class GuestLoginActivity extends AppCompatActivity {
     }
 
     private void bindListner() {
-        tvLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(GuestLoginActivity.this,LoginActivity.class);
-                startActivity(intent);
-            }
-        });
-        tv_tnc.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(GuestLoginActivity.this, MainActivity.class);
-                startActivity(intent);
-            }
-        });
+
         signup_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,8 +70,8 @@ public class GuestLoginActivity extends AppCompatActivity {
         number = findViewById(R.id.etPhoneSignUp);
         pass = findViewById(R.id.etPassLogin);
         et_address = findViewById(R.id.etAddressSignUp);
-        tvLogin = findViewById(R.id.tvSignIn);
-        tv_tnc = findViewById(R.id.tvSkipp);
+        //tvLogin = findViewById(R.id.tvSignIn);
+        // tv_tnc = findViewById(R.id.tvSkipp);
         signup_btn = findViewById(R.id.btnSignUp);
         user = new userOnlineInfo();
         localStorage = new LocalStorage(activity);
@@ -104,9 +94,37 @@ public class GuestLoginActivity extends AppCompatActivity {
             Utils.showAlertDialog(GuestLoginActivity.this, "Please Enter Your Information Properly");
             return;
         }
-        else {
-            registrationApi(f_name,u_emael,et_number,password,address);
+        if (!isEmailValid(u_emael)) {
+            Utils.showAlertDialog(activity, getResources().getString(R.string.email_not_valid));
+            return;
         }
+        if (et_number.length() != 8) {
+            Utils.showAlertDialog(activity, getResources().getString(R.string.phone_number_must_be_of_8));
+            return;
+        }
+
+            registrationApi(f_name,u_emael,et_number,password,address);
+
+    }
+
+    public boolean isEmailValid(String email) {
+        String regExpn =
+                "^(([\\w-]+\\.)+[\\w-]+|([a-zA-Z]{1}|[\\w-]{2,}))@"
+                        + "((([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
+                        + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\."
+                        + "([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
+                        + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])){1}|"
+                        + "([a-zA-Z]+[\\w-]+\\.)+[a-zA-Z]{2,4})$";
+
+        CharSequence inputStr = email;
+
+        Pattern pattern = Pattern.compile(regExpn, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(inputStr);
+
+        if (matcher.matches())
+            return true;
+        else
+            return false;
     }
 
     /*----------------------------------------------- Registration Api------------------------------------------------------*/
@@ -206,6 +224,7 @@ public class GuestLoginActivity extends AppCompatActivity {
         Gson gson = new Gson();
         String json = gson.toJson(result);
         localStorage.putDistributorProfile(result);
+        localStorage.putString(LocalStorage.guestId, "");
         localStorage.putString(LocalStorage.token,result.getData().getToken());
         localStorage.putInt(LocalStorage.role,result.getData().getRole());
         if(result.getData().getRole() ==0){

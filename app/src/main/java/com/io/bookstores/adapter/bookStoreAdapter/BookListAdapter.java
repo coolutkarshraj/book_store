@@ -55,6 +55,7 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.MyView
     userOnlineInfo user;
     NewProgressBar dialog;
     String type = "";
+    String schoolStoreId = "";
     private LocalStorage localStorage;
     private LoginModel loginModel;
     private DbHelper dbHelper;
@@ -89,17 +90,18 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.MyView
          holder.tv_price.setText(""+mData.get(position).getPrice()+"KD");
          holder.tv_bookName.setText(""+mData.get(position).getName());
         Glide.with(mContext).load(Config.imageUrl + mData.get(position).getAvatarPath()).into(holder.iv_favorite);
-
         if (loginModel == null) {
             getWishListStatus();
-            for(int ii =0; ii <=lists.size()-1;ii++){
-                if (mData.get(position).getBookId() == Long.parseLong(lists.get(ii).getpID())) {
+            for (int ii = 0; ii <= lists.size() - 1; ii++) {
+                if (Long.parseLong(lists.get(ii).getpID()) == mData.get(position).getBookId()) {
+                    Log.e("matched", "" + mData.get(position).getBookId() + " =" + Long.parseLong(lists.get(ii).getpID()));
                     holder.mark_fav.setVisibility(View.GONE);
                     holder.mark_fav_red.setVisibility(View.VISIBLE);
-                } else {
+                }/* else {
+                    Log.e("nomatched", "" + mData.get(position).getBookId() + " =" + Long.parseLong(lists.get(ii).getpID()));
                     holder.mark_fav.setVisibility(View.VISIBLE);
                     holder.mark_fav_red.setVisibility(View.GONE);
-                }
+                }*/
             }
         } else {
             if (mData.get(position).isWishlist() == true) {
@@ -117,43 +119,14 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.MyView
             public void onClick(View v) {
                 if (type.equals("school")) {
                     openDialogBox(mData, position);
+                } else if (type.equals("store") && schoolStoreId.equals(String.valueOf(mData.get(position).getStoreId()))) {
+                    addtoCart(mData, position);
+                } else if (type.isEmpty()) {
+                    addtoCart(mData, position);
                 } else {
-                    LocalStorage localStorage = new LocalStorage(mContext);
-                    String dummyId = localStorage.getString(LocalStorage.Dummy_Store_ID);
-                    String storeId = localStorage.getString(LocalStorage.StoreId);
-                    if (dummyId.equals(storeId) || dummyId.equals("")) {
-                        localStorage.putString(LocalStorage.Dummy_Store_ID, localStorage.getString(LocalStorage.StoreId));
-                        DbHelper dbHelper = new DbHelper(mContext);
-                        Cursor cursor = dbHelper.getDataq(String.valueOf(mData.get(position).getBookId()));
-                        if (cursor.getCount() == 0) {
-                            boolean isInserted = dbHelper.insertData(mData.get(position).getName(),
-                                    mData.get(position).getAvatarPath(),
-                                    mData.get(position).getBookId(),
-                                    1,
-                                    mData.get(position).getPrice(),
-                                    mData.get(position).getDescription(),
-                                    String.valueOf(mData.get(position).getGstPrice()),
-                                    mData.get(position).getQuantity(),
-                                    String.valueOf(mData.get(position).isWishlist()),
-                                    localStorage.getString(LocalStorage.TYPE),
-                                    "");
-                            if (isInserted) {
-                                getSqliteData1();
-                                Toast.makeText(mContext, "Items Added Succesfully", Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(mContext, "Something Went Wrong", Toast.LENGTH_SHORT).show();
-                            }
-                        } else {
-                            Toast.makeText(mContext, "You have already this item added into cart", Toast.LENGTH_SHORT).show();
-                        }
-
-                    } else {
-                        openDialogBox(mData, position);
-                    }
+                    openDialogBox(mData, position);
                 }
             }
-
-
         });
         holder.mark_fav.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -164,8 +137,8 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.MyView
                     LocalStorage localStorage = new LocalStorage(mContext);
                     String dummyId = localStorage.getString(LocalStorage.Dummy_Store_ID);
                     String storeId = localStorage.getString(LocalStorage.StoreId);
-                    if (dummyId.equals(storeId) || dummyId.equals("")) {
-                        localStorage.putString(LocalStorage.Dummy_Store_ID, localStorage.getString(LocalStorage.StoreId));
+                   /* if (dummyId.equals(storeId) || dummyId.equals("")) {
+                        localStorage.putString(LocalStorage.Dummy_Store_ID, localStorage.getString(LocalStorage.StoreId));*/
                         DbHelper dbHelper = new DbHelper(mContext);
                         Cursor cursor = dbHelper.getOneWishList(String.valueOf(mData.get(position).getBookId()));
                         if (cursor.getCount() == 0) {
@@ -177,7 +150,7 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.MyView
                                     mData.get(position).getDescription(),
                                     String.valueOf(mData.get(position).getGstPrice()),
                                     mData.get(position).getQuantity(),
-                                    "true", "store", "");
+                                    "true", "store", "", storeId, "book");
                             if (isInserted) {
                                 holder.mark_fav.setVisibility(View.GONE);
                                 holder.mark_fav_red.setVisibility(View.VISIBLE);
@@ -189,10 +162,10 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.MyView
                         } else {
                             Toast.makeText(mContext, "You have already this item added into wishlist", Toast.LENGTH_SHORT).show();
                         }
-
+/*
                     } else {
                         opendialogwish(mData, position);
-                    }
+                    }*/
                 } else {
                     holder.mark_fav.setVisibility(View.GONE);
                     holder.mark_fav_red.setVisibility(View.VISIBLE);
@@ -320,7 +293,7 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.MyView
                         String.valueOf(mData.get(position).getGstPrice()),
                         mData.get(position).getQuantity(), String.valueOf(mData.get(position).isWishlist()),
                         localStorage.getString(LocalStorage.TYPE),
-                        "");
+                        "", String.valueOf(mData.get(position).getStoreId()),"book");
 
                 if (isInserted) {
                     getSqliteData1();
@@ -343,50 +316,27 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.MyView
         alert.show();
     }
 
-    private void opendialogwish(final List<Datum> mData, final int position) {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-        builder.setMessage("you have already select books from another store .Are you sure Want to delete existing wishlist item");
-        builder.setTitle("Delete Wishlist Item");
-        //Setting message manually and performing action on button click
-        //This will not allow to close dialogbox until user selects an option
-        builder.setCancelable(false);
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.cancel();
-                LocalStorage localStorage = new LocalStorage(mContext);
-                localStorage.putString(LocalStorage.Dummy_Store_ID, localStorage.getString(LocalStorage.StoreId));
-                DbHelper dbHelper = new DbHelper(mContext);
-                dbHelper.deleteAll();
-                boolean isInserted = dbHelper.insertWishList(mData.get(position).getName(),
-                        mData.get(position).getAvatarPath(),
-                        mData.get(position).getBookId(),
-                        1,
-                        mData.get(position).getPrice(),
-                        mData.get(position).getDescription(),
-                        String.valueOf(mData.get(position).getGstPrice()),
-                        mData.get(position).getQuantity(), String.valueOf(mData.get(position).isWishlist()), "store", "");
+   /* private void opendialogwish(final List<Datum> mData, final int position) {
+        LocalStorage localStorage = new LocalStorage(mContext);
+        localStorage.putString(LocalStorage.Dummy_Store_ID, localStorage.getString(LocalStorage.StoreId));
+        DbHelper dbHelper = new DbHelper(mContext);
+        dbHelper.deleteAll();
+        @SuppressLint({"NewApi", "LocalSuppress"}) boolean isInserted = dbHelper.insertWishList(mData.get(position).getName(),
+                mData.get(position).getAvatarPath(),
+                mData.get(position).getBookId(),
+                1,
+                mData.get(position).getPrice(),
+                mData.get(position).getDescription(),
+                String.valueOf(mData.get(position).getGstPrice()),
+                mData.get(position).getQuantity(), String.valueOf(mData.get(position).isWishlist()), "store", "");
 
-                if (isInserted) {
-                    getWishList();
-                    Toast.makeText(mContext, "Items Added Succesfully", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(mContext, "Something Went Wrong", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.cancel();
-            }
-        });
-
-        //Creating dialog box
-        AlertDialog alert = builder.create();
-        //Setting the title manually
-        //alert.setTitle("AlertDialogExample");
-        alert.show();
-    }
+        if (isInserted) {
+            getWishList();
+            Toast.makeText(mContext, "Items Added Succesfully", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(mContext, "Something Went Wrong", Toast.LENGTH_SHORT).show();
+        }
+    }*/
 
     private void showBookDetila(Datum datum) {
         final Dialog dialog = new Dialog(mContext);
@@ -402,10 +352,12 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.MyView
         final Button No = (Button) dialog.findViewById(R.id.no);
         final TextView oldPassword = (TextView) dialog.findViewById(R.id.et_old_password);
         final TextView newPassword = (TextView) dialog.findViewById(R.id.et_new_password);
+        final TextView tv_book_price = (TextView) dialog.findViewById(R.id.tv_book_price);
         final ImageView Clear = (ImageView) dialog.findViewById(R.id.clear);
 
         oldPassword.setText(datum.getName());
         newPassword.setText(datum.getDescription());
+        tv_book_price.setText("" + datum.getPrice() + "K.D");
         Yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -457,6 +409,40 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.MyView
 
 
         }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void addtoCart(List<Datum> mData, int position) {
+        LocalStorage localStorage = new LocalStorage(mContext);
+                   /* String dummyId = localStorage.getString(LocalStorage.Dummy_Store_ID);
+                    String storeId = localStorage.getString(LocalStorage.StoreId);
+                    if (dummyId.equals(storeId) || dummyId.equals("")) {
+                        localStorage.putString(LocalStorage.Dummy_Store_ID, localStorage.getString(LocalStorage.StoreId));
+*/
+        DbHelper dbHelper = new DbHelper(mContext);
+        Cursor cursor = dbHelper.getDataq(String.valueOf(mData.get(position).getBookId()));
+        if (cursor.getCount() == 0) {
+            boolean isInserted = dbHelper.insertData(mData.get(position).getName(),
+                    mData.get(position).getAvatarPath(),
+                    mData.get(position).getBookId(),
+                    1,
+                    mData.get(position).getPrice(),
+                    mData.get(position).getDescription(),
+                    String.valueOf(mData.get(position).getGstPrice()),
+                    mData.get(position).getQuantity(),
+                    String.valueOf(mData.get(position).isWishlist()),
+                    localStorage.getString(LocalStorage.TYPE),
+                    "", String.valueOf(mData.get(position).getStoreId()),"book");
+            if (isInserted) {
+                getSqliteData1();
+                Toast.makeText(mContext, "Items Added Succesfully", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(mContext, "Something Went Wrong", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(mContext, "You have already this item added into cart", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     private void getSqliteData1() {
@@ -524,7 +510,9 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.MyView
                     shoppingBagModel.setPID(json_data.getString("P_ID"));
                     shoppingBagModel.setType(json_data.getString("size"));
                     shoppingBagModel.setType(json_data.getString("type"));
+                    shoppingBagModel.setSchoolStoreId(json_data.getString("schoolStoreId"));
                     type = json_data.getString("type");
+                    schoolStoreId = json_data.getString("schoolStoreId");
                     shoppingBagModel.setWishlist(json_data.getString("wishlist"));
                     shoppingBagModel.setGst(json_data.getString("gstPrice"));
                     list.add(shoppingBagModel);
@@ -659,6 +647,8 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.MyView
                     shoppingBagModel.setSize(json_data.getString("size"));
                     shoppingBagModel.setType(json_data.getString("type"));
                     shoppingBagModel.setAvailibleQty(json_data.getString("avalible"));
+                    shoppingBagModel.setSchoolStoreId(json_data.getString("schoolStoreId"));
+                    shoppingBagModel.setCategory(json_data.getString("category"));
                     shoppingBagModel.setpID(json_data.getString("P_ID"));
                     shoppingBagModel.setWishlist(json_data.getString("wishlist"));
                     shoppingBagModel.setGst(json_data.getString("gstPrice"));

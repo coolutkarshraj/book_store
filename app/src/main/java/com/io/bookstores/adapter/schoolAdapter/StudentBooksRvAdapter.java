@@ -57,8 +57,10 @@ public class StudentBooksRvAdapter extends RecyclerView.Adapter<SchoolBooksHolde
     private LoginModel loginModel;
     private DbHelper dbHelper;
     String type = "";
-    String avalibaleQ = " ";
-    String pSize = " ";
+    String schoolStoreId = "";
+    String avalibaleQ = "0";
+    String pSize = "0";
+
     userOnlineInfo user;
     NewProgressBar dialog;
     private String wishlistdata;
@@ -77,6 +79,7 @@ public class StudentBooksRvAdapter extends RecyclerView.Adapter<SchoolBooksHolde
     public SchoolBooksHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(activity).inflate(R.layout.item_student_books, parent, false);
         getSqliteData1();
+        getWishListStatus();
         dbHelper = new DbHelper(activity);
         user = new userOnlineInfo();
         localStorage = new LocalStorage(activity);
@@ -88,20 +91,20 @@ public class StudentBooksRvAdapter extends RecyclerView.Adapter<SchoolBooksHolde
     @Override
     public void onBindViewHolder(final SchoolBooksHolder holder, final int position) {
         final ProductDataModel model = data.get(position);
+
         holder.tv_price.setText(model.getPrice() + "K.D.");
         holder.tv_p_name.setText(model.getName());
         Glide.with(activity).load(Config.imageUrl + model.getAvatarPath()).into(holder.ivClothImage);
-
         if (loginModel == null) {
             getWishListStatus();
             for (int ii = 0; ii <= lists.size() - 1; ii++) {
                 if (model.getClassProductId() == Long.parseLong(lists.get(ii).getpID())) {
                     holder.mark_fav.setVisibility(View.GONE);
                     holder.mark_fav_red.setVisibility(View.VISIBLE);
-                } else {
+                }/* else {
                     holder.mark_fav.setVisibility(View.VISIBLE);
                     holder.mark_fav_red.setVisibility(View.GONE);
-                }
+                }*/
             }
         } else {
             if (model.isIsWishlist() == true) {
@@ -117,30 +120,29 @@ public class StudentBooksRvAdapter extends RecyclerView.Adapter<SchoolBooksHolde
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View view) {
+                Log.e("Satus", "" + model.getSchool().getSchoolId());
                 if (loginModel == null) {
                     LocalStorage localStorage = new LocalStorage(activity);
-                    String dummyId = localStorage.getString(LocalStorage.Dummy_School_ID);
-                    String storeId = localStorage.getString(LocalStorage.schoolId);
                     if (model.getProductSizes().size() == 0 || model.getProductSizes().isEmpty()) {
-
+                        avalibaleQ = "0";
+                        pSize = "0";
                     } else {
                         avalibaleQ = String.valueOf(model.getProductSizes().get(0).getQuantity());
                         pSize = String.valueOf(model.getProductSizes().get(0).getProductSizeId());
                     }
-                    if (dummyId.equals(storeId) || dummyId.equals("")) {
-                        localStorage.putString(LocalStorage.Dummy_School_ID, localStorage.getString(LocalStorage.schoolId));
                         DbHelper dbHelper = new DbHelper(activity);
                         Cursor cursor = dbHelper.getOneWishList(String.valueOf(model.getClassProductId()));
                         if (cursor.getCount() == 0) {
                             boolean isInserted = dbHelper.insertWishList(model.getName(),
                                     model.getAvatarPath(),
-                                    Long.valueOf(model.getClassProductId()),
+                                    (long) model.getClassProductId(),
                                     1,
                                     Long.parseLong(model.getPrice()),
                                     model.getDescription(),
                                     "",
                                     Integer.parseInt(avalibaleQ),
-                                    "true", "school", pSize);
+                                    "true", "school",
+                                    pSize, String.valueOf(model.getSchool().getSchoolId()),"book");
                             if (isInserted) {
                                 holder.mark_fav.setVisibility(View.GONE);
                                 holder.mark_fav_red.setVisibility(View.VISIBLE);
@@ -153,13 +155,12 @@ public class StudentBooksRvAdapter extends RecyclerView.Adapter<SchoolBooksHolde
                             Toast.makeText(activity, "You have already this item added into wishlist", Toast.LENGTH_SHORT).show();
                         }
 
-                    } else {
-                        opendialogwish(model, position);
-                    }
+
                 } else {
                     holder.mark_fav.setVisibility(View.GONE);
                     holder.mark_fav_red.setVisibility(View.VISIBLE);
                     updateQuantity(Long.valueOf(model.getClassProductId()), "true");
+                    Log.e("ProductId", "" + model.getClassProductId());
                     addorRemomoveWishlist(Long.valueOf(model.getClassProductId()));
                 }
             }
@@ -175,7 +176,7 @@ public class StudentBooksRvAdapter extends RecyclerView.Adapter<SchoolBooksHolde
                     boolean isdeleted = false;
                     isdeleted = dbHelper.deleteOneWishList(String.valueOf(model.getClassProductId()));
 
-                    if (isdeleted == true) {
+                    if (isdeleted) {
                         holder.mark_fav.setVisibility(View.VISIBLE);
                         holder.mark_fav_red.setVisibility(View.GONE);
                         Toast.makeText(activity, "wishlist delete sucessfully", Toast.LENGTH_SHORT).show();
@@ -211,46 +212,12 @@ public class StudentBooksRvAdapter extends RecyclerView.Adapter<SchoolBooksHolde
             public void onClick(View v) {
                 if (type.equals("store")) {
                     openDialogBox(model, position);
+                } else if (type.equals("school") && schoolStoreId.equals(String.valueOf(model.getSchool().getSchoolId()))) {
+                    addTocart(model);
+                } else if (type.isEmpty()) {
+                    addTocart(model);
                 } else {
-                    LocalStorage localStorage = new LocalStorage(activity);
-                    String dummyId = localStorage.getString(LocalStorage.Dummy_School_ID);
-                    String schoolId = localStorage.getString(LocalStorage.schoolId);
-                    if (model.getProductSizes().size() == 0 || model.getProductSizes().isEmpty()) {
-
-                    } else {
-                        avalibaleQ = String.valueOf(model.getProductSizes().get(0).getQuantity());
-                        pSize = String.valueOf(model.getProductSizes().get(0).getProductSizeId());
-                    }
-                    if (dummyId.equals(schoolId) || dummyId.equals("")) {
-                        localStorage.putString(LocalStorage.Dummy_School_ID, localStorage.getString(LocalStorage.schoolId));
-                        DbHelper dbHelper = new DbHelper(activity);
-                        Cursor cursor = dbHelper.getDataq(String.valueOf(model.getClassProductId()));
-                        if (cursor.getCount() == 0) {
-                            boolean isInserted = dbHelper.insertData(model.getName(),
-                                    model.getAvatarPath(),
-                                    Long.valueOf(model.getClassProductId()),
-                                    1,
-                                    Long.parseLong(model.getPrice()),
-                                    model.getDescription(),
-                                    "",
-                                    Integer.parseInt(avalibaleQ),
-                                    String.valueOf(model.isIsWishlist()),
-                                    localStorage.getString(LocalStorage.TYPE),
-                                    pSize);
-                            if (isInserted) {
-                                getSqliteData1();
-                                Toast.makeText(activity, "Items Added Succesfully", Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(activity, "Something Went Wrong", Toast.LENGTH_SHORT).show();
-                            }
-                        } else {
-                            Toast.makeText(activity, "You have already this item added into cart", Toast.LENGTH_SHORT).show();
-                        }
-                    } else {
-
-                        openDialogBox(model, position);
-                    }
-
+                   openDialogBox(model,position);
                 }
             }
         });
@@ -306,6 +273,44 @@ public class StudentBooksRvAdapter extends RecyclerView.Adapter<SchoolBooksHolde
 
         } else {
             Utils.showAlertDialog((Activity) activity, "No Internet Connection");
+        }
+    }
+
+    private void addTocart(ProductDataModel model) {
+        LocalStorage localStorage = new LocalStorage(activity);
+
+
+        Log.e("Satus", "" + model.getSchool().getSchoolId());
+        if (model.getProductSizes().size() == 0 || model.getProductSizes().isEmpty()) {
+
+        } else {
+            avalibaleQ = String.valueOf(model.getProductSizes().get(0).getQuantity());
+            pSize = String.valueOf(model.getProductSizes().get(0).getProductSizeId());
+        }
+                   /* if (dummyId.equals(schoolId) || dummyId.equals("")) {
+                        localStorage.putString(LocalStorage.Dummy_School_ID, localStorage.getString(LocalStorage.schoolId));*/
+        DbHelper dbHelper = new DbHelper(activity);
+        Cursor cursor = dbHelper.getDataq(String.valueOf(model.getClassProductId()));
+        if (cursor.getCount() == 0) {
+            boolean isInserted = dbHelper.insertData(model.getName(),
+                    model.getAvatarPath(),
+                    Long.valueOf(model.getClassProductId()),
+                    1,
+                    Long.parseLong(model.getPrice()),
+                    model.getDescription(),
+                    "",
+                    Integer.parseInt(avalibaleQ),
+                    String.valueOf(model.isIsWishlist()),
+                    localStorage.getString(LocalStorage.TYPE),
+                    pSize, String.valueOf(model.getSchool().getSchoolId()),"book");
+            if (isInserted) {
+                getSqliteData1();
+                Toast.makeText(activity, "Items Added Succesfully", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(activity, "Something Went Wrong", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(activity, "You have already this item added into cart", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -369,7 +374,7 @@ public class StudentBooksRvAdapter extends RecyclerView.Adapter<SchoolBooksHolde
                                     Integer.parseInt(avalibaleQ),
                                     String.valueOf(model.isIsWishlist()),
                                     localStorage.getString(LocalStorage.TYPE),
-                                    pSize);
+                                    pSize, String.valueOf(model.getSchool().getSchoolId()),"book");
                             if (isInserted) {
                                 getSqliteData1();
                                 Toast.makeText(activity, "Items Added Succesfully", Toast.LENGTH_SHORT).show();
@@ -427,7 +432,6 @@ public class StudentBooksRvAdapter extends RecyclerView.Adapter<SchoolBooksHolde
                     avalibaleQ = String.valueOf(model.getProductSizes().get(0).getQuantity());
                     pSize = String.valueOf(model.getProductSizes().get(0).getProductSizeId());
                 }
-                localStorage.putString(LocalStorage.Dummy_School_ID, localStorage.getString(LocalStorage.schoolId));
                 DbHelper dbHelper = new DbHelper(activity);
                 dbHelper.deleteAll();
                 boolean isInserted = dbHelper.insertData(model.getName(),
@@ -440,7 +444,7 @@ public class StudentBooksRvAdapter extends RecyclerView.Adapter<SchoolBooksHolde
                         Integer.parseInt(avalibaleQ),
                         String.valueOf(model.isIsWishlist()),
                         localStorage.getString(LocalStorage.TYPE),
-                        pSize);
+                        pSize, String.valueOf(model.getSchool().getSchoolId()),"book");
 
                 if (isInserted) {
                     getSqliteData1();
@@ -495,7 +499,7 @@ public class StudentBooksRvAdapter extends RecyclerView.Adapter<SchoolBooksHolde
                         Integer.parseInt(avalibaleQ),
                         String.valueOf(model.isIsWishlist()),
                         localStorage.getString(LocalStorage.TYPE),
-                        pSize);
+                        pSize, String.valueOf(model.getSchool().getSchoolId()),"book");
 
                 if (isInserted) {
                     getSqliteData1();
@@ -583,7 +587,9 @@ public class StudentBooksRvAdapter extends RecyclerView.Adapter<SchoolBooksHolde
                     shoppingBagModel.setPID(json_data.getString("P_ID"));
                     shoppingBagModel.setSize(json_data.getString("size"));
                     shoppingBagModel.setType(json_data.getString("type"));
+                    shoppingBagModel.setSchoolStoreId(json_data.getString("schoolStoreId"));
                     type = json_data.getString("type");
+                    schoolStoreId = json_data.getString("schoolStoreId");
                     shoppingBagModel.setWishlist(json_data.getString("wishlist"));
                     shoppingBagModel.setGst(json_data.getString("gstPrice"));
                     list.add(shoppingBagModel);
@@ -665,8 +671,10 @@ public class StudentBooksRvAdapter extends RecyclerView.Adapter<SchoolBooksHolde
                     shoppingBagModel.setImage(json_data.getString("Image"));
                     shoppingBagModel.setSize(json_data.getString("size"));
                     shoppingBagModel.setType(json_data.getString("type"));
+                    shoppingBagModel.setCategory(json_data.getString("category"));
                     shoppingBagModel.setAvailibleQty(json_data.getString("avalible"));
                     shoppingBagModel.setpID(json_data.getString("P_ID"));
+                    shoppingBagModel.setSchoolStoreId(json_data.getString("schoolStoreId"));
                     shoppingBagModel.setWishlist(json_data.getString("wishlist"));
                     shoppingBagModel.setGst(json_data.getString("gstPrice"));
                     lists.add(shoppingBagModel);
@@ -681,56 +689,34 @@ public class StudentBooksRvAdapter extends RecyclerView.Adapter<SchoolBooksHolde
         }
     }
 
-    private void opendialogwish(final ProductDataModel model, int position) {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        builder.setMessage("you have already select books from another school .Are you sure Want to delete existing wishlist item");
-        builder.setTitle("Delete Wishlist Item");
-        //Setting message manually and performing action on button click
-        //This will not allow to close dialogbox until user selects an option
-        builder.setCancelable(false);
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.cancel();
-                LocalStorage localStorage = new LocalStorage(activity);
-                if (model.getProductSizes().size() == 0 || model.getProductSizes().isEmpty()) {
+  /*  private void opendialogwish(final ProductDataModel model, int position) {
+        LocalStorage localStorage = new LocalStorage(activity);
+        if (model.getProductSizes().size() == 0 || model.getProductSizes().isEmpty()) {
 
-                } else {
-                    avalibaleQ = String.valueOf(model.getProductSizes().get(0).getQuantity());
-                    pSize = String.valueOf(model.getProductSizes().get(0).getProductSizeId());
-                }
-                localStorage.putString(LocalStorage.Dummy_School_ID, localStorage.getString(LocalStorage.schoolId));
-                DbHelper dbHelper = new DbHelper(activity);
-                dbHelper.deleteAll();
-                boolean isInserted = dbHelper.insertWishList(model.getName(),
-                        model.getAvatarPath(),
-                        Long.valueOf(model.getClassProductId()),
-                        1,
-                        Long.parseLong(model.getPrice()),
-                        model.getDescription(),
-                        "",
-                        Integer.parseInt(avalibaleQ), "true", "school", pSize);
+        } else {
+            avalibaleQ = String.valueOf(model.getProductSizes().get(0).getQuantity());
+            pSize = String.valueOf(model.getProductSizes().get(0).getProductSizeId());
+        }
+        localStorage.putString(LocalStorage.Dummy_School_ID, localStorage.getString(LocalStorage.schoolId));
+        DbHelper dbHelper = new DbHelper(activity);
+        dbHelper.deleteAll();
+        boolean isInserted = dbHelper.insertWishList(model.getName(),
+                model.getAvatarPath(),
+                Long.valueOf(model.getClassProductId()),
+                1,
+                Long.parseLong(model.getPrice()),
+                model.getDescription(),
+                "",
+                Integer.parseInt(avalibaleQ), "true", "school", pSize);
 
-                if (isInserted) {
-                    getWishListStatus();
-                    Toast.makeText(activity, "Items Added Succesfully", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(activity, "Something Went Wrong", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.cancel();
-            }
-        });
+        if (isInserted) {
+            getWishListStatus();
+            Toast.makeText(activity, "Items Added Succesfully", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(activity, "Something Went Wrong", Toast.LENGTH_SHORT).show();
+        }
+    }*/
 
-        //Creating dialog box
-        AlertDialog alert = builder.create();
-        //Setting the title manually
-        //alert.setTitle("AlertDialogExample");
-        alert.show();
-    }
 
     private void updateQuantity(Long pid, String s) {
         dbHelper = new DbHelper(activity);

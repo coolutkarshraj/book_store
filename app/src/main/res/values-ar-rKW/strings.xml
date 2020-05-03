@@ -65,10 +65,10 @@
     <string name="please_enter_your_email_or_mobile_in_order_to_reset_your_password">
 يرجى إدخال بريدك الإلكتروني أو هاتفك المحمول من أجل إعادة تعيين كلمة المرور الخاصة بك
 </string>
-    <string name="discover_more_bookstores">المكتبات</string>
+    <string name="discover_more_bookstores">اكتشف المزيد من مكتبة</string>
     <string name="add_new_address">أضافة عنوان جديد+</string>
     <string name="mobile">التليفون المحمول</string>
-    <string name="discover_more_courses">"الدورات "</string>
+    <string name="discover_more_courses">اكتشف المزيد من الدورات</string>
     <string name="send_request">ارسل طلب</string>
     <string name="checkout">الدفع</string>
     <string name="toast_lang_change">اللغة العربية المختارة</string>
@@ -219,5 +219,17 @@
     <string name="all_private_school">المدارس</string>
     <string name="choose_your_class">المرحلة الدراسيةة</string>
     <string name="clothes">الملابس</string>
+    <string name="order_history">سجل طلبك</string>
+    <string name="booksnotavailble">الكتب غير متاحة في هذه الفئة</string>
+    <string name="filter">منقي</string>
+    <string name="itemSize">حجم الصنف</string>
+    <string name="description">وصف</string>
+    <string name="itemPrice">سعر السلعة</string>
+    <string name="addtoCart">أضف إلى السلة</string>
 
+    <string name="bookstoreOrder">طلب متجر الكتب</string>
+    <string name="schoolOrder">ترتيب المدرسة</string>
+    <string name="bookStore">مكتبة لبيع الكتب</string>
+    <string name="school">مدرسة</string>
+    <string name="clothedetial">تفاصيل القماش</string>
 </resources>

@@ -25,6 +25,7 @@ import com.io.bookstores.apicaller.ApiCaller;
 import com.io.bookstores.localStorage.LocalStorage;
 import com.io.bookstores.model.courseModel.CourseDataModel;
 import com.io.bookstores.model.courseModel.EnrollCourseResponseModel;
+import com.io.bookstores.model.guestModel.GuestDetailResponseModel;
 import com.io.bookstores.model.guestModel.GuestEnrollCourseResponseModel;
 import com.io.bookstores.model.guestModel.GuestResponseModel;
 import com.io.bookstores.utility.NewProgressBar;
@@ -184,7 +185,6 @@ public class CourseEnrollFragment extends Fragment implements View.OnClickListen
             Utils.showAlertDialog(activity, getResources().getString(R.string.phone_number_must_be_of_8));
             return;
         }
-
         if (!isEmailValid(strEmail)) {
             Utils.showAlertDialog(activity, getResources().getString(R.string.email_not_valid));
             return;
@@ -217,7 +217,7 @@ public class CourseEnrollFragment extends Fragment implements View.OnClickListen
 
     /*------------------------------------------------- guest create Api Caller ----------------------------------------------*/
 
-    private void guestEnrollCourse(String strName, String strEmail, String strPhone) {
+    private void guestEnrollCourse(String strName, String strEmail, final String strPhone) {
         if (user.isOnline(activity)) {
             dialog.show();
             ApiCaller.guestApi(activity, Config.Url.guestCreate, strName, strEmail, strPhone, new FutureCallback<GuestResponseModel>() {
@@ -227,11 +227,14 @@ public class CourseEnrollFragment extends Fragment implements View.OnClickListen
                         Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                         dialog.dismiss();
                     }
-
                     if (result != null) {
                         if (result.getStatus()) {
                             dialog.dismiss();
                             enrollCourseGuest(result.getData().getGuestId(), courseDataModel.getCourseId());
+                            localStorage.putString(LocalStorage.guestId, strPhone);
+                        } else {
+                            dialog.dismiss();
+                            UserDetailApiCall(strPhone);
                         }
 
                     }
@@ -242,6 +245,33 @@ public class CourseEnrollFragment extends Fragment implements View.OnClickListen
         }
 
 
+    }
+
+    private void UserDetailApiCall(final String strPhone) {
+        if (user.isOnline(activity)) {
+
+            ApiCaller.getGuestDetial(activity, Config.Url.guestDetial + strPhone, new FutureCallback<GuestDetailResponseModel>() {
+                @Override
+                public void onCompleted(Exception e, GuestDetailResponseModel result) {
+                    if (e != null) {
+                        Utils.showAlertDialog(getActivity(), "Something Went Wrong");
+
+                    }
+
+                    if (result != null) {
+                        if (result.isStatus()) {
+                            localStorage.putString(LocalStorage.guestId, strPhone);
+                            enrollCourseGuest((long) result.getData().getGuestId(), courseDataModel.getCourseId());
+                        } else {
+                            Toast.makeText(activity, result.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                }
+            });
+        } else {
+            Utils.showAlertDialog(getActivity(), "No Internet Connection");
+        }
     }
 
     /*-------------------------------------------------- guest enroll ap caller -----------------------------------------------*/

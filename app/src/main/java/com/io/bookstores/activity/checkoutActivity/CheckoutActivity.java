@@ -85,6 +85,8 @@ public class CheckoutActivity extends AppCompatActivity {
     NewProgressBar dialog;
     private TextView tv_address;
     private ArrayList itemname;
+    private String storeId = "";
+    private String schoolId = "";
     private RecyclerView recyclerView;
     public static TextView tv_name_1, tv_name_2, no_text_found;
     private AddressAdapter addressAdapter;
@@ -382,11 +384,12 @@ public class CheckoutActivity extends AppCompatActivity {
         final LocalStorage localStorage = new LocalStorage(this);
         JsonObject jsonObject = new JsonObject();
         jsonArray = new JsonArray();
-        jsonObject.addProperty("storeid", localStorage.getString(LocalStorage.Dummy_Store_ID));
+        getSqliteData1();
+        jsonObject.addProperty("storeid", storeId);
         jsonObject.addProperty("deliverytype", deliveryType);
         jsonObject.addProperty("deliveryaddressid", localStorage.getString(LocalStorage.addressId));
         jsonObject.addProperty("totalprice", totalpricessss);
-        getSqliteData1();
+
         jsonObject.add("items", jsonArray);
 
         Log.e("jsonob", "" + jsonObject);
@@ -415,6 +418,7 @@ public class CheckoutActivity extends AppCompatActivity {
                                 } else {
 
                                     if (result.getStatus() == true) {
+
                                         qrcreator(result.getData().getOrderId());
                                         Intent intent = new Intent(CheckoutActivity.this, ProcessingActivity.class);
                                         startActivity(intent);
@@ -478,6 +482,7 @@ public class CheckoutActivity extends AppCompatActivity {
                 JsonObject jsonObject = new JsonObject();
                 jsonObject.addProperty("bookid", json_data.getString("P_ID"));
                 jsonObject.addProperty("count", json_data.getString("Quantity"));
+                storeId = json_data.getString("schoolStoreId");
                 jsonArray.add(jsonObject);
             }
         } catch (JSONException e) {
@@ -489,11 +494,12 @@ public class CheckoutActivity extends AppCompatActivity {
         final LocalStorage localStorage = new LocalStorage(this);
         JsonObject jsonObject1 = new JsonObject();
         jsonArraySchool = new JsonArray();
-        jsonObject1.addProperty("schoolId", localStorage.getString(LocalStorage.Dummy_School_ID));
+        getSqliteDataDataForSchoolOrder();
+        jsonObject1.addProperty("schoolId", schoolId);
         jsonObject1.addProperty("deliveryType", deliveryType);
         jsonObject1.addProperty("deliveryAddressId", localStorage.getString(LocalStorage.addressId));
         jsonObject1.addProperty("totalPrice", totalpricessss);
-        getSqliteDataDataForSchoolOrder();
+
         jsonObject1.add("items", jsonArraySchool);
 
         Log.e("jsonob", "" + jsonObject1);
@@ -586,6 +592,7 @@ public class CheckoutActivity extends AppCompatActivity {
                 jsonObject.addProperty("productId", json_data.getString("P_ID"));
                 jsonObject.addProperty("count", json_data.getString("Quantity"));
                 jsonObject.addProperty("sizeId", json_data.getString("size"));
+                schoolId = json_data.getString("schoolStoreId");
                 jsonArraySchool.add(jsonObject);
             }
         } catch (JSONException e) {
@@ -936,7 +943,7 @@ public class CheckoutActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //  addAddressValidateData(etAddress, spindata, etState, etPinCode,dialog,spindistict);
                 addAddressValidateData(etAddress, spindata, etState, etPinCode, dialog, spindistict);
-                dialog.dismiss();
+                //dialog.dismiss();
             }
         });
         btn_cancel.setOnClickListener(new View.OnClickListener() {

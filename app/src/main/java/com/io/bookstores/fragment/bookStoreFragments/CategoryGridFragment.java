@@ -17,10 +17,10 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.io.bookstores.Config;
 import com.io.bookstores.R;
+import com.io.bookstores.StaticData;
 import com.io.bookstores.adapter.categoryAdapter.CategoryFragmentAdapter;
 import com.io.bookstores.adapter.categoryAdapter.CategoryGridAdapter;
 import com.io.bookstores.apicaller.ApiCaller;
-import com.io.bookstores.fragment.basicFragment.CategoryListFragment;
 import com.io.bookstores.listeners.ItemClickListner;
 import com.io.bookstores.localStorage.LocalStorage;
 import com.io.bookstores.model.categoryModel.CategoryData;
@@ -43,7 +43,6 @@ public class CategoryGridFragment extends Fragment implements View.OnClickListen
     private Activity activity;
     private RecyclerView recyclerView1, recyclerView2, recyclerView3, recyclerView4;
     private RelativeLayout rlViewAllCategory;
-    private CategoryListFragment categoryListFragment;
     private NewProgressBar dialog;
     private userOnlineInfo user;
     private SpringDotsIndicator dotsIndicator;
@@ -100,6 +99,7 @@ public class CategoryGridFragment extends Fragment implements View.OnClickListen
     public void onClick(View v) {
         switch ((v.getId())) {
             case R.id.iv_view_all_category:
+                StaticData.filter = true;
                 localStorage.putString(LocalStorage.CategoryId, "-1");
                 bookListFragment = new BookListFragment();
                 getActivity().getSupportFragmentManager().beginTransaction()

@@ -21,11 +21,13 @@ import com.io.bookstores.Config;
 import com.io.bookstores.R;
 import com.io.bookstores.activity.authentication.LoginActivity;
 import com.io.bookstores.adapter.courseAdapter.EnrolledCourseRvAdapter;
+import com.io.bookstores.adapter.courseAdapter.GuestEnrolledCourseRvAdapter;
 import com.io.bookstores.apicaller.ApiCaller;
 import com.io.bookstores.listeners.ItemClickListner;
 import com.io.bookstores.localStorage.LocalStorage;
 import com.io.bookstores.model.courseModel.EnrolledCourseListDataModel;
 import com.io.bookstores.model.courseModel.EnrolledCourseListResponseModel;
+import com.io.bookstores.model.guestCoursedModel.GuestEnrolledCourseResponseModel;
 import com.io.bookstores.utility.NewProgressBar;
 import com.io.bookstores.utility.Utils;
 import com.io.bookstores.utility.userOnlineInfo;
@@ -115,9 +117,57 @@ public class EnrollCourseListFragment extends Fragment implements View.OnClickLi
         if (localStorage.getString(LocalStorage.token) == null ||
                 localStorage.getString(LocalStorage.token).equals("")) {
             tv_login.setVisibility(View.VISIBLE);
+            if (localStorage.getString(LocalStorage.guestId) != " " || localStorage.getString(LocalStorage.guestId) != null) {
+                nestedScrollView.setVisibility(View.VISIBLE);
+                tv_login.setVisibility(View.GONE);
+                getGuestCourseDetail();
+            }
         } else {
+
             getEnrolledCourseListApi();
             nestedScrollView.setVisibility(View.VISIBLE);
+
+        }
+    }/*---------------------------------------------------- Guest Course List ---------------------------------------------*/
+
+    private void getGuestCourseDetail() {
+        if (user.isOnline(activity)) {
+            dialog.show();
+            ApiCaller.guestEnrollCourseList(getActivity(), Config.Url.guestEnrolledList + localStorage.getString(LocalStorage.guestId),
+                    new FutureCallback<GuestEnrolledCourseResponseModel>() {
+
+                        @Override
+                        public void onCompleted(Exception e, GuestEnrolledCourseResponseModel result) {
+                            if (e != null) {
+                                dialog.dismiss();
+                                Utils.showAlertDialog(getActivity(), "Something Went Wrong");
+                            }
+
+                            if (result != null) {
+                                guestUserData(result);
+                                dialog.dismiss();
+
+                            }
+
+
+                        }
+                    });
+        } else {
+            Utils.showAlertDialog(getActivity(), "No Internet Connection");
+        }
+    }
+
+    private void guestUserData(GuestEnrolledCourseResponseModel result) {
+        if (result.getData().isEmpty()) {
+            notdata.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+        } else {
+            notdata.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+            LinearLayoutManager gridLayoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
+            recyclerView.setLayoutManager(gridLayoutManager);
+            GuestEnrolledCourseRvAdapter adapter = new GuestEnrolledCourseRvAdapter(getActivity(), result.getData());
+            recyclerView.setAdapter(adapter);
         }
     }
 

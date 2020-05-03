@@ -151,7 +151,7 @@ public class AllBookStoresFragment extends Fragment implements View.OnClickListe
     /*----------------------------------------------- set up of recycler view ------------------------------------------------*/
 
     private void setUpofSearchView() {
-        searchView2.setQueryHint("Search Books...");
+       // searchView2.setQueryHint("Search Books...");
         searchView2.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {

@@ -24,7 +24,6 @@
             android:layout_marginTop="@dimen/margin_7dp"
             android:layout_marginRight="@dimen/margin_7dp"
             android:background="@drawable/cross"
-            android:visibility="gone"
             tools:ignore="ContentDescription,RtlHardcoded" />
 
         <LinearLayout
@@ -45,9 +44,9 @@
 
                 <TextView
                     android:id="@+id/chatdelete"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Course Detials"
+                    android:text="@string/course_details"
                     android:textColor="@color/blue"
                     android:textSize="@dimen/startmargin"
                     tools:ignore="HardcodedText,SpUsage" />
@@ -68,7 +67,7 @@
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="Course Name"
+                    android:hint="@string/course_name"
                     android:textColor="@color/black"
                     android:textSize="@dimen/h2"
                     tools:ignore="HardcodedText" />
@@ -88,7 +87,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_15dp"
-                    android:hint="Course Description"
+                    android:hint="@string/course_description"
                     android:textColor="@color/black"
                     android:textSize="@dimen/h2"
                     tools:ignore="HardcodedText" />
@@ -105,7 +104,27 @@
                     android:textSize="@dimen/h2"
                     tools:ignore="Autofill,LabelFor,TextFields" />
 
+                <TextView
 
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_15dp"
+                    android:hint="@string/course_price"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/h2"
+                    tools:ignore="HardcodedText" />
+
+
+                <EditText
+                    android:id="@+id/tv_cprice"
+                    android:layout_width="match_parent"
+                    android:layout_height ="wrap_content"
+                    android:layout_marginTop="@dimen/margin_20dp"
+                    android:background="@drawable/layout_bg_on_focus"
+                    android:padding="@dimen/margin_10dp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/h2"
+                    tools:ignore="Autofill,LabelFor,TextFields" />
             </LinearLayout>
 
             <LinearLayout

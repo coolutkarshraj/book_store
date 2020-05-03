@@ -35,6 +35,7 @@ import com.io.bookstores.activity.homeActivity.MainActivity;
 import com.io.bookstores.adapter.schoolAdapter.ItemSizessAdapter;
 import com.io.bookstores.apicaller.ApiCaller;
 import com.io.bookstores.listeners.ItemClickListner;
+import com.io.bookstores.listeners.RecyclerViewClickListener;
 import com.io.bookstores.localStorage.DbHelper;
 import com.io.bookstores.localStorage.LocalStorage;
 import com.io.bookstores.model.bookListModel.CartLocalListResponseMode;
@@ -61,16 +62,19 @@ public class FavoriteItemsSchoolAdapter extends RecyclerView.Adapter<FavoriteIte
     NewProgressBar dialog;
     private LocalStorage localStorage;
     private LoginModel loginModel;
-    String avalibaleQ = "";
+    String avalibaleQ = "0";
     String type = "";
+    String schoolStoreId = "";
     ItemClickListner itemClickListner;
-    String pSize = "";
+    String pSize = "0";
     DbHelper dbHelper;
+    RecyclerViewClickListener recyclerViewClickListener;
     ArrayList<CartLocalListResponseMode> list = new ArrayList<>();
 
-    public FavoriteItemsSchoolAdapter(Context mContext, List<GetAllSchoolWishListDataModel> mData) {
+    public FavoriteItemsSchoolAdapter(Context mContext, List<GetAllSchoolWishListDataModel> mData, RecyclerViewClickListener recyclerViewClickListener) {
         this.mContext = mContext;
         this.mData = mData;
+        this.recyclerViewClickListener = recyclerViewClickListener;
     }
 
     @Override
@@ -96,11 +100,7 @@ public class FavoriteItemsSchoolAdapter extends RecyclerView.Adapter<FavoriteIte
         holder.clayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (model.getProductSizes().size() == 1) {
-                    addToCArt(model, position, mData);
-                } else {
-                    opendialogproductsize(model, position, mData);
-                }
+                showBookDetila(model);
             }
         });
         holder.imageView19.setOnClickListener(new View.OnClickListener() {
@@ -203,6 +203,65 @@ public class FavoriteItemsSchoolAdapter extends RecyclerView.Adapter<FavoriteIte
         }
     }
 
+    private void showBookDetila(GetAllSchoolWishListDataModel model) {
+        final Dialog dialog = new Dialog(mContext);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        DisplayMetrics metrics = mContext.getResources().getDisplayMetrics();
+        int width = metrics.widthPixels;
+        int height = metrics.heightPixels;
+        dialog.getWindow().setLayout((6 * width) / 7, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.setContentView(R.layout.book_detial_dialog);
+        dialog.setTitle("");
+        final Button Yes = (Button) dialog.findViewById(R.id.yes);
+        final Button No = (Button) dialog.findViewById(R.id.no);
+        final TextView chatdelete = (TextView) dialog.findViewById(R.id.chatdelete);
+        final TextView tv_heding_name = (TextView) dialog.findViewById(R.id.tv_heding_name);
+        final TextView tv_heding_description = (TextView) dialog.findViewById(R.id.tv_heding_description);
+        final TextView tv_heading_proce = (TextView) dialog.findViewById(R.id.tv_heading_proce);
+        final TextView oldPassword = (TextView) dialog.findViewById(R.id.et_old_password);
+        final TextView newPassword = (TextView) dialog.findViewById(R.id.et_new_password);
+        final TextView tv_book_price = (TextView) dialog.findViewById(R.id.tv_book_price);
+        final ImageView Clear = (ImageView) dialog.findViewById(R.id.clear);
+
+        if(model.getClassCategory().getName().equals("clothes") ||
+                model.getClassCategory().getName().equals("cloth") ||
+                model.getClassCategory().getName().equals("Clothes")
+        || model.getClassCategory().getName().equals("Cloth")){
+
+
+                chatdelete.setText(mContext.getResources().getString(R.string.clothedetial));
+                tv_heding_name.setText(mContext.getResources().getString(R.string.name));
+                tv_heding_description.setText(mContext.getResources().getString(R.string.description));
+                tv_heading_proce.setText(mContext.getResources().getString(R.string.price));
+
+        }
+        oldPassword.setText(model.getName());
+        newPassword.setText(model.getDescription());
+        tv_book_price.setText("" + model.getPrice() + "K.D");
+        Yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        No.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        Clear.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("ResourceAsColor")
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+
     @Override
     public int getItemCount() {
         return mData.size();
@@ -228,7 +287,7 @@ public class FavoriteItemsSchoolAdapter extends RecyclerView.Adapter<FavoriteIte
         }
     }
 
-    private void addToCArt(final GetAllSchoolWishListDataModel model, final int position, List<GetAllSchoolWishListDataModel> mData) {
+    private void addToCArt(final GetAllSchoolWishListDataModel model, final int position, final List<GetAllSchoolWishListDataModel> mData) {
 
         final Dialog dialog = new Dialog(mContext);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -248,49 +307,21 @@ public class FavoriteItemsSchoolAdapter extends RecyclerView.Adapter<FavoriteIte
         Yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LocalStorage localStorage = new LocalStorage(mContext);
-                String dummyId = localStorage.getString(LocalStorage.Dummy_School_ID);
-                String storeId = localStorage.getString(LocalStorage.schoolId);
-                if (dummyId.equals(storeId) || dummyId.equals("")) {
-                    localStorage.putString(LocalStorage.Dummy_Store_ID, localStorage.getString(LocalStorage.schoolId));
-                    DbHelper dbHelper = new DbHelper(mContext);
-                    if (model.getProductSizes().size() == 0 || model.getProductSizes().isEmpty()) {
 
-                    } else {
-                        avalibaleQ = String.valueOf(model.getProductSizes().get(0).getQuantity());
-                        pSize = String.valueOf(model.getProductSizes().get(0).getProductSizeId());
-                    }
-                    Cursor cursor = dbHelper.getDataq(String.valueOf(FavoriteItemsSchoolAdapter.this.mData.get(position).getClassProductId()));
-                    if (cursor.getCount() == 0) {
-                        boolean isInserted = dbHelper.insertData(FavoriteItemsSchoolAdapter.this.mData.get(position).getName(),
-                                FavoriteItemsSchoolAdapter.this.mData.get(position).getAvatarPath(),
-                                Long.valueOf(FavoriteItemsSchoolAdapter.this.mData.get(position).getClassProductId()),
-                                1,
-                                Long.parseLong(FavoriteItemsSchoolAdapter.this.mData.get(position).getPrice()),
-                                FavoriteItemsSchoolAdapter.this.mData.get(position).getDescription(),
-                                "",
-                                Integer.parseInt(avalibaleQ), "false",
-                                localStorage.getString(LocalStorage.TYPE),
-                                pSize);
-                        if (isInserted) {
-                            getSqliteData1();
-                            Toast.makeText(mContext, "Items Added Succesfully", Toast.LENGTH_SHORT).show();
-                            removeWishListItem(Long.valueOf(model.getClassProductId()), position);
-                            dialog.dismiss();
-                        } else {
-                            dialog.dismiss();
-                            Toast.makeText(mContext, "Something Went Wrong", Toast.LENGTH_SHORT).show();
-                        }
-                    } else {
-                        Toast.makeText(mContext, "You have already this item added into cart", Toast.LENGTH_SHORT).show();
-                        removeWishListItem(Long.valueOf(model.getClassProductId()), position);
-                        dialog.dismiss();
-                    }
-
+                if (type.equals("store")) {
+                    openDialogBox(model, position);
+                    dialog.dismiss();
+                } else if (type.equals("school") && schoolStoreId.equals(String.valueOf(model.getSchool().getSchoolId()))) {
+                    addToCartSchoolBooks(mData, model, position);
+                    dialog.dismiss();
+                } else if (type.isEmpty()) {
+                    addToCartSchoolBooks(mData, model, position);
+                    dialog.dismiss();
                 } else {
                     openDialogBox(model, position);
                     dialog.dismiss();
                 }
+
 
             }
 
@@ -314,6 +345,80 @@ public class FavoriteItemsSchoolAdapter extends RecyclerView.Adapter<FavoriteIte
 
     }
 
+    /* school  books add into the cart */
+    private void addToCartSchoolBooks(List<GetAllSchoolWishListDataModel> mData, GetAllSchoolWishListDataModel model, int position) {
+        DbHelper dbHelper = new DbHelper(mContext);
+        if (model.getProductSizes().size() == 0 || model.getProductSizes().isEmpty()) {
+
+        } else {
+            avalibaleQ = String.valueOf(model.getProductSizes().get(0).getQuantity());
+            pSize = String.valueOf(model.getProductSizes().get(0).getProductSizeId());
+        }
+        Cursor cursor = dbHelper.getDataq(String.valueOf(mData.get(position).getClassProductId()));
+        if (cursor.getCount() == 0) {
+            boolean isInserted = dbHelper.insertData(mData.get(position).getName(),
+                    mData.get(position).getAvatarPath(),
+                    (long) mData.get(position).getClassProductId(),
+                    1,
+                    Long.parseLong(mData.get(position).getPrice()),
+                    mData.get(position).getDescription(),
+                    "",
+                    Integer.parseInt(avalibaleQ), "false",
+                    localStorage.getString(LocalStorage.TYPE),
+                    pSize, String.valueOf(mData.get(position).getSchool().getSchoolId()), "book");
+            if (isInserted) {
+                getSqliteData1();
+                Toast.makeText(mContext, "Items Added Succesfully", Toast.LENGTH_SHORT).show();
+                removeWishListItem((long) model.getClassProductId(), position);
+                dialog.dismiss();
+            } else {
+                dialog.dismiss();
+                Toast.makeText(mContext, "Something Went Wrong", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(mContext, "You have already this item added into cart", Toast.LENGTH_SHORT).show();
+            //  removeWishListItem(Long.valueOf(model.getClassProductId()), position);
+            // dialog.dismiss();
+        }
+    }
+
+    /* add colthes into the cart */
+    public void addClothesDataintoCart(GetAllSchoolWishListDataModel model, int position) {
+        LocalStorage localStorage = new LocalStorage(mContext);
+        if (localStorage.getString(LocalStorage.SIZEEID).equals("")) {
+            Toast.makeText(mContext, "Please Select Size", Toast.LENGTH_SHORT).show();
+        } else {
+//            dialog.dismiss();
+                       /* String dummyId = localStorage.getString(LocalStorage.Dummy_School_ID);
+                        String storeId = localStorage.getString(LocalStorage.schoolId);
+
+                        if (dummyId.equals(storeId) || dummyId.equals("")) {
+                            localStorage.putString(LocalStorage.Dummy_School_ID, localStorage.getString(LocalStorage.schoolId));*/
+            DbHelper dbHelper = new DbHelper(mContext);
+            Cursor cursor = dbHelper.getDataq(String.valueOf(model.getClassProductId()));
+            if (cursor.getCount() == 0) {
+                boolean isInserted = dbHelper.insertData(model.getName(),
+                        model.getAvatarPath(),
+                        Long.valueOf(model.getClassProductId()),
+                        1,
+                        Long.parseLong(model.getPrice()),
+                        model.getDescription(),
+                        "",
+                        Integer.parseInt(localStorage.getString(LocalStorage.PQUANTITY)),
+                        "false", "school", localStorage.getString(LocalStorage.SIZEEID), String.valueOf(model.getSchool().getSchoolId()), "cloth");
+                if (isInserted) {
+                    getSqliteData1();
+                    removeWishListItem(Long.valueOf(model.getClassProductId()), position);
+                    Toast.makeText(mContext, "add item to wishlist sucessfully", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(mContext, "Something Went Wrong", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(mContext, "You have already this item added into wishlist", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
     private void openDialogBox(final GetAllSchoolWishListDataModel model, final int position) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         builder.setMessage("you have already select books from another store .Are you sure Want to delete existing cart item");
@@ -325,8 +430,7 @@ public class FavoriteItemsSchoolAdapter extends RecyclerView.Adapter<FavoriteIte
             @RequiresApi(api = Build.VERSION_CODES.N)
             public void onClick(DialogInterface dialog, int id) {
                 dialog.cancel();
-                LocalStorage localStorage = new LocalStorage(mContext);
-                localStorage.putString(LocalStorage.Dummy_School_ID, localStorage.getString(LocalStorage.Dummy_School_ID));
+
                 DbHelper dbHelper = new DbHelper(mContext);
                 dbHelper.deleteAll();
 
@@ -345,7 +449,7 @@ public class FavoriteItemsSchoolAdapter extends RecyclerView.Adapter<FavoriteIte
                         "",
                         Integer.parseInt(avalibaleQ), "false",
                         localStorage.getString(LocalStorage.TYPE),
-                        pSize);
+                        pSize, String.valueOf(model.getSchool().getSchoolId()),"book");
 
                 if (isInserted) {
                     getSqliteData1();
@@ -380,8 +484,7 @@ public class FavoriteItemsSchoolAdapter extends RecyclerView.Adapter<FavoriteIte
             @RequiresApi(api = Build.VERSION_CODES.N)
             public void onClick(DialogInterface dialog, int id) {
                 dialog.cancel();
-                LocalStorage localStorage = new LocalStorage(mContext);
-                localStorage.putString(LocalStorage.Dummy_School_ID, localStorage.getString(LocalStorage.Dummy_School_ID));
+
                 DbHelper dbHelper = new DbHelper(mContext);
                 dbHelper.deleteAll();
                 if (model.getProductSizes().size() == 0 || model.getProductSizes().isEmpty()) {
@@ -391,13 +494,15 @@ public class FavoriteItemsSchoolAdapter extends RecyclerView.Adapter<FavoriteIte
                 }
                 boolean isInserted = dbHelper.insertData(model.getName(),
                         model.getAvatarPath(),
-                        Long.valueOf(model.getClassProductId()),
+                        (long) model.getClassProductId(),
                         1,
                         Long.parseLong(model.getPrice()),
                         model.getDescription(),
                         "",
                         Integer.parseInt(localStorage.getString(LocalStorage.PQUANTITY)),
-                        "false", "school", localStorage.getString(LocalStorage.SIZEEID));
+                        "false", "school",
+                        localStorage.getString(LocalStorage.SIZEEID),
+                        String.valueOf(model.getSchool().getSchoolId()), "cloth");
 
                 if (isInserted) {
                     getSqliteData1();
@@ -484,7 +589,9 @@ public class FavoriteItemsSchoolAdapter extends RecyclerView.Adapter<FavoriteIte
                     shoppingBagModel.setImage(json_data.getString("Image"));
                     shoppingBagModel.setSize(json_data.getString("size"));
                     shoppingBagModel.setType(json_data.getString("type"));
+                    shoppingBagModel.setSchoolStoreId(json_data.getString("schoolStoreId"));
                     type = json_data.getString("type");
+                    schoolStoreId = json_data.getString("schoolStoreId");
                     shoppingBagModel.setAvailibleQty(json_data.getString("avalible"));
                     shoppingBagModel.setPID(json_data.getString("P_ID"));
                     shoppingBagModel.setGst(json_data.getString("gstPrice"));
@@ -504,7 +611,7 @@ public class FavoriteItemsSchoolAdapter extends RecyclerView.Adapter<FavoriteIte
         }
     }
 
-    private void opendialogproductsize(final GetAllSchoolWishListDataModel model, final int position, List<GetAllSchoolWishListDataModel> mData) {
+    private void opendialogproductsize(final GetAllSchoolWishListDataModel model, final int position, final List<GetAllSchoolWishListDataModel> mData) {
         final Dialog dialog = new Dialog(mContext, R.style.dialogTheme);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         DisplayMetrics metrics = mContext.getResources().getDisplayMetrics();
@@ -527,6 +634,30 @@ public class FavoriteItemsSchoolAdapter extends RecyclerView.Adapter<FavoriteIte
         Yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if (type.equals("store")) {
+                    if (localStorage.getString(LocalStorage.SIZEEID).equals("")) {
+                        Toast.makeText(mContext, "Please Select Size", Toast.LENGTH_SHORT).show();
+                    } else {
+                        dialog.dismiss();
+                        openDialogBoxsize(model, position);
+                    }
+                } else if (type.equals("school") && schoolStoreId.equals(String.valueOf(model.getSchool().getSchoolId()))) {
+
+                    addClothesDataintoCart(model, position);
+                    dialog.dismiss();
+                } else if (type.isEmpty()) {
+                    addClothesDataintoCart(model, position);
+                    dialog.dismiss();
+                } else {
+                    if (localStorage.getString(LocalStorage.SIZEEID).equals("")) {
+                        Toast.makeText(mContext, "Please Select Size", Toast.LENGTH_SHORT).show();
+                    } else {
+                        dialog.dismiss();
+                        openDialogBoxsize(model, position);
+                    }
+                }
+
                 if (type.equals("store")) {
                     if (localStorage.getString(LocalStorage.SIZEEID).equals("")) {
                         Toast.makeText(mContext, "Please Select Size", Toast.LENGTH_SHORT).show();
@@ -535,43 +666,12 @@ public class FavoriteItemsSchoolAdapter extends RecyclerView.Adapter<FavoriteIte
                         openDialogBoxsize(model, position);
                     }
                 } else {
-                    LocalStorage localStorage = new LocalStorage(mContext);
-                    if (localStorage.getString(LocalStorage.SIZEEID).equals("")) {
-                        Toast.makeText(mContext, "Please Select Size", Toast.LENGTH_SHORT).show();
-                    } else {
-                        dialog.dismiss();
-                        String dummyId = localStorage.getString(LocalStorage.Dummy_School_ID);
-                        String storeId = localStorage.getString(LocalStorage.schoolId);
 
-                        if (dummyId.equals(storeId) || dummyId.equals("")) {
-                            localStorage.putString(LocalStorage.Dummy_School_ID, localStorage.getString(LocalStorage.schoolId));
-                            DbHelper dbHelper = new DbHelper(mContext);
-                            Cursor cursor = dbHelper.getDataq(String.valueOf(model.getClassProductId()));
-                            if (cursor.getCount() == 0) {
-                                boolean isInserted = dbHelper.insertData(model.getName(),
-                                        model.getAvatarPath(),
-                                        Long.valueOf(model.getClassProductId()),
-                                        1,
-                                        Long.parseLong(model.getPrice()),
-                                        model.getDescription(),
-                                        "",
-                                        Integer.parseInt(localStorage.getString(LocalStorage.PQUANTITY)),
-                                        "false", "school", localStorage.getString(LocalStorage.SIZEEID));
-                                if (isInserted) {
-                                    getSqliteData1();
-                                    removeWishListItem(Long.valueOf(model.getClassProductId()), position);
-                                    Toast.makeText(mContext, "add item to wishlist sucessfully", Toast.LENGTH_SHORT).show();
-                                } else {
-                                    Toast.makeText(mContext, "Something Went Wrong", Toast.LENGTH_SHORT).show();
-                                }
-                            } else {
-                                Toast.makeText(mContext, "You have already this item added into wishlist", Toast.LENGTH_SHORT).show();
-                            }
 
-                        } else {
+                      /*  } else {
                             openDialogBoxsize(model, position);
-                        }
-                    }
+                        }*/
+
                 }
             }
         });
@@ -596,6 +696,7 @@ public class FavoriteItemsSchoolAdapter extends RecyclerView.Adapter<FavoriteIte
         dbHelper = new DbHelper(mContext);
         boolean isupdated = dbHelper.updatewish(String.valueOf(pid), s);
         if (isupdated == true) {
+            recyclerViewClickListener.onClickPosition(25);
             getSqliteData1();
         } else {
             Utils.showAlertDialog((Activity) mContext, "something went wrong");

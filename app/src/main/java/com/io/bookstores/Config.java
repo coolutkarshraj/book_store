@@ -5,8 +5,8 @@ package com.io.bookstores;
  */
 
 public class Config {
-    public final static String IP = "15.185.106.133";
-    public static String imageUrl ="http://15.185.106.133/api/media/render/?path=";
+    public final static String IP = "mybookstores.net";
+    public static String imageUrl ="https://mybookstores.net/api/media/render/?path=";
 
     public static class Url {
         public final static String registerUser = "user/register";
@@ -68,6 +68,9 @@ public class Config {
         public static String getClassSubCategory = "class-sub-category/getAllByCategory";
         public static String schoolProducts = "product/list";
         public static String schoolDetail = "school/detail?id=";
+        public static String guestDetial = "course/guest-detail?phone=";
+        public static String guestEnrolledList = "course/guest-enrolled?phone=";
+        public static String getAllClassList = "class/list/?classGroupId=";
     }
 
     public final static int splashTimeout = 3000;

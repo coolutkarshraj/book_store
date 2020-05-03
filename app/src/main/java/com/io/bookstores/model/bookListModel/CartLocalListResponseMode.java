@@ -33,6 +33,11 @@ public class CartLocalListResponseMode {
     private String type;
     @SerializedName("size")
     private String size;
+    @SerializedName("schoolStoreId")
+    private String schoolStoreId;
+
+    @SerializedName("category")
+    private String category;
 
     public String getWishlist() {
         return wishlist;
@@ -138,5 +143,21 @@ public class CartLocalListResponseMode {
 
     public void setSize(String size) {
         this.size = size;
+    }
+
+    public String getSchoolStoreId() {
+        return schoolStoreId;
+    }
+
+    public void setSchoolStoreId(String schoolStoreId) {
+        this.schoolStoreId = schoolStoreId;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

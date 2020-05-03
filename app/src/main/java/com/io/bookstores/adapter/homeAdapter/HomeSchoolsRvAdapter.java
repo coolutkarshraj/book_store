@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -46,6 +47,7 @@ public class HomeSchoolsRvAdapter extends RecyclerView.Adapter<HomeSchoolHolder>
                 LocalStorage localStorage = new LocalStorage(activity);
                 localStorage.putString(LocalStorage.schoolId, String.valueOf(data.getSchoolId()));
                 localStorage.putString(LocalStorage.TYPE,"school");
+
                 itemClickListner.onClick(8);
             }
         });

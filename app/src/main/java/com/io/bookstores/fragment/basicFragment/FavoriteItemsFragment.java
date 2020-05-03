@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +29,7 @@ import com.io.bookstores.adapter.basicAdapter.FavoriteItemsLocalAdapter;
 import com.io.bookstores.adapter.basicAdapter.FavoriteItemsSchoolAdapter;
 import com.io.bookstores.apicaller.ApiCaller;
 import com.io.bookstores.listeners.ItemClickListner;
+import com.io.bookstores.listeners.RecyclerViewClickListener;
 import com.io.bookstores.localStorage.DbHelper;
 import com.io.bookstores.localStorage.LocalStorage;
 import com.io.bookstores.model.bookListModel.WishListLocalResponseModel;
@@ -48,9 +50,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FavoriteItemsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class FavoriteItemsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, RecyclerViewClickListener {
     private ArrayList lstBook;
-    private RecyclerView recyclerView;
+    private RecyclerView recyclerView, fav_recyclerView_schools, rv_local_wishlist;
     private FavoriteItemsAdapter favoriteItemsAdapter;
     private LocalStorage localStorage;
     private TextView loggedih, wishlist;
@@ -58,10 +60,13 @@ public class FavoriteItemsFragment extends Fragment implements SwipeRefreshLayou
     private userOnlineInfo user;
     private Activity activity;
     private NewProgressBar dialog;
+    private LinearLayout ll_Shools, ll_books;
+    private String isEmprty = "", isEmpty1 = "";
     private View root;
     private ImageView iv_back;
     private ItemClickListner itemClickListner;
     private SwipeRefreshLayout swipeRefreshLayout;
+    RecyclerViewClickListener recyclerViewClickListener;
     List<WishListLocalResponseModel> list = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -72,8 +77,13 @@ public class FavoriteItemsFragment extends Fragment implements SwipeRefreshLayou
     }
 
     private void intializeViews(View root) {
+        recyclerViewClickListener = this;
         recyclerView = root.findViewById(R.id.fav_recyclerView);
+        fav_recyclerView_schools = root.findViewById(R.id.fav_recyclerView_schools);
+        rv_local_wishlist = root.findViewById(R.id.rv_local_wishlist);
         loggedih = root.findViewById(R.id.loggedih);
+        ll_Shools = root.findViewById(R.id.ll_Shools);
+        ll_books = root.findViewById(R.id.ll_books);
         itemClickListner = (ItemClickListner)getActivity();
         iv_back = root.findViewById(R.id.iv_back);
         swipeRefreshLayout = root.findViewById(R.id.swipe_refresh);
@@ -92,15 +102,12 @@ public class FavoriteItemsFragment extends Fragment implements SwipeRefreshLayou
           /*  nested_c_view.setVisibility(View.GONE);
             loggedih.setVisibility(View.VISIBLE);*/
         } else {
-            if (localStorage.getString(LocalStorage.TYPE).equals("store")) {
-                nested_c_view.setVisibility(View.VISIBLE);
-                loggedih.setVisibility(View.GONE);
-                getWishListApiCall();
-            } else {
-                nested_c_view.setVisibility(View.VISIBLE);
-                loggedih.setVisibility(View.GONE);
-                getWishListApiCallSchool();
-            }
+            nested_c_view.setVisibility(View.VISIBLE);
+            loggedih.setVisibility(View.GONE);
+
+            getWishListApiCall();
+
+
         }
         bindListner();
     }
@@ -110,6 +117,7 @@ public class FavoriteItemsFragment extends Fragment implements SwipeRefreshLayou
             dialog = new NewProgressBar(activity);
             dialog.show();
             final LocalStorage localStorage = new LocalStorage(activity);
+            Log.e("token",localStorage.getString(localStorage.token));
             ApiCaller.getWishList(activity, Config.Url.getWishList, localStorage.getString(LocalStorage.token),
                     new FutureCallback<GetWishlistResponseModel>() {
                         @Override
@@ -123,15 +131,20 @@ public class FavoriteItemsFragment extends Fragment implements SwipeRefreshLayou
                             if(result != null){
                                 if(result.getStatus()== null){
                                     if(result.getMessage().equals("Unauthorized")){
+
                                         Utils.showAlertDialogLogout(getActivity(), "Your Session was expire. please Logout!",localStorage.getUserProfile().getData().getUser().getUserId());
                                         dialog.dismiss();
                                     }
                                     dialog.dismiss();
                                 }else {
                                     if (result.getStatus() == true) {
-                                        setRecyclerViewData(result.getData());
+
                                         dialog.dismiss();
+
+                                        setRecyclerViewData(result.getData());
+
                                     } else {
+
                                         Toast.makeText(activity, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
                                         dialog.dismiss();
                                     }
@@ -151,29 +164,34 @@ public class FavoriteItemsFragment extends Fragment implements SwipeRefreshLayou
     private void setRecyclerViewData(List<GetWishListDataModel> data) {
 
         if (data.isEmpty()) {
-            recyclerView.setVisibility(View.GONE);
-            wishlist.setVisibility(View.VISIBLE);
+            // recyclerView.setVisibility(View.GONE);
+            //wishlist.setVisibility(View.VISIBLE);
+            isEmprty = "empty";
+            ll_books.setVisibility(View.GONE);
+            getWishListApiCallSchool();
         } else {
-            recyclerView.setVisibility(View.VISIBLE);
-            wishlist.setVisibility(View.GONE);
+            //recyclerView.setVisibility(View.VISIBLE);
+            //wishlist.setVisibility(View.GONE);
+            isEmprty = "";
+            ll_books.setVisibility(View.VISIBLE);
             FavoriteItemsAdapter myAdapter = new FavoriteItemsAdapter(activity, data);
             recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
             recyclerView.setAdapter(myAdapter);
+            getWishListApiCallSchool();
         }
 
     }
 
     private void getWishListApiCallSchool() {
         if (user.isOnline(activity)) {
-            dialog = new NewProgressBar(activity);
-            dialog.show();
+
             final LocalStorage localStorage = new LocalStorage(activity);
             ApiCaller.getWishListschool(activity, Config.Url.getWishListSchool, localStorage.getString(LocalStorage.token),
                     new FutureCallback<GetAllSchoolWishListResponseModel>() {
                         @Override
                         public void onCompleted(Exception e, GetAllSchoolWishListResponseModel result) {
                             if (e != null) {
-                                dialog.dismiss();
+
                                 Utils.showAlertDialog(activity, "Something Went Wrong");
                                 return;
                             }
@@ -181,15 +199,15 @@ public class FavoriteItemsFragment extends Fragment implements SwipeRefreshLayou
                             if (result != null) {
 
                                 if (result.isStatus() == true) {
+
                                     setRecyclerViewDataSchool(result.getData());
-                                    dialog.dismiss();
+
                                 } else {
+
                                     if (result.getMessage().equals("Unauthorized")) {
                                         Utils.showAlertDialogLogout(getActivity(), "Your Session was expire. please Logout!", localStorage.getUserProfile().getData().getUser().getUserId());
-                                        dialog.dismiss();
                                     } else {
                                         Toast.makeText(activity, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
-                                        dialog.dismiss();
                                     }
 
                                 }
@@ -207,14 +225,20 @@ public class FavoriteItemsFragment extends Fragment implements SwipeRefreshLayou
 
     private void setRecyclerViewDataSchool(List<GetAllSchoolWishListDataModel> data) {
         if (data.isEmpty()) {
-            recyclerView.setVisibility(View.GONE);
-            wishlist.setVisibility(View.VISIBLE);
+           /* fav_recyclerView_schools.setVisibility(View.GONE);
+            wishlist.setVisibility(View.VISIBLE);*/
+            isEmpty1 = "empty";
+            ll_Shools.setVisibility(View.GONE);
+            if (isEmprty.equals("empty") && isEmpty1.equals("empty")) {
+                wishlist.setVisibility(View.VISIBLE);
+            }
         } else {
-            recyclerView.setVisibility(View.VISIBLE);
-            wishlist.setVisibility(View.GONE);
-            FavoriteItemsSchoolAdapter schoolAdapter = new FavoriteItemsSchoolAdapter(activity, data);
-            recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-            recyclerView.setAdapter(schoolAdapter);
+            isEmpty1 = "";
+            ll_Shools.setVisibility(View.VISIBLE);
+
+            FavoriteItemsSchoolAdapter schoolAdapter = new FavoriteItemsSchoolAdapter(activity, data,recyclerViewClickListener);
+            fav_recyclerView_schools.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+            fav_recyclerView_schools.setAdapter(schoolAdapter);
         }
     }
 
@@ -242,7 +266,8 @@ public class FavoriteItemsFragment extends Fragment implements SwipeRefreshLayou
         dbHelper = new DbHelper(getActivity());
         Cursor cursor = dbHelper.getAllWishlist();
         if (cursor.getCount() == 0) {
-            Log.e("Error", "no GuestDataModel");
+            rv_local_wishlist.setVisibility(View.GONE);
+            wishlist.setVisibility(View.VISIBLE);
             return;
         }
         JSONArray resultSet = new JSONArray();
@@ -276,7 +301,6 @@ public class FavoriteItemsFragment extends Fragment implements SwipeRefreshLayou
         datajson.replaceAll("\\\\", "");
         Log.d("wishlistAll", datajson);
         getWishListAllData(datajson);
-
     }
 
     private void getWishListAllData(String datajson) {
@@ -300,22 +324,27 @@ public class FavoriteItemsFragment extends Fragment implements SwipeRefreshLayou
                     shoppingBagModel.setImage(json_data.getString("Image"));
                     shoppingBagModel.setAvailibleQty(json_data.getString("avalible"));
                     shoppingBagModel.setpID(json_data.getString("P_ID"));
+                    shoppingBagModel.setDescription(json_data.getString("description"));
+                    shoppingBagModel.setCategory(json_data.getString("category"));
                     shoppingBagModel.setSize(json_data.getString("size"));
                     shoppingBagModel.setType(json_data.getString("type"));
+                    shoppingBagModel.setSchoolStoreId(json_data.getString("schoolStoreId"));
                     shoppingBagModel.setWishlist(json_data.getString("wishlist"));
                     shoppingBagModel.setGst(json_data.getString("gstPrice"));
                     list.add(shoppingBagModel);
 
                 }
+
                 if (list.isEmpty()) {
-                    recyclerView.setVisibility(View.GONE);
+                    rv_local_wishlist.setVisibility(View.GONE);
                     wishlist.setVisibility(View.VISIBLE);
                 } else {
-                    recyclerView.setVisibility(View.VISIBLE);
+
+                    rv_local_wishlist.setVisibility(View.VISIBLE);
                     wishlist.setVisibility(View.GONE);
-                    FavoriteItemsLocalAdapter myAdapter = new FavoriteItemsLocalAdapter(activity, list);
-                    recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-                    recyclerView.setAdapter(myAdapter);
+                    FavoriteItemsLocalAdapter myAdapter = new FavoriteItemsLocalAdapter(activity, list, recyclerViewClickListener);
+                    rv_local_wishlist.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+                    rv_local_wishlist.setAdapter(myAdapter);
                 }
 
             }
@@ -333,5 +362,14 @@ public class FavoriteItemsFragment extends Fragment implements SwipeRefreshLayou
                 swipeRefreshLayout.setRefreshing(false);
             }
         }, 1000);
+    }
+
+    @Override
+    public void onClickPosition(int position) {
+        if (position == 80) {
+            getWishListStatus();
+        }else if(position==25){
+            getWishListApiCall();
+        }
     }
 }

@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -45,7 +44,7 @@ public class ClassCategoryRvAdapter extends RecyclerView.Adapter<ClassCategoryHo
             @Override
             public void onClick(View v) {
                 itemClickListner = (ItemClickListner) activity;
-                if (model.getName().equals("Clothes")) {
+                if (model.getName().equals("Clothes") || model.getName().equals("clothes") || model.getName().equals("clothes")) {
                     StaticData.type = 1;
                 } else {
                     StaticData.type = 2;
@@ -53,7 +52,7 @@ public class ClassCategoryRvAdapter extends RecyclerView.Adapter<ClassCategoryHo
                 }
                 LocalStorage localStorage = new LocalStorage(activity);
                 localStorage.putString(LocalStorage.classCategoryId, String.valueOf(model.getClassCategoryId()));
-                itemClickListner.onClick(10);
+                itemClickListner.onClick(11);
 
             }
         });
@@ -71,7 +70,7 @@ public class ClassCategoryRvAdapter extends RecyclerView.Adapter<ClassCategoryHo
                 }
                 LocalStorage localStorage = new LocalStorage(activity);
                 localStorage.putString(LocalStorage.classCategoryId, String.valueOf(model.getClassCategoryId()));
-                itemClickListner.onClick(10);
+                itemClickListner.onClick(11);
 
             }
         });

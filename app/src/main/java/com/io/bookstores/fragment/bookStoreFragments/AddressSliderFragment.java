@@ -13,7 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.io.bookstores.R;
 import com.io.bookstores.activity.homeActivity.ui.home.HomeFragment;
 import com.io.bookstores.adapter.categoryAdapter.AddressSliderAdapter;
+import com.io.bookstores.model.addAddressResponseModel.DeliveryAddress;
 import com.io.bookstores.model.dilvery.DilveryAddressDataModel;
+import com.io.bookstores.model.getAddressResponseModel.AddressResponseModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,10 +31,12 @@ public class AddressSliderFragment extends Fragment {
     private List<DilveryAddressDataModel> listd = new ArrayList<>();
     private List<DilveryAddressDataModel> item = new ArrayList<>();
 
-    public AddressSliderFragment(List<DilveryAddressDataModel> listd) {
-        this.listd = listd;
+    public AddressSliderFragment(List<DilveryAddressDataModel> resultt) {
+        this.listd = resultt;
     }
 
+
+    
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,6 +53,7 @@ public class AddressSliderFragment extends Fragment {
 
     private void intailizeViews(View view) {
         recyclerView = view.findViewById(R.id.rv_address);
+
     }
 
     /*---------------------------------------------- set up of recycler View -------------------------------------------------*/
@@ -81,5 +86,6 @@ public class AddressSliderFragment extends Fragment {
             getFragmentManager().beginTransaction().detach(this).attach(this).commit();
         }
     }
+
 
 }

@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +20,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
 import com.io.bookstores.Config;
 import com.io.bookstores.R;
 import com.io.bookstores.StaticData;
@@ -29,6 +32,8 @@ import com.io.bookstores.localStorage.DbHelper;
 import com.io.bookstores.localStorage.LocalStorage;
 import com.io.bookstores.model.bookListModel.CartLocalListResponseMode;
 import com.io.bookstores.model.deliveryPriceModel.DeliveryResponseModel;
+import com.io.bookstores.model.loginModel.LoginModel;
+import com.io.bookstores.model.registerModel.RegisterModel;
 import com.io.bookstores.utility.NewProgressBar;
 import com.io.bookstores.utility.Utils;
 import com.io.bookstores.utility.userOnlineInfo;
@@ -39,6 +44,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class CartFragment extends Fragment {
@@ -57,6 +64,8 @@ public class CartFragment extends Fragment {
     private String deliveryType;
     public static int dilvery = 0;
     public static int price, Qty, gst = 0;
+    private EditText et_g_addrss, et_g_name, et_g_email, et_g_phone, et_g_passowrd;
+    private LinearLayout ll_deliveryAddressGuest;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -81,6 +90,12 @@ public class CartFragment extends Fragment {
         tv_name_2 =  root.findViewById(R.id.tv_name_2);
         rb_1st =  root.findViewById(R.id.rb_1st1);
         rb_2nd =  root.findViewById(R.id.rb_2nd2);
+        et_g_addrss = root.findViewById(R.id.et_g_addrss);
+        et_g_name = root.findViewById(R.id.et_g_name);
+        et_g_email = root.findViewById(R.id.et_g_email);
+        et_g_phone = root.findViewById(R.id.et_g_phone);
+        et_g_passowrd = root.findViewById(R.id.et_g_passowrd);
+        ll_deliveryAddressGuest = root.findViewById(R.id.ll_deliveryAddressGuest);
         localStorage = new LocalStorage(getActivity());
         localStorage.putBooleAan(LocalStorage.isCart,false);
         user = new userOnlineInfo();
@@ -90,6 +105,11 @@ public class CartFragment extends Fragment {
         getSqliteData1();
         callApiToGetDeliveryCharge();
         deliv_charge.setText("0KD");
+        if (!localStorage.getBoolean(LocalStorage.isLoggedIn)) {
+            ll_deliveryAddressGuest.setVisibility(View.VISIBLE);
+        }
+
+
     }
 
     /*-------------------------------------------------- get Delivery Price Api call ---------------------------------------*/
@@ -186,15 +206,179 @@ public class CartFragment extends Fragment {
                         startActivity(intent);
                     }
                 }else{
-                    localStorage.putBooleAan(LocalStorage.isCart,true);
+
+                    guestLoginWork();
+                    /*localStorage.putBooleAan(LocalStorage.isCart,true);
                     Intent intent = new Intent(getActivity(), LoginActivity.class);
-                    startActivity(intent);
+                    startActivity(intent);*/
                 }
                 localStorage.putString(LocalStorage.addressId,"");
 
             }
         });
     }
+
+    private void guestLoginWork() {
+
+        String address = et_g_addrss.getText().toString().trim();
+        String name = et_g_name.getText().toString().trim();
+        String email = et_g_email.getText().toString().trim();
+        String phone = et_g_phone.getText().toString().trim();
+        String password = et_g_passowrd.getText().toString().trim();
+        if (address.isEmpty() || name.isEmpty() || email.isEmpty() || phone.isEmpty() || password.isEmpty()) {
+            Utils.showAlertDialog(getActivity(), "Please Enter Your Information Properly");
+            return;
+        } else if (!isEmailValid(email)) {
+            Utils.showAlertDialog(getActivity(), getResources().getString(R.string.email_not_valid));
+            return;
+        } else if (et_g_phone.length() != 8) {
+            Utils.showAlertDialog(getActivity(), getResources().getString(R.string.phone_number_must_be_of_8));
+            return;
+        } else if (rb_1st.isChecked() == false && rb_2nd.isChecked() == false) {
+            Toast.makeText(getActivity(), "please select delivery method", Toast.LENGTH_SHORT).show();
+        } else {
+            if (rb_1st.isChecked()) {
+                deliveryType = deliveryModel.getData().get(0).getType();
+            } else {
+                deliveryType = deliveryModel.getData().get(1).getType();
+            }
+            registrationApi(name, email, phone, password, address);
+
+        }
+
+    }
+
+    public boolean isEmailValid(String email) {
+        String regExpn =
+                "^(([\\w-]+\\.)+[\\w-]+|([a-zA-Z]{1}|[\\w-]{2,}))@"
+                        + "((([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
+                        + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\."
+                        + "([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
+                        + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])){1}|"
+                        + "([a-zA-Z]+[\\w-]+\\.)+[a-zA-Z]{2,4})$";
+
+        CharSequence inputStr = email;
+
+        Pattern pattern = Pattern.compile(regExpn, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(inputStr);
+
+        if (matcher.matches())
+            return true;
+        else
+            return false;
+    }
+
+    /*----------------------------------------------- Registration Api------------------------------------------------------*/
+
+    private void registrationApi(String f_name, final String u_emael, String et_number, final String password,
+                                 String address) {
+        if (user.isOnline(getActivity())) {
+            dialog = new NewProgressBar(getActivity());
+            dialog.show();
+            ApiCaller.registerCustomer(getActivity(), Config.Url.registerCustomer
+                    , u_emael, et_number, password, f_name, address,
+                    new FutureCallback<RegisterModel>() {
+                        @Override
+                        public void onCompleted(Exception e, RegisterModel result) {
+                            LocalStorage localStorage = new LocalStorage(getActivity());
+
+                            if (e != null) {
+                                Utils.showAlertDialog(getActivity(), "Something Went Wrong");
+                                dialog.dismiss();
+                                return;
+                            }
+                            if (result != null) {
+                                if (result.getStatus() == true) {
+                                    dialog.dismiss();
+                                    loginApi(u_emael, password);
+                                    // Toast.makeText(GuestLoginActivity.this, "" + result.getMessage(), Toast.LENGTH_LONG).show();
+                                   /* Intent intent = new Intent(GuestLoginActivity.this, LoginActivity.class);
+                                    startActivity(intent);*/
+                                } else {
+                                    dialog.dismiss();
+                                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                                    startActivity(intent);
+                                    Toast.makeText(getActivity(), "" + result.getMessage() + ". please login", Toast.LENGTH_LONG).show();
+                                }
+
+                            }
+                        }
+                    });
+        } else {
+            Utils.showAlertDialog(getActivity(), "No Internet Connection");
+        }
+
+    }
+
+    private void loginApi(String u_emael, String password) {
+
+        if (user.isOnline(getActivity())) {
+            dialog = new NewProgressBar(getActivity());
+            dialog.show();
+            ApiCaller.loginCustomer(getActivity(), Config.Url.login, u_emael, password,
+                    new FutureCallback<LoginModel>() {
+                        @Override
+                        public void onCompleted(Exception e, LoginModel result) {
+                            if (e != null) {
+                                Utils.showAlertDialog(getActivity(), "Something Went Wrong");
+                                dialog.dismiss();
+                                return;
+                            }
+
+                            if (result != null) {
+                                if (result.getStatus() == true) {
+                                    dialog.dismiss();
+                                    saveLoginData(result);
+                                    localStorage.putBooleAan(LocalStorage.isLoggedIn, true);
+                                    navigateToHomeActivit(result);
+                                } else {
+                                    dialog.dismiss();
+                                    Toast.makeText(getActivity(), "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                        }
+                    });
+
+        } else {
+            Utils.showAlertDialog(getActivity(), "No Internet Connection");
+        }
+
+
+    }
+
+    private void navigateToHomeActivit(LoginModel result) {
+        localStorage.putInt(LocalStorage.role, result.getData().getRole());
+        if (result.getData().getRole() == 1) {
+         /*   Intent i = new Intent(getActivity() , BookStoreMainActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(i);*/
+        } else {
+            int total = price;
+            Intent intent = new Intent(getActivity(), CheckoutActivity.class);
+            // intent.putExtra("deliveryType",deliveryType);
+            intent.putExtra("totalprice", total);
+
+            startActivity(intent);
+        }
+
+    }
+
+    private void saveLoginData(LoginModel result) {
+        Gson gson = new Gson();
+        String json = gson.toJson(result);
+        localStorage.putDistributorProfile(result);
+        localStorage.putString(LocalStorage.guestId, "");
+        localStorage.putString(LocalStorage.token, result.getData().getToken());
+        localStorage.putInt(LocalStorage.role, result.getData().getRole());
+        if (result.getData().getRole() == 0) {
+            localStorage.putInt(LocalStorage.userId, result.getData().getUser().getUserId());
+        } else {
+            localStorage.putInt(LocalStorage.userId, result.getData().getUser().getStoreId());
+        }
+
+    }
+
 
     private void getSqliteData1() {
         DbHelper dbHelper;
@@ -267,6 +451,8 @@ public class CartFragment extends Fragment {
                     shoppingBagModel.setSize(json_data.getString("size"));
                     shoppingBagModel.setType(json_data.getString("type"));
                     shoppingBagModel.setPID(json_data.getString("P_ID"));
+                    shoppingBagModel.setSchoolStoreId(json_data.getString("schoolStoreId"));
+                    shoppingBagModel.setCategory(json_data.getString("category"));
                     shoppingBagModel.setGst(json_data.getString("gstPrice"));
                     price = Integer.parseInt(json_data.getString("Price"));
                     qty = Integer.parseInt(json_data.getString("Quantity"));

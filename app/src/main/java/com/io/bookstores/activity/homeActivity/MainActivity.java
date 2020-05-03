@@ -49,7 +49,6 @@ import com.io.bookstores.activity.homeActivity.ui.order.OrderFragment;
 import com.io.bookstores.activity.profile.EditProfileFragment;
 import com.io.bookstores.activity.profile.ProfileFragment;
 import com.io.bookstores.apicaller.ApiCaller;
-import com.io.bookstores.fragment.basicFragment.CategoryListFragment;
 import com.io.bookstores.fragment.basicFragment.ContactUsFragment;
 import com.io.bookstores.fragment.basicFragment.FavoriteItemsFragment;
 import com.io.bookstores.fragment.bookStoreFragments.AllBookStoresFragment;
@@ -61,6 +60,7 @@ import com.io.bookstores.fragment.courseFragment.EnrollCourseListFragment;
 import com.io.bookstores.fragment.schoolFragments.AllClassesFragment;
 import com.io.bookstores.fragment.schoolFragments.AllSchoolsFragment;
 import com.io.bookstores.fragment.schoolFragments.ClassCategoryFragment;
+import com.io.bookstores.fragment.schoolFragments.ClassFragment;
 import com.io.bookstores.fragment.schoolFragments.ClothsFragment;
 import com.io.bookstores.listeners.ItemClickListner;
 import com.io.bookstores.localStorage.DbHelper;
@@ -100,10 +100,11 @@ public class MainActivity extends AppCompatActivity implements
     NewProgressBar dialog;
     boolean doubleBackToExitPressedOnce = false;
 
-    CategoryListFragment categoryListFragment;
+    // CategoryListFragment categoryListFragment;
     FavoriteItemsFragment favoriteItemsFragment;
     ClassCategoryFragment classCategoryFragment;
     CategoryGridFragment categoryGridFragment;
+    ClassFragment classFragment;
     ClothsFragment clothsFragment;
     FloatingActionButton fabSave;
     ImageView iv_cart;
@@ -130,7 +131,6 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
         initView();
         bindListner();
@@ -611,6 +611,7 @@ public class MainActivity extends AppCompatActivity implements
         cartFragment = new CartFragment();
         orderFragment = new OrderFragment();
         clothsFragment = new ClothsFragment();
+        classFragment = new ClassFragment();
         allSchoolsFragment = new AllSchoolsFragment();
         allClassesFragment = new AllClassesFragment();
         classCategoryFragment = new ClassCategoryFragment();
@@ -637,7 +638,7 @@ public class MainActivity extends AppCompatActivity implements
         enrollCourseListFragment = new EnrollCourseListFragment();
         profileFragment = new ProfileFragment();
         categoryGridFragment = new CategoryGridFragment();
-        categoryListFragment = new CategoryListFragment();
+        //   categoryListFragment = new CategoryListFragment();
         bookListFragment = new BookListFragment();
         bookstoresFragmentWithFilter = new BookstoresFragmentWithFilter();
         loginModel = localStorage.getUserProfile();
@@ -720,11 +721,17 @@ public class MainActivity extends AppCompatActivity implements
         }
         if (position == 9) {
             MainActivity.this.getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.content_view, classCategoryFragment)
+                    .replace(R.id.content_view, classFragment)
                     .addToBackStack(null)
                     .commit();
         }
         if (position == 10) {
+            MainActivity.this.getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.content_view, classCategoryFragment)
+                    .addToBackStack(null)
+                    .commit();
+        }
+        if (position == 11) {
             MainActivity.this.getSupportFragmentManager().beginTransaction()
                     .replace(R.id.content_view, clothsFragment)
                     .addToBackStack(null)

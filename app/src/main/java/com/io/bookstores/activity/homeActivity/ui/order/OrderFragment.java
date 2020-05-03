@@ -25,9 +25,11 @@ import com.io.bookstores.apicaller.ApiCaller;
 import com.io.bookstores.fragment.basicFragment.TrackFragment;
 import com.io.bookstores.listeners.ItemClickListner;
 import com.io.bookstores.listeners.RecyclerViewClickListener;
+import com.io.bookstores.listeners.SchoolOrders;
 import com.io.bookstores.localStorage.LocalStorage;
 import com.io.bookstores.model.loginModel.LoginModel;
 import com.io.bookstores.model.myOrder.MyOrderResponseModel;
+import com.io.bookstores.model.schoolOrderList.DataItem;
 import com.io.bookstores.model.schoolOrderList.SchoolOrderResponseModel;
 import com.io.bookstores.utility.NewProgressBar;
 import com.io.bookstores.utility.Utils;
@@ -38,7 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class OrderFragment extends Fragment implements RecyclerViewClickListener {
+public class OrderFragment extends Fragment implements RecyclerViewClickListener, SchoolOrders {
     private ArrayList itemname;
     private RecyclerView recyclerView, rv_schoolOrder;
     private OrderAdapter orderAdapter;
@@ -50,16 +52,20 @@ public class OrderFragment extends Fragment implements RecyclerViewClickListener
     public static RelativeLayout rl_layout;
     private RecyclerViewClickListener item;
     private List<com.io.bookstores.model.myOrder.Datum> courseicon;
+
+    List<DataItem> data;
     private ImageView iv_back;
     String isEmpty = "", isEmpty1 = "";
     TextView tv_no_order;
     private LinearLayout ll_book_order, ll_school_order;
     private ItemClickListner itemClickListner;
+    private SchoolOrders schoolOrders;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.order_fragment, container, false);
         item = this;
+        schoolOrders = this;
         iv_back = root.findViewById(R.id.iv_back);
         itemClickListner = (ItemClickListner) getActivity();
         recyclerView = root.findViewById(R.id.recyclerView);
@@ -77,14 +83,14 @@ public class OrderFragment extends Fragment implements RecyclerViewClickListener
         if (localStorage.getString(LocalStorage.token) == null || localStorage.getString(LocalStorage.token).equals("")) {
             hide.setVisibility(View.GONE);
             loggedih.setVisibility(View.VISIBLE);
+
         } else {
             loggedih.setVisibility(View.GONE);
             hide.setVisibility(View.VISIBLE);
             callApiToGetOrder();
-            callOrderOfSchool();
-            if (isEmpty.equals("empty") && isEmpty1.equals("empty")) {
-                tv_no_order.setVisibility(View.VISIBLE);
-            }
+
+            // Toast.makeText(getActivity(), "yes", Toast.LENGTH_SHORT).show();
+
         }
 
         bindListner();
@@ -112,7 +118,9 @@ public class OrderFragment extends Fragment implements RecyclerViewClickListener
                             if (result.getData() == null || result.getData().size() == 0 || result.getData().isEmpty()) {
                                 ll_book_order.setVisibility(View.GONE);
                                 isEmpty = "empty";
+                                callOrderOfSchool();
                             } else {
+                                isEmpty = "";
                                 ll_book_order.setVisibility(View.VISIBLE);
                                 setRecyclerViewData(result);
                             }
@@ -132,6 +140,7 @@ public class OrderFragment extends Fragment implements RecyclerViewClickListener
         orderAdapter = new OrderAdapter(getActivity(), order.getData(), item);
         courseicon = order.getData();
         recyclerView.setAdapter(orderAdapter);
+        callOrderOfSchool();
     }
 
     private void callOrderOfSchool() {
@@ -150,6 +159,12 @@ public class OrderFragment extends Fragment implements RecyclerViewClickListener
                             if (result.getData() == null || result.getData().size() == 0 || result.getData().isEmpty()) {
                                 ll_school_order.setVisibility(View.GONE);
                                 isEmpty1 = "empty";
+                                if (isEmpty.equals("empty") && isEmpty1.equals("empty")) {
+                                    tv_no_order.setVisibility(View.VISIBLE);
+
+                                } else {
+
+                                }
                             } else {
 
                                 ll_school_order.setVisibility(View.VISIBLE);
@@ -166,8 +181,10 @@ public class OrderFragment extends Fragment implements RecyclerViewClickListener
 
     private void setRecyclerViewDataSchool(SchoolOrderResponseModel result) {
         rv_schoolOrder.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        SchoolOrderRvAdapter adapter = new SchoolOrderRvAdapter(getActivity(), result.getData(), item);
+        SchoolOrderRvAdapter adapter = new SchoolOrderRvAdapter(getActivity(), result.getData(), schoolOrders);
+        data = result.getData();
         rv_schoolOrder.setAdapter(adapter);
+
     }
 
 
@@ -194,6 +211,19 @@ public class OrderFragment extends Fragment implements RecyclerViewClickListener
             Toast.makeText(getActivity(), "your order was rejected and dont track", Toast.LENGTH_SHORT).show();
         } else {
             track = new TrackFragment(courseicon.get(position).getOrderStatus());
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.content_view, track)
+                    .addToBackStack(null)
+                    .commit();
+        }
+    }
+
+    @Override
+    public void onClickPositionss(int position) {
+        if (data.get(0).getOrderStatus().equals("Rejected")) {
+            Toast.makeText(getActivity(), "your order was rejected and dont track", Toast.LENGTH_SHORT).show();
+        } else {
+            track = new TrackFragment(data.get(0).getOrderStatus());
             getActivity().getSupportFragmentManager().beginTransaction()
                     .replace(R.id.content_view, track)
                     .addToBackStack(null)

@@ -38,7 +38,7 @@
                 android:layout_marginStart="40dp"
                 android:layout_marginTop="@dimen/margin_8dp"
                 android:layout_marginEnd="40dp"
-                android:text="Select Category"
+                android:text="@string/discover_more_bookstores"
                 android:textAlignment="center"
                 android:textSize="20sp"
                 app:fontFamily="@font/arial_bold"
@@ -51,7 +51,7 @@
                 android:id="@+id/textView35"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+                android:visibility="gone"
                 android:layout_below="@+id/textView34"
                 android:layout_gravity="center"
                 android:layout_marginStart="40dp"
@@ -80,8 +80,9 @@
                 android:id="@+id/iv_view_all_category"
                 android:layout_width="@dimen/width_70dp"
                 android:layout_height="@dimen/margin_20dp"
-                android:layout_below="@+id/textView35"
+                android:layout_below="@+id/textView34"
                 android:layout_alignParentEnd="true"
+                android:layout_marginTop="@dimen/margin_15dp"
                 android:layout_gravity="end"
                 android:background="@drawable/view_empty">
 

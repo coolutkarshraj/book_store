@@ -51,7 +51,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_institute_heading"
-                app:queryHint="@string/search_by_institue_name"
+                app:queryHint="@string/search"
                 tools:ignore="RtlHardcoded,RtlSymmetry,UnusedAttribute" />
 
             <androidx.recyclerview.widget.RecyclerView

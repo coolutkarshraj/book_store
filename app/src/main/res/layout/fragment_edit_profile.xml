@@ -86,7 +86,7 @@
             android:layout_marginLeft="@dimen/margin_32dp"
             android:layout_marginTop="@dimen/margin_32dp"
             android:inputType="text"
-            android:text="Username"
+            android:text="@string/username"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/et_firstname"
             tools:ignore="HardcodedText,RtlHardcoded,TextViewEdits" />
@@ -125,7 +125,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_6dp"
-            android:text="Phone"
+            android:text="@string/phone"
             app:layout_constraintStart_toStartOf="@+id/et_username"
             app:layout_constraintTop_toBottomOf="@+id/et_username"
             tools:ignore="HardcodedText" />
@@ -135,7 +135,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
-            android:text="Email"
+            android:text="@string/email"
             app:layout_constraintStart_toStartOf="@+id/et_phone"
             app:layout_constraintTop_toBottomOf="@+id/et_phone"
             tools:ignore="HardcodedText" />
@@ -161,7 +161,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
-            android:text="Delivery Address"
+            android:text="@string/delivery_address"
             app:layout_constraintStart_toStartOf="@+id/et_email"
             app:layout_constraintTop_toBottomOf="@+id/et_email"
             tools:ignore="HardcodedText" />

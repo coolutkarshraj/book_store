@@ -159,7 +159,6 @@
             android:textColor="@color/text_color_green"
             android:textSize="@dimen/h2"
             android:textStyle="bold"
-            android:visibility="gone"
             app:fontFamily="@font/fontawesome"
             app:layout_constraintEnd_toEndOf="@+id/tvPass"
             app:layout_constraintStart_toStartOf="@+id/tvPass"

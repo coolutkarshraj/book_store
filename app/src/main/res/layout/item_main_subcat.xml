@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_root"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="@dimen/margin_20dp"
+    android:layout_marginBottom="@dimen/margin_10dp"
+    android:background="@drawable/unselected_btn">
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/margin_15dp"
+        android:paddingTop="@dimen/radius_2dp"
+        android:paddingEnd="@dimen/margin_15dp"
+        android:paddingBottom="@dimen/radius_2dp"
+        android:textColor="@color/light_gray" />
+
+</RelativeLayout>

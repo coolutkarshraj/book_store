@@ -107,22 +107,30 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
-                    android:layout_weight="2"
+                    android:weightSum="2"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <RelativeLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight=".5"
-                        android:text="Book Name"
-                        android:textSize="@dimen/h1"
-                        tools:ignore="HardcodedText,NestedWeights" />
+                        android:layout_weight="1.5">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:text="@string/book_name"
+                            android:textSize="@dimen/h1"
+                            tools:ignore="HardcodedText,NestedWeights" />
+                    </RelativeLayout>
+
 
                     <TextView
                         android:id="@+id/tv_bookstore_name"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1.5"
+                        android:layout_weight=".5"
+                        android:paddingStart="@dimen/margin_15dp"
                         android:text="Bookstore Name"
                         android:textSize="@dimen/h1"
                         tools:ignore="HardcodedText">
@@ -138,14 +146,21 @@
                     android:orientation="horizontal"
                     android:weightSum="2">
 
-                    <TextView
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="1.5"
-                        android:text="Description"
-                        android:textSize="@dimen/h1"
-                        tools:ignore="HardcodedText,NestedWeights" />
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.5">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center_vertical"
+                            android:text="@string/description"
+                            android:textSize="@dimen/h1"
+                            tools:ignore="HardcodedText,NestedWeights" />
+                    </RelativeLayout>
+
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
@@ -182,7 +197,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_gravity="center_vertical"
-                        android:text="Item Price"
+                        android:text="@string/item_price"
                         android:textSize="@dimen/h1"
                         tools:ignore="HardcodedText" />
 
@@ -237,7 +252,7 @@
                     android:paddingStart="@dimen/margin_20dp"
                     android:paddingEnd="@dimen/margin_20dp"
                     android:textAllCaps="false"
-                    android:text="Add to cart"
+                    android:text="@string/addtoCart"
                     android:textColor="@color/white"
                     android:textSize="@dimen/h2"
                     tools:ignore="ButtonStyle,HardcodedText" />

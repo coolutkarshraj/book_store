@@ -204,7 +204,7 @@ public class ClothsFragment extends Fragment implements View.OnClickListener, Re
 
     private void getSchoolProducts() {
         if (user.isOnline(activity)) {
-            ApiCaller.getSchoolProducts(getActivity(), Config.Url.schoolProducts + "/" + localStorage.getString(LocalStorage.schoolId) + "/" + localStorage.getString(LocalStorage.classGroupId) + "/" + localStorage.getString(LocalStorage.classCategoryId) + "/" + "-1", token,
+            ApiCaller.getSchoolProducts(getActivity(), Config.Url.schoolProducts + "/" + localStorage.getString(LocalStorage.schoolId) + "/" + localStorage.getString(LocalStorage.classGroupId) + "/" + localStorage.getString(LocalStorage.classId) + "/" + localStorage.getString(LocalStorage.classCategoryId) + "/" + "-1", token,
                     new FutureCallback<ProductResponseModel>() {
 
                         @Override
@@ -314,7 +314,7 @@ public class ClothsFragment extends Fragment implements View.OnClickListener, Re
     private void clothApiCall(int position) {
         if (user.isOnline(activity)) {
             dialog.show();
-            ApiCaller.getSchoolProducts(getActivity(), Config.Url.schoolProducts + "/" + localStorage.getString(LocalStorage.schoolId) + "/" + localStorage.getString(LocalStorage.classGroupId) + "/" + localStorage.getString(LocalStorage.classCategoryId) + "/" + position, token,
+            ApiCaller.getSchoolProducts(getActivity(), Config.Url.schoolProducts + "/" + localStorage.getString(LocalStorage.schoolId) + "/" + localStorage.getString(LocalStorage.classGroupId) + "/" + localStorage.getString(LocalStorage.classId) + "/" + localStorage.getString(LocalStorage.classCategoryId) + "/" + position, token,
                     new FutureCallback<ProductResponseModel>() {
 
                         @Override

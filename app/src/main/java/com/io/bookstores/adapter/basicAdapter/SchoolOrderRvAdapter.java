@@ -14,6 +14,7 @@ import com.io.bookstores.Config;
 import com.io.bookstores.R;
 import com.io.bookstores.holder.OrderHolder;
 import com.io.bookstores.listeners.RecyclerViewClickListener;
+import com.io.bookstores.listeners.SchoolOrders;
 import com.io.bookstores.model.schoolOrderList.DataItem;
 
 import org.jetbrains.annotations.NotNull;
@@ -24,12 +25,12 @@ import java.util.List;
 public class SchoolOrderRvAdapter extends RecyclerView.Adapter<OrderHolder> {
     private Activity activity;
     private List<DataItem>  courseicon;
-    private RecyclerViewClickListener item;
+    private SchoolOrders schoolOrders;
 
-    public SchoolOrderRvAdapter(FragmentActivity activity, List<DataItem> data, RecyclerViewClickListener item) {
+    public SchoolOrderRvAdapter(FragmentActivity activity, List<DataItem> data, SchoolOrders schoolOrders) {
         this.activity = activity;
         this.courseicon = data;
-        this.item = item;
+        this.schoolOrders = schoolOrders;
     }
 
 
@@ -52,7 +53,7 @@ public class SchoolOrderRvAdapter extends RecyclerView.Adapter<OrderHolder> {
         holder.textView13.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                item.onClickPosition(position);
+                schoolOrders.onClickPositionss(position);
             }
         });
 

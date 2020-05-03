@@ -13,6 +13,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
@@ -61,6 +62,7 @@ public class AllBookStoreRvAdapter extends RecyclerView.Adapter<AllBookStoreRvAd
                 itemClickListner = (ItemClickListner) mContext;
                 LocalStorage localStorage = new LocalStorage(mContext);
                 localStorage.putString(LocalStorage.StoreId, String.valueOf(mData.get(position).storeId));
+
                 localStorage.putString(LocalStorage.TYPE,"store");
                 itemClickListner.onClick(2);
             }

@@ -38,6 +38,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.io.bookstores.Config;
 import com.io.bookstores.R;
+import com.io.bookstores.StaticData;
 import com.io.bookstores.activity.authentication.LoginActivity;
 import com.io.bookstores.activity.homeActivity.ui.deliveryAddress.DeliveryAddressFragment;
 import com.io.bookstores.activity.profile.EditProfileFragment;
@@ -46,7 +47,6 @@ import com.io.bookstores.apicaller.ApiCaller;
 import com.io.bookstores.fragment.bookStoreFragments.BookListFragment;
 import com.io.bookstores.fragment.bookStoreFragments.AllBookStoresFragment;
 import com.io.bookstores.fragment.bookStoreFragments.BookstoresFragmentWithFilter;
-import com.io.bookstores.fragment.basicFragment.CategoryListFragment;
 import com.io.bookstores.fragment.basicFragment.FavoriteItemsFragment;
 import com.io.bookstores.fragment.adminBookStoreFragment.HomeBookFragment;
 import com.io.bookstores.fragment.adminBookStoreFragment.OrderListBookFragment;
@@ -78,7 +78,7 @@ public class BookStoreMainActivity extends AppCompatActivity implements
     OrderListBookFragment orderListBookFragment;
     ProfileAdminFragment profileAdminFragment;
 
-    CategoryListFragment categoryListFragment;
+
     FavoriteItemsFragment favoriteItemsFragment;
     FloatingActionButton fabSave;
     ImageView iv_cart;
@@ -431,7 +431,7 @@ public class BookStoreMainActivity extends AppCompatActivity implements
         language = findViewById(R.id.language);
         country = findViewById(R.id.country);
         profileFragment = new ProfileFragment();
-        categoryListFragment = new CategoryListFragment();
+
         bookListFragment = new BookListFragment();
         bookstoresFragmentWithFilter = new BookstoresFragmentWithFilter();
         navigationHeader();
@@ -535,6 +535,7 @@ public class BookStoreMainActivity extends AppCompatActivity implements
                 if (selectedId == -1) {
                 } else {
                     if (radioButton.getText().equals("English")) {
+                        StaticData.selectedLanguage = "english";
                         Locale locale = new Locale("en");
                         Locale.setDefault(locale);
                         Configuration config = new Configuration();
@@ -544,6 +545,7 @@ public class BookStoreMainActivity extends AppCompatActivity implements
                         startActivity(new Intent(BookStoreMainActivity.this,BookStoreMainActivity.class));
                     } else {
                         Locale locale = new Locale("hi");
+                        StaticData.selectedLanguage = "kuwait";
                         Locale.setDefault(locale);
                         Configuration config = new Configuration();
                         config.locale = locale;

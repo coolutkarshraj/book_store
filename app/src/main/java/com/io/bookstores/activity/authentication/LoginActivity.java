@@ -28,6 +28,9 @@ import com.io.bookstores.utility.Utils;
 import com.io.bookstores.utility.userOnlineInfo;
 import com.koushikdutta.async.future.FutureCallback;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Created by Utkarsh Raj 10/12/2019.
  */
@@ -113,7 +116,9 @@ public class LoginActivity extends AppCompatActivity {
         btn_gust.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, GuestLoginActivity.class));
+                Intent intent = new Intent(LoginActivity.this,GuestLoginActivity.class);
+                startActivity(intent);
+
             }
         });
     }
@@ -125,6 +130,9 @@ public class LoginActivity extends AppCompatActivity {
         password = pass.getText().toString().trim();
         if(userNaame.length()<1){
             Utils.showAlertDialog(activity, "Please Enter Username");
+        }  else if (!isEmailValid(userNaame)) {
+            Utils.showAlertDialog(activity, getResources().getString(R.string.email_not_valid));
+            return;
         }
        else if(password.length()<5){
             Utils.showAlertDialog(activity, "Please Enter Minimum 5 Digit Password");
@@ -165,10 +173,31 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
     }
+
+    public boolean isEmailValid(String email) {
+        String regExpn =
+                "^(([\\w-]+\\.)+[\\w-]+|([a-zA-Z]{1}|[\\w-]{2,}))@"
+                        + "((([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
+                        + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\."
+                        + "([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
+                        + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])){1}|"
+                        + "([a-zA-Z]+[\\w-]+\\.)+[a-zA-Z]{2,4})$";
+
+        CharSequence inputStr = email;
+
+        Pattern pattern = Pattern.compile(regExpn, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(inputStr);
+
+        if (matcher.matches())
+            return true;
+        else
+            return false;
+    }
     /*------------------------------------------ Go to user portal or Book store portal ----------------------------------------*/
 
     private void navigateToHomeActivit(LoginModel result) {
         localStorage.putInt(LocalStorage.role,result.getData().getRole());
+        localStorage.putString(LocalStorage.guestId, "");
         if(result.getData().getRole()== 1){
             Intent i = new Intent(activity , BookStoreMainActivity.class);
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

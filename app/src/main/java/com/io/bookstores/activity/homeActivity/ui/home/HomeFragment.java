@@ -20,16 +20,16 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.io.bookstores.Config;
 import com.io.bookstores.R;
-import com.io.bookstores.adapter.homeAdapter.AdSliderAdapter;
 import com.io.bookstores.adapter.categoryAdapter.CategoryFragmentAdapter;
+import com.io.bookstores.adapter.homeAdapter.AdSliderAdapter;
 import com.io.bookstores.adapter.homeAdapter.HomeCourseRvAdapter;
 import com.io.bookstores.adapter.homeAdapter.HomeSchoolsRvAdapter;
 import com.io.bookstores.adapter.homeAdapter.HomeStoreRvAdapter;
 import com.io.bookstores.apicaller.ApiCaller;
-import com.io.bookstores.fragment.courseFragment.CourseEnrollFragment;
+import com.io.bookstores.fragment.bookStoreFragments.AddressSliderFragment;
 import com.io.bookstores.fragment.courseFragment.AllCoursesListFragment;
 import com.io.bookstores.fragment.courseFragment.AllInstituteListFragment;
-import com.io.bookstores.fragment.bookStoreFragments.AddressSliderFragment;
+import com.io.bookstores.fragment.courseFragment.CourseEnrollFragment;
 import com.io.bookstores.listeners.ItemClickListner;
 import com.io.bookstores.listeners.RecyclerViewClickListener;
 import com.io.bookstores.localStorage.DbHelper;
@@ -239,6 +239,7 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener,
         }
         for (int p = 0; p < sizee; p++) {
           adapter.addFragment(new AddressSliderFragment(resultt));
+
             adapter.notifyDataSetChanged();
 
         }
@@ -276,11 +277,61 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener,
 
     /*--------------------------------------------- setup of recycler View of All store ----------------------------------------*/
 
-    private void setRecyclerView(StoreModel result) {
+    private void setRecyclerView(final StoreModel result) {
+        final List<com.io.bookstores.model.storeModel.Datum> datumList = new ArrayList<>();
+
+        for (int i = 0; i < 4; i++) {
+            if (i < result.getData().size()) {
+                datumList.add(result.getData().get(i));
+            }
+        }
         GridLayoutManager gridLayoutManager1 = new GridLayoutManager(getActivity(), 2);
         recycler_view_store.setLayoutManager(gridLayoutManager1);
-        homeStoreRvAdapter = new HomeStoreRvAdapter(getActivity(), result.getData());
+        homeStoreRvAdapter = new HomeStoreRvAdapter(getActivity(), datumList);
         recycler_view_store.setAdapter(homeStoreRvAdapter);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+
+                    try {
+                        Thread.sleep(5000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    if (datumList.size() > 1) {
+                        com.io.bookstores.model.storeModel.Datum datum = datumList.get(datumList.size() - 1);
+
+                        int index = result.getData().indexOf(datum);
+
+                        int j = 1;
+                        datumList.clear();
+                        for (int i = 0; i < 4; i++) {
+                            if ((j + index) >= result.getData().size()) {
+                                index = 0;
+                                j = 0;
+                            }
+
+                            datumList.add(result.getData().get(j + index));
+                            j++;
+                        }
+
+                        try {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    homeStoreRvAdapter.notifyDataSetChanged();
+                                }
+                            });
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }).start();
     }
 
     /*------------------------------------------------ get all institute Api Call ---------------------------------------------*/
@@ -312,12 +363,61 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener,
 
     /*-------------------------------------------- setUp of All institute recycler view ----------------------------------------*/
 
-    private void setRecyclerViewData(TrendingInstituteResponseModel result) {
+    private void setRecyclerViewData(final TrendingInstituteResponseModel result) {
+        final List<TrendingInstituteDataModel> datumList = new ArrayList<>();
+
+        for (int i = 0; i < 4; i++) {
+            if (i < result.getData().size()) {
+                datumList.add(result.getData().get(i));
+            }
+        }
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
         reccycler_ciew_course.setLayoutManager(gridLayoutManager);
-        courseAdapter = new HomeCourseRvAdapter((FragmentActivity) getActivity(), result.getData(), recyclerViewClickListener);
+        courseAdapter = new HomeCourseRvAdapter((FragmentActivity) getActivity(), datumList, recyclerViewClickListener);
         list = result.getData();
         reccycler_ciew_course.setAdapter(courseAdapter);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+
+                    try {
+                        Thread.sleep(5000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    if (datumList.size() > 1) {
+                        TrendingInstituteDataModel datum = datumList.get(datumList.size() - 1);
+
+                        int index = result.getData().indexOf(datum);
+
+                        int j = 1;
+                        datumList.clear();
+                        for (int i = 0; i < 4; i++) {
+                            if ((j + index) >= result.getData().size()) {
+                                index = 0;
+                                j = 0;
+                            }
+
+                            datumList.add(result.getData().get(j + index));
+                            j++;
+                        }
+
+                        try {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    courseAdapter.notifyDataSetChanged();
+                                }
+                            });
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }).start();
     }
 
     /*---------------------------------------------------- get all school api call -------------------------------------------*/

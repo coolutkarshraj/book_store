@@ -52,6 +52,7 @@ public class CategoryGridAdapter extends RecyclerView.Adapter<CategoryGridAdapte
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                StaticData.filter = false;
                 itemClickListner = (ItemClickListner) mContext;
                 LocalStorage localStorage = new LocalStorage(mContext);
                 assert itemClickListner != null;
@@ -62,6 +63,7 @@ public class CategoryGridAdapter extends RecyclerView.Adapter<CategoryGridAdapte
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                StaticData.filter = false;
                 itemClickListner = (ItemClickListner) mContext;
                 LocalStorage localStorage = new LocalStorage(mContext);
                 assert itemClickListner != null;

@@ -6,9 +6,9 @@
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nested_sc_view"
+        android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone">
+        android:layout_height="match_parent">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -47,12 +47,141 @@
                     android:labelFor="@+id/ll0"
                     tools:ignore="UnknownIdInLayout" />
 
+                <LinearLayout
+                    android:id="@+id/ll_deliveryAddressGuest"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:layout_below="@+id/recyclerView"
+                    android:layout_marginTop="@dimen/margin_15dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_15dp"
+                        android:fontFamily="@font/exo_bold"
+                        android:text="@string/delivery_address"
+                        android:textSize="@dimen/h2" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_15dp"
+                        android:layout_marginTop="@dimen/font_10"
+                        android:text="*Address(Please enter full address)"
+                        tools:ignore="HardcodedText" />
+
+                    <EditText
+                        android:id="@+id/et_g_addrss"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/width_40dp"
+                        android:layout_marginStart="@dimen/margin_15dp"
+                        android:layout_marginTop="@dimen/margin_5dp"
+                        android:layout_marginEnd="@dimen/margin_15dp"
+                        android:background="@drawable/edittext_backgrund"
+                        android:paddingStart="@dimen/margin_5dp"
+                        android:singleLine="true"
+                        android:textColor="@color/gray_text"
+                        android:textSize="@dimen/h2"
+                        tools:ignore="Autofill,LabelFor,TextFields" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_15dp"
+                        android:layout_marginTop="@dimen/font_10"
+                        android:text="*Your Name"
+                        tools:ignore="HardcodedText" />
+
+                    <EditText
+                        android:id="@+id/et_g_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/width_40dp"
+                        android:layout_marginStart="@dimen/margin_15dp"
+                        android:layout_marginTop="@dimen/margin_5dp"
+                        android:layout_marginEnd="@dimen/margin_15dp"
+                        android:background="@drawable/edittext_backgrund"
+                        android:paddingStart="@dimen/margin_5dp"
+                        android:singleLine="true"
+                        android:textColor="@color/gray_text"
+                        android:textSize="@dimen/h2"
+                        tools:ignore="Autofill,LabelFor,TextFields" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_15dp"
+                        android:layout_marginTop="@dimen/font_10"
+                        android:text="*Email"
+                        tools:ignore="HardcodedText" />
+
+                    <EditText
+                        android:id="@+id/et_g_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/width_40dp"
+                        android:layout_marginStart="@dimen/margin_15dp"
+                        android:layout_marginTop="@dimen/margin_5dp"
+                        android:layout_marginEnd="@dimen/margin_15dp"
+                        android:background="@drawable/edittext_backgrund"
+                        android:paddingStart="@dimen/margin_5dp"
+                        android:singleLine="true"
+                        android:textColor="@color/gray_text"
+                        android:textSize="@dimen/h2"
+                        tools:ignore="Autofill,LabelFor,TextFields" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_15dp"
+                        android:layout_marginTop="@dimen/font_10"
+                        android:text="*Phone Number"
+                        tools:ignore="HardcodedText" />
+
+                    <EditText
+                        android:id="@+id/et_g_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/width_40dp"
+                        android:layout_marginStart="@dimen/margin_15dp"
+                        android:layout_marginTop="@dimen/margin_5dp"
+                        android:layout_marginEnd="@dimen/margin_15dp"
+                        android:background="@drawable/edittext_backgrund"
+                        android:paddingStart="@dimen/margin_5dp"
+                        android:singleLine="true"
+                        android:inputType="number"
+                        android:maxLength="8"
+                        android:textColor="@color/gray_text"
+                        android:textSize="@dimen/h2"
+                        tools:ignore="Autofill,LabelFor,TextFields" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_15dp"
+                        android:layout_marginTop="@dimen/font_10"
+                        android:text="*Password"
+                        tools:ignore="HardcodedText" />
+
+                    <EditText
+                        android:id="@+id/et_g_passowrd"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/width_40dp"
+                        android:layout_marginStart="@dimen/margin_15dp"
+                        android:layout_marginTop="@dimen/margin_5dp"
+                        android:layout_marginEnd="@dimen/margin_15dp"
+                        android:background="@drawable/edittext_backgrund"
+                        android:paddingStart="@dimen/margin_5dp"
+                        android:singleLine="true"
+                        android:textColor="@color/gray_text"
+                        android:textSize="@dimen/h2"
+                        tools:ignore="Autofill,LabelFor,TextFields" />
+                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/delivery"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/recyclerView"
+                    android:layout_below="@+id/ll_deliveryAddressGuest"
                     android:layout_marginTop="@dimen/font_10"
                     android:orientation="vertical">
 

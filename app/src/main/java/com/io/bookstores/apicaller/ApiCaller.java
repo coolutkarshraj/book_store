@@ -18,6 +18,7 @@ import com.io.bookstores.model.adminResponseModel.DeleteBookResponseModel;
 import com.io.bookstores.model.bookListModel.BookListModel;
 import com.io.bookstores.model.categoryModel.CategoryModel;
 import com.io.bookstores.model.changePasswordOtpModel.ChangePasswordVerifyOtpModel;
+import com.io.bookstores.model.classList.GetAllClassResponseModel;
 import com.io.bookstores.model.classModel.ClassCategoryModel;
 import com.io.bookstores.model.classModel.ClassResponseModel;
 import com.io.bookstores.model.classModel.ClassSubCategoryResponseModel;
@@ -37,6 +38,8 @@ import com.io.bookstores.model.filterStore.FilterStoreResponseModel;
 import com.io.bookstores.model.getAddressResponseModel.AddressResponseModel;
 import com.io.bookstores.model.getAllOrder.QrResponseModel;
 import com.io.bookstores.model.getProfileResponseModel.GetProfileResponseModel;
+import com.io.bookstores.model.guestCoursedModel.GuestEnrolledCourseResponseModel;
+import com.io.bookstores.model.guestModel.GuestDetailResponseModel;
 import com.io.bookstores.model.guestModel.GuestEnrollCourseResponseModel;
 import com.io.bookstores.model.guestModel.GuestResponseModel;
 import com.io.bookstores.model.insituteModel.InsituiteResponseModel;
@@ -69,8 +72,13 @@ import com.koushikdutta.async.http.body.Part;
 import com.koushikdutta.ion.Ion;
 
 import java.io.File;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 import static com.io.bookstores.localStorage.LocalStorage.token;
 
@@ -79,9 +87,27 @@ public class ApiCaller {
 
     /* -----------------------------------------------------Registration api------------------------------------------------------*/
 
+    private static void ssl(Activity activity) {
+        Ion.getDefault(activity).getHttpClient().getSSLSocketMiddleware().setTrustManagers(new TrustManager[]{new X509TrustManager() {
+            @Override
+            public void checkClientTrusted(final X509Certificate[] chain, final String authType) throws CertificateException {
+            }
+
+            @Override
+            public void checkServerTrusted(final X509Certificate[] chain, final String authType) throws CertificateException {
+            }
+
+            @Override
+            public X509Certificate[] getAcceptedIssuers() {
+                return new X509Certificate[0];
+            }
+        }});
+    }
+
     public static void registerCustomer(Activity activity, String url, String email,
                                         String phone, String password, String firstname,
                                         String address, final FutureCallback<RegisterModel> apiCallBack) {
+        ssl(activity);
         final Gson gson = new Gson();
         Ion.with(activity)
                 .load(UrlLocator.getFinalUrl(url))
@@ -107,6 +133,7 @@ public class ApiCaller {
                     }
                 });
     }
+
 
 
 
@@ -1021,6 +1048,22 @@ public class ApiCaller {
                 });
     }
 
+    public static void guestEnrollCourseList(Activity activity, String url,
+                                             final FutureCallback<GuestEnrolledCourseResponseModel> apiCallback) {
+        final Gson gson = new Gson();
+        Ion.with(activity)
+                .load(UrlLocator.getFinalUrl(url))
+                .noCache()
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        GuestEnrolledCourseResponseModel enrolledCourseListResponseModel = gson.fromJson(result, GuestEnrolledCourseResponseModel.class);
+                        apiCallback.onCompleted(e, enrolledCourseListResponseModel);
+                    }
+                });
+    }
+
     public static void courseDetial(Activity activity, String url,
                                     final FutureCallback<CourseDetialResponseModel> apiCallback) {
         final Gson gson = new Gson();
@@ -1135,7 +1178,20 @@ public class ApiCaller {
 
     public static void getAdvertisment(Activity activity, String url,
                                        final FutureCallback<AdsResponseModel> apiCallBack) {
+        Ion.getDefault(activity).getHttpClient().getSSLSocketMiddleware().setTrustManagers(new TrustManager[]{new X509TrustManager() {
+            @Override
+            public void checkClientTrusted(final X509Certificate[] chain, final String authType) throws CertificateException {
+            }
 
+            @Override
+            public void checkServerTrusted(final X509Certificate[] chain, final String authType) throws CertificateException {
+            }
+
+            @Override
+            public X509Certificate[] getAcceptedIssuers() {
+                return new X509Certificate[0];
+            }
+        }});
         final Gson gson = new Gson();
         Ion.with(activity)
                 .load(UrlLocator.getFinalUrl(url))
@@ -1301,7 +1357,7 @@ public class ApiCaller {
     public static void getclassCategoryApi(Activity activity, String url, String classGroupId,
                                            final FutureCallback<ClassCategoryModel> apiCallBack) {
         final JsonObject json = new JsonObject();
-        json.addProperty("classGroupId", classGroupId);
+        json.addProperty("classId", classGroupId);
         final Gson gson = new Gson();
         Ion.with(activity)
                 .load("POST",UrlLocator.getFinalUrl(url))
@@ -1317,6 +1373,22 @@ public class ApiCaller {
                 });
     }
 
+
+    public static void getclassListApi(Activity activity, String url,
+                                   final FutureCallback<GetAllClassResponseModel> apiCallBack) {
+        final Gson gson = new Gson();
+        Ion.with(activity)
+                .load("GET", UrlLocator.getFinalUrl(url))
+                .noCache()
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        GetAllClassResponseModel classCategoryModel = gson.fromJson(result, GetAllClassResponseModel.class);
+                        apiCallBack.onCompleted(e, classCategoryModel);
+                    }
+                });
+    }
     /*------------------------------------------------------- get class ategory Api------------------------------------------------------------*/
 
     public static void getclassSubCategoryApi(Activity activity, String url, String classCategoryId,
@@ -1406,6 +1478,22 @@ public class ApiCaller {
                     public void onCompleted(Exception e, JsonObject result) {
                         GetAllSchoolWishListResponseModel deliveryAddress = gson.fromJson(result, GetAllSchoolWishListResponseModel.class);
                         apiCallBack.onCompleted(e, deliveryAddress);
+                    }
+                });
+    }
+
+    public static void getGuestDetial(Activity activity, String url,
+                                      final FutureCallback<GuestDetailResponseModel> apiCallBack) {
+        final Gson gson = new Gson();
+        Ion.with(activity)
+                .load(UrlLocator.getFinalUrl(url))
+                .noCache()
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        GuestDetailResponseModel guestDetailResponseModel = gson.fromJson(result, GuestDetailResponseModel.class);
+                        apiCallBack.onCompleted(e, guestDetailResponseModel);
                     }
                 });
     }

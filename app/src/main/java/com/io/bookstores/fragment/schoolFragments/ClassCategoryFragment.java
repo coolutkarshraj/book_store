@@ -2,29 +2,25 @@ package com.io.bookstores.fragment.schoolFragments;
 
 import android.app.Activity;
 import android.os.Bundle;
-
-import androidx.appcompat.widget.SearchView;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.SearchView;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.io.bookstores.Config;
 import com.io.bookstores.R;
 import com.io.bookstores.adapter.schoolAdapter.ClassCategoryRvAdapter;
-import com.io.bookstores.adapter.schoolAdapter.ClassGroupRvAdapter;
 import com.io.bookstores.apicaller.ApiCaller;
 import com.io.bookstores.listeners.ItemClickListner;
 import com.io.bookstores.localStorage.LocalStorage;
 import com.io.bookstores.model.classModel.ClassCategoryDataModel;
 import com.io.bookstores.model.classModel.ClassCategoryModel;
-import com.io.bookstores.model.classModel.ClassDataModel;
-import com.io.bookstores.model.classModel.ClassResponseModel;
 import com.io.bookstores.utility.NewProgressBar;
 import com.io.bookstores.utility.Utils;
 import com.io.bookstores.utility.userOnlineInfo;
@@ -105,7 +101,8 @@ public class ClassCategoryFragment extends Fragment implements View.OnClickListe
         if (user.isOnline(activity)) {
             dialog.show();
 
-            ApiCaller.getclassCategoryApi(getActivity(), Config.Url.getclassCategory, localStorage.getString(LocalStorage.classGroupId),
+            ApiCaller.getclassCategoryApi(getActivity(), Config.Url.getclassCategory,
+                    localStorage.getString(LocalStorage.classId),
                     new FutureCallback<ClassCategoryModel>() {
 
                         @Override

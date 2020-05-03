@@ -44,7 +44,7 @@ public class Datum {
     @SerializedName("store")
     private Store mStore;
     @SerializedName("storeId")
-    private Object mStoreId;
+    private String mStoreId;
 
     @SerializedName("isWishlist")
     @Expose
@@ -179,11 +179,11 @@ public class Datum {
         mStore = store;
     }
 
-    public Object getStoreId() {
+    public String getStoreId() {
         return mStoreId;
     }
 
-    public void setStoreId(Object storeId) {
+    public void setStoreId(String storeId) {
         mStoreId = storeId;
     }
 

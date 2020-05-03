@@ -11,6 +11,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -61,7 +62,6 @@ public class AllSchoolsRvAdapter extends RecyclerView.Adapter<SchoolsHolder> {
         holder.btn_browese.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 itemClickListner = (ItemClickListner) activity;
                 LocalStorage localStorage = new LocalStorage(activity);
                 localStorage.putString(LocalStorage.schoolId, String.valueOf(model.getSchoolId()));

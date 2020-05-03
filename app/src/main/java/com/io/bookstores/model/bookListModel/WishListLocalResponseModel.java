@@ -35,6 +35,15 @@ public class WishListLocalResponseModel {
     @SerializedName("size")
     private String size;
 
+    @SerializedName("description")
+    private String description;
+
+    @SerializedName("schoolStoreId")
+    private String schoolStoreId;
+
+    @SerializedName("category")
+    private String category;
+
     public String getId() {
         return id;
     }
@@ -121,5 +130,29 @@ public class WishListLocalResponseModel {
 
     public void setSize(String size) {
         this.size = size;
+    }
+
+    public String getSchoolStoreId() {
+        return schoolStoreId;
+    }
+
+    public void setSchoolStoreId(String schoolStoreId) {
+        this.schoolStoreId = schoolStoreId;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

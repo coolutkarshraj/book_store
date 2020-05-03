@@ -51,8 +51,23 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView34"
-                app:queryHint="@string/search_by_bookstorename"
+                app:queryHint="@string/search"
                 tools:ignore="RtlHardcoded,RtlSymmetry,UnusedAttribute" />
+
+            <ImageView
+                android:id="@+id/iv_filter"
+                android:layout_width="@dimen/width_20dp"
+                android:layout_height="@dimen/margin_20dp"
+                android:layout_marginStart="@dimen/height_10dp"
+                android:layout_marginTop="@dimen/h20"
+                android:background="@drawable/filter"
+                android:visibility="gone"
+                android:backgroundTint="@color/blue"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/searchView2"
+                app:layout_constraintTop_toBottomOf="@+id/textView34"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteY="59dp" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_cateory_list"
@@ -74,7 +89,7 @@
         android:layout_gravity="center_vertical"
         android:layout_margin="20dp"
         android:fontFamily="@font/exo_bold"
-        android:text="books are not available in this category"
+        android:text="@string/booksnotavailble"
         android:textAlignment="center"
         android:textSize="@dimen/h1"
         android:visibility="gone"

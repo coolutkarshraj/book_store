@@ -94,7 +94,7 @@
             android:text="@string/details"
             android:textColor="@color/colorAccent1"
             android:textSize="12sp"
-            android:visibility="gone"
+           android:layout_marginBottom="@dimen/margin_15dp"
             cardview:layout_constraintBottom_toBottomOf="@+id/bv_course_browse"
             cardview:layout_constraintStart_toEndOf="@+id/bv_course_browse">
 

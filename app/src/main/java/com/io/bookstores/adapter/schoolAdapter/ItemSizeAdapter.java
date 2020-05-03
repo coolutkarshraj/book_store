@@ -53,7 +53,7 @@ public class ItemSizeAdapter extends RecyclerView.Adapter<ItemSizeAdapter.MyView
             @Override
             public void onClick(View v) {
                 postionn = position;
-                itemClickListner.onClick(data.getProductSizeId());
+                //itemClickListner.onClick(data.getProductSizeId());
                 localStorage.putString(LocalStorage.SIZEEID, String.valueOf(data.getProductSizeId()));
                 localStorage.putString(LocalStorage.PQUANTITY, String.valueOf(data.getQuantity()));
                 notifyDataSetChanged();

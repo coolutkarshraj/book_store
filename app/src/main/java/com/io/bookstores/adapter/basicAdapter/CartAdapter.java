@@ -91,10 +91,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartHolder> {
                 if (Long.parseLong(model.getpID()) == Long.parseLong(lists.get(ii).getpID())) {
                     holder.mark_fav.setVisibility(View.GONE);
                     holder.mark_fav_red.setVisibility(View.VISIBLE);
-                } else {
+                } /*else {
                     holder.mark_fav.setVisibility(View.VISIBLE);
                     holder.mark_fav_red.setVisibility(View.GONE);
-                }
+                }*/
             }
         } else {
             if (item.get(position).getWishlist().equals("true")) {
@@ -200,23 +200,20 @@ public class CartAdapter extends RecyclerView.Adapter<CartHolder> {
 
                 if (loginModel == null) {
                     LocalStorage localStorage = new LocalStorage(activity);
-                    String dummyId = localStorage.getString(LocalStorage.Dummy_Store_ID);
-                    String storeId = localStorage.getString(LocalStorage.StoreId);
-                    if (dummyId.equals(storeId) || dummyId.equals("")) {
-                        localStorage.putString(LocalStorage.Dummy_Store_ID, localStorage.getString(LocalStorage.StoreId));
+
                         DbHelper dbHelper = new DbHelper(activity);
 
                         Cursor cursor = dbHelper.getOneWishList(String.valueOf(model.getpID()));
                         if (cursor.getCount() == 0) {
                             boolean isInserted = dbHelper.insertWishList(model.getName(),
                                     model.getImage(),
-                                    Long.parseLong(model.getpID()),
+                                    Long.valueOf(model.getpID()),
                                     1,
                                     Long.parseLong(model.getPrice()),
                                     model.getName(),
                                     model.getGst(),
                                     Integer.parseInt(model.getAvailibleQty()),
-                                    "true", "store", "");
+                                    "true", model.getType(), "0", model.getSchoolStoreId(),model.getCategory());
                             if (isInserted) {
                                 getWishListStatus();
                                 holder.mark_fav.setVisibility(View.GONE);
@@ -229,9 +226,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartHolder> {
                             Toast.makeText(activity, "You have already this item added into wishlist", Toast.LENGTH_SHORT).show();
                         }
 
-                    } else {
-                        opendialogwish(model, position);
-                    }
+
                 } else {
                     if (localStorage.getString(LocalStorage.TYPE).equals("store")) {
                         holder.mark_fav.setVisibility(View.GONE);
@@ -281,7 +276,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartHolder> {
                         updateQuantity(Long.valueOf(item.get(position).getPID()), "false");
                         addorRemomoveWishlistSchool(Long.valueOf(item.get(position).getPID()));
                     }
-
 
                 }
             }
@@ -562,7 +556,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartHolder> {
 
     }
 
-    private void opendialogwish(final CartLocalListResponseMode model, int position) {
+   /* private void opendialogwish(final CartLocalListResponseMode model, int position) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setMessage("you have already select books from another store .Are you sure Want to delete existing wishlist item");
         builder.setTitle("Delete Wishlist Item");
@@ -585,7 +579,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartHolder> {
                         model.getName(),
                         String.valueOf(model.getGst()),
                         Integer.parseInt(model.getAvailibleQty()),
-                        String.valueOf(model.getWishlist()), "store", "");
+                        String.valueOf(model.getWishlist()), "store", "", String.valueOf(1));
 
                 if (isInserted) {
                     Toast.makeText(activity, "Items Added Succesfully", Toast.LENGTH_SHORT).show();
@@ -606,7 +600,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartHolder> {
         //alert.setTitle("AlertDialogExample");
         alert.show();
     }
-
+*/
 
     private void getWishListStatus() {
         DbHelper dbHelper;
@@ -671,6 +665,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartHolder> {
                     shoppingBagModel.setImage(json_data.getString("Image"));
                     shoppingBagModel.setSize(json_data.getString("size"));
                     shoppingBagModel.setType(json_data.getString("type"));
+                    shoppingBagModel.setSchoolStoreId(json_data.getString("schoolStoreId"));
+                    shoppingBagModel.setCategory(json_data.getString("category"));
+
                     shoppingBagModel.setAvailibleQty(json_data.getString("avalible"));
                     shoppingBagModel.setpID(json_data.getString("P_ID"));
                     shoppingBagModel.setWishlist(json_data.getString("wishlist"));

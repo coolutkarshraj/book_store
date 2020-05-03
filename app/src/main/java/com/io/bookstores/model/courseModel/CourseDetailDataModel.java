@@ -26,6 +26,10 @@ public class CourseDetailDataModel {
     @Expose
     private String avatarName;
 
+    @SerializedName("price")
+    @Expose
+    private int price;
+
     public String getCreatedDate() {
         return createdDate;
     }
@@ -80,5 +84,13 @@ public class CourseDetailDataModel {
 
     public void setAvatarName(String avatarName) {
         this.avatarName = avatarName;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 }

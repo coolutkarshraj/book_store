@@ -37,7 +37,7 @@ public class ClassSubCategoryRvAdapter extends RecyclerView.Adapter<ClassSubCate
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
         LayoutInflater mInflater = LayoutInflater.from(mContext);
-        view = mInflater.inflate(R.layout.item_class_subcategory, parent, false);
+        view = mInflater.inflate(R.layout.item_main_subcat, parent, false);
         return new MyViewHolder(view);
     }
 
