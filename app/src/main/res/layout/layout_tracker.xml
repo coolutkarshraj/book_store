@@ -11,8 +11,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_15dp"
         android:text="@string/track_your_order"
+        android:fontFamily="@font/arial_bold"
         android:textAlignment="center"
-        android:textColor="@color/black"
         android:textSize="@dimen/h20" />
 
     <RelativeLayout
