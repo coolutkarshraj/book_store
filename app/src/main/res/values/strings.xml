@@ -230,9 +230,11 @@
     <string name="itemPrice">Item Price</string>
     <string name="addtoCart">Add to Cart</string>
     <string name="bookstoreOrder">Book Store Order</string>
+    <string name="schoolsnotavailable">Schools are Not Available</string>
     <string name="schoolOrder">School Order</string>
     <string name="bookStore">Book Store</string>
     <string name="school">School</string>
+    <string name="datanotfound">Data Not Found</string>
 
 
 </resources>

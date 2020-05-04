@@ -539,15 +539,17 @@ public class BookStoreMainActivity extends AppCompatActivity implements
                         Locale locale = new Locale("en");
                         Locale.setDefault(locale);
                         Configuration config = new Configuration();
+
                         config.locale = locale;
                         getBaseContext().getResources().updateConfiguration(config, null);
                         dialog.dismiss();
                         startActivity(new Intent(BookStoreMainActivity.this,BookStoreMainActivity.class));
                     } else {
-                        Locale locale = new Locale("hi");
+                        Locale locale = new Locale("ar");
                         StaticData.selectedLanguage = "kuwait";
                         Locale.setDefault(locale);
                         Configuration config = new Configuration();
+                        config.setLayoutDirection(Locale.ENGLISH);
                         config.locale = locale;
                         getBaseContext().getResources().updateConfiguration(config, null);
                         dialog.dismiss();

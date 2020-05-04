@@ -32,6 +32,7 @@ import com.io.bookstores.R;
 import com.io.bookstores.StaticData;
 import com.io.bookstores.activity.homeActivity.MainActivity;
 import com.io.bookstores.apicaller.ApiCaller;
+import com.io.bookstores.listeners.RecyclerViewClickListener;
 import com.io.bookstores.localStorage.DbHelper;
 import com.io.bookstores.localStorage.LocalStorage;
 import com.io.bookstores.model.bookListModel.CartLocalListResponseMode;
@@ -62,11 +63,13 @@ public class FavoriteItemsAdapter extends RecyclerView.Adapter<FavoriteItemsAdap
     String schoolStoreId = "";
     private LocalStorage localStorage;
     private LoginModel loginModel;
+    RecyclerViewClickListener recyclerViewClickListener;
     ArrayList<CartLocalListResponseMode> list = new ArrayList<>();
 
-    public FavoriteItemsAdapter(Context mContext, List<GetWishListDataModel> mData) {
+    public FavoriteItemsAdapter(Context mContext, List<GetWishListDataModel> mData, RecyclerViewClickListener recyclerViewClickListener) {
         this.mContext = mContext;
         this.mData = mData;
+        this.recyclerViewClickListener = recyclerViewClickListener;
     }
 
     @Override
@@ -86,6 +89,7 @@ public class FavoriteItemsAdapter extends RecyclerView.Adapter<FavoriteItemsAdap
         final GetWishListDataModel model = mData.get(position);
         holder.textView31.setText(model.getName());
         Glide.with(mContext).load(Config.imageUrl + model.getAvatarPath()).into(holder.img_book_thumbnail);
+        holder.favouritePriceText.setText("Price : " + model.getPrice() + " KD");
 
         holder.clayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -173,6 +177,8 @@ public class FavoriteItemsAdapter extends RecyclerView.Adapter<FavoriteItemsAdap
                                         mData.remove(position);
                                         notifyItemRemoved(position);
                                         notifyItemRangeRemoved(position, mData.size());
+                                        recyclerViewClickListener.onClickPosition(25);
+
                                         dialog.dismiss();
                                     } else {
                                         Toast.makeText(mContext, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
@@ -241,7 +247,7 @@ public class FavoriteItemsAdapter extends RecyclerView.Adapter<FavoriteItemsAdap
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textView31;
+        TextView textView31,favouritePriceText;
         ImageView img_book_thumbnail,imageView19,imageView21;
         CardView cardView;
         ConstraintLayout clayout;
@@ -255,6 +261,7 @@ public class FavoriteItemsAdapter extends RecyclerView.Adapter<FavoriteItemsAdap
             clayout = (ConstraintLayout) itemView.findViewById(R.id.clayout);
             imageView19 = (ImageView) itemView.findViewById(R.id.imageView19);
             imageView21 = (ImageView) itemView.findViewById(R.id.imageView21);
+            favouritePriceText = itemView.findViewById(R.id.bookPriceText);
 
         }
     }

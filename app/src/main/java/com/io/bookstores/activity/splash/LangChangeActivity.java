@@ -43,9 +43,10 @@ public class LangChangeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 StaticData.selectedLanguage = "kuwait";
-                Locale locale = new Locale("hi");
+                Locale locale = new Locale("ar");
                 Locale.setDefault(locale);
                 Configuration config = new Configuration();
+                config.setLayoutDirection(Locale.ENGLISH);
                 config.locale = locale;
                 getBaseContext().getResources().updateConfiguration(config, null);
                // Toast.makeText(LangChangeActivity.this, "اللغة العربية المختارة!", Toast.LENGTH_LONG).show();

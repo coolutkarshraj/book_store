@@ -97,6 +97,7 @@ public class FavoriteItemsLocalAdapter extends RecyclerView.Adapter<FavoriteItem
         Log.e("scullydummy", scullydummy);
         Log.e("schollId", schollId);*/
         holder.textView31.setText(model.getName());
+        holder.favouritePriceText.setText("Price : " + model.getPrice() + " KD");
         Glide.with(mContext).load(Config.imageUrl + model.getImage()).into(holder.img_book_thumbnail);
 
         holder.clayout.setOnClickListener(new View.OnClickListener() {
@@ -228,7 +229,7 @@ public class FavoriteItemsLocalAdapter extends RecyclerView.Adapter<FavoriteItem
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textView31;
+        TextView textView31,favouritePriceText;
         ImageView img_book_thumbnail, imageView19, imageView21;
         CardView cardView;
         ConstraintLayout clayout;
@@ -242,6 +243,7 @@ public class FavoriteItemsLocalAdapter extends RecyclerView.Adapter<FavoriteItem
             clayout = (ConstraintLayout) itemView.findViewById(R.id.clayout);
             imageView19 = (ImageView) itemView.findViewById(R.id.imageView19);
             imageView21 = (ImageView) itemView.findViewById(R.id.imageView21);
+            favouritePriceText = itemView.findViewById(R.id.bookPriceText);
 
         }
     }

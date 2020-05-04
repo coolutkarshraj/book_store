@@ -96,6 +96,7 @@ public class FavoriteItemsSchoolAdapter extends RecyclerView.Adapter<FavoriteIte
         final GetAllSchoolWishListDataModel model = mData.get(position);
         holder.textView31.setText(model.getName());
         Glide.with(mContext).load(Config.imageUrl + model.getAvatarPath()).into(holder.img_book_thumbnail);
+        holder.favouritePriceText.setText("Price : " + model.getPrice() + " KD");
 
         holder.clayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -187,6 +188,7 @@ public class FavoriteItemsSchoolAdapter extends RecyclerView.Adapter<FavoriteIte
                                         notifyItemRemoved(position);
                                         notifyItemRangeRemoved(position, mData.size());
                                         dialog.dismiss();
+                                        recyclerViewClickListener.onClickPosition(25);
                                     } else {
                                         Toast.makeText(mContext, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
                                         dialog.dismiss();
@@ -269,7 +271,7 @@ public class FavoriteItemsSchoolAdapter extends RecyclerView.Adapter<FavoriteIte
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textView31;
+        TextView textView31,favouritePriceText;
         ImageView img_book_thumbnail, imageView19, imageView21;
         CardView cardView;
         ConstraintLayout clayout;
@@ -283,6 +285,7 @@ public class FavoriteItemsSchoolAdapter extends RecyclerView.Adapter<FavoriteIte
             clayout = (ConstraintLayout) itemView.findViewById(R.id.clayout);
             imageView19 = (ImageView) itemView.findViewById(R.id.imageView19);
             imageView21 = (ImageView) itemView.findViewById(R.id.imageView21);
+            favouritePriceText = itemView.findViewById(R.id.bookPriceText);
 
         }
     }

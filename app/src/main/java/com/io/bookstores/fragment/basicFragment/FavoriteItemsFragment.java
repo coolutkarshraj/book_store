@@ -71,17 +71,19 @@ public class FavoriteItemsFragment extends Fragment implements SwipeRefreshLayou
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-         root = inflater.inflate(R.layout.fragment_favorite_items, container, false);
+        root = inflater.inflate(R.layout.fragment_favorite_items, container, false);
         intializeViews(root);
         return root;
     }
 
     private void intializeViews(View root) {
+        activity = getActivity();
         recyclerViewClickListener = this;
         recyclerView = root.findViewById(R.id.fav_recyclerView);
         fav_recyclerView_schools = root.findViewById(R.id.fav_recyclerView_schools);
         rv_local_wishlist = root.findViewById(R.id.rv_local_wishlist);
         loggedih = root.findViewById(R.id.loggedih);
+        dialog = new NewProgressBar(activity);
         ll_Shools = root.findViewById(R.id.ll_Shools);
         ll_books = root.findViewById(R.id.ll_books);
         itemClickListner = (ItemClickListner)getActivity();
@@ -90,7 +92,7 @@ public class FavoriteItemsFragment extends Fragment implements SwipeRefreshLayou
         nested_c_view = root.findViewById(R.id.nested_c_view);
         wishlist = root.findViewById(R.id.wishlist);
         user = new userOnlineInfo();
-        activity = getActivity();
+
         localStorage = new LocalStorage(getActivity());
         LoginModel loginModel = localStorage.getUserProfile();
         System.out.println(loginModel);
@@ -114,7 +116,7 @@ public class FavoriteItemsFragment extends Fragment implements SwipeRefreshLayou
 
     private void getWishListApiCall() {
         if (user.isOnline(activity)) {
-            dialog = new NewProgressBar(activity);
+
             dialog.show();
             final LocalStorage localStorage = new LocalStorage(activity);
             Log.e("token",localStorage.getString(localStorage.token));
@@ -174,7 +176,7 @@ public class FavoriteItemsFragment extends Fragment implements SwipeRefreshLayou
             //wishlist.setVisibility(View.GONE);
             isEmprty = "";
             ll_books.setVisibility(View.VISIBLE);
-            FavoriteItemsAdapter myAdapter = new FavoriteItemsAdapter(activity, data);
+            FavoriteItemsAdapter myAdapter = new FavoriteItemsAdapter(activity, data,recyclerViewClickListener);
             recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
             recyclerView.setAdapter(myAdapter);
             getWishListApiCallSchool();
@@ -370,6 +372,8 @@ public class FavoriteItemsFragment extends Fragment implements SwipeRefreshLayou
             getWishListStatus();
         }else if(position==25){
             getWishListApiCall();
+            dialog.dismiss();
+
         }
     }
 }

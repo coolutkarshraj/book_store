@@ -79,7 +79,7 @@
         android:layout_gravity="center_vertical"
         android:layout_margin="@dimen/height_20dp"
         android:fontFamily="@font/exo_bold"
-        android:text="Not Found"
+        android:text="@string/datanotfound"
         android:textAlignment="center"
         android:textSize="@dimen/h1"
         android:visibility="gone"

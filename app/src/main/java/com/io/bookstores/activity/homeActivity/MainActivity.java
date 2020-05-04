@@ -402,9 +402,10 @@ public class MainActivity extends AppCompatActivity implements
                         startActivity(i);
                     } else {
                         StaticData.selectedLanguage = "kuwait";
-                        Locale locale = new Locale("hi");
+                        Locale locale = new Locale("ar");
                         Locale.setDefault(locale);
                         Configuration config = new Configuration();
+                        config.setLayoutDirection(Locale.ENGLISH);
                         config.locale = locale;
                         getBaseContext().getResources().updateConfiguration(config, null);
                         dialog.dismiss();

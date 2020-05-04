@@ -100,7 +100,7 @@
     <string name="mobile_number">رقم الهاتف المحمول</string>
     <string name="enter_address">أدخل العنوان</string>
     <string name="phone_number">رقم الهاتف</string>
-    <string name="select_category_to_browse_bookstore">"اختار القسم الذي حاب تتسوق فيه "</string>
+    <string name="select_category_to_browse_bookstore">حدد الفئة لتصفح مكتبة</string>
     <string name="order">الطلب #٪ s</string>
     <string name="login">تسجيل الدخول</string>
     <string name="user_id">اسم الكتاب</string>
@@ -226,10 +226,11 @@
     <string name="description">وصف</string>
     <string name="itemPrice">سعر السلعة</string>
     <string name="addtoCart">أضف إلى السلة</string>
-
     <string name="bookstoreOrder">طلب متجر الكتب</string>
     <string name="schoolOrder">ترتيب المدرسة</string>
     <string name="bookStore">مكتبة لبيع الكتب</string>
     <string name="school">مدرسة</string>
     <string name="clothedetial">تفاصيل القماش</string>
+    <string name="schoolsnotavailable">المدارس غير متوفرة</string>
+    <string name="datanotfound">لم يتم العثور على البيانات</string>
 </resources>

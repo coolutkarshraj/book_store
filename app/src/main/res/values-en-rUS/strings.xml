@@ -235,4 +235,7 @@
     <string name="bookStore">Book Store</string>
     <string name="school">School</string>
     <string name="clothedetial">Cloth Detials</string>
+    <string name="schoolsnotavailable">Schools are Not Available</string>
+    <string name="datanotfound">Data Not Found</string>
+
 </resources>

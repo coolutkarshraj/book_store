@@ -3,22 +3,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="160dp"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginLeft="@dimen/margin_5dp"
-    android:layout_marginTop="@dimen/five_dp"
+    android:layout_marginTop="@dimen/ten_dp"
     android:layout_marginRight="@dimen/five_dp"
-    android:background="@drawable/default_background"
     android:orientation="vertical"
     tools:ignore="RtlHardcoded">
 
-    <ImageView
-        android:id="@+id/iv_image"
-        android:layout_width="143dp"
-        android:layout_height="100dp"
-        android:layout_gravity="center_horizontal"
-        android:padding="@dimen/twenty_four_dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/defaultimage"
-        tools:ignore="ContentDescription" />
+    <androidx.cardview.widget.CardView
+        android:layout_marginLeft="1dp"
+        android:layout_marginRight="1dp"
+        app:cardElevation="3dp"
+        android:layout_marginBottom="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_image"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_140dp"
+            android:layout_gravity="center_horizontal"
+            android:scaleType="fitXY"
+            android:src="@drawable/defaultimage"
+            tools:ignore="ContentDescription" />
+
+    </androidx.cardview.widget.CardView>
 
     <TextView
         android:id="@+id/tv_name"

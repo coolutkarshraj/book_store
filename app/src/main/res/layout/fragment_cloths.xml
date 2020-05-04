@@ -175,7 +175,7 @@
         android:layout_gravity="center_vertical"
         android:layout_margin="@dimen/margin_20dp"
         android:fontFamily="@font/exo_bold"
-        android:text="books are not available in this category"
+        android:text="@string/datanotfound"
         android:textAlignment="center"
         android:textSize="@dimen/h1"
         android:visibility="gone"

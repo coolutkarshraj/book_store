@@ -146,7 +146,7 @@ public class AllSchoolsFragment extends Fragment implements View.OnClickListener
     /*---------------------------------------------------- set up of search view --------------------------------------------------*/
 
     private void searchViewSetUp() {
-        search_all_Schools.setQueryHint("Search Schools...");
+
         search_all_Schools.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
