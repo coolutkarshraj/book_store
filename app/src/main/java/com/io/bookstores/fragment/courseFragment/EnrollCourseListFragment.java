@@ -117,7 +117,11 @@ public class EnrollCourseListFragment extends Fragment implements View.OnClickLi
         if (localStorage.getString(LocalStorage.token) == null ||
                 localStorage.getString(LocalStorage.token).equals("")) {
             tv_login.setVisibility(View.VISIBLE);
-            if (localStorage.getString(LocalStorage.guestId) != " " || localStorage.getString(LocalStorage.guestId) != null) {
+            if (localStorage.getString(LocalStorage.guestId).equals("") || localStorage.getString(LocalStorage.guestId) == null) {
+                nestedScrollView.setVisibility(View.VISIBLE);
+                tv_login.setVisibility(View.GONE);
+                notdata.setVisibility(View.VISIBLE);
+            }else {
                 nestedScrollView.setVisibility(View.VISIBLE);
                 tv_login.setVisibility(View.GONE);
                 getGuestCourseDetail();

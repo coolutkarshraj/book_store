@@ -188,7 +188,7 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
 
                                 } else {
 
-                                    Toast.makeText(activity, result.getMessage(), Toast.LENGTH_SHORT).show();
+                                    // Toast.makeText(activity, result.getMessage(), Toast.LENGTH_SHORT).show();
                                 }
                             } else {
                                 dialog.dismiss();
@@ -451,36 +451,41 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
         if (user.isOnline(getActivity())) {
             dialog = new NewProgressBar(getActivity());
             dialog.show();
-            ApiCaller.upload(activity, Config.Url.addbook, author, strBookName, strDescrpition, spindata, strQuantity, strPrice, localStorage.getString(LocalStorage.token), imgFile, new FutureCallback<AddBookResponseModel>() {
-                @Override
-                public void onCompleted(Exception e, AddBookResponseModel result) {
-                    if (e != null) {
-                        dialog.dismiss();
-                        Utils.showAlertDialog(getActivity(), "Something Went Wrong");
-                        return;
-                    }
+            if (imagefile == null) {
+                dialog.dismiss();
+                Toast.makeText(activity, "please select Image", Toast.LENGTH_SHORT).show();
+            } else {
+                ApiCaller.upload(activity, Config.Url.addbook, author, strBookName, strDescrpition, spindata, strQuantity, strPrice, localStorage.getString(LocalStorage.token), imgFile, new FutureCallback<AddBookResponseModel>() {
+                    @Override
+                    public void onCompleted(Exception e, AddBookResponseModel result) {
+                        if (e != null) {
+                            dialog.dismiss();
+                            Utils.showAlertDialog(getActivity(), "Something Went Wrong");
+                            return;
+                        }
 
-                    if (result != null) {
-                        if (result.getStatus() == null) {
-                            if (result.getMessage().equals("Unauthorized")) {
-                                Utils.showAlertDialogAdminLogout(getActivity(), "Your Session was expire. please Logout!", localStorage.getInt(LocalStorage.userId));
-                                dialog.dismiss();
-                            }
-                        } else {
-                            if (result.getStatus() == true) {
-                                dialog.dismiss();
-                                dialogs.dismiss();
-                                Toast.makeText(activity, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                        if (result != null) {
+                            if (result.getStatus() == null) {
+                                if (result.getMessage().equals("Unauthorized")) {
+                                    Utils.showAlertDialogAdminLogout(getActivity(), "Your Session was expire. please Logout!", localStorage.getInt(LocalStorage.userId));
+                                    dialog.dismiss();
+                                }
                             } else {
-                                dialog.dismiss();
-                                dialogs.dismiss();
-                                Toast.makeText(activity, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
+                                if (result.getStatus() == true) {
+                                    dialog.dismiss();
+                                    dialogs.dismiss();
+                                    Toast.makeText(activity, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                                } else {
+                                    dialog.dismiss();
+                                    dialogs.dismiss();
+                                    Toast.makeText(activity, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
 
+                            }
                         }
                     }
-                }
-            });
+                });
+            }
 
         } else {
             Utils.showAlertDialog(getActivity(), "No Internet Connection");
@@ -500,7 +505,7 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
             public boolean onQueryTextChange(String s) {
                 List<AdminBookDataModel> newlist = new ArrayList<>();
                 for (AdminBookDataModel productList : item) {
-                    String name = productList.getName();
+                    String name = productList.getName().toLowerCase();
                     if (name.contains(s))
                         newlist.add(productList);
                 }
@@ -626,7 +631,7 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
         final ImageView clear = (ImageView) dialogs.findViewById(R.id.clear);
         readWritePermission();
         multiplePermission();
-        tvHeading.setText("Edit Book Detial");
+        tvHeading.setText(getResources().getString(R.string.editbook));
         strName = item.get(position).getName();
         strDesc = item.get(position).getDescription();
         strPrice = String.valueOf(item.get(position).getPrice());
@@ -672,7 +677,6 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
                 strPrice = price.getText().toString().trim();
                 strQuantity = quantity.getText().toString().trim();
                 strAuthor = author.getText().toString().trim();
-                Toast.makeText(activity, "postionspiner " + spindata, Toast.LENGTH_SHORT).show();
 
                 editBook(strName, strDesc, strPrice, strQuantity, imageView, licenseFile, spindata, item.get(position).getBookId(), dialogs, strAuthor);
             }

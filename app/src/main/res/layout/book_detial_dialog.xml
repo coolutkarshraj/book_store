@@ -60,12 +60,19 @@
                 android:layout_marginEnd="@dimen/margin_25dp"
                 android:orientation="vertical">
 
+                <ImageView
+                    android:id="@+id/iv_image"
+                    android:layout_width="@dimen/height_150dp"
+                    android:layout_height="@dimen/height_150dp"
+                    android:layout_gravity="center" />
+
                 <TextView
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/book_name"
                     android:id="@+id/tv_heding_name"
+                    android:layout_marginTop="@dimen/margin_10dp"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/h2" />
                 <TextView
@@ -90,7 +97,7 @@
                 <TextView
                     android:id="@+id/et_new_password"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/height_100dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_5dp"
                     android:background="@drawable/layout_bg_on_focus"
                     android:padding="@dimen/margin_10dp"
@@ -117,6 +124,24 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/h2" />
 
+                <TextView
+
+                    android:id="@+id/tv_size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/itemSize"
+                    android:visibility="gone"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/h2" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_itemsize"
+                    android:visibility="gone"
+                    android:layout_marginTop="@dimen/margin_5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -131,14 +156,16 @@
                 tools:ignore="RtlHardcoded">
 
                 <Button
-                    android:id="@+id/no"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/btn_add_To_cart"
+                    android:layout_width="@dimen/height_120dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/margin_20dp"
-                    android:text="@string/no"
-                    android:visibility="gone"
-                    android:background="@drawable/round_corner_light_gray"
+                    android:background="@drawable/round_corner_button_yellow"
+                    android:paddingStart="@dimen/margin_10dp"
+                    android:paddingEnd="@dimen/margin_10dp"
+                    android:text="@string/addtoCart"
                     android:textSize="@dimen/h2"
+                    android:textColor="@color/white"
                     tools:ignore="ButtonStyle" />
 
                 <Button

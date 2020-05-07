@@ -68,6 +68,7 @@ public class FavoriteItemsSchoolAdapter extends RecyclerView.Adapter<FavoriteIte
     ItemClickListner itemClickListner;
     String pSize = "0";
     DbHelper dbHelper;
+    Boolean open = false;
     RecyclerViewClickListener recyclerViewClickListener;
     ArrayList<CartLocalListResponseMode> list = new ArrayList<>();
 
@@ -101,7 +102,7 @@ public class FavoriteItemsSchoolAdapter extends RecyclerView.Adapter<FavoriteIte
         holder.clayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showBookDetila(model);
+                showBookDetila(model, position);
             }
         });
         holder.imageView19.setOnClickListener(new View.OnClickListener() {
@@ -205,8 +206,8 @@ public class FavoriteItemsSchoolAdapter extends RecyclerView.Adapter<FavoriteIte
         }
     }
 
-    private void showBookDetila(GetAllSchoolWishListDataModel model) {
-        final Dialog dialog = new Dialog(mContext);
+    private void showBookDetila(final GetAllSchoolWishListDataModel model, final int position) {
+        final Dialog dialog = new Dialog(mContext, R.style.dialogTheme);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         DisplayMetrics metrics = mContext.getResources().getDisplayMetrics();
         int width = metrics.widthPixels;
@@ -216,7 +217,7 @@ public class FavoriteItemsSchoolAdapter extends RecyclerView.Adapter<FavoriteIte
         dialog.setContentView(R.layout.book_detial_dialog);
         dialog.setTitle("");
         final Button Yes = (Button) dialog.findViewById(R.id.yes);
-        final Button No = (Button) dialog.findViewById(R.id.no);
+        final Button btn_add_To_cart = (Button) dialog.findViewById(R.id.btn_add_To_cart);
         final TextView chatdelete = (TextView) dialog.findViewById(R.id.chatdelete);
         final TextView tv_heding_name = (TextView) dialog.findViewById(R.id.tv_heding_name);
         final TextView tv_heding_description = (TextView) dialog.findViewById(R.id.tv_heding_description);
@@ -224,14 +225,18 @@ public class FavoriteItemsSchoolAdapter extends RecyclerView.Adapter<FavoriteIte
         final TextView oldPassword = (TextView) dialog.findViewById(R.id.et_old_password);
         final TextView newPassword = (TextView) dialog.findViewById(R.id.et_new_password);
         final TextView tv_book_price = (TextView) dialog.findViewById(R.id.tv_book_price);
+        final TextView tv_size = (TextView) dialog.findViewById(R.id.tv_size);
         final ImageView Clear = (ImageView) dialog.findViewById(R.id.clear);
+        final ImageView iv_image = (ImageView) dialog.findViewById(R.id.iv_image);
+        final RecyclerView rv_itemsize = (RecyclerView) dialog.findViewById(R.id.rv_itemsize);
 
         if(model.getClassCategory().getName().equals("clothes") ||
                 model.getClassCategory().getName().equals("cloth") ||
                 model.getClassCategory().getName().equals("Clothes")
         || model.getClassCategory().getName().equals("Cloth")){
 
-
+            tv_size.setVisibility(View.VISIBLE);
+            rv_itemsize.setVisibility(View.VISIBLE);
                 chatdelete.setText(mContext.getResources().getString(R.string.clothedetial));
                 tv_heding_name.setText(mContext.getResources().getString(R.string.name));
                 tv_heding_description.setText(mContext.getResources().getString(R.string.description));
@@ -241,17 +246,68 @@ public class FavoriteItemsSchoolAdapter extends RecyclerView.Adapter<FavoriteIte
         oldPassword.setText(model.getName());
         newPassword.setText(model.getDescription());
         tv_book_price.setText("" + model.getPrice() + "K.D");
+        Glide.with(mContext).load(Config.imageUrl + model.getAvatarPath()).into(iv_image);
+        rv_itemsize.setLayoutManager(new GridLayoutManager(mContext, 4));
+        ItemSizessAdapter adapter = new ItemSizessAdapter(mContext, model.getProductSizes());
+        rv_itemsize.setAdapter(adapter);
+
         Yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
             }
         });
-        No.setOnClickListener(new View.OnClickListener() {
+        btn_add_To_cart.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                dialog.dismiss();
+                if (model.getClassCategory().getName().equals("clothes") ||
+                        model.getClassCategory().getName().equals("cloth") ||
+                        model.getClassCategory().getName().equals("Clothes")
+                        || model.getClassCategory().getName().equals("Cloth")) {
+                    if (type.equals("store")) {
+                        if (localStorage.getString(LocalStorage.SIZEEID).equals("")) {
+                            Toast.makeText(mContext, "Please Select Size", Toast.LENGTH_SHORT).show();
+                        } else {
+                            dialog.dismiss();
+                            openDialogBoxsize(model, position);
+                        }
+                    } else if (type.equals("school") && schoolStoreId.equals(String.valueOf(model.getSchool().getSchoolId()))) {
+
+                        addClothesDataintoCart(model, position);
+                        if (open) {
+                        } else {
+                            dialog.dismiss();
+                        }
+                    } else if (type.isEmpty()) {
+                        addClothesDataintoCart(model, position);
+                        if (open) {
+                        } else {
+                            dialog.dismiss();
+                        }
+                    } else {
+                        if (localStorage.getString(LocalStorage.SIZEEID).equals("")) {
+                            Toast.makeText(mContext, "Please Select Size", Toast.LENGTH_SHORT).show();
+                        } else {
+                            dialog.dismiss();
+                            openDialogBoxsize(model, position);
+                        }
+                    }
+                } else {
+                    if (type.equals("store")) {
+                        openDialogBox(model, position);
+                        dialog.dismiss();
+                    } else if (type.equals("school") && schoolStoreId.equals(String.valueOf(model.getSchool().getSchoolId()))) {
+                        addToCartSchoolBooks(mData, model, position);
+                        dialog.dismiss();
+                    } else if (type.isEmpty()) {
+                        addToCartSchoolBooks(mData, model, position);
+                        dialog.dismiss();
+                    } else {
+                        openDialogBox(model, position);
+                        dialog.dismiss();
+                    }
+                }
             }
         });
         Clear.setOnClickListener(new View.OnClickListener() {
@@ -367,8 +423,8 @@ public class FavoriteItemsSchoolAdapter extends RecyclerView.Adapter<FavoriteIte
                     mData.get(position).getDescription(),
                     "",
                     Integer.parseInt(avalibaleQ), "false",
-                    localStorage.getString(LocalStorage.TYPE),
-                    pSize, String.valueOf(mData.get(position).getSchool().getSchoolId()), "book");
+                    "school",
+                    pSize, Integer.parseInt(String.valueOf(mData.get(position).getSchool().getSchoolId())), "book");
             if (isInserted) {
                 getSqliteData1();
                 Toast.makeText(mContext, "Items Added Succesfully", Toast.LENGTH_SHORT).show();
@@ -390,7 +446,10 @@ public class FavoriteItemsSchoolAdapter extends RecyclerView.Adapter<FavoriteIte
         LocalStorage localStorage = new LocalStorage(mContext);
         if (localStorage.getString(LocalStorage.SIZEEID).equals("")) {
             Toast.makeText(mContext, "Please Select Size", Toast.LENGTH_SHORT).show();
+            open = true;
+
         } else {
+            open = false;
 //            dialog.dismiss();
                        /* String dummyId = localStorage.getString(LocalStorage.Dummy_School_ID);
                         String storeId = localStorage.getString(LocalStorage.schoolId);
@@ -408,10 +467,13 @@ public class FavoriteItemsSchoolAdapter extends RecyclerView.Adapter<FavoriteIte
                         model.getDescription(),
                         "",
                         Integer.parseInt(localStorage.getString(LocalStorage.PQUANTITY)),
-                        "false", "school", localStorage.getString(LocalStorage.SIZEEID), String.valueOf(model.getSchool().getSchoolId()), "cloth");
+                        "false", "school", localStorage.getString(LocalStorage.SIZEEID), model.getSchool().getSchoolId(), "cloth");
                 if (isInserted) {
                     getSqliteData1();
                     removeWishListItem(Long.valueOf(model.getClassProductId()), position);
+                    localStorage.putString(LocalStorage.SIZEEID, "");
+                    localStorage.putString(LocalStorage.PQUANTITY, "");
+
                     Toast.makeText(mContext, "add item to wishlist sucessfully", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(mContext, "Something Went Wrong", Toast.LENGTH_SHORT).show();
@@ -451,11 +513,12 @@ public class FavoriteItemsSchoolAdapter extends RecyclerView.Adapter<FavoriteIte
                         model.getDescription(),
                         "",
                         Integer.parseInt(avalibaleQ), "false",
-                        localStorage.getString(LocalStorage.TYPE),
-                        pSize, String.valueOf(model.getSchool().getSchoolId()),"book");
+                       "school",
+                        pSize,model.getSchool().getSchoolId(),"book");
 
                 if (isInserted) {
                     getSqliteData1();
+
                     removeWishListItem(Long.valueOf(model.getClassProductId()), position);
                     Toast.makeText(mContext, "Items Added Succesfully", Toast.LENGTH_SHORT).show();
                 } else {
@@ -505,10 +568,12 @@ public class FavoriteItemsSchoolAdapter extends RecyclerView.Adapter<FavoriteIte
                         Integer.parseInt(localStorage.getString(LocalStorage.PQUANTITY)),
                         "false", "school",
                         localStorage.getString(LocalStorage.SIZEEID),
-                        String.valueOf(model.getSchool().getSchoolId()), "cloth");
+                        model.getSchool().getSchoolId(), "cloth");
 
                 if (isInserted) {
                     getSqliteData1();
+                    localStorage.putString(LocalStorage.SIZEEID, "");
+                    localStorage.putString(LocalStorage.PQUANTITY, "");
                     removeWishListItem(Long.valueOf(model.getClassProductId()), position);
                     Toast.makeText(mContext, "Items Added Succesfully", Toast.LENGTH_SHORT).show();
                 } else {
@@ -648,10 +713,16 @@ public class FavoriteItemsSchoolAdapter extends RecyclerView.Adapter<FavoriteIte
                 } else if (type.equals("school") && schoolStoreId.equals(String.valueOf(model.getSchool().getSchoolId()))) {
 
                     addClothesDataintoCart(model, position);
-                    dialog.dismiss();
+                    if (open) {
+                    } else {
+                        dialog.dismiss();
+                    }
                 } else if (type.isEmpty()) {
                     addClothesDataintoCart(model, position);
-                    dialog.dismiss();
+                    if (open) {
+                    } else {
+                        dialog.dismiss();
+                    }
                 } else {
                     if (localStorage.getString(LocalStorage.SIZEEID).equals("")) {
                         Toast.makeText(mContext, "Please Select Size", Toast.LENGTH_SHORT).show();
@@ -661,21 +732,21 @@ public class FavoriteItemsSchoolAdapter extends RecyclerView.Adapter<FavoriteIte
                     }
                 }
 
-                if (type.equals("store")) {
+              /*  if (type.equals("store")) {
                     if (localStorage.getString(LocalStorage.SIZEEID).equals("")) {
                         Toast.makeText(mContext, "Please Select Size", Toast.LENGTH_SHORT).show();
                     } else {
                         dialog.dismiss();
                         openDialogBoxsize(model, position);
                     }
-                } else {
+                } else {*/
 
 
                       /*  } else {
                             openDialogBoxsize(model, position);
                         }*/
 
-                }
+
             }
         });
         No.setOnClickListener(new View.OnClickListener() {

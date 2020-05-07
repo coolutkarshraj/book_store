@@ -304,6 +304,8 @@ public class AdminEditStoreFragment extends Fragment implements View.OnClickList
         strAddrss = tvAddress.getText().toString();
         if (strStoreName.equals("") || strDescrption.equals("") || strEmail.equals("") || strAddrss.equals("") || strPhone.equals("")) {
             Toast.makeText(activity, "please enter all fields", Toast.LENGTH_SHORT).show();
+        } else if (tvPhone.getText().length() != 8) {
+            Toast.makeText(activity, getResources().getString(R.string.phone_number_must_be_of_8), Toast.LENGTH_SHORT).show();
         } else {
             createAddress();
             editProfile(strStoreName, strDescrption, strPhone, strAddressJson, imgFile);

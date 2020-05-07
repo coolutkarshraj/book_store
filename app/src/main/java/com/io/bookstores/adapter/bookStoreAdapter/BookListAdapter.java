@@ -150,7 +150,7 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.MyView
                                     mData.get(position).getDescription(),
                                     String.valueOf(mData.get(position).getGstPrice()),
                                     mData.get(position).getQuantity(),
-                                    "true", "store", "", storeId, "book");
+                                    "true", "store", "", Integer.parseInt(storeId), "book");
                             if (isInserted) {
                                 holder.mark_fav.setVisibility(View.GONE);
                                 holder.mark_fav_red.setVisibility(View.VISIBLE);
@@ -209,18 +209,20 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.MyView
         holder.mark_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-             showBookDetila(mData.get(position));
+                showBookDetila(mData, position);
             }
         });
 
         holder.iv_favorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showBookDetila(mData.get(position));
+                showBookDetila(mData, position);
             }
         });
 
     }
+
+
 
 
 
@@ -293,7 +295,7 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.MyView
                         String.valueOf(mData.get(position).getGstPrice()),
                         mData.get(position).getQuantity(), String.valueOf(mData.get(position).isWishlist()),
                         localStorage.getString(LocalStorage.TYPE),
-                        "", String.valueOf(mData.get(position).getStoreId()),"book");
+                        "", Integer.parseInt(mData.get(position).getStoreId()),"book");
 
                 if (isInserted) {
                     getSqliteData1();
@@ -338,8 +340,8 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.MyView
         }
     }*/
 
-    private void showBookDetila(Datum datum) {
-        final Dialog dialog = new Dialog(mContext);
+    private void showBookDetila(final List<Datum> mData, final int position) {
+        final Dialog dialog = new Dialog(mContext, R.style.dialogTheme);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         DisplayMetrics metrics = mContext.getResources().getDisplayMetrics();
         int width = metrics.widthPixels;
@@ -349,26 +351,42 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.MyView
         dialog.setContentView(R.layout.book_detial_dialog);
         dialog.setTitle("");
         final Button Yes = (Button) dialog.findViewById(R.id.yes);
-        final Button No = (Button) dialog.findViewById(R.id.no);
+        final Button btn_add_To_cart = (Button) dialog.findViewById(R.id.btn_add_To_cart);
         final TextView oldPassword = (TextView) dialog.findViewById(R.id.et_old_password);
         final TextView newPassword = (TextView) dialog.findViewById(R.id.et_new_password);
         final TextView tv_book_price = (TextView) dialog.findViewById(R.id.tv_book_price);
         final ImageView Clear = (ImageView) dialog.findViewById(R.id.clear);
+        final ImageView iv_image = (ImageView) dialog.findViewById(R.id.iv_image);
 
-        oldPassword.setText(datum.getName());
-        newPassword.setText(datum.getDescription());
-        tv_book_price.setText("" + datum.getPrice() + "K.D");
+        oldPassword.setText(mData.get(position).getName());
+        newPassword.setText(mData.get(position).getDescription());
+        tv_book_price.setText("" + mData.get(position).getPrice() + "K.D");
+        Glide.with(mContext).load(Config.imageUrl + mData.get(position).getAvatarPath()).into(iv_image);
+
         Yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
             }
         });
-        No.setOnClickListener(new View.OnClickListener() {
+        btn_add_To_cart.setOnClickListener(new View.OnClickListener() {
 
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
-                dialog.dismiss();
+                if (type.equals("school")) {
+                    dialog.dismiss();
+                    openDialogBox(mData, position);
+                } else if (type.equals("store") && schoolStoreId.equals(String.valueOf(mData.get(position).getStoreId()))) {
+                    addtoCart(mData, position);
+                    dialog.dismiss();
+                } else if (type.isEmpty()) {
+                    addtoCart(mData, position);
+                    dialog.dismiss();
+                } else {
+                    openDialogBox(mData, position);
+                    dialog.dismiss();
+                }
             }
         });
         Clear.setOnClickListener(new View.OnClickListener() {
@@ -432,7 +450,7 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.MyView
                     mData.get(position).getQuantity(),
                     String.valueOf(mData.get(position).isWishlist()),
                     localStorage.getString(LocalStorage.TYPE),
-                    "", String.valueOf(mData.get(position).getStoreId()),"book");
+                    "", Integer.parseInt(mData.get(position).getStoreId()),"book");
             if (isInserted) {
                 getSqliteData1();
                 Toast.makeText(mContext, "Items Added Succesfully", Toast.LENGTH_SHORT).show();

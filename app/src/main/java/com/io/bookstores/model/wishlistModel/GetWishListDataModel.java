@@ -61,7 +61,7 @@ public class GetWishListDataModel {
     private Object categoryId;
     @SerializedName("storeId")
     @Expose
-    private Object storeId;
+    private Integer storeId;
 
     public String getCreatedDate() {
         return createdDate;
@@ -207,11 +207,11 @@ public class GetWishListDataModel {
         this.categoryId = categoryId;
     }
 
-    public Object getStoreId() {
+    public Integer getStoreId() {
         return storeId;
     }
 
-    public void setStoreId(Object storeId) {
+    public void setStoreId(Integer storeId) {
         this.storeId = storeId;
     }
 

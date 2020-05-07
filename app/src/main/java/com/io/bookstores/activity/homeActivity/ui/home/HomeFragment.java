@@ -232,10 +232,10 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener,
 
     private void makaAddressListScrollView(List<DilveryAddressDataModel> resultt) {
         CategoryFragmentAdapter adapter = new CategoryFragmentAdapter(((FragmentActivity) getActivity()).getSupportFragmentManager());
-        if (resultt.size() % 6 == 0) {
-            sizee = resultt.size() / 6;
+        if (resultt.size() % 4 == 0) {
+            sizee = resultt.size() / 4;
         } else {
-            sizee = resultt.size() / 6 + 1;
+            sizee = resultt.size() / 4 + 1;
         }
         for (int p = 0; p < sizee; p++) {
           adapter.addFragment(new AddressSliderFragment(resultt));
@@ -245,6 +245,7 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener,
         }
         adapter.notifyDataSetChanged();
         viewPager.setAdapter(adapter);
+        viewPager.setSaveEnabled(false);
         dotsIndicator.setViewPager(viewPager);
     }
     /*---------------------------------------------------- get all store api call -------------------------------------------*/
@@ -436,7 +437,7 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener,
                             if (result != null) {
                                 if (result.isStatus()) {
 
-                                    setofSchoolRecyclerView(result.getData());
+                                    setofSchoolRecyclerView(result);
                                 }
                             }
                         }
@@ -448,11 +449,61 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener,
 
     /*--------------------------------------------- setup of recycler View of All school ----------------------------------------*/
 
-    private void setofSchoolRecyclerView(List<GetAllSchoolDataModel> result) {
+    private void setofSchoolRecyclerView(final GetAllSchoolResponseModel result) {
+        final List<GetAllSchoolDataModel> datumList = new ArrayList<>();
+        for (int i = 0; i < 4; i++) {
+            if (i < result.getData().size()) {
+                datumList.add(result.getData().get(i));
+            }
+        }
         GridLayoutManager gridLayoutManager1 = new GridLayoutManager(getActivity(), 2);
         reccycler_schools.setLayoutManager(gridLayoutManager1);
-         HomeSchoolsRvAdapter sToreAdapter = new HomeSchoolsRvAdapter(getActivity(), result);
-        reccycler_schools.setAdapter(sToreAdapter);
+         final HomeSchoolsRvAdapter schoolsRvAdapter = new HomeSchoolsRvAdapter(getActivity(),datumList);
+        reccycler_schools.setAdapter(schoolsRvAdapter);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+
+                    try {
+                        Thread.sleep(5000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    if (datumList.size() > 1) {
+                        GetAllSchoolDataModel datum = datumList.get(datumList.size() - 1);
+
+                        int index = result.getData().indexOf(datum);
+
+                        int j = 1;
+                        datumList.clear();
+                        for (int i = 0; i < 4; i++) {
+                            if ((j + index) >= result.getData().size()) {
+                                index = 0;
+                                j = 0;
+                            }
+
+                            datumList.add(result.getData().get(j + index));
+                            j++;
+                        }
+
+                        try {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    schoolsRvAdapter.notifyDataSetChanged();
+                                }
+                            });
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }).start();
+
     }
 
 
@@ -476,6 +527,8 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener,
             public void run() {
                 swipeRefreshLayout.setRefreshing(false);
                 intializeViews(root);
+                bindListner();
+                startWorking();
             }
         }, 1000);
 

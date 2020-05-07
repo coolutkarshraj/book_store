@@ -51,12 +51,12 @@
                     android:drawablePadding="5dp"
                     android:elevation="@dimen/elevation_10dp"
                     android:gravity="center"
-                    android:hint="Search By BookStoreName"
+                    android:hint="@string/search"
                     android:paddingLeft="@dimen/margin_10dp"
                     app:iconifiedByDefault="false"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:queryHint="Discover more books..."
+                    app:queryHint="@string/search"
                     tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry,UnusedAttribute" />
 
                 <ImageView
@@ -102,6 +102,7 @@
             android:layout_gravity="bottom|start"
             android:layout_margin="@dimen/fab_margin"
             android:src="@drawable/ic_add_black_24dp"
+
             android:visibility="visible"
             app:backgroundTint="@color/colorPrimary"
             app:borderWidth="0dp"

@@ -75,7 +75,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
     public boolean insertData(String name, String avatarPath, Long bookId, int qty,
                               Long price, String description, String gstPrice, int avalibleqty, String s,
-                              String type, String size, String SchoolStoreID,String category) {
+                              String type, String size, int SchoolStoreID,String category) {
         database = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("Name",name);
@@ -101,7 +101,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
     public boolean insertWishList(String name, String avatarPath, Long bookId, int qty,
                                   Long price, String description, String gstPrice, int avalibleqty, String s,
-                                  String type, String size, String SchoolStoreID, String category) {
+                                  String type, String size, int SchoolStoreID, String category) {
         database = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("Name",name);

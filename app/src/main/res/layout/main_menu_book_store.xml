@@ -168,7 +168,6 @@
             android:src="@drawable/ic_arrow_back_black_24dp"
             android:tint="#637381"
             tools:ignore="ContentDescription">
-
         </ImageView>
 
         <TextView
@@ -184,6 +183,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/height_60dp"
         android:layout_margin="@dimen/margin_8dp"
+        android:visibility="gone"
         android:background="@drawable/search_view_background"
         android:focusable="true"
         android:focusableInTouchMode="true"

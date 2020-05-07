@@ -213,7 +213,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartHolder> {
                                     model.getName(),
                                     model.getGst(),
                                     Integer.parseInt(model.getAvailibleQty()),
-                                    "true", model.getType(), "0", model.getSchoolStoreId(),model.getCategory());
+                                    "true", model.getType(), "0", Integer.parseInt(model.getSchoolStoreId()),model.getCategory());
                             if (isInserted) {
                                 getWishListStatus();
                                 holder.mark_fav.setVisibility(View.GONE);

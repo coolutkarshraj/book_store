@@ -302,6 +302,7 @@ public class CategoryGridFragment extends Fragment implements View.OnClickListen
 
         adapter.notifyDataSetChanged();
         viewPager.setAdapter(adapter);
+        viewPager.setSaveEnabled(false);
         dotsIndicator.setViewPager(viewPager);
 
         recyclerView1.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));

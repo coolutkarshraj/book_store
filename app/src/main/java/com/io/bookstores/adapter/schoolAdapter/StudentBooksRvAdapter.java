@@ -142,7 +142,7 @@ public class StudentBooksRvAdapter extends RecyclerView.Adapter<SchoolBooksHolde
                                     "",
                                     Integer.parseInt(avalibaleQ),
                                     "true", "school",
-                                    pSize, String.valueOf(model.getSchool().getSchoolId()),"book");
+                                    pSize, model.getSchool().getSchoolId(),"book");
                             if (isInserted) {
                                 holder.mark_fav.setVisibility(View.GONE);
                                 holder.mark_fav_red.setVisibility(View.VISIBLE);
@@ -302,7 +302,7 @@ public class StudentBooksRvAdapter extends RecyclerView.Adapter<SchoolBooksHolde
                     Integer.parseInt(avalibaleQ),
                     String.valueOf(model.isIsWishlist()),
                     localStorage.getString(LocalStorage.TYPE),
-                    pSize, String.valueOf(model.getSchool().getSchoolId()),"book");
+                    pSize, model.getSchool().getSchoolId(),"book");
             if (isInserted) {
                 getSqliteData1();
                 Toast.makeText(activity, "Items Added Succesfully", Toast.LENGTH_SHORT).show();
@@ -374,7 +374,7 @@ public class StudentBooksRvAdapter extends RecyclerView.Adapter<SchoolBooksHolde
                                     Integer.parseInt(avalibaleQ),
                                     String.valueOf(model.isIsWishlist()),
                                     localStorage.getString(LocalStorage.TYPE),
-                                    pSize, String.valueOf(model.getSchool().getSchoolId()),"book");
+                                    pSize, model.getSchool().getSchoolId(), "book");
                             if (isInserted) {
                                 getSqliteData1();
                                 Toast.makeText(activity, "Items Added Succesfully", Toast.LENGTH_SHORT).show();
@@ -444,7 +444,7 @@ public class StudentBooksRvAdapter extends RecyclerView.Adapter<SchoolBooksHolde
                         Integer.parseInt(avalibaleQ),
                         String.valueOf(model.isIsWishlist()),
                         localStorage.getString(LocalStorage.TYPE),
-                        pSize, String.valueOf(model.getSchool().getSchoolId()),"book");
+                        pSize, model.getSchool().getSchoolId(), "book");
 
                 if (isInserted) {
                     getSqliteData1();
@@ -499,7 +499,7 @@ public class StudentBooksRvAdapter extends RecyclerView.Adapter<SchoolBooksHolde
                         Integer.parseInt(avalibaleQ),
                         String.valueOf(model.isIsWishlist()),
                         localStorage.getString(LocalStorage.TYPE),
-                        pSize, String.valueOf(model.getSchool().getSchoolId()),"book");
+                        pSize, model.getSchool().getSchoolId(), "book");
 
                 if (isInserted) {
                     getSqliteData1();

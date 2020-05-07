@@ -36,7 +36,6 @@ import com.io.bookstores.listeners.RecyclerViewClickListener;
 import com.io.bookstores.localStorage.DbHelper;
 import com.io.bookstores.localStorage.LocalStorage;
 import com.io.bookstores.model.bookListModel.CartLocalListResponseMode;
-import com.io.bookstores.model.bookListModel.Datum;
 import com.io.bookstores.model.loginModel.LoginModel;
 import com.io.bookstores.model.wishlistModel.AddorRemoveWishlistResponseModel;
 import com.io.bookstores.model.wishlistModel.GetWishListDataModel;
@@ -94,7 +93,7 @@ public class FavoriteItemsAdapter extends RecyclerView.Adapter<FavoriteItemsAdap
         holder.clayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showBookDetila(model);
+                showBookDetila(model, position);
             }
         });
         holder.imageView19.setOnClickListener(new View.OnClickListener() {
@@ -197,8 +196,8 @@ public class FavoriteItemsAdapter extends RecyclerView.Adapter<FavoriteItemsAdap
         }
     }
 
-    private void showBookDetila(GetWishListDataModel model) {
-        final Dialog dialog = new Dialog(mContext);
+    private void showBookDetila(GetWishListDataModel model, final int position) {
+        final Dialog dialog = new Dialog(mContext, R.style.dialogTheme);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         DisplayMetrics metrics = mContext.getResources().getDisplayMetrics();
         int width = metrics.widthPixels;
@@ -208,26 +207,41 @@ public class FavoriteItemsAdapter extends RecyclerView.Adapter<FavoriteItemsAdap
         dialog.setContentView(R.layout.book_detial_dialog);
         dialog.setTitle("");
         final Button Yes = (Button) dialog.findViewById(R.id.yes);
-        final Button No = (Button) dialog.findViewById(R.id.no);
+        final Button btn_add_To_cart = (Button) dialog.findViewById(R.id.btn_add_To_cart);
         final TextView oldPassword = (TextView) dialog.findViewById(R.id.et_old_password);
         final TextView newPassword = (TextView) dialog.findViewById(R.id.et_new_password);
         final TextView tv_book_price = (TextView) dialog.findViewById(R.id.tv_book_price);
         final ImageView Clear = (ImageView) dialog.findViewById(R.id.clear);
+        final ImageView iv_image = (ImageView) dialog.findViewById(R.id.iv_image);
 
         oldPassword.setText(model.getName());
         newPassword.setText(model.getDescription());
         tv_book_price.setText("" + model.getPrice()+"K.D");
+        Glide.with(mContext).load(Config.imageUrl + model.getAvatarPath()).into(iv_image);
         Yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
             }
         });
-        No.setOnClickListener(new View.OnClickListener() {
+        btn_add_To_cart.setOnClickListener(
+                new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                dialog.dismiss();
+                if (type.equals("store") && schoolStoreId.equals(String.valueOf(mData.get(position).getStoreId()))) {
+                    addtoCartWork(mData, position);
+                    dialog.dismiss();
+                } else if (type.equals("school") && schoolStoreId.equals(String.valueOf(mData.get(position).getStoreId()))) {
+                    addtoCartWork(mData, position);
+                    dialog.dismiss();
+                } else if (type.isEmpty()) {
+                    addtoCartWork(mData, position);
+                    dialog.dismiss();
+                } else {
+                    openDialogBox(mData, position);
+                    dialog.dismiss();
+                }
             }
         });
         Clear.setOnClickListener(new View.OnClickListener() {
@@ -333,8 +347,8 @@ public class FavoriteItemsAdapter extends RecyclerView.Adapter<FavoriteItemsAdap
                     mData.get(position).getName(),
                     String.valueOf(mData.get(position).getGstPrice()),
                     mData.get(position).getQuantity(),
-                    "false", localStorage.getString(LocalStorage.TYPE),
-                    "", String.valueOf(mData.get(position).getStoreId()),"book");
+                    "false", "store",
+                    "", mData.get(position).getStoreId(), "book");
 
             if (isInserted) {
                 Toast.makeText(mContext, "Items Added Succesfully", Toast.LENGTH_SHORT).show();
@@ -344,9 +358,8 @@ public class FavoriteItemsAdapter extends RecyclerView.Adapter<FavoriteItemsAdap
                 isdeleted = dbHelper.deleteOneWishList(String.valueOf(mData.get(position).getBookId()));
 
                 if (isdeleted == true) {
-                    mData.remove(position);
-                    notifyItemRemoved(position);
-                    notifyItemRangeChanged(position, mData.size());
+                    getSqliteData1();
+                    removeWishListItem(mData.get(position).getBookId(), position);
                     // Toast.makeText(mContext, "wishlist delete sucessfully", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(mContext, "Data is not deleted", Toast.LENGTH_SHORT).show();
@@ -383,11 +396,12 @@ public class FavoriteItemsAdapter extends RecyclerView.Adapter<FavoriteItemsAdap
                         mData.get(position).getPrice(),
                         mData.get(position).getDescription(),
                         String.valueOf(mData.get(position).getGstPrice()),
-                        mData.get(position).getQuantity(), "false", localStorage.getString(LocalStorage.TYPE),
-                        "", String.valueOf(mData.get(position).getStoreId()),"book");
+                        mData.get(position).getQuantity(), "false", "store",
+                        "", mData.get(position).getStoreId(), "book");
 
                 if (isInserted) {
                     getSqliteData1();
+                    removeWishListItem(mData.get(position).getBookId(), position);
                     Toast.makeText(mContext, "Items Added Succesfully", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(mContext, "Something Went Wrong", Toast.LENGTH_SHORT).show();

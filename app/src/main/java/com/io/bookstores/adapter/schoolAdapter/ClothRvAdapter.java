@@ -68,6 +68,7 @@ public class ClothRvAdapter extends RecyclerView.Adapter<ClothHolder> {
     ItemClickListner itemClickListner;
     private List<ProductDataModel> data;
     private LoginModel loginModel;
+    Boolean isOpen = false;
     private DbHelper dbHelper;
     private String wishlistdata;
     private ItemSizeAdapter adapter;
@@ -206,14 +207,7 @@ public class ClothRvAdapter extends RecyclerView.Adapter<ClothHolder> {
         Yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               /* if (type.equals("store")) {
-                    if (localStorage.getString(LocalStorage.SIZEEID).equals("")) {
-                        Toast.makeText(activity, "Please Select Size", Toast.LENGTH_SHORT).show();
-                    } else {
-                        dialog.dismiss();
-                        openDialogBoxWishList(model, position, holder);
-                    }
-                } else {*/
+
                     LocalStorage localStorage = new LocalStorage(activity);
                     if (localStorage.getString(LocalStorage.SIZEEID).equals("")) {
                         Toast.makeText(activity, "Please Select Size", Toast.LENGTH_SHORT).show();
@@ -236,11 +230,13 @@ public class ClothRvAdapter extends RecyclerView.Adapter<ClothHolder> {
                                         "",
                                         Integer.parseInt(localStorage.getString(LocalStorage.PQUANTITY)),
                                         "true", "school", localStorage.getString(LocalStorage.SIZEEID),
-                                        String.valueOf(model.getSchool().getSchoolId()), "cloth");
+                                        model.getSchool().getSchoolId(), "cloth");
                                 if (isInserted) {
                                     holder.mark_fav.setVisibility(View.GONE);
                                     holder.mark_fav_red.setVisibility(View.VISIBLE);
                                     getWishListStatus();
+                                    localStorage.putString(LocalStorage.SIZEEID, "");
+                                    localStorage.putString(LocalStorage.PQUANTITY, "");
                                     Toast.makeText(activity, "add item to wishlist sucessfully", Toast.LENGTH_SHORT).show();
                                 } else {
                                     Toast.makeText(activity, "Something Went Wrong", Toast.LENGTH_SHORT).show();
@@ -319,10 +315,18 @@ public class ClothRvAdapter extends RecyclerView.Adapter<ClothHolder> {
                     }
                 } else if (type.equals("school") && schoolStoreId.equals(String.valueOf(model.getSchool().getSchoolId()))) {
                     addDataToCartClothes(model, position);
-                    dialog.dismiss();
+                    if (isOpen) {
+
+                    } else {
+                        dialog.dismiss();
+                    }
                 } else if (type.isEmpty()) {
                     addDataToCartClothes(model, position);
-                    dialog.dismiss();
+                    if (isOpen) {
+
+                    } else {
+                        dialog.dismiss();
+                    }
                 } else {
                     if (localStorage.getString(LocalStorage.SIZEEID).equals("")) {
                         Toast.makeText(activity, "Please Select Size", Toast.LENGTH_SHORT).show();
@@ -364,7 +368,9 @@ public class ClothRvAdapter extends RecyclerView.Adapter<ClothHolder> {
         LocalStorage localStorage = new LocalStorage(activity);
         if (localStorage.getString(LocalStorage.SIZEEID).equals("")) {
             Toast.makeText(activity, "Please Select Size", Toast.LENGTH_SHORT).show();
+            isOpen = true;
         } else {
+            isOpen = false;
             //  dialog.dismiss();
                         /*String dummyId = localStorage.getString(LocalStorage.Dummy_School_ID);
                         String schoolId = localStorage.getString(LocalStorage.schoolId);
@@ -382,8 +388,8 @@ public class ClothRvAdapter extends RecyclerView.Adapter<ClothHolder> {
                         "",
                         Integer.parseInt(localStorage.getString(LocalStorage.PQUANTITY)),
                         String.valueOf(model.isIsWishlist()),
-                        localStorage.getString(LocalStorage.TYPE),
-                        localStorage.getString(LocalStorage.SIZEEID), String.valueOf(model.getSchool().getSchoolId()), "cloth");
+                        "school",
+                        localStorage.getString(LocalStorage.SIZEEID), model.getSchool().getSchoolId(), "cloth");
                 if (isInserted) {
                     getSqliteData1();
                     localStorage.putString(LocalStorage.SIZEEID, "");
@@ -429,11 +435,13 @@ public class ClothRvAdapter extends RecyclerView.Adapter<ClothHolder> {
                         "",
                         Integer.parseInt(localStorage.getString(LocalStorage.PQUANTITY)),
                         String.valueOf(model.isIsWishlist()),
-                        localStorage.getString(LocalStorage.TYPE),
-                        localStorage.getString(LocalStorage.SIZEEID), String.valueOf(model.getSchool().getSchoolId()), "cloth");
+                        "school",
+                        localStorage.getString(LocalStorage.SIZEEID), model.getSchool().getSchoolId(), "cloth");
 
                 if (isInserted) {
                     getSqliteData1();
+                    localStorage.putString(LocalStorage.SIZEEID, "");
+                    localStorage.putString(LocalStorage.PQUANTITY, "");
                     Toast.makeText(activity, "Items Added Succesfully", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(activity, "Something Went Wrong", Toast.LENGTH_SHORT).show();
@@ -483,8 +491,8 @@ public class ClothRvAdapter extends RecyclerView.Adapter<ClothHolder> {
                         "",
                         Integer.parseInt(localStorage.getString(LocalStorage.PQUANTITY)),
                         String.valueOf(model.isIsWishlist()),
-                        localStorage.getString(LocalStorage.TYPE),
-                        localStorage.getString(LocalStorage.SIZEEID), String.valueOf(1),"cloth");
+                        "school",
+                        localStorage.getString(LocalStorage.SIZEEID), 1, "cloth");
 
                 if (isInserted) {
                     getSqliteData1();

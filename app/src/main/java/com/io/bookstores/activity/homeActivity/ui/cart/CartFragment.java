@@ -24,7 +24,6 @@ import com.google.gson.Gson;
 import com.io.bookstores.Config;
 import com.io.bookstores.R;
 import com.io.bookstores.StaticData;
-import com.io.bookstores.activity.authentication.LoginActivity;
 import com.io.bookstores.activity.checkoutActivity.CheckoutActivity;
 import com.io.bookstores.adapter.basicAdapter.CartAdapter;
 import com.io.bookstores.apicaller.ApiCaller;
@@ -296,9 +295,7 @@ public class CartFragment extends Fragment {
                                     startActivity(intent);*/
                                 } else {
                                     dialog.dismiss();
-                                    Intent intent = new Intent(getActivity(), LoginActivity.class);
-                                    startActivity(intent);
-                                    Toast.makeText(getActivity(), "" + result.getMessage() + ". please login", Toast.LENGTH_LONG).show();
+                                    loginApi(u_emael, password);
                                 }
 
                             }
@@ -333,7 +330,7 @@ public class CartFragment extends Fragment {
                                     navigateToHomeActivit(result);
                                 } else {
                                     dialog.dismiss();
-                                    Toast.makeText(getActivity(), "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), "User have already register with this email-id, Please Login  ", Toast.LENGTH_SHORT).show();
                                 }
                             }
 

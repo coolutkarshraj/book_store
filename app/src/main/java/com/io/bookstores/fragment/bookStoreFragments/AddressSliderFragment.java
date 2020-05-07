@@ -64,12 +64,12 @@ public class AddressSliderFragment extends Fragment {
             sizeo = 0;
             i = 0;
         } else if (HomeFragment.viewPager.getCurrentItem() > 0) {
-            sizeo = 6 * HomeFragment.viewPager.getCurrentItem();
-            i = 6 * HomeFragment.viewPager.getCurrentItem();
+            sizeo = 4 * HomeFragment.viewPager.getCurrentItem();
+            i = 4 * HomeFragment.viewPager.getCurrentItem();
         }
 
         for (i = sizeo; i <= listd.size() - 1; i++) {
-            if (i < sizeo + 6) {
+            if (i < sizeo + 4) {
                 item.add(listd.get(i));
             }
         }

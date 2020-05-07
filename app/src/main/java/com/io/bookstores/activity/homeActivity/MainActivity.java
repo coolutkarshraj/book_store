@@ -188,8 +188,8 @@ public class MainActivity extends AppCompatActivity implements
             public void onClick(View v) {
                 if (loginModel == null) {
                     Intent i = new Intent(MainActivity.this, SignUpActivity.class);
-                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(i);
                     finish();
                 } else {
@@ -207,8 +207,8 @@ public class MainActivity extends AppCompatActivity implements
             public void onClick(View v) {
                 if (loginModel == null) {
                     Intent i = new Intent(MainActivity.this, SignUpActivity.class);
-                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(i);
                     finish();
                 } else {
@@ -268,8 +268,11 @@ public class MainActivity extends AppCompatActivity implements
             public void onClick(View view) {
                 if (nav_Email.getText().toString().trim().equals("Login or SignUp")) {
                     Intent i = new Intent(MainActivity.this, LoginActivity.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(i);
                     dbHelper.deleteAllWishList();
+                    finish();
                 } else {
                     logoutApiCall();
                 }
@@ -282,7 +285,10 @@ public class MainActivity extends AppCompatActivity implements
             public void onClick(View view) {
                 if (nav_user.getText().toString().trim().equals("Hello Guest")) {
                     Intent i = new Intent(MainActivity.this, LoginActivity.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(i);
+                    finish();
                 }
             }
         });
@@ -291,7 +297,10 @@ public class MainActivity extends AppCompatActivity implements
             public void onClick(View v) {
                 if (nav_Email.getText().toString().trim().equals("Login or SignUp")) {
                     Intent i = new Intent(MainActivity.this, LoginActivity.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(i);
+                    finish();
                 }
             }
         });

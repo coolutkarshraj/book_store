@@ -104,7 +104,7 @@ public class FavoriteItemsLocalAdapter extends RecyclerView.Adapter<FavoriteItem
             @Override
             public void onClick(View view) {
                 // addToCArt(model, position);
-                showBookDetila(model);
+                showBookDetila(model, position, mData);
             }
         });
         holder.imageView19.setOnClickListener(new View.OnClickListener() {
@@ -170,7 +170,7 @@ public class FavoriteItemsLocalAdapter extends RecyclerView.Adapter<FavoriteItem
         holder.imageView21.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addToCArt(model, position);
+                addToCArt(model, position, mData);
 
             }
         });
@@ -248,7 +248,7 @@ public class FavoriteItemsLocalAdapter extends RecyclerView.Adapter<FavoriteItem
         }
     }
 
-    private void addToCArt(final WishListLocalResponseModel model, final int position) {
+    private void addToCArt(final WishListLocalResponseModel model, final int position, final List<WishListLocalResponseModel> mData) {
 
         final Dialog dialog = new Dialog(mContext);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -272,6 +272,9 @@ public class FavoriteItemsLocalAdapter extends RecyclerView.Adapter<FavoriteItem
                     addtoCartWork(mData, position);
                     dialog.dismiss();
                 } else if (type.equals("school") && schoolStoreId.equals(model.getSchoolStoreId())) {
+                    addtoCartWork(mData, position);
+                    dialog.dismiss();
+                } else if (type.isEmpty()) {
                     addtoCartWork(mData, position);
                     dialog.dismiss();
                 } else {
@@ -324,12 +327,13 @@ public class FavoriteItemsLocalAdapter extends RecyclerView.Adapter<FavoriteItem
                         mData.get(position).getName(),
                         mData.get(position).getGst(),
                         Integer.parseInt(mData.get(position).getAvailibleQty()),
-                        "false", localStorage.getString(LocalStorage.TYPE),
-                        "", mData.get(position).getSchoolStoreId(),mData.get(position).getCategory());
+                        "false", mData.get(position).getType(),
+                        "", Integer.parseInt(mData.get(position).getSchoolStoreId()), mData.get(position).getCategory());
 
                 if (isInserted) {
                     dbHelper = new DbHelper(mContext);
                     Cursor cursor = dbHelper.getData();
+                    getSqliteData1();
                     boolean isdeleted = false;
                     isdeleted = dbHelper.deleteOneWishList(String.valueOf(mData.get(position).getpID()));
 
@@ -374,12 +378,12 @@ public class FavoriteItemsLocalAdapter extends RecyclerView.Adapter<FavoriteItem
                     mData.get(position).getName(),
                     mData.get(position).getGst(),
                     Integer.parseInt(mData.get(position).getAvailibleQty()),
-                    "false", localStorage.getString(LocalStorage.TYPE),
-
-                    mData.get(position).getSize(), mData.get(position).getSchoolStoreId(),mData.get(position).getCategory());
+                    "false", mData.get(position).getType(),
+                    mData.get(position).getSize(), Integer.parseInt(mData.get(position).getSchoolStoreId()), mData.get(position).getCategory());
 
             if (isInserted) {
                 Toast.makeText(mContext, "Items Added Succesfully", Toast.LENGTH_SHORT).show();
+                getSqliteData1();
 
                 dbHelper = new DbHelper(mContext);
                 boolean isdeleted = false;
@@ -415,9 +419,9 @@ public class FavoriteItemsLocalAdapter extends RecyclerView.Adapter<FavoriteItem
         }
     }
 
-    private void showBookDetila(WishListLocalResponseModel model) {
+    private void showBookDetila(final WishListLocalResponseModel model, final int position, final List<WishListLocalResponseModel> mData) {
 
-        final Dialog dialog = new Dialog(mContext);
+        final Dialog dialog = new Dialog(mContext, R.style.dialogTheme);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         DisplayMetrics metrics = mContext.getResources().getDisplayMetrics();
         int width = metrics.widthPixels;
@@ -427,7 +431,7 @@ public class FavoriteItemsLocalAdapter extends RecyclerView.Adapter<FavoriteItem
         dialog.setContentView(R.layout.book_detial_dialog);
         dialog.setTitle("");
         final Button Yes = (Button) dialog.findViewById(R.id.yes);
-        final Button No = (Button) dialog.findViewById(R.id.no);
+        final Button btn_add_To_cart = (Button) dialog.findViewById(R.id.btn_add_To_cart);
         final TextView chatdelete = (TextView) dialog.findViewById(R.id.chatdelete);
         final TextView tv_heding_name = (TextView) dialog.findViewById(R.id.tv_heding_name);
         final TextView tv_heding_description = (TextView) dialog.findViewById(R.id.tv_heding_description);
@@ -436,6 +440,7 @@ public class FavoriteItemsLocalAdapter extends RecyclerView.Adapter<FavoriteItem
         final TextView newPassword = (TextView) dialog.findViewById(R.id.et_new_password);
         final TextView tv_book_price = (TextView) dialog.findViewById(R.id.tv_book_price);
         final ImageView Clear = (ImageView) dialog.findViewById(R.id.clear);
+        final ImageView iv_image = (ImageView) dialog.findViewById(R.id.iv_image);
 
         if (model.getCategory().equals("cloth")) {
             chatdelete.setText(mContext.getResources().getString(R.string.clothedetial));
@@ -446,17 +451,30 @@ public class FavoriteItemsLocalAdapter extends RecyclerView.Adapter<FavoriteItem
         oldPassword.setText(model.getName());
         newPassword.setText(model.getDescription());
         tv_book_price.setText("" + model.getPrice() + "K.D");
+        Glide.with(mContext).load(Config.imageUrl + model.getImage()).into(iv_image);
         Yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
             }
         });
-        No.setOnClickListener(new View.OnClickListener() {
+        btn_add_To_cart.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                dialog.dismiss();
+                if (type.equals("store") && schoolStoreId.equals(model.getSchoolStoreId())) {
+                    addtoCartWork(mData, position);
+                    dialog.dismiss();
+                } else if (type.equals("school") && schoolStoreId.equals(model.getSchoolStoreId())) {
+                    addtoCartWork(mData, position);
+                    dialog.dismiss();
+                } else if (type.isEmpty()) {
+                    addtoCartWork(mData, position);
+                    dialog.dismiss();
+                } else {
+                    openDialogBox(mData, position);
+                    dialog.dismiss();
+                }
             }
         });
         Clear.setOnClickListener(new View.OnClickListener() {
@@ -537,8 +555,8 @@ public class FavoriteItemsLocalAdapter extends RecyclerView.Adapter<FavoriteItem
                     shoppingBagModel.setSchoolStoreId(json_data.getString("schoolStoreId"));
                     type = json_data.getString("type");
                     schoolStoreId = json_data.getString("schoolStoreId");
-
                     shoppingBagModel.setAvailibleQty(json_data.getString("avalible"));
+                    shoppingBagModel.setCategory(json_data.getString("category"));
                     shoppingBagModel.setPID(json_data.getString("P_ID"));
                     shoppingBagModel.setGst(json_data.getString("gstPrice"));
                     list.add(shoppingBagModel);

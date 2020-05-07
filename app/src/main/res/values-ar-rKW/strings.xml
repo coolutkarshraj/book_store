@@ -233,4 +233,15 @@
     <string name="clothedetial">تفاصيل القماش</string>
     <string name="schoolsnotavailable">المدارس غير متوفرة</string>
     <string name="datanotfound">لم يتم العثور على البيانات</string>
+
+    <string name="cart_address"><font fgcolor="#f00000">*</font>العنوان (يرجى إدخال العنوان الكامل)</string>
+    <string name="cart_name"><font fgcolor="#f00000">*</font>اسمك</string>
+    <string name="cart_email"><font fgcolor="#f00000">*</font>البريد الإلكتروني</string>
+    <string name="cart_number"><font fgcolor="#f00000">*</font>رقم الهاتف</string>
+    <string name="cart_password"><font fgcolor="#f00000">*</font>كلمه السر</string>
+
+    <string name="category">الفئة</string>
+    <string name="author_name">اسم المؤلف</string>
+    <string name="addbook">أضف كتاب</string>
+    <string name="editbook">تحرير تفاصيل الكتاب</string>
 </resources>

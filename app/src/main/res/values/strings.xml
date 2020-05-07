@@ -235,6 +235,14 @@
     <string name="bookStore">Book Store</string>
     <string name="school">School</string>
     <string name="datanotfound">Data Not Found</string>
-
+    <string name="cart_address"><font fgcolor="#f00000">*</font>Adderss(Please enter full address)</string>
+    <string name="cart_name"><font fgcolor="#f00000">*</font>Your Name</string>
+    <string name="cart_email"><font fgcolor="#f00000">*</font>Email</string>
+    <string name="cart_number"><font fgcolor="#f00000">*</font>Phone Number</string>
+    <string name="cart_password"><font fgcolor="#f00000">*</font>Password</string>
+    <string name="category">Category</string>
+    <string name="author_name">Author Name</string>
+    <string name="addbook">Add Book</string>
+    <string name="editbook">Edit Book Details</string>
 
 </resources>

@@ -15,7 +15,6 @@
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="@dimen/radius_2dp"
         tools:ignore="UnusedAttribute">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -42,7 +41,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:text="Add Book"
+                    android:text="@string/addbook"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/h20"
                     tools:ignore="HardcodedText" />
@@ -127,14 +126,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/twenty_four_dp"
                 android:layout_marginTop="@dimen/font_10"
-                android:text="Category"
+                android:text="@string/category"
                 android:textColor="@color/dark_gray_text_color"
                 android:textSize="@dimen/sixteen_sp"
                 tools:ignore="HardcodedText" />
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
+                android:layout_marginTop="@dimen/eight_dp"
                 android:layout_marginLeft="@dimen/twenty_four_dp"
                 android:layout_marginRight="@dimen/twenty_four_dp"
                 android:background="@drawable/layout_bg_on_focus">
@@ -143,17 +143,17 @@
                     android:id="@+id/category_spinner"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="8dp">
+                    android:layout_centerVertical="true">
 
                 </Spinner>
-            </LinearLayout>
+            </RelativeLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/twenty_four_dp"
                 android:layout_marginTop="@dimen/margin_10dp"
-                android:text="Description"
+                android:text="@string/description"
                 android:textColor="@color/dark_gray_text_color"
                 android:textSize="@dimen/sixteen_sp"
                 tools:ignore="HardcodedText" />
@@ -178,7 +178,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/twenty_four_dp"
                 android:layout_marginTop="@dimen/margin_10dp"
-                android:text="Price"
+                android:text="@string/price"
                 android:textColor="@color/dark_gray_text_color"
                 android:textSize="@dimen/sixteen_sp"
                 tools:ignore="HardcodedText,RtlHardcoded" />
@@ -201,7 +201,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/twenty_four_dp"
                 android:layout_marginTop="@dimen/margin_10dp"
-                android:text="Quantity"
+                android:text="@string/quantity"
                 android:textColor="@color/dark_gray_text_color"
                 android:textSize="@dimen/sixteen_sp"
                 tools:ignore="HardcodedText,RtlHardcoded" />
@@ -225,7 +225,7 @@
                 android:layout_marginStart="@dimen/twenty_four_dp"
                 android:layout_marginTop="@dimen/margin_10dp"
                 android:inputType="number"
-                android:text="Author Name"
+                android:text="@string/author_name"
                 android:textColor="@color/dark_gray_text_color"
                 android:textSize="@dimen/sixteen_sp"
                 tools:ignore="HardcodedText,TextViewEdits" />
@@ -262,7 +262,7 @@
                     android:background="@drawable/round_corner_light_gray"
                     android:paddingLeft="@dimen/margin_20dp"
                     android:paddingRight="@dimen/margin_20dp"
-                    android:text="Cancel"
+                    android:text="@string/cancel"
                     android:textAllCaps="false"
                     android:textColor="@color/black"
                     android:textSize="@dimen/h2"
@@ -277,7 +277,7 @@
                     android:background="@drawable/round_corner_button_yellow"
                     android:paddingLeft="@dimen/margin_20dp"
                     android:paddingRight="@dimen/margin_20dp"
-                    android:text="Save"
+                    android:text="@string/save"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
                     android:textSize="@dimen/h2"

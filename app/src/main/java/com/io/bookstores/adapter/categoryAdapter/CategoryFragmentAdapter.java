@@ -1,5 +1,7 @@
 package com.io.bookstores.adapter.categoryAdapter;
 
+import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -28,5 +30,10 @@ public class CategoryFragmentAdapter extends FragmentStatePagerAdapter {
     @Override
     public int getCount() {
         return mfragments.size();
+    }
+
+    @Override
+    public Parcelable saveState() {
+        return null;
     }
 }
