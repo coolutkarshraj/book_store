@@ -177,6 +177,8 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener,
                                 if (result.getStatus()) {
                                     setSliderAdsAdapter(result);
                                 }
+                            }else {
+                                Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                             }
                         }
                     });
@@ -217,6 +219,8 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener,
                                 } else {
                                     Toast.makeText(activity, result.getMessage(), Toast.LENGTH_SHORT).show();
                                 }
+                            }else {
+                                Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                             }
 
                         }
@@ -259,14 +263,19 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener,
                         @Override
                         public void onCompleted(Exception e, StoreModel result) {
                             if (e != null) {
+                                dialog.dismiss();
                                 Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                             }
                             if (result != null) {
                                 if (result.getStatus()) {
+                                    dialog.dismiss();
                                     setRecyclerView(result);
                                 }
+                            }else {
+                                Utils.showAlertDialog(getActivity(), "Something Went Wrong");
+                                dialog.dismiss();
                             }
-                            dialog.dismiss();
+
 
 
                         }
@@ -352,8 +361,10 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener,
                                     setRecyclerViewData(result);
                                 }
 
+                            }else {
+                                dialog.dismiss();
                             }
-                            dialog.dismiss();
+
 
                         }
                     });

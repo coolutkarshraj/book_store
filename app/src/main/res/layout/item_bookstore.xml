@@ -46,33 +46,51 @@
                 tools:ignore="ContentDescription" />
         </com.google.android.material.card.MaterialCardView>
 
-        <TextView
-            android:id="@+id/tv_bookstore_tilte"
+
+        <RelativeLayout
             android:layout_width="0dp"
+            android:id="@+id/layout"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_8dp"
-            android:layout_marginTop="@dimen/margin_8dp"
-            android:text="TextView"
-            android:textSize="16sp"
-            cardview:layout_constraintEnd_toStartOf="@+id/materialCardView"
-            cardview:fontFamily="@font/arial_bold"
             cardview:layout_constraintStart_toStartOf="parent"
             cardview:layout_constraintTop_toTopOf="parent"
-            tools:ignore="HardcodedText" />
-
-        <TextView
-            android:id="@+id/tv_bookstore_desc"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_8dp"
-            android:layout_marginTop="12dp"
-            android:text="Bookstore definition is - a place of business where books are the main item offered for sale —called also bookshop."
-            android:textSize="@dimen/h3"
-            cardview:fontFamily="sans-serif"
+            android:layout_marginTop="@dimen/margin_8dp"
+            cardview:layout_constraintEnd_toStartOf="@+id/materialCardView"
+            tools:ignore="HardcodedText">
+
+            <TextView
+                android:id="@+id/tv_bookstore_tilte"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+android:paddingEnd="@dimen/margin_5dp"
+                android:text="TextView"
+                android:textSize="16sp"
+
+                cardview:fontFamily="@font/arial_bold" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:id="@+id/layout_below"
+            android:layout_height="wrap_content"
             cardview:layout_constraintEnd_toStartOf="@+id/materialCardView"
             cardview:layout_constraintStart_toStartOf="parent"
-            cardview:layout_constraintTop_toBottomOf="@+id/tv_bookstore_tilte"
-            tools:ignore="HardcodedText" />
+            cardview:layout_constraintTop_toBottomOf="@+id/layout"
+            tools:ignore="HardcodedText">
+            <TextView
+                android:id="@+id/tv_bookstore_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_8dp"
+                android:layout_marginTop="12dp"
+                android:textSize="@dimen/h3"
+                android:paddingEnd="@dimen/margin_5dp"
+                android:maxLines="5"
+                cardview:fontFamily="sans-serif"
+                />
+        </RelativeLayout>
+
+
 
         <Button
             android:id="@+id/btn_browese"

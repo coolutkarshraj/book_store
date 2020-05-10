@@ -114,16 +114,22 @@ public class OrderFragment extends Fragment implements RecyclerViewClickListener
                                 Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                                 return;
                             }
-
-                            if (result.getData() == null || result.getData().size() == 0 || result.getData().isEmpty()) {
-                                ll_book_order.setVisibility(View.GONE);
-                                isEmpty = "empty";
-                                callOrderOfSchool();
-                            } else {
-                                isEmpty = "";
-                                ll_book_order.setVisibility(View.VISIBLE);
-                                setRecyclerViewData(result);
-                            }
+                           if(result!=null) {
+                               if (result.getData() == null || result.getData().size() == 0 || result.getData().isEmpty()) {
+                                   dialog.dismiss();
+                                   ll_book_order.setVisibility(View.GONE);
+                                   isEmpty = "empty";
+                                   callOrderOfSchool();
+                               } else {
+                                   dialog.dismiss();
+                                   isEmpty = "";
+                                   ll_book_order.setVisibility(View.VISIBLE);
+                                   setRecyclerViewData(result);
+                               }
+                           }else {
+                               dialog.dismiss();
+                               Utils.showAlertDialog(getActivity(), "Something Went Wrong");
+                           }
 
 
                         }

@@ -151,6 +151,8 @@ public class EnrollCourseListFragment extends Fragment implements View.OnClickLi
                                 guestUserData(result);
                                 dialog.dismiss();
 
+                            }else {
+                                Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                             }
 
 
@@ -201,6 +203,9 @@ public class EnrollCourseListFragment extends Fragment implements View.OnClickLi
                                     datasetToRecyclerView(result);
                                     dialog.dismiss();
                                 }
+                            }else {
+                                dialog.dismiss();
+                                Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                             }
 
 

@@ -23,6 +23,7 @@ import com.io.bookstores.apicaller.ApiCaller;
 import com.io.bookstores.fragment.courseFragment.AllCoursesListFragment;
 import com.io.bookstores.listeners.ItemClickListner;
 import com.io.bookstores.listeners.RecyclerViewClickListener;
+import com.io.bookstores.localStorage.LocalStorage;
 import com.io.bookstores.model.insituteModel.InsituiteDataModel;
 import com.io.bookstores.model.instituteDetial.InsituiteDetialResponseModel;
 import com.io.bookstores.utility.Utils;
@@ -41,6 +42,7 @@ public class InstitutesAdapter extends RecyclerView.Adapter<InstitutesAdapter.My
     String strAddress;
     String strState;
     String strCity;
+    LocalStorage localStorage;
 
     private RecyclerViewClickListener item;
 
@@ -58,6 +60,7 @@ public class InstitutesAdapter extends RecyclerView.Adapter<InstitutesAdapter.My
         View view ;
         LayoutInflater mInflater = LayoutInflater.from(mContext);
         view = mInflater.inflate(R.layout.item_institute,parent,false);
+        localStorage = new LocalStorage(mContext);
         return new MyViewHolder(view);
     }
 
@@ -65,8 +68,14 @@ public class InstitutesAdapter extends RecyclerView.Adapter<InstitutesAdapter.My
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         InsituiteDataModel model = mData.get(position);
        // holder.cardView.setAnimation(AnimationUtils.loadAnimation(mContext,R.anim.fade_scale_animation));
-        holder.tv_institute_title.setText(model.getInstituteName());
-        holder.tv_institute_desc.setText(model.getDescription());
+        if (localStorage.getString(LocalStorage.islanguage).equals("kuwait")) {
+            holder.tv_institute_title.setText(model.getArabicName());
+            holder.tv_institute_desc.setText(model.getArabicDescription());
+        } else {
+            holder.tv_institute_title.setText(model.getInstituteName());
+            holder.tv_institute_desc.setText(model.getDescription());
+        }
+
 
         holder.bv_institute_browse.setOnClickListener(new View.OnClickListener() {
             @Override

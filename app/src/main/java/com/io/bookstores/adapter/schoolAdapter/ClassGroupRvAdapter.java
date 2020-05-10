@@ -4,11 +4,11 @@ import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.io.bookstores.R;
+import com.io.bookstores.StaticData;
 import com.io.bookstores.holder.ClassGroupHolder;
 import com.io.bookstores.listeners.ItemClickListner;
 import com.io.bookstores.localStorage.LocalStorage;
@@ -22,6 +22,7 @@ public class ClassGroupRvAdapter extends RecyclerView.Adapter<ClassGroupHolder> 
     private Activity activity;
     private List<ClassDataModel> list;
     private ItemClickListner itemClickListner;
+    LocalStorage localStorage;
 
 
     public ClassGroupRvAdapter(Activity activity, List<ClassDataModel> list) {
@@ -33,13 +34,19 @@ public class ClassGroupRvAdapter extends RecyclerView.Adapter<ClassGroupHolder> 
     @Override
     public ClassGroupHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(activity).inflate(R.layout.item_classes, parent, false);
+        localStorage = new LocalStorage(activity);
         return new ClassGroupHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ClassGroupHolder holder, final int position) {
         final ClassDataModel model = list.get(position);
-        holder.tvClassName.setText(model.getName());
+        if (localStorage.getString(LocalStorage.islanguage).equals("kuwait")) {
+            holder.tvClassName.setText(model.getArabicName());
+        } else {
+            holder.tvClassName.setText(model.getName());
+        }
+
         holder.rlRoot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

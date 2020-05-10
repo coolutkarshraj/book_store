@@ -86,12 +86,18 @@ public class BookstoresFragmentWithFilter extends Fragment {
                                 Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                                 return;
                             }
-                            if (result.getStatus() == true) {
+
+                            if(result!=null) {
+                                if (result.getStatus() == true) {
+                                    dialog.dismiss();
+                                    setRecyclerViewData(result);
+                                } else {
+                                    dialog.dismiss();
+                                    Toast.makeText(getActivity(), "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            }else {
                                 dialog.dismiss();
-                                setRecyclerViewData(result);
-                            } else {
-                                dialog.dismiss();
-                                Toast.makeText(getActivity(), "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                                Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                             }
 
 

@@ -263,21 +263,24 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
                                 Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                                 return;
                             }
-                            if (result.getStatus() == true) {
+                            if(result!=null) {
+                                if (result.getStatus() == true) {
 
-                                items.clear();
-                                categoryId.clear();
-                                for (int i = 0; i < result.getData().size(); i++) {
-                                    String name = result.getData().get(i).getName();
-                                    items.add(name);
-                                    categoryId.add(String.valueOf(result.getData().get(i).getCategoryId()));
+                                    items.clear();
+                                    categoryId.clear();
+                                    for (int i = 0; i < result.getData().size(); i++) {
+                                        String name = result.getData().get(i).getName();
+                                        items.add(name);
+                                        categoryId.add(String.valueOf(result.getData().get(i).getCategoryId()));
+                                    }
+
+                                } else {
+
+                                    Toast.makeText(getActivity(), "" + result.getMessage(), Toast.LENGTH_SHORT).show();
                                 }
-
-                            } else {
-
-                                Toast.makeText(getActivity(), "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                            }else {
+                                Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                             }
-
 
                         }
                     });
@@ -482,6 +485,10 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
                                 }
 
                             }
+                        }else {
+                            dialogs.dismiss();
+                            dialog.dismiss();
+                            Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                         }
                     }
                 });
@@ -592,11 +599,13 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
                                     }
                                     dialog.dismiss();
                                 } else {
-                                    dialog.dismiss();
                                     setRecyclerViewData(result);
                                     dialog.dismiss();
 
                                 }
+                            }else {
+                                dialog.dismiss();
+                                Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                             }
 
 
@@ -747,6 +756,10 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
                                     }
 
                                 }
+                            }else {
+                                Utils.showAlertDialog(getActivity(), "Something Went Wrong");
+                                dialogs.dismiss();
+                                dialog.dismiss();
                             }
 
 

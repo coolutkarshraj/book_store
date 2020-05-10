@@ -4,13 +4,13 @@ import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.io.bookstores.Config;
 import com.io.bookstores.R;
+import com.io.bookstores.StaticData;
 import com.io.bookstores.holder.HomeSchoolHolder;
 import com.io.bookstores.listeners.ItemClickListner;
 import com.io.bookstores.localStorage.LocalStorage;
@@ -22,6 +22,7 @@ public class HomeSchoolsRvAdapter extends RecyclerView.Adapter<HomeSchoolHolder>
     private Activity activity;
     List<GetAllSchoolDataModel> list;
     private ItemClickListner itemClickListner;
+    LocalStorage localStorage;
 
     public HomeSchoolsRvAdapter(Activity activity, List<GetAllSchoolDataModel> list) {
         this.activity = activity;
@@ -32,13 +33,19 @@ public class HomeSchoolsRvAdapter extends RecyclerView.Adapter<HomeSchoolHolder>
     @Override
     public HomeSchoolHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(activity).inflate(R.layout.item_home_school, parent, false);
+        localStorage = new LocalStorage(activity);
         return new HomeSchoolHolder(view);
     }
 
     @Override
     public void onBindViewHolder(HomeSchoolHolder holder, final int position) {
         final GetAllSchoolDataModel data = list.get(position);
-        holder.name.setText(data.getSchoolName());
+        if (localStorage.getString(LocalStorage.islanguage).equals("kuwait")) {
+            holder.name.setText(data.getArabicName());
+        } else {
+            holder.name.setText(data.getSchoolName());
+        }
+
         Glide.with(activity).load(Config.imageUrl + data.getAvatarPath()).into(holder.image);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

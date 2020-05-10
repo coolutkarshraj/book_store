@@ -23,6 +23,7 @@ public class ClassCategoryRvAdapter extends RecyclerView.Adapter<ClassCategoryHo
     private Activity activity;
     private List<ClassCategoryDataModel> list;
     ItemClickListner itemClickListner;
+    LocalStorage localStorage;
 
 
     public ClassCategoryRvAdapter(Activity activity, List<ClassCategoryDataModel> list) {
@@ -33,13 +34,18 @@ public class ClassCategoryRvAdapter extends RecyclerView.Adapter<ClassCategoryHo
     @Override
     public ClassCategoryHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(activity).inflate(R.layout.item_school_detial_list, parent, false);
+        localStorage = new LocalStorage(activity);
         return new ClassCategoryHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ClassCategoryHolder holder, final int position) {
         final ClassCategoryDataModel model = list.get(position);
-        holder.tvClassName.setText(model.getName());
+        if (localStorage.getString(LocalStorage.islanguage).equals("kuwait")) {
+            holder.tvClassName.setText(model.getArabicName());
+        } else {
+            holder.tvClassName.setText(model.getName());
+        }
         holder.rlRoot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -98,6 +98,9 @@ public class OrderListBookFragment extends Fragment {
                                         setRecyclerViewData(result);
                                     }
                                 }
+                            }else {
+                                Utils.showAlertDialog(getActivity(), "Something Went Wrong");
+                                dialog.dismiss();
                             }
                         }
 

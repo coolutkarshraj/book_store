@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.io.bookstores.Config;
 import com.io.bookstores.R;
+import com.io.bookstores.StaticData;
 import com.io.bookstores.listeners.ItemClickListner;
 import com.io.bookstores.localStorage.LocalStorage;
 import com.io.bookstores.model.storeModel.Datum;
@@ -35,6 +36,7 @@ public class AllBookStoreRvAdapter extends RecyclerView.Adapter<AllBookStoreRvAd
     private ItemClickListner itemClickListner;
     private String Lat;
     private String Longi;
+    LocalStorage localStorage;
 
     public AllBookStoreRvAdapter(Context mContext, List<Datum> mData) {
         this.mContext = mContext;
@@ -48,12 +50,21 @@ public class AllBookStoreRvAdapter extends RecyclerView.Adapter<AllBookStoreRvAd
         View view ;
         LayoutInflater mInflater = LayoutInflater.from(mContext);
         view = mInflater.inflate(R.layout.item_bookstore,parent,false);
+        localStorage = new LocalStorage(mContext);
         return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        holder.tv_bookstore_tilte.setText(mData.get(position).getName());
+
+        if (localStorage.getString(LocalStorage.islanguage).equals("kuwait")) {
+            holder.tv_bookstore_tilte.setText(mData.get(position).getArabicName());
+            holder.tv_bookstore_desc.setText(mData.get(position).getArabicDescription());
+        } else {
+            holder.tv_bookstore_tilte.setText(mData.get(position).getName());
+            holder.tv_bookstore_desc.setText(mData.get(position).getDescription());
+        }
+
        // holder.tv_bookstore_desc.setText(mData.get(position).getDescription());
         Glide.with(mContext).load(Config.imageUrl +mData.get(position).getAvatarPath()).into(holder.iv_bookstore_thumbnail);
         holder.btn_browese.setOnClickListener(new View.OnClickListener() {

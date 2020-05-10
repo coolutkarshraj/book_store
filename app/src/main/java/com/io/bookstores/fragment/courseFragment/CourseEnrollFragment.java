@@ -118,7 +118,6 @@ public class CourseEnrollFragment extends Fragment implements View.OnClickListen
     /*--------------------------------------------- if user is guest or login set Up of ui ----------------------------------*/
 
     private void ifGusestOrUser() {
-
         if (token.equals("") || token == null) {
             layout.setVisibility(View.VISIBLE);
         } else {
@@ -129,8 +128,14 @@ public class CourseEnrollFragment extends Fragment implements View.OnClickListen
     /*------------------------------------------- course detial display on Views ----------------------------------------------*/
 
     private void corseDetialSetIntViews() {
-        tvCourseTitile.setText(courseDataModel.getCourseName());
-        tvCourseDescription.setText(courseDataModel.getCourseDescription());
+        if(localStorage.getString(LocalStorage.islanguage).equals("kuwait")){
+            tvCourseTitile.setText(courseDataModel.getArabicName());
+            tvCourseDescription.setText(courseDataModel.getArabicDescription());
+        }else {
+            tvCourseTitile.setText(courseDataModel.getCourseName());
+            tvCourseDescription.setText(courseDataModel.getCourseDescription());
+        }
+
         Glide.with(activity).load(Config.imageUrl + courseDataModel.getAvatarPath()).into(imageView);
     }
 
@@ -163,6 +168,8 @@ public class CourseEnrollFragment extends Fragment implements View.OnClickListen
                                         dialog.dismiss();
                                     }
                                 }
+                            }else {
+                                Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                             }
 
 
@@ -238,6 +245,9 @@ public class CourseEnrollFragment extends Fragment implements View.OnClickListen
                         }
 
                     }
+                    else {
+                        Utils.showAlertDialog(getActivity(), "Something Went Wrong");
+                    }
                 }
             });
         } else {
@@ -267,6 +277,9 @@ public class CourseEnrollFragment extends Fragment implements View.OnClickListen
                         }
 
                     }
+                    else {
+                        Utils.showAlertDialog(getActivity(), "Something Went Wrong");
+                    }
                 }
             });
         } else {
@@ -295,6 +308,8 @@ public class CourseEnrollFragment extends Fragment implements View.OnClickListen
                             startActivity(i);
                         }
 
+                    }else {
+                        Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                     }
                 }
             });

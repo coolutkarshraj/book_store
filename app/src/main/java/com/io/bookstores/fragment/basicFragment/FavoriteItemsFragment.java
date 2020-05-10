@@ -151,6 +151,9 @@ public class FavoriteItemsFragment extends Fragment implements SwipeRefreshLayou
                                         dialog.dismiss();
                                     }
                                 }
+                            }else {
+                                dialog.dismiss();
+                                Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                             }
 
 
@@ -214,6 +217,8 @@ public class FavoriteItemsFragment extends Fragment implements SwipeRefreshLayou
 
                                 }
 
+                            }else {
+                                Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                             }
 
 

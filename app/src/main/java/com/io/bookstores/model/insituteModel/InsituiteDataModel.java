@@ -23,6 +23,12 @@ public class InsituiteDataModel {
     @Expose
     private String description;
 
+    @SerializedName("arabicName")
+    private  String arabicName;
+
+    @SerializedName("arabicDescription")
+    private  String arabicDescription;
+
 
     public Integer getInstituteId() {
         return instituteId;
@@ -70,5 +76,21 @@ public class InsituiteDataModel {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getArabicName() {
+        return arabicName;
+    }
+
+    public void setArabicName(String arabicName) {
+        this.arabicName = arabicName;
+    }
+
+    public String getArabicDescription() {
+        return arabicDescription;
+    }
+
+    public void setArabicDescription(String arabicDescription) {
+        this.arabicDescription = arabicDescription;
     }
 }

@@ -25,6 +25,7 @@ public class CategoryGridAdapter extends RecyclerView.Adapter<CategoryGridAdapte
     private Context mContext;
     private List<CategoryData> mData;
     private ItemClickListner itemClickListner;
+    LocalStorage localStorage;
 
     public CategoryGridAdapter(Context mContext, List<CategoryData> mData) {
         this.mContext = mContext;
@@ -37,12 +38,13 @@ public class CategoryGridAdapter extends RecyclerView.Adapter<CategoryGridAdapte
         View view;
         LayoutInflater mInflater = LayoutInflater.from(mContext);
         view = mInflater.inflate(R.layout.item_category_grid, parent, false);
+        localStorage = new LocalStorage(mContext);
         return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        if (StaticData.selectedLanguage.equals("kuwait")) {
+        if (localStorage.getString(LocalStorage.islanguage).equals("kuwait")) {
             holder.tv_category.setText(mData.get(position).getArabicName());
         } else {
             holder.tv_category.setText(mData.get(position).getName());

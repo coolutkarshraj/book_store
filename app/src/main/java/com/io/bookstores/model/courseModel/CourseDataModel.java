@@ -31,6 +31,14 @@ public class CourseDataModel {
     @Expose
     private int price;
 
+    @SerializedName("arabicName")
+    @Expose
+    private String arabicName;
+
+    @SerializedName("arabicDescription")
+    @Expose
+    private String arabicDescription;
+
     public String getCreatedDate() {
         return createdDate;
     }
@@ -93,5 +101,21 @@ public class CourseDataModel {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public String getArabicName() {
+        return arabicName;
+    }
+
+    public void setArabicName(String arabicName) {
+        this.arabicName = arabicName;
+    }
+
+    public String getArabicDescription() {
+        return arabicDescription;
+    }
+
+    public void setArabicDescription(String arabicDescription) {
+        this.arabicDescription = arabicDescription;
     }
 }

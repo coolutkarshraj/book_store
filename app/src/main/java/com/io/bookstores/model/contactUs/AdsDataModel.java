@@ -23,6 +23,10 @@ public class AdsDataModel {
     @Expose
     private String avatarName;
 
+    @SerializedName("url")
+    @Expose
+    private String url;
+
     public String getCreatedDate() {
         return createdDate;
     }
@@ -71,4 +75,11 @@ public class AdsDataModel {
         this.avatarName = avatarName;
     }
 
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
 }

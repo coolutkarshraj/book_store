@@ -97,7 +97,7 @@ public class AllCoursesListFragment extends Fragment implements RecyclerViewClic
 
     private void getcourseList() {
         if (user.isOnline(getActivity())) {
-            dialog.show();
+           // dialog.show();
             ApiCaller.getCourseList(getActivity(), Config.Url.courseList + instituteId,
                     new FutureCallback<CourseResponseModel>() {
 
@@ -110,8 +110,10 @@ public class AllCoursesListFragment extends Fragment implements RecyclerViewClic
                                 if (result.getStatus()) {
                                     setRecyclerView(result);
                                 }
+                            }else {
+                                Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                             }
-                            dialog.dismiss();
+                            //dialog.dismiss();
 
 
                         }

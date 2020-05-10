@@ -13,7 +13,6 @@ import com.io.bookstores.holder.ClassCategoryHolder;
 import com.io.bookstores.listeners.ItemClickListner;
 import com.io.bookstores.localStorage.LocalStorage;
 import com.io.bookstores.model.classList.DataItem;
-import com.io.bookstores.model.classModel.ClassCategoryDataModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +23,7 @@ public class ClassRvAdapter extends RecyclerView.Adapter<ClassCategoryHolder> {
     private Activity activity;
     private List<DataItem> list;
     ItemClickListner itemClickListner;
+    LocalStorage localStorage;
 
 
     public ClassRvAdapter(Activity activity, List<DataItem> list) {
@@ -34,13 +34,19 @@ public class ClassRvAdapter extends RecyclerView.Adapter<ClassCategoryHolder> {
     @Override
     public ClassCategoryHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(activity).inflate(R.layout.item_school_detial_list, parent, false);
+        localStorage = new LocalStorage(activity);
         return new ClassCategoryHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ClassCategoryHolder holder, final int position) {
         final DataItem model = list.get(position);
-        holder.tvClassName.setText(model.getLabel());
+        if (localStorage.getString(LocalStorage.islanguage).equals("kuwait")) {
+            holder.tvClassName.setText(model.getArabicName());
+        } else {
+            holder.tvClassName.setText(model.getLabel());
+        }
+
         holder.rlRoot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

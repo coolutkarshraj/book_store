@@ -124,6 +124,9 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 
                                     }
                                 }
+                            }else {
+                                dialog.dismiss();
+                                Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                             }
 
 
@@ -217,6 +220,9 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                                     dialog.dismiss();
                                     changePasswordData(result);
                                 }
+                            }else {
+                                dialog.dismiss();
+                                Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                             }
 
 

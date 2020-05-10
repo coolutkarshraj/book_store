@@ -8,7 +8,7 @@
     android:orientation="vertical"
     tools:ignore="UnusedAttribute">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -18,6 +18,19 @@
             android:layout_height="match_parent"
             android:scaleType="fitXY"
             tools:ignore="ContentDescription" />
-    </LinearLayout>
+
+        <Button
+            android:layout_width="@dimen/width_70dp"
+            android:layout_height="@dimen/height_30dp"
+            android:background="@drawable/round_corner_button_yellow"
+            android:text="@string/view"
+            android:id="@+id/btn_view"
+            android:textColor="@color/white"
+            android:textSize="@dimen/h2"
+            android:textAllCaps="false"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/height_30dp"/>
+    </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

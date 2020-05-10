@@ -132,6 +132,9 @@ public class ContactUsFragment extends Fragment implements View.OnClickListener 
                                 dialog.dismiss();
                             }
                         }
+                    }else {
+                        dialog.dismiss();
+                        Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                     }
 
                 }

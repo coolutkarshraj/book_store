@@ -29,6 +29,19 @@ public class Datum {
     @Expose
     public Address address;
 
+    @SerializedName("arabicName")
+     @Expose
+
+
+    private String arabicName;
+    @SerializedName("description")
+    @Expose
+    private String description;
+
+    @SerializedName("arabicDescription")
+    @Expose
+   private String arabicDescription;
+
     public String getCreatedDate() {
         return createdDate;
     }
@@ -91,5 +104,29 @@ public class Datum {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public String getArabicName() {
+        return arabicName;
+    }
+
+    public void setArabicName(String arabicName) {
+        this.arabicName = arabicName;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getArabicDescription() {
+        return arabicDescription;
+    }
+
+    public void setArabicDescription(String arabicDescription) {
+        this.arabicDescription = arabicDescription;
     }
 }

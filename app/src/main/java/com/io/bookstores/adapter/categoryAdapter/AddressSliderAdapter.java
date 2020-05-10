@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.io.bookstores.R;
 import com.io.bookstores.StaticData;
 import com.io.bookstores.listeners.ItemClickListner;
+import com.io.bookstores.localStorage.LocalStorage;
 import com.io.bookstores.model.dilvery.DilveryAddressDataModel;
 
 import java.util.List;
@@ -21,6 +22,7 @@ public class AddressSliderAdapter extends RecyclerView.Adapter<AddressSliderAdap
     private Context mContext ;
     private List<DilveryAddressDataModel> mData;
     private ItemClickListner itemClickListner;
+    LocalStorage localStorage;
 
     public AddressSliderAdapter(Context mContext, List<DilveryAddressDataModel> mData) {
         this.mContext = mContext;
@@ -33,13 +35,14 @@ public class AddressSliderAdapter extends RecyclerView.Adapter<AddressSliderAdap
         View view ;
         LayoutInflater mInflater = LayoutInflater.from(mContext);
         view = mInflater.inflate(R.layout.item_address_slide,parent,false);
+        localStorage = new LocalStorage(mContext);
         return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         final DilveryAddressDataModel model = mData.get(position);
-        if (StaticData.selectedLanguage.equals("kuwait")) {
+        if (localStorage.getString(LocalStorage.islanguage).equals("kuwait")) {
             holder.tv_name.setText(model.getArabicName());
         } else {
             holder.tv_name.setText(model.getName());

@@ -244,4 +244,5 @@
     <string name="author_name">اسم المؤلف</string>
     <string name="addbook">أضف كتاب</string>
     <string name="editbook">تحرير تفاصيل الكتاب</string>
+    <string name="view">عرض</string>
 </resources>

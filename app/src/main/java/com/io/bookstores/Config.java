@@ -5,8 +5,8 @@ package com.io.bookstores;
  */
 
 public class Config {
-        public final static String IP = "test.mybookstores.net";
-    public static String imageUrl ="https://test.mybookstores.net/api/media/render/?path=";
+        public final static String IP = "mybookstores.net";
+    public static String imageUrl ="https://mybookstores.net/api/media/render/?path=";
 
     public static class Url {
         public final static String registerUser = "user/register";

@@ -23,6 +23,12 @@ public class TrendingInstituteDataModel {
     @Expose
     private Integer addedById;
 
+    @SerializedName("arabicName")
+    private String arabicName;
+
+    @SerializedName("arabicDescription")
+    private String arabicDescription;
+
     public Integer getInstituteId() {
         return instituteId;
     }
@@ -71,4 +77,27 @@ public class TrendingInstituteDataModel {
         this.addedById = addedById;
     }
 
+    public Boolean getPremium() {
+        return isPremium;
+    }
+
+    public void setPremium(Boolean premium) {
+        isPremium = premium;
+    }
+
+    public String getArabicName() {
+        return arabicName;
+    }
+
+    public void setArabicName(String arabicName) {
+        this.arabicName = arabicName;
+    }
+
+    public String getArabicDescription() {
+        return arabicDescription;
+    }
+
+    public void setArabicDescription(String arabicDescription) {
+        this.arabicDescription = arabicDescription;
+    }
 }

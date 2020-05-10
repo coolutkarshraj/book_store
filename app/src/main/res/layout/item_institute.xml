@@ -46,28 +46,46 @@
 
         </com.google.android.material.card.MaterialCardView>
 
-
-        <TextView
-            android:id="@+id/tv_institute_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/font_10"
-            android:textSize="@dimen/h1"
-            cardview:fontFamily="@font/arial_bold"
-            cardview:layout_constraintStart_toStartOf="parent"
-            cardview:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tv_institute_desc"
+        <RelativeLayout
+            android:id="@+id/layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_8dp"
-            android:layout_marginTop="@dimen/margin_12dp"
-            android:textSize="@dimen/h3"
-            cardview:fontFamily="sans-serif"
+            android:layout_marginStart="@dimen/margin_10dp"
+            android:layout_marginTop="@dimen/margin_10dp"
             cardview:layout_constraintEnd_toStartOf="@+id/materialCardView_institute"
             cardview:layout_constraintStart_toStartOf="parent"
-            cardview:layout_constraintTop_toBottomOf="@+id/tv_institute_title" />
+            cardview:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/tv_institute_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="@dimen/margin_5dp"
+                android:text="hello"
+                android:textSize="@dimen/h1"
+                cardview:fontFamily="@font/arial_bold" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_10dp"
+            cardview:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="@dimen/margin_5dp"
+            cardview:layout_constraintEnd_toStartOf="@+id/materialCardView_institute"
+            cardview:layout_constraintTop_toBottomOf="@+id/layout">
+
+            <TextView
+                android:id="@+id/tv_institute_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingEnd="@dimen/margin_5dp"
+                android:textSize="@dimen/h3"
+                android:maxLines="5"
+                cardview:fontFamily="sans-serif" />
+        </RelativeLayout>
+
 
         <Button
             android:id="@+id/bv_institute_browse"

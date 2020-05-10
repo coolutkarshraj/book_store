@@ -114,6 +114,8 @@ public class AllInstituteListFragment extends Fragment implements RecyclerViewCl
                                 if (result.getStatus()) {
                                     setRecyclerView(result);
                                 }
+                            }else {
+                                Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                             }
                             dialog.dismiss();
 

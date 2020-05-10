@@ -48,36 +48,51 @@
         </com.google.android.material.card.MaterialCardView>
 
 
-        <TextView
-            android:id="@+id/tv_school_name"
+        <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_8dp"
-            android:layout_marginTop="@dimen/margin_8dp"
-            android:textSize="@dimen/h1"
-            android:textColor="@color/black"
-            cardview:fontFamily="@font/arial_bold"
+            android:id="@+id/rl_layout"
             cardview:layout_constraintEnd_toEndOf="@+id/materialCardView"
             cardview:layout_constraintEnd_toStartOf="@+id/materialCardView"
             cardview:layout_constraintStart_toEndOf="@+id/materialCardView"
             cardview:layout_constraintStart_toStartOf="parent"
-            cardview:layout_constraintTop_toTopOf="parent" />
+            android:layout_marginStart="@dimen/margin_8dp"
+            android:layout_marginTop="@dimen/margin_8dp"
+            cardview:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/tv_school_description"
+            <TextView
+                android:id="@+id/tv_school_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="@dimen/margin_5dp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/h1"
+                cardview:fontFamily="@font/arial_bold" />
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_8dp"
-            android:layout_marginTop="@dimen/margin_12dp"
-            android:ellipsize="end"
-            android:maxLines="3"
-            android:text="Books, Clothes, WorkBooks"
-            android:textSize="12sp"
-            cardview:fontFamily="sans-serif"
             cardview:layout_constraintEnd_toStartOf="@+id/materialCardView"
             cardview:layout_constraintStart_toStartOf="parent"
-            cardview:layout_constraintTop_toBottomOf="@+id/tv_school_name"
-            tools:ignore="HardcodedText" />
+            cardview:layout_constraintTop_toBottomOf="@+id/rl_layout"
+            tools:ignore="HardcodedText">
+
+            <TextView
+                android:id="@+id/tv_school_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_8dp"
+                android:layout_marginTop="@dimen/margin_12dp"
+                android:ellipsize="end"
+                android:maxLines="5"
+                android:paddingEnd="@dimen/margin_5dp"
+                android:text="Books, Clothes, WorkBooks"
+                android:textSize="12sp"
+                cardview:fontFamily="sans-serif"
+                tools:ignore="RtlSymmetry" />
+        </RelativeLayout>
+
 
         <Button
             android:id="@+id/btn_browese"

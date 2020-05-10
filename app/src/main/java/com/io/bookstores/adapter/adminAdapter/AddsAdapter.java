@@ -3,9 +3,11 @@ package com.io.bookstores.adapter.adminAdapter;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -65,6 +67,18 @@ public class AddsAdapter extends
                 mContext.startActivity(i);
             }
         });
+        holder.btn_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (model.getUrl().isEmpty()) {
+
+                } else {
+                    Intent i = new Intent(Intent.ACTION_VIEW);
+                    i.setData(Uri.parse(model.getUrl()));
+                    mContext.startActivity(i);
+               }
+            }
+        });
     }
 
 
@@ -76,11 +90,13 @@ public class AddsAdapter extends
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         ImageView iv_image;
+        Button btn_view;
 
         public MyViewHolder(View itemView) {
             super(itemView);
 
             iv_image = (ImageView) itemView.findViewById(R.id.iv_image);
+            btn_view = (Button) itemView.findViewById(R.id.btn_view);
 
 
         }

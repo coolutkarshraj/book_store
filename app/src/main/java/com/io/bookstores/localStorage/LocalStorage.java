@@ -33,6 +33,7 @@ public class LocalStorage {
     private static LocalStorage instance;
     private SharedPreferences storage;
     public static final String isFirstLaunch = "isFirstLaunch";
+    public static final String islanguage = "islanguage";
     public static final String isFirstLaunch1 = "isFirstLaunch1";
     public static final String Dummy_Store_ID = "Dummy_ID";
     public static final String Dummy_School_ID = "Dummy_School_ID";

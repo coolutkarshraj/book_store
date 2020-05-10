@@ -395,7 +395,7 @@ public class MainActivity extends AppCompatActivity implements
                 } else {
 
                     if (radioButton.getText().equals("English")) {
-                        StaticData.selectedLanguage = "english";
+                        localStorage.putString(LocalStorage.islanguage, "english");
                         Locale locale = new Locale("en");
                         Locale.setDefault(locale);
                         Configuration config = new Configuration();
@@ -410,7 +410,8 @@ public class MainActivity extends AppCompatActivity implements
                         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(i);
                     } else {
-                        StaticData.selectedLanguage = "kuwait";
+
+                        localStorage.putString(LocalStorage.islanguage, "kuwait");
                         Locale locale = new Locale("ar");
                         Locale.setDefault(locale);
                         Configuration config = new Configuration();

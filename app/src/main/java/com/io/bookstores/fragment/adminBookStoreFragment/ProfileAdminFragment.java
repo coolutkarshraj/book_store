@@ -172,6 +172,9 @@ public class ProfileAdminFragment extends Fragment implements View.OnClickListen
                                     dialog.dismiss();
                                     getdataSetIntoViews(result);
                                 }
+                            }else {
+                                dialog.dismiss();
+                                Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                             }
                         }
                     });

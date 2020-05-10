@@ -11,13 +11,13 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.io.bookstores.Config;
 import com.io.bookstores.R;
+import com.io.bookstores.StaticData;
 import com.io.bookstores.apicaller.ApiCaller;
 import com.io.bookstores.holder.SchoolsHolder;
 import com.io.bookstores.listeners.ItemClickListner;
@@ -38,6 +38,7 @@ public class AllSchoolsRvAdapter extends RecyclerView.Adapter<SchoolsHolder> {
     private List<GetAllSchoolDataModel> list;
     private ItemClickListner itemClickListner;
     private userOnlineInfo user;
+    LocalStorage localStorage;
 
 
     public AllSchoolsRvAdapter(Activity activity, List<GetAllSchoolDataModel> list) {
@@ -50,14 +51,23 @@ public class AllSchoolsRvAdapter extends RecyclerView.Adapter<SchoolsHolder> {
     public SchoolsHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(activity).inflate(R.layout.item_school_list, parent, false);
         user = new userOnlineInfo();
+        localStorage = new LocalStorage(activity);
         return new SchoolsHolder(view);
     }
 
     @Override
     public void onBindViewHolder(SchoolsHolder holder, final int position) {
         final GetAllSchoolDataModel model = list.get(position);
-        holder.tvSchoolName.setText(model.getSchoolName());
-        holder.tvSchoolDesc.setText(model.getDescription());
+
+        if (localStorage.getString(LocalStorage.islanguage).equals("kuwait")) {
+            holder.tvSchoolName.setText(model.getArabicName());
+            holder.tvSchoolDesc.setText(model.getArabicDescription());
+        } else {
+            holder.tvSchoolName.setText(model.getSchoolName());
+            holder.tvSchoolDesc.setText(model.getDescription());
+        }
+
+
         Glide.with(activity).load(Config.imageUrl + model.getAvatarPath()).into(holder.iv_school_logo);
         holder.btn_browese.setOnClickListener(new View.OnClickListener() {
             @Override

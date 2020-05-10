@@ -175,6 +175,9 @@ public class ClothsFragment extends Fragment implements View.OnClickListener, Re
                                     dialog.dismiss();
                                     setUpOfSubCategory(result.getData());
                                 }
+                            }else {
+                                Utils.showAlertDialog(getActivity(), "Something Went Wrong");
+                                dialog.dismiss();
                             }
                         }
                     });
@@ -224,6 +227,9 @@ public class ClothsFragment extends Fragment implements View.OnClickListener, Re
                                         Toast.makeText(activity, result.getMessage(), Toast.LENGTH_SHORT).show();
                                     }
                                 }
+                            }else {
+                                dialog.dismiss();
+                                Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                             }
                         }
                     });

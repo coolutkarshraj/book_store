@@ -10,6 +10,7 @@ public class DataItem{
 	private String description;
 	private String label;
 	private int classGroupId;
+	private String arabicName;
 
 	public void setClassId(int classId){
 		this.classId = classId;
@@ -65,5 +66,13 @@ public class DataItem{
 
 	public int getClassGroupId(){
 		return classGroupId;
+	}
+
+	public String getArabicName() {
+		return arabicName;
+	}
+
+	public void setArabicName(String arabicName) {
+		this.arabicName = arabicName;
 	}
 }

@@ -177,6 +177,9 @@ public class BookListFragment extends Fragment implements View.OnClickListener {
                                         Toast.makeText(getActivity(), "" + result.getMessage(), Toast.LENGTH_SHORT).show();
                                     }
                                 }
+                            }else {
+                                dialog.dismiss();
+                                Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                             }
 
 

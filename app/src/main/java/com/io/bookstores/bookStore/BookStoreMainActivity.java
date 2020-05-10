@@ -535,7 +535,7 @@ public class BookStoreMainActivity extends AppCompatActivity implements
                 if (selectedId == -1) {
                 } else {
                     if (radioButton.getText().equals("English")) {
-                        StaticData.selectedLanguage = "english";
+                        localStorage.putString(LocalStorage.islanguage,"english");
                         Locale locale = new Locale("en");
                         Locale.setDefault(locale);
                         Configuration config = new Configuration();
@@ -546,7 +546,7 @@ public class BookStoreMainActivity extends AppCompatActivity implements
                         startActivity(new Intent(BookStoreMainActivity.this,BookStoreMainActivity.class));
                     } else {
                         Locale locale = new Locale("ar");
-                        StaticData.selectedLanguage = "kuwait";
+                        localStorage.putString(LocalStorage.islanguage,"kuwait");
                         Locale.setDefault(locale);
                         Configuration config = new Configuration();
                         config.setLayoutDirection(Locale.ENGLISH);

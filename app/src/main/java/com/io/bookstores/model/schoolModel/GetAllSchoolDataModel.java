@@ -39,6 +39,12 @@ public class GetAllSchoolDataModel {
     @SerializedName("addressId")
     private int addressId;
 
+    @SerializedName("arabicName")
+    private String arabicName;
+
+    @SerializedName("arabicDescription")
+    private  String arabicDescription;
+
     public void setAvatarName(String avatarName){
         this.avatarName = avatarName;
     }
@@ -125,5 +131,21 @@ public class GetAllSchoolDataModel {
 
     public int getAddressId(){
         return addressId;
+    }
+
+    public String getArabicName() {
+        return arabicName;
+    }
+
+    public void setArabicName(String arabicName) {
+        this.arabicName = arabicName;
+    }
+
+    public String getArabicDescription() {
+        return arabicDescription;
+    }
+
+    public void setArabicDescription(String arabicDescription) {
+        this.arabicDescription = arabicDescription;
     }
 }

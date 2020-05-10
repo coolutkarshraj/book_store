@@ -8,6 +8,8 @@ public class ClassDataModel {
 
     @SerializedName("name")
     private String name;
+    @SerializedName("arabicName")
+    private String arabicName;
 
     @SerializedName("description")
     private String description;
@@ -47,5 +49,11 @@ public class ClassDataModel {
         return classGroupId;
     }
 
+    public String getArabicName() {
+        return arabicName;
+    }
 
+    public void setArabicName(String arabicName) {
+        this.arabicName = arabicName;
+    }
 }

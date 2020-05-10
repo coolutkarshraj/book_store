@@ -118,6 +118,10 @@ public class ClassCategoryFragment extends Fragment implements View.OnClickListe
                                     setUpofClassesRv(result.getData());
                                 }
                             }
+                            else {
+                                dialog.dismiss();
+                                Utils.showAlertDialog(getActivity(), "Something Went Wrong");
+                            }
                         }
                     });
         } else {

@@ -129,6 +129,9 @@ public class EditProfileFragment extends Fragment {
                                     }
 
                                 }
+                            }else {
+                                dialog.dismiss();
+                                Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                             }
 
 

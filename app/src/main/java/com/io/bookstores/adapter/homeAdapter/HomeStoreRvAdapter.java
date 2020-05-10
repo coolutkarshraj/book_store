@@ -21,6 +21,7 @@ public class HomeStoreRvAdapter extends RecyclerView.Adapter<StoresHolder> {
     private Activity activity;
     private List<Datum> coursename;
     private ItemClickListner itemClickListner;
+    LocalStorage localStorage;
 
     public HomeStoreRvAdapter(Activity activity, List<Datum> coursename) {
         this.activity = activity;
@@ -31,12 +32,19 @@ public class HomeStoreRvAdapter extends RecyclerView.Adapter<StoresHolder> {
     @Override
     public StoresHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(activity).inflate(R.layout.item_view_store, parent, false);
+        localStorage = new LocalStorage(activity);
         return new StoresHolder(view);
     }
 
     @Override
     public void onBindViewHolder(StoresHolder holder, final int position) {
-        holder.name.setText(coursename.get(position).name);
+
+        if (localStorage.getString(LocalStorage.islanguage).equals("kuwait")) {
+            holder.name.setText(coursename.get(position).getArabicName());
+        } else {
+            holder.name.setText(coursename.get(position).name);
+        }
+
         Glide.with(activity).load(Config.imageUrl +coursename.get(position).getAvatarPath()).into(holder.image);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

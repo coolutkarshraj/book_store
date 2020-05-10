@@ -120,6 +120,9 @@ public class AllSchoolsFragment extends Fragment implements View.OnClickListener
                                     dialog.dismiss();
                                     setofSchoolRecyclerView(result.getData());
                                 }
+                            }else {
+                                Utils.showAlertDialog(getActivity(), "Something Went Wrong");
+                                dialog.dismiss();
                             }
                         }
                     });

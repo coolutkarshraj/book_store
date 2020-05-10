@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -100,11 +101,17 @@ public class AddsActivity extends AppCompatActivity implements View.OnClickListe
                     }
 
                     if (result != null) {
-                        if (result.getStatus() == true) {
-                           recyclerViewDataSetUp(result.getData());
-                        } else {
+                        if (result.getStatus() == null) {
                             Utils.showAlertDialog(activity, "Something Went Wrong");
+                        } else {
+                            if (result.getStatus()) {
+                                recyclerViewDataSetUp(result.getData());
+                            } else {
+                                Utils.showAlertDialog(activity, "Something Went Wrong");
+                            }
                         }
+                    } else {
+                        Toast.makeText(activity, result.getMessage(), Toast.LENGTH_SHORT).show();
                     }
 
                 }
@@ -118,8 +125,12 @@ public class AddsActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void recyclerViewDataSetUp(List<AdsDataModel> data) {
-        addsAdapter = new AddsAdapter(activity,data);
-        recyclerViewAdds.setAdapter(addsAdapter);
+        if (data.isEmpty()) {
+            Utils.showAlertDialog(activity, "Data Not Found");
+        } else {
+            addsAdapter = new AddsAdapter(activity, data);
+            recyclerViewAdds.setAdapter(addsAdapter);
+        }
     }
 
 }

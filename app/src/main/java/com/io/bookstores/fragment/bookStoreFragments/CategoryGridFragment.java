@@ -141,12 +141,17 @@ public class CategoryGridFragment extends Fragment implements View.OnClickListen
                                 Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                                 return;
                             }
+                            if(result!=null){
                             if (result.getStatus() == true) {
                                 dialog.dismiss();
                                 recyclerViewData(result.getData());
                             } else {
                                 dialog.dismiss();
                                 Toast.makeText(getActivity(), "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                            }else {
+                                dialog.dismiss();
+                                Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                             }
 
 

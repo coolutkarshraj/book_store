@@ -199,6 +199,9 @@ public class AdminEditStoreFragment extends Fragment implements View.OnClickList
                                     dialog.dismiss();
                                     getdataSetIntoViews(result);
                                 }
+                            }else {
+                                dialog.dismiss();
+                                Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                             }
 
 
@@ -364,6 +367,9 @@ public class AdminEditStoreFragment extends Fragment implements View.OnClickList
                                     dialog.dismiss();
 
                                 }
+                            }else {
+                                dialog.dismiss();
+                                Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                             }
 
 

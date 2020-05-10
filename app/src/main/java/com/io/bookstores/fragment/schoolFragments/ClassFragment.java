@@ -118,6 +118,9 @@ public class ClassFragment extends Fragment implements View.OnClickListener {
                                     dialog.dismiss();
                                     setUpofClassesRv(result.getData());
                                 }
+                            }else {
+                                dialog.dismiss();
+                                Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                             }
                         }
                     });

@@ -25,6 +25,9 @@ public class ClassCategoryDataModel {
     @SerializedName("classGroupId")
     private int classGroupId;
 
+    @SerializedName("arabicName")
+    private String arabicName;
+
     public void setAvatarName(Object avatarName){
         this.avatarName = avatarName;
     }
@@ -79,5 +82,13 @@ public class ClassCategoryDataModel {
 
     public int getClassGroupId(){
         return classGroupId;
+    }
+
+    public String getArabicName() {
+        return arabicName;
+    }
+
+    public void setArabicName(String arabicName) {
+        this.arabicName = arabicName;
     }
 }

@@ -20,7 +20,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.io.bookstores.Config;
 import com.io.bookstores.R;
+import com.io.bookstores.StaticData;
 import com.io.bookstores.listeners.ItemClickListner;
+import com.io.bookstores.localStorage.LocalStorage;
 import com.io.bookstores.model.filterStore.Datum;
 
 import java.util.List;
@@ -32,6 +34,7 @@ public class BookstoresFilterAdapter extends RecyclerView.Adapter<BookstoresFilt
     private ItemClickListner itemClickListner;
     private String Lat;
     private String Longi;
+    private LocalStorage localStorage;
 
 
     public BookstoresFilterAdapter(Context mContext, List<Datum> mData) {
@@ -47,14 +50,20 @@ public class BookstoresFilterAdapter extends RecyclerView.Adapter<BookstoresFilt
         View view ;
         LayoutInflater mInflater = LayoutInflater.from(mContext);
         view = mInflater.inflate(R.layout.item_bookstore,parent,false);
+        localStorage = new LocalStorage(mContext);
         return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        holder.tv_bookstore_tilte.setText(mData.get(position).getName());
-       // holder.tv_bookstore_desc.setText(mData.get(position).getDescription());
-        Glide.with(mContext).load(Config.imageUrl +mData.get(position).getAvatarPath()).into(holder.iv_bookstore_thumbnail);
+        if (localStorage.getString(LocalStorage.islanguage).equals("kuwait")) {
+            holder.tv_bookstore_tilte.setText(mData.get(position).getArabicName());
+            holder.tv_bookstore_desc.setText(mData.get(position).getArabicDescription());
+        } else {
+            holder.tv_bookstore_tilte.setText(mData.get(position).getmName());
+            holder.tv_bookstore_desc.setText(mData.get(position).getmDescription());
+        }
+        Glide.with(mContext).load(Config.imageUrl +mData.get(position).getmAvatarPath()).into(holder.iv_bookstore_thumbnail);
         holder.btn_browese.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,8 +76,8 @@ public class BookstoresFilterAdapter extends RecyclerView.Adapter<BookstoresFilt
         holder.button4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Lat = mData.get(position).getAddress().getLat();
-                Longi = mData.get(position).getAddress().getLong();
+                Lat = mData.get(position).getmAddress().getLat();
+                Longi = mData.get(position).getmAddress().getLong();
 
             if (Lat.equals("") || Lat == null && Longi.equals("") || Longi == null) {
                     final Dialog dialog = new Dialog(mContext);
@@ -87,11 +96,11 @@ public class BookstoresFilterAdapter extends RecyclerView.Adapter<BookstoresFilt
                     final TextView etCity = (TextView) dialog.findViewById(R.id.et_city);
                     final TextView etState = (TextView) dialog.findViewById(R.id.et_state);
                     final TextView etPinCode = (TextView) dialog.findViewById(R.id.et_pincode);
-                    etAddress.setText(mData.get(position).getName());
-                    etState.setText(mData.get(position).getEmail());
-                    etCity.setText(String.valueOf(mData.get(position).getPhone()));
-                    etPinCode.setText(mData.get(position).getAddress().getAddress() + "," +
-                            mData.get(position).getAddress().getCity() + "," + mData.get(position).getAddress().getLandmark());
+                    etAddress.setText(mData.get(position).getmName());
+                    etState.setText(mData.get(position).getmEmail());
+                    etCity.setText(String.valueOf(mData.get(position).getmPhone()));
+                    etPinCode.setText(mData.get(position).getmAddress().getAddress() + "," +
+                            mData.get(position).getmAddress().getCity() + "," + mData.get(position).getmAddress().getLandmark());
 
                     btn_Add.setOnClickListener(new View.OnClickListener() {
                         @Override

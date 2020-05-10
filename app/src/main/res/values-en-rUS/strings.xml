@@ -247,5 +247,6 @@
     <string name="author_name">Author Name</string>
     <string name="addbook">Add Book</string>
     <string name="editbook">Edit Book Details</string>
+    <string name="view">View</string>
 
 </resources>

@@ -45,148 +45,169 @@ public class Datum {
     @SerializedName("storeId")
     private Long mStoreId;
 
-    public Boolean getActive() {
+    @SerializedName("arabicName")
+    String arabicName;
+
+    @SerializedName("arabicDescription")
+    String arabicDescription;
+
+    public Boolean getmActive() {
         return mActive;
     }
 
-    public void setActive(Boolean active) {
-        mActive = active;
+    public void setmActive(Boolean mActive) {
+        this.mActive = mActive;
     }
 
-    public AddedBy getAddedBy() {
+    public AddedBy getmAddedBy() {
         return mAddedBy;
     }
 
-    public void setAddedBy(AddedBy addedBy) {
-        mAddedBy = addedBy;
+    public void setmAddedBy(AddedBy mAddedBy) {
+        this.mAddedBy = mAddedBy;
     }
 
-    public Long getAddedById() {
+    public Long getmAddedById() {
         return mAddedById;
     }
 
-    public void setAddedById(Long addedById) {
-        mAddedById = addedById;
+    public void setmAddedById(Long mAddedById) {
+        this.mAddedById = mAddedById;
     }
 
-    public Address getAddress() {
+    public Address getmAddress() {
         return mAddress;
     }
 
-    public void setAddress(Address address) {
-        mAddress = address;
+    public void setmAddress(Address mAddress) {
+        this.mAddress = mAddress;
     }
 
-    public Long getAddressId() {
+    public Long getmAddressId() {
         return mAddressId;
     }
 
-    public void setAddressId(Long addressId) {
-        mAddressId = addressId;
+    public void setmAddressId(Long mAddressId) {
+        this.mAddressId = mAddressId;
     }
 
-    public String getAvatarName() {
+    public String getmAvatarName() {
         return mAvatarName;
     }
 
-    public void setAvatarName(String avatarName) {
-        mAvatarName = avatarName;
+    public void setmAvatarName(String mAvatarName) {
+        this.mAvatarName = mAvatarName;
     }
 
-    public String getAvatarPath() {
+    public String getmAvatarPath() {
         return mAvatarPath;
     }
 
-    public void setAvatarPath(String avatarPath) {
-        mAvatarPath = avatarPath;
+    public void setmAvatarPath(String mAvatarPath) {
+        this.mAvatarPath = mAvatarPath;
     }
 
-    public Long getBooks() {
+    public Long getmBooks() {
         return mBooks;
     }
 
-    public void setBooks(Long books) {
-        mBooks = books;
+    public void setmBooks(Long mBooks) {
+        this.mBooks = mBooks;
     }
 
-    public String getCreatedDate() {
+    public String getmCreatedDate() {
         return mCreatedDate;
     }
 
-    public void setCreatedDate(String createdDate) {
-        mCreatedDate = createdDate;
+    public void setmCreatedDate(String mCreatedDate) {
+        this.mCreatedDate = mCreatedDate;
     }
 
-    public String getDescription() {
+    public String getmDescription() {
         return mDescription;
     }
 
-    public void setDescription(String description) {
-        mDescription = description;
+    public void setmDescription(String mDescription) {
+        this.mDescription = mDescription;
     }
 
-    public String getEmail() {
+    public String getmEmail() {
         return mEmail;
     }
 
-    public void setEmail(String email) {
-        mEmail = email;
+    public void setmEmail(String mEmail) {
+        this.mEmail = mEmail;
     }
 
-    public Boolean getIsPremium() {
+    public Boolean getmIsPremium() {
         return mIsPremium;
     }
 
-    public void setIsPremium(Boolean isPremium) {
-        mIsPremium = isPremium;
+    public void setmIsPremium(Boolean mIsPremium) {
+        this.mIsPremium = mIsPremium;
     }
 
-    public Object getLastLogged() {
+    public Object getmLastLogged() {
         return mLastLogged;
     }
 
-    public void setLastLogged(Object lastLogged) {
-        mLastLogged = lastLogged;
+    public void setmLastLogged(Object mLastLogged) {
+        this.mLastLogged = mLastLogged;
     }
 
-    public String getName() {
+    public String getmName() {
         return mName;
     }
 
-    public void setName(String name) {
-        mName = name;
+    public void setmName(String mName) {
+        this.mName = mName;
     }
 
-    public String getPhone() {
+    public String getmPhone() {
         return mPhone;
     }
 
-    public void setPhone(String phone) {
-        mPhone = phone;
+    public void setmPhone(String mPhone) {
+        this.mPhone = mPhone;
     }
 
-    public String getPhoneCode() {
+    public String getmPhoneCode() {
         return mPhoneCode;
     }
 
-    public void setPhoneCode(String phoneCode) {
-        mPhoneCode = phoneCode;
+    public void setmPhoneCode(String mPhoneCode) {
+        this.mPhoneCode = mPhoneCode;
     }
 
-    public String getRegistrationToken() {
+    public String getmRegistrationToken() {
         return mRegistrationToken;
     }
 
-    public void setRegistrationToken(String registrationToken) {
-        mRegistrationToken = registrationToken;
+    public void setmRegistrationToken(String mRegistrationToken) {
+        this.mRegistrationToken = mRegistrationToken;
     }
 
-    public Long getStoreId() {
+    public Long getmStoreId() {
         return mStoreId;
     }
 
-    public void setStoreId(Long storeId) {
-        mStoreId = storeId;
+    public void setmStoreId(Long mStoreId) {
+        this.mStoreId = mStoreId;
     }
 
+    public String getArabicName() {
+        return arabicName;
+    }
+
+    public void setArabicName(String arabicName) {
+        this.arabicName = arabicName;
+    }
+
+    public String getArabicDescription() {
+        return arabicDescription;
+    }
+
+    public void setArabicDescription(String arabicDescription) {
+        this.arabicDescription = arabicDescription;
+    }
 }

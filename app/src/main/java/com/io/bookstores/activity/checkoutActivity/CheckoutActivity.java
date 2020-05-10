@@ -262,22 +262,27 @@ public class CheckoutActivity extends AppCompatActivity {
                                 Utils.showAlertDialog(CheckoutActivity.this, "Something Went Wrong");
                                 return;
                             }
-                            if (result.getStatus() == true) {
 
-                                deliveryModel = result;
-                                rb_1st.setChecked(true);
-                                tv_name_1.setText(result.getData().get(0).getType() + " Delivery");
-                                rb_1st.setText(result.getData().get(0).getPrice() + result.getData().get(0).getUnit());
-                                rb_2nd.setText("0KD");
-                                tv_name_2.setText(result.getData().get(1).getType() + " Delivery");
-                                delivery_type.setText(deliveryModel.getData().get(0).getType() + " Delivery");
-                                deliveryType = deliveryModel.getData().get(0).getType();
-                                deliv_charge.setText(deliveryModel.getData().get(0).getPrice() + deliveryModel.getData().get(0).getUnit());
-                                totalpricessss = totalprice + deliveryModel.getData().get(0).getPrice();
-                                totalAll_cost.setText(totalpricessss + "KD");
-                            } else {
+                            if(result!=null) {
+                                if (result.getStatus() == true) {
 
-                                Toast.makeText(activity, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                                    deliveryModel = result;
+                                    rb_1st.setChecked(true);
+                                    tv_name_1.setText(result.getData().get(0).getType() + " Delivery");
+                                    rb_1st.setText(result.getData().get(0).getPrice() + result.getData().get(0).getUnit());
+                                    rb_2nd.setText("0KD");
+                                    tv_name_2.setText(result.getData().get(1).getType() + " Delivery");
+                                    delivery_type.setText(deliveryModel.getData().get(0).getType() + " Delivery");
+                                    deliveryType = deliveryModel.getData().get(0).getType();
+                                    deliv_charge.setText(deliveryModel.getData().get(0).getPrice() + deliveryModel.getData().get(0).getUnit());
+                                    totalpricessss = totalprice + deliveryModel.getData().get(0).getPrice();
+                                    totalAll_cost.setText(totalpricessss + "KD");
+                                } else {
+
+                                    Toast.makeText(activity, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            }else {
+                                Utils.showAlertDialog(activity, "Something Went Wrong");
                             }
 
                         }
@@ -328,6 +333,9 @@ public class CheckoutActivity extends AppCompatActivity {
                                         dialog.dismiss();
                                     }
                                 }
+                            }else {
+                                dialog.dismiss();
+                                Utils.showAlertDialog(activity, "Something Went Wrong");
                             }
 
                         }
@@ -428,6 +436,9 @@ public class CheckoutActivity extends AppCompatActivity {
                                         Toast.makeText(CheckoutActivity.this, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
                                     }
                                 }
+                            }else {
+                                Utils.showAlertDialog(activity, "Something Went Wrong");
+                                dialog.dismiss();
                             }
                         }
                     });
@@ -535,6 +546,8 @@ public class CheckoutActivity extends AppCompatActivity {
                                         Toast.makeText(CheckoutActivity.this, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
                                     }
                                 }
+                            }else {
+                                Utils.showAlertDialog(activity, "Something Went Wrong");
                             }
 
                         }
@@ -789,7 +802,7 @@ public class CheckoutActivity extends AppCompatActivity {
 
                     }
                 } else {
-                    Toast.makeText(activity, result.getMessage(), Toast.LENGTH_SHORT).show();
+                    Utils.showAlertDialog(activity, "Something Went Wrong");
                 }
 
             }
@@ -815,7 +828,7 @@ public class CheckoutActivity extends AppCompatActivity {
 
                     }
                 } else {
-                    Toast.makeText(activity, result.getMessage(), Toast.LENGTH_SHORT).show();
+                    Utils.showAlertDialog(activity, "Something Went Wrong");
                 }
 
             }
@@ -850,6 +863,8 @@ public class CheckoutActivity extends AppCompatActivity {
                                     dialog.dismiss();
 
                                 }
+                            }else {
+                                Utils.showAlertDialog(activity, "Something Went Wrong");
                             }
                         }
                     });
@@ -1009,6 +1024,9 @@ public class CheckoutActivity extends AppCompatActivity {
                                         CheckoutActivity.this.dialog.dismiss();
                                     }
                                 }
+                            }else {
+                                dialog.dismiss();
+                                Utils.showAlertDialog(activity, "Something Went Wrong");
                             }
 
                         }
@@ -1047,6 +1065,9 @@ public class CheckoutActivity extends AppCompatActivity {
                                         dialog.dismiss();
                                     }
                                 }
+                            }else {
+                                dialog.dismiss();
+                                Utils.showAlertDialog(activity, "Something Went Wrong");
                             }
 
                         }

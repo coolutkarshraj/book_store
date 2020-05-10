@@ -18,7 +18,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.io.bookstores.Config;
 import com.io.bookstores.R;
+import com.io.bookstores.StaticData;
 import com.io.bookstores.listeners.RecyclerViewClickListener;
+import com.io.bookstores.localStorage.LocalStorage;
 import com.io.bookstores.model.courseModel.CourseDataModel;
 
 import java.util.ArrayList;
@@ -29,6 +31,7 @@ public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.MyViewHo
     private Context mContext ;
     private List<CourseDataModel> mData ;
     RecyclerViewClickListener item;
+    LocalStorage localStorage;
 
 
     public CoursesAdapter(Context mContext, List<CourseDataModel> mData,RecyclerViewClickListener item) {
@@ -44,6 +47,7 @@ public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.MyViewHo
         View view ;
         LayoutInflater mInflater = LayoutInflater.from(mContext);
         view = mInflater.inflate(R.layout.item_courses,parent,false);
+        localStorage = new LocalStorage(mContext);
         return new MyViewHolder(view);
     }
 
@@ -51,8 +55,15 @@ public class CoursesAdapter extends RecyclerView.Adapter<CoursesAdapter.MyViewHo
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         CourseDataModel model = mData.get(position);
         //holder.cardView.setAnimation(AnimationUtils.loadAnimation(mContext,R.anim.fade_scale_animation));
-        holder.tv_courses_tilte.setText(model.getCourseName());
-        holder.tv_courses_desc.setText(model.getCourseDescription());
+
+        if (localStorage.getString(LocalStorage.islanguage).equals("kuwait")) {
+            holder.tv_courses_tilte.setText(model.getArabicName());
+            holder.tv_courses_desc.setText(model.getArabicDescription());
+        } else {
+            holder.tv_courses_tilte.setText(model.getCourseName());
+            holder.tv_courses_desc.setText(model.getCourseDescription());
+        }
+
         Glide.with(mContext).load(Config.imageUrl + model.getAvatarPath()).into(holder.iv_courses_thumbnail);
        /* holder.iv_courses_thumbnail.setImageResource(mData.get(position).getThumbnail());*/
         holder.bv_course_browse.setOnClickListener(new View.OnClickListener() {
