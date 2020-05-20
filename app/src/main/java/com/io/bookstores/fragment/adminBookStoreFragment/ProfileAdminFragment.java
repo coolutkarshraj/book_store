@@ -18,6 +18,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import com.bumptech.glide.Glide;
 import com.io.bookstores.Config;
 import com.io.bookstores.R;
@@ -31,10 +35,6 @@ import com.io.bookstores.utility.NewProgressBar;
 import com.io.bookstores.utility.Utils;
 import com.io.bookstores.utility.userOnlineInfo;
 import com.koushikdutta.async.future.FutureCallback;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -166,8 +166,10 @@ public class ProfileAdminFragment extends Fragment implements View.OnClickListen
                                         Utils.showAlertDialogLogout(getActivity(), "Your Session was expire. please Logout!", localStorage.getInt(LocalStorage.userId));
 
                                         dialog.dismiss();
+                                    } else {
+                                        dialog.dismiss();
+                                        Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                                     }
-                                    dialog.dismiss();
                                 } else {
                                     dialog.dismiss();
                                     getdataSetIntoViews(result);

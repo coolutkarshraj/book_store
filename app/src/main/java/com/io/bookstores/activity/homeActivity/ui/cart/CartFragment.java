@@ -127,6 +127,7 @@ public class CartFragment extends Fragment {
                                 Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                                 return;
                             }
+
                             if (result.getStatus() == true) {
                                 dialog.dismiss();
                                 deliveryModel = result;
@@ -287,7 +288,10 @@ public class CartFragment extends Fragment {
                                 return;
                             }
                             if (result != null) {
-                                if (result.getStatus() == true) {
+                                if(result.getStatus() == null){
+                                    Utils.showAlertDialog(getActivity(), "Something Went Wrong");
+                                    dialog.dismiss();
+                                }else  if (result.getStatus() == true) {
                                     dialog.dismiss();
                                     loginApi(u_emael, password);
                                     // Toast.makeText(GuestLoginActivity.this, "" + result.getMessage(), Toast.LENGTH_LONG).show();
@@ -323,7 +327,10 @@ public class CartFragment extends Fragment {
                             }
 
                             if (result != null) {
-                                if (result.getStatus() == true) {
+                                if(result.getStatus() == null){
+                                    Utils.showAlertDialog(getActivity(), "Something Went Wrong");
+                                    dialog.dismiss();
+                                }else if (result.getStatus() == true) {
                                     dialog.dismiss();
                                     saveLoginData(result);
                                     localStorage.putBooleAan(LocalStorage.isLoggedIn, true);

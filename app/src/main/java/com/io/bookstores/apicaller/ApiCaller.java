@@ -60,6 +60,7 @@ import com.io.bookstores.model.store.EditStoreDetialResponseModel;
 import com.io.bookstores.model.store.StoreDetailResponseModel;
 import com.io.bookstores.model.storeDetailsModel.StoreDetailsModel;
 import com.io.bookstores.model.storeModel.StoreModel;
+import com.io.bookstores.model.subCategory.ClassSubCategorsResponseModel;
 import com.io.bookstores.model.updateAddResponseModel.UpdateAddResponseModel;
 import com.io.bookstores.model.updatePasswordModel.UpdatePasswordModel;
 import com.io.bookstores.model.verifyOtpModel.VerifyOtpModel;
@@ -1391,20 +1392,18 @@ public class ApiCaller {
     }
     /*------------------------------------------------------- get class ategory Api------------------------------------------------------------*/
 
-    public static void getclassSubCategoryApi(Activity activity, String url, String classCategoryId,
-                                              final FutureCallback<ClassSubCategoryResponseModel> apiCallBack) {
-        final JsonObject json = new JsonObject();
-        json.addProperty("classCategoryId", classCategoryId);
+    public static void getclassSubCategoryApi(Activity activity, String url,
+                                              final FutureCallback<ClassSubCategorsResponseModel> apiCallBack) {
+
         final Gson gson = new Gson();
         Ion.with(activity)
-                .load("POST", UrlLocator.getFinalUrl(url))
+                .load("GET", UrlLocator.getFinalUrl(url))
                 .noCache()
-                .setJsonObjectBody(json)
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
                     public void onCompleted(Exception e, JsonObject result) {
-                        ClassSubCategoryResponseModel classCategoryModel = gson.fromJson(result, ClassSubCategoryResponseModel.class);
+                        ClassSubCategorsResponseModel classCategoryModel = gson.fromJson(result, ClassSubCategorsResponseModel.class);
                         apiCallBack.onCompleted(e, classCategoryModel);
                     }
                 });

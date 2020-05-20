@@ -24,14 +24,14 @@ import com.io.bookstores.adapter.schoolAdapter.StudentBooksRvAdapter;
 import com.io.bookstores.apicaller.ApiCaller;
 import com.io.bookstores.listeners.ItemClickListner;
 import com.io.bookstores.listeners.ItemClickListnerss;
-import com.io.bookstores.listeners.RecyclerViewClickListener;
+import com.io.bookstores.listeners.RecyclerViewClickListenerS;
 import com.io.bookstores.localStorage.LocalStorage;
-import com.io.bookstores.model.classModel.ClassSubCategoryDataModel;
-import com.io.bookstores.model.classModel.ClassSubCategoryResponseModel;
 import com.io.bookstores.model.loginModel.LoginModel;
 import com.io.bookstores.model.productModel.ProductDataModel;
 import com.io.bookstores.model.productModel.ProductResponseModel;
 import com.io.bookstores.model.staticModel.ClothModel;
+import com.io.bookstores.model.subCategory.ClassSubCategoriesItem;
+import com.io.bookstores.model.subCategory.ClassSubCategorsResponseModel;
 import com.io.bookstores.utility.NewProgressBar;
 import com.io.bookstores.utility.Utils;
 import com.io.bookstores.utility.userOnlineInfo;
@@ -45,7 +45,7 @@ import static com.io.bookstores.R.id;
 import static com.io.bookstores.R.layout;
 
 
-public class ClothsFragment extends Fragment implements View.OnClickListener, RecyclerViewClickListener {
+public class ClothsFragment extends Fragment implements View.OnClickListener, RecyclerViewClickListenerS {
 
 
     private Activity activity;
@@ -60,17 +60,17 @@ public class ClothsFragment extends Fragment implements View.OnClickListener, Re
     private ClothRvAdapter adapter;
     private LoginModel loginModel;
     private ItemClickListnerss itemClickListnerss;
-    int size;
-    private List<ClassSubCategoryDataModel> dataItem = new ArrayList<>();
+    String size;
+    private List<ClassSubCategoriesItem> dataItem = new ArrayList<>();
     private ClassSubCategoryRvAdapter classSubCategoryRvAdapter;
     private StudentBooksRvAdapter studentBooksRvAdapter;
     private List<ClothModel> listCloth;
     private List<ClothModel> listStudentBooks;
     private String token = "";
-    private TextView tv_no_data_found_cloth;
+    private TextView tv_no_data_found_cloth, notdata;
     private ItemClickListner itemClickListner;
     private List<ProductDataModel> listData = new ArrayList<>();
-    private RecyclerViewClickListener recyclerViewClickListener;
+    private RecyclerViewClickListenerS recyclerViewClickListener;
 
     public ClothsFragment() {
 
@@ -103,6 +103,7 @@ public class ClothsFragment extends Fragment implements View.OnClickListener, Re
         itemClickListner = (ItemClickListner) activity;
 
         iv_back = view.findViewById(id.iv_back);
+        notdata = view.findViewById(id.notdata);
         ll_books_layout = view.findViewById(id.ll_books_layout);
         ll_cloth_layout = view.findViewById(id.ll_cloth_layout);
         rv_books = view.findViewById(id.rv_books);
@@ -142,7 +143,6 @@ public class ClothsFragment extends Fragment implements View.OnClickListener, Re
         if (StaticData.type == 1) {
             ll_cloth_layout.setVisibility(View.VISIBLE);
             ll_books_layout.setVisibility(View.GONE);
-
             setUpOfCloths();
         } else {
             ll_cloth_layout.setVisibility(View.GONE);
@@ -160,20 +160,20 @@ public class ClothsFragment extends Fragment implements View.OnClickListener, Re
     private void classSubcategoryApiCall() {
         if (user.isOnline(activity)) {
             dialog.show();
-            ApiCaller.getclassSubCategoryApi(getActivity(), Config.Url.getClassSubCategory, localStorage.getString(LocalStorage.classCategoryId),
-                    new FutureCallback<ClassSubCategoryResponseModel>() {
+            ApiCaller.getclassSubCategoryApi(getActivity(), Config.Url.getClassSubCategory + localStorage.getString(LocalStorage.classCategoryId),
+                    new FutureCallback<ClassSubCategorsResponseModel>() {
 
                         @Override
-                        public void onCompleted(Exception e, ClassSubCategoryResponseModel result) {
+                        public void onCompleted(Exception e, ClassSubCategorsResponseModel result) {
                             if (e != null) {
                                 dialog.dismiss();
                                 Utils.showAlertDialog(getActivity(), "Something Went Wrong");
+                                return;
                             }
                             if (result != null) {
-
                                 if (result.isStatus()) {
                                     dialog.dismiss();
-                                    setUpOfSubCategory(result.getData());
+                                    setUpOfSubCategory(result.getData().getClassSubCategories());
                                 }
                             }else {
                                 Utils.showAlertDialog(getActivity(), "Something Went Wrong");
@@ -188,16 +188,16 @@ public class ClothsFragment extends Fragment implements View.OnClickListener, Re
 
     /*---------------------------------------- all class SubCategory Set On Recycler View -----------------------------------*/
 
-    private void setUpOfSubCategory(List<ClassSubCategoryDataModel> data) {
-        if (data.isEmpty()) {
+    private void setUpOfSubCategory(List<ClassSubCategoriesItem> classSubCategories) {
+        if (classSubCategories.isEmpty()) {
 
             rv_subcategory.setVisibility(View.GONE);
         } else {
             rv_subcategory.setVisibility(View.VISIBLE);
             rv_subcategory.setLayoutManager(new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false));
-            classSubCategoryRvAdapter = new ClassSubCategoryRvAdapter(activity, data, recyclerViewClickListener);
-            dataItem = data;
-            size = dataItem.get(0).getClassSubCategoryId();
+            classSubCategoryRvAdapter = new ClassSubCategoryRvAdapter(activity, classSubCategories, recyclerViewClickListener);
+            dataItem = classSubCategories;
+            size = classSubCategories.get(0).getName();
             rv_subcategory.setAdapter(classSubCategoryRvAdapter);
             clothApiCall(size);
         }
@@ -207,17 +207,16 @@ public class ClothsFragment extends Fragment implements View.OnClickListener, Re
 
     private void getSchoolProducts() {
         if (user.isOnline(activity)) {
-            ApiCaller.getSchoolProducts(getActivity(), Config.Url.schoolProducts + "/" + localStorage.getString(LocalStorage.schoolId) + "/" + localStorage.getString(LocalStorage.classGroupId) + "/" + localStorage.getString(LocalStorage.classId) + "/" + localStorage.getString(LocalStorage.classCategoryId) + "/" + "-1", token,
+            ApiCaller.getSchoolProducts(getActivity(), Config.Url.schoolProducts + "/" + localStorage.getString(LocalStorage.schoolId) + "/" + localStorage.getString(LocalStorage.classGroupId) + "/" + localStorage.getString(LocalStorage.classId) + "/" + localStorage.getString(LocalStorage.classCategoryId) + "/" + null, token,
                     new FutureCallback<ProductResponseModel>() {
 
                         @Override
                         public void onCompleted(Exception e, ProductResponseModel result) {
                             if (e != null) {
-
                                 Utils.showAlertDialog(getActivity(), "Something Went Wrong");
+                                return;
                             }
                             if (result != null) {
-
                                 if (result.isStatus()) {
                                     setUpOfProducts(result.getData());
                                 } else {
@@ -240,8 +239,12 @@ public class ClothsFragment extends Fragment implements View.OnClickListener, Re
 
     private void setUpOfProducts(List<ProductDataModel> data) {
         if (data.isEmpty()) {
-            Toast.makeText(activity, "data Not Found", Toast.LENGTH_SHORT).show();
+            notdata.setVisibility(View.VISIBLE);
+            rv_books.setVisibility(View.GONE);
+
         } else {
+            notdata.setVisibility(View.GONE);
+            rv_books.setVisibility(View.VISIBLE);
             rv_books.setLayoutManager(new GridLayoutManager(activity, 3));
             studentBooksRvAdapter = new StudentBooksRvAdapter(activity, data);
             listData = data;
@@ -313,11 +316,11 @@ public class ClothsFragment extends Fragment implements View.OnClickListener, Re
     }
 
     @Override
-    public void onClickPosition(int position) {
+    public void onClickPosition(String position) {
         clothApiCall(position);
     }
 
-    private void clothApiCall(int position) {
+    private void clothApiCall(String position) {
         if (user.isOnline(activity)) {
             dialog.show();
             ApiCaller.getSchoolProducts(getActivity(), Config.Url.schoolProducts + "/" + localStorage.getString(LocalStorage.schoolId) + "/" + localStorage.getString(LocalStorage.classGroupId) + "/" + localStorage.getString(LocalStorage.classId) + "/" + localStorage.getString(LocalStorage.classCategoryId) + "/" + position, token,
@@ -326,11 +329,10 @@ public class ClothsFragment extends Fragment implements View.OnClickListener, Re
                         @Override
                         public void onCompleted(Exception e, ProductResponseModel result) {
                             if (e != null) {
-
+                                dialog.dismiss();
                                 Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                             }
                             if (result != null) {
-
                                 if (result.isStatus()) {
                                     dialog.dismiss();
                                     setUpOfProductsCloth(result.getData());
@@ -343,6 +345,9 @@ public class ClothsFragment extends Fragment implements View.OnClickListener, Re
                                         Toast.makeText(activity, result.getMessage(), Toast.LENGTH_SHORT).show();
                                     }
                                 }
+                            } else {
+                                dialog.dismiss();
+                                Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                             }
                         }
                     });

@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:cardview="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/margin_5dp"
     cardview:cardCornerRadius="@dimen/margin_5dp"
@@ -15,12 +15,12 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/height_140dp">
+            android:layout_height="@dimen/height_150dp">
 
             <ImageView
                 android:id="@+id/iv_image"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/height_140dp"
+                android:layout_height="@dimen/height_150dp"
                 android:scaleType="centerCrop"
                 tools:ignore="ContentDescription" />
 

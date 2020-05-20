@@ -2,6 +2,7 @@ package com.io.bookstores.fragment.bookStoreFragments;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,7 @@ public class CategoryFirstFragment extends Fragment {
     private List<CategoryData> item3 = new ArrayList<>();
 
     public CategoryFirstFragment(List<CategoryData> data) {
+        Log.e("finalsize", "" + data.size());
         this.data = data;
     }
 
@@ -60,18 +62,20 @@ public class CategoryFirstFragment extends Fragment {
     private void dataSetIntoRecyclerView() {
         item3.clear();
         if (CategoryGridFragment.viewPager.getCurrentItem() == 0) {
-            sizeo = 5;
-            i = 5;
+            sizeo = 0;
+            i = 0;
         } else if (CategoryGridFragment.viewPager.getCurrentItem() > 0) {
-            sizeo = 10 * CategoryGridFragment.viewPager.getCurrentItem();
-            i = 10 * CategoryGridFragment.viewPager.getCurrentItem();
+            sizeo = 5 * CategoryGridFragment.viewPager.getCurrentItem();
+            i = 5 * CategoryGridFragment.viewPager.getCurrentItem();
         }
 
         for (i = sizeo; i <= data.size() - 1; i++) {
-            if (i < sizeo + 10) {
+            if (i < sizeo + 5) {
                 item3.add(data.get(i));
+
             }
         }
+
 
         recyclerView3.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         CategoryGridAdapter adapter3 = new CategoryGridAdapter(getActivity(), item3);

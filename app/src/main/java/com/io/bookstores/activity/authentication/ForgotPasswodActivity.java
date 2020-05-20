@@ -129,7 +129,10 @@ public class ForgotPasswodActivity extends AppCompatActivity implements View.OnC
                             }
 
                             if (result != null) {
-                                if (result.getStatus()) {
+                                if (result.getStatus() == null) {
+                                    dialog.show();
+                                    Utils.showAlertDialog(activity, "Something Went Wrong");
+                                } else if (result.getStatus()) {
                                     dialog.show();
                                     Intent i = new Intent(activity, LoginActivity.class);
                                     startActivity(i);
@@ -139,6 +142,9 @@ public class ForgotPasswodActivity extends AppCompatActivity implements View.OnC
                                     Toast.makeText(activity, result.getMessage(), Toast.LENGTH_SHORT).show();
                                     etEmail.getText().clear();
                                 }
+                            } else {
+                                dialog.show();
+                                Utils.showAlertDialog(activity, "Something Went Wrong");
                             }
                         }
                     });

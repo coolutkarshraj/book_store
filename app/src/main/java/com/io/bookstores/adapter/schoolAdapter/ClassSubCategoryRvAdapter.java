@@ -14,20 +14,22 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.io.bookstores.R;
 import com.io.bookstores.listeners.ItemClickListner;
 import com.io.bookstores.listeners.RecyclerViewClickListener;
+import com.io.bookstores.listeners.RecyclerViewClickListenerS;
 import com.io.bookstores.model.classModel.ClassSubCategoryDataModel;
+import com.io.bookstores.model.subCategory.ClassSubCategoriesItem;
 
 import java.util.List;
 
 public class ClassSubCategoryRvAdapter extends RecyclerView.Adapter<ClassSubCategoryRvAdapter.MyViewHolder> {
 
     private Context mContext;
-    private List<ClassSubCategoryDataModel> mData;
+    private List<ClassSubCategoriesItem> mData;
     private ItemClickListner itemClickListner;
-    private RecyclerViewClickListener recyclerViewClickListener;
+    private RecyclerViewClickListenerS recyclerViewClickListener;
     int postionn = 0;
 
 
-    public ClassSubCategoryRvAdapter(Context mContext, List<ClassSubCategoryDataModel> mData, RecyclerViewClickListener recyclerViewClickListener) {
+    public ClassSubCategoryRvAdapter(Context mContext, List<ClassSubCategoriesItem> mData, RecyclerViewClickListenerS recyclerViewClickListener) {
         this.mContext = mContext;
         this.mData = mData;
         this.recyclerViewClickListener = recyclerViewClickListener;
@@ -43,14 +45,14 @@ public class ClassSubCategoryRvAdapter extends RecyclerView.Adapter<ClassSubCate
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        final ClassSubCategoryDataModel data = mData.get(position);
+        final ClassSubCategoriesItem data = mData.get(position);
         holder.tv_name.setText(data.getName());
         holder.rl_root.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 postionn = position;
               //  Toast.makeText(mContext, "sub id" + data.getClassSubCategoryId(), Toast.LENGTH_SHORT).show();
-                recyclerViewClickListener.onClickPosition(data.getClassSubCategoryId());
+                recyclerViewClickListener.onClickPosition(data.getName());
                 notifyDataSetChanged();
             }
         });

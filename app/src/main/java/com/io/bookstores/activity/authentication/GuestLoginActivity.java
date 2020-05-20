@@ -146,13 +146,13 @@ public class GuestLoginActivity extends AppCompatActivity {
                                 dialog.dismiss();
                                 return;
                             }
-                            if(result != null){
-                                if(result.getStatus()== true) {
+                            if (result != null) {
+                                if (result.getStatus() == null) {
+                                    Utils.showAlertDialog(GuestLoginActivity.this, "Something Went Wrong");
+                                    dialog.dismiss();
+                                } else if (result.getStatus()) {
                                     dialog.dismiss();
                                     loginApi(u_emael,password);
-                                   // Toast.makeText(GuestLoginActivity.this, "" + result.getMessage(), Toast.LENGTH_LONG).show();
-                                   /* Intent intent = new Intent(GuestLoginActivity.this, LoginActivity.class);
-                                    startActivity(intent);*/
                                 }else {
                                     dialog.dismiss();
                                     Intent intent = new Intent(GuestLoginActivity.this, LoginActivity.class);
@@ -160,6 +160,9 @@ public class GuestLoginActivity extends AppCompatActivity {
                                     Toast.makeText(GuestLoginActivity.this, "" + result.getMessage() +". please login", Toast.LENGTH_LONG).show();
                                 }
 
+                            } else {
+                                Utils.showAlertDialog(GuestLoginActivity.this, "Something Went Wrong");
+                                dialog.dismiss();
                             }
                         }
                     });
@@ -185,7 +188,10 @@ public class GuestLoginActivity extends AppCompatActivity {
                                 }
 
                                 if (result != null) {
-                                    if (result.getStatus() == true) {
+                                    if (result.getStatus() == null) {
+                                        Utils.showAlertDialog(activity, "Something Went Wrong");
+                                        dialog.dismiss();
+                                    } else if (result.getStatus()) {
                                         dialog.dismiss();
                                         saveLoginData(result);
                                         localStorage.putBooleAan(LocalStorage.isLoggedIn, true);
@@ -194,6 +200,9 @@ public class GuestLoginActivity extends AppCompatActivity {
                                         dialog.dismiss();
                                         Toast.makeText(activity, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
                                     }
+                                } else {
+                                    Utils.showAlertDialog(activity, "Something Went Wrong");
+                                    dialog.dismiss();
                                 }
 
                             }

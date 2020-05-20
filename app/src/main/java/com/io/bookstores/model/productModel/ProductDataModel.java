@@ -10,7 +10,7 @@ public class ProductDataModel {
     private String avatarName;
 
     @SerializedName("classSubCategory")
-    private ClassSubCategory classSubCategory;
+    private String  classSubCategory;
 
     @SerializedName("isWishlist")
     private boolean isWishlist;
@@ -50,11 +50,11 @@ public class ProductDataModel {
         return avatarName;
     }
 
-    public void setClassSubCategory(ClassSubCategory classSubCategory){
+    public void setClassSubCategory(String classSubCategory){
         this.classSubCategory = classSubCategory;
     }
 
-    public ClassSubCategory getClassSubCategory(){
+    public String getClassSubCategory(){
         return classSubCategory;
     }
 

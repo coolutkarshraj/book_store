@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.io.bookstores.Config;
 import com.io.bookstores.R;
-import com.io.bookstores.StaticData;
 import com.io.bookstores.apicaller.ApiCaller;
 import com.io.bookstores.holder.SchoolsHolder;
 import com.io.bookstores.listeners.ItemClickListner;
@@ -76,7 +75,7 @@ public class AllSchoolsRvAdapter extends RecyclerView.Adapter<SchoolsHolder> {
                 LocalStorage localStorage = new LocalStorage(activity);
                 localStorage.putString(LocalStorage.schoolId, String.valueOf(model.getSchoolId()));
                 localStorage.putString(LocalStorage.TYPE, "school");
-
+                localStorage.putString(LocalStorage.Dummy_Store_ID, String.valueOf(model.getSchoolId()));
                 itemClickListner.onClick(8);
             }
         });

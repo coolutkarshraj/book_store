@@ -184,6 +184,9 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
                                 if (result.getStatus() == null) {
                                     if (result.getMessage().equals("Unauthorized")) {
                                         Utils.showAlertDialogAdminLogout(getActivity(), "Your Session was expire. please Logout!", localStorage.getInt(LocalStorage.userId));
+                                    } else {
+                                        dialog.dismiss();
+                                        Utils.showAlertDialog(activity, "Something Went Wrong");
                                     }
 
                                 } else {
@@ -216,8 +219,10 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
                                     if (result.getMessage().equals("Unauthorized")) {
                                         Utils.showAlertDialogAdminLogout(getActivity(), "Your Session was expire. please Logout!", localStorage.getInt(LocalStorage.userId));
                                         dialog.dismiss();
+                                    } else {
+                                        dialog.dismiss();
+                                        Utils.showAlertDialog(activity, "Something Went Wrong");
                                     }
-                                    dialog.dismiss();
                                 } else {
                                     setRecyclerViewData(result);
                                     dialog.dismiss();
@@ -264,8 +269,9 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
                                 return;
                             }
                             if(result!=null) {
-                                if (result.getStatus() == true) {
-
+                                if (result.getStatus() == null) {
+                                    Utils.showAlertDialog(getActivity(), "Something Went Wrong");
+                                } else if (result.getStatus() == true) {
                                     items.clear();
                                     categoryId.clear();
                                     for (int i = 0; i < result.getData().size(); i++) {
@@ -472,6 +478,9 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
                                 if (result.getMessage().equals("Unauthorized")) {
                                     Utils.showAlertDialogAdminLogout(getActivity(), "Your Session was expire. please Logout!", localStorage.getInt(LocalStorage.userId));
                                     dialog.dismiss();
+                                }else {
+                                    Utils.showAlertDialog(getActivity(), "Something Went Wrong");
+                                    dialog.dismiss();
                                 }
                             } else {
                                 if (result.getStatus() == true) {
@@ -590,14 +599,20 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
 
                         @Override
                         public void onCompleted(Exception e, AdminBookListResponseModel result) {
-
+                            if (e != null) {
+                                dialog.dismiss();
+                                Utils.showAlertDialog(getActivity(), "Something Went Wrong");
+                                return;
+                            }
                             if (result != null) {
                                 if (result.getStatus() == null) {
                                     if (result.getMessage().equals("Unauthorized")) {
                                         Utils.showAlertDialogAdminLogout(getActivity(), "Your Session was expire. please Logout!", localStorage.getInt(LocalStorage.userId));
                                         dialog.dismiss();
+                                    }else {
+                                        dialog.dismiss();
+                                        Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                                     }
-                                    dialog.dismiss();
                                 } else {
                                     setRecyclerViewData(result);
                                     dialog.dismiss();
@@ -742,6 +757,9 @@ public class HomeBookFragment extends Fragment implements View.OnClickListener, 
                                     if (result.getMessage().equals("Unauthorized")) {
                                         Utils.showAlertDialogAdminLogout(getActivity(), "Your Session was expire. please Logout!", localStorage.getInt(LocalStorage.userId));
                                         dialog.dismiss();
+                                    }else {
+                                        dialog.dismiss();
+                                        Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                                     }
 
                                 } else {

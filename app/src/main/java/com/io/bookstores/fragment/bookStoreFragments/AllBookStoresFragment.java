@@ -123,7 +123,10 @@ public class AllBookStoresFragment extends Fragment implements View.OnClickListe
                                 return;
                             }
                             if(result!=null) {
-                                if (result.getStatus() == true) {
+                                if (result.getStatus() == null) {
+                                    dialog.dismiss();
+                                    Utils.showAlertDialog(getActivity(), "Something Went Wrong");
+                                } else if (result.getStatus() == true) {
                                     dialog.dismiss();
                                     data = result;
                                     setRecyclerViewData(result.getData());

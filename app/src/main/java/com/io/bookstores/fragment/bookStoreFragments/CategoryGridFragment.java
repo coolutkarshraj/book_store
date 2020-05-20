@@ -19,6 +19,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.io.bookstores.Config;
 import com.io.bookstores.R;
+import com.io.bookstores.StaticData;
 import com.io.bookstores.adapter.categoryAdapter.CategoryFragmentAdapter;
 import com.io.bookstores.adapter.categoryAdapter.CategoryGridAdapter;
 import com.io.bookstores.apicaller.ApiCaller;
@@ -51,9 +52,11 @@ public class CategoryGridFragment extends Fragment implements View.OnClickListen
     List<CategoryData> item1 = new ArrayList<>();
     List<CategoryData> item2 = new ArrayList<>();
     List<CategoryData> item3 = new ArrayList<>();
+    List<CategoryData> datasize = new ArrayList<>();
     private LocalStorage localStorage;
 
     private int sizee = 0;
+    private int others = 0;
     private BookListFragment bookListFragment;
     private ItemClickListner itemClickListner;
     private ImageView iv_image;
@@ -111,6 +114,7 @@ public class CategoryGridFragment extends Fragment implements View.OnClickListen
     public void onClick(View v) {
         switch ((v.getId())) {
             case R.id.iv_view_all_category:
+                StaticData.filter = true;
                 localStorage.putString(LocalStorage.CategoryId, "-1");
                 bookListFragment = new BookListFragment();
                 getActivity().getSupportFragmentManager().beginTransaction()
@@ -142,7 +146,11 @@ public class CategoryGridFragment extends Fragment implements View.OnClickListen
                                 return;
                             }
                             if(result!=null){
-                            if (result.getStatus() == true) {
+                                if (result.getStatus() == null) {
+                                    dialog.dismiss();
+                                    Utils.showAlertDialog(getActivity(), "Something Went Wrong");
+                                } else if (result.getStatus() == true) {
+
                                 dialog.dismiss();
                                 recyclerViewData(result.getData());
                             } else {
@@ -173,19 +181,29 @@ public class CategoryGridFragment extends Fragment implements View.OnClickListen
         }
 
         CategoryFragmentAdapter adapter = new CategoryFragmentAdapter(((FragmentActivity) activity).getSupportFragmentManager());
-        if (data.size() % 10 == 0) {
-            sizee = data.size() / 10;
+        datasize.clear();
+        for (int j = 0; j < data.size(); j++) {
+            if (data.get(j).getDescription().equals("Others")) {
+                datasize.add(data.get(j));
+                Log.e("othersize",""+datasize.size());
+            }
+        }
+        if (datasize.size() % 5 == 0) {
+            sizee = datasize.size() / 5;
         } else {
-            sizee = data.size() / 10 + 1;
+            sizee = datasize.size() / 5 + 1;
         }
         for (int i = 0; i < sizee; i++) {
-            adapter.addFragment(new CategoryFirstFragment(data));
+            Log.e("new",""+datasize.size());
+            adapter.addFragment(new CategoryFirstFragment(datasize));
+
             adapter.notifyDataSetChanged();
 
         }
         item1.clear();
         item2.clear();
-        for ( int i = 0; i <= data.size() - 1; i++) {
+        item3.clear();
+      /*  for ( int i = 0; i <= data.size() - 1; i++) {
 //            if (i <  3) {
 //                item1.add(data.get(i));
 //            } else if (i <  3 + 3) {
@@ -303,6 +321,16 @@ public class CategoryGridFragment extends Fragment implements View.OnClickListen
                     item3.add(model);
                 }
             }
+        }*/
+
+        for (int i = 0; i <= data.size() - 1; i++) {
+            if (data.get(i).getDescription().equals("Electronics")) {
+                item3.add(data.get(i));
+            } else if (data.get(i).getDescription().equals("Office Supplies")) {
+                item2.add(data.get(i));
+            } else if (data.get(i).getDescription().equals("Books")) {
+                item1.add(data.get(i));
+            }
         }
 
         adapter.notifyDataSetChanged();
@@ -312,14 +340,17 @@ public class CategoryGridFragment extends Fragment implements View.OnClickListen
 
         recyclerView1.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         CategoryGridAdapter adapter1 = new CategoryGridAdapter(getActivity(), item1);
+        Log.e("size1", "" + item1.size());
         recyclerView1.setAdapter(adapter1);
 
         recyclerView2.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         CategoryGridAdapter adapter2 = new CategoryGridAdapter(getActivity(), item2);
+        Log.e("size2", "" + item2.size());
         recyclerView2.setAdapter(adapter2);
 
         recyclerView3.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         CategoryGridAdapter adapter3 = new CategoryGridAdapter(getActivity(), item3);
+        Log.e("size3", "" + item3.size());
         recyclerView3.setAdapter(adapter3);
 
         booksHeading.setVisibility(View.VISIBLE);

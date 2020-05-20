@@ -213,8 +213,10 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                                     if(result.getMessage().equals("Unauthorized")){
                                         Utils.showAlertDialogLogout(getActivity(), "Your Session was expire. please Logout!",localStorage.getUserProfile().getData().getUser().getUserId());
                                         dialog.dismiss();
+                                    }else {
+                                        dialog.dismiss();
+                                        Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                                     }
-                                    dialog.dismiss();
                                 }else {
                                     SettingsFragment.this.dialog.dismiss();
                                     dialog.dismiss();

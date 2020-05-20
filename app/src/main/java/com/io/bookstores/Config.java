@@ -5,7 +5,7 @@ package com.io.bookstores;
  */
 
 public class Config {
-        public final static String IP = "mybookstores.net";
+    public final static String IP = "mybookstores.net";
     public static String imageUrl ="https://mybookstores.net/api/media/render/?path=";
 
     public static class Url {
@@ -65,7 +65,7 @@ public class Config {
         public static String getSchools = "school/list";
         public static String getclass = "class-group/getSchoolClasses";
         public static String getclassCategory = "class-category/getCategories";
-        public static String getClassSubCategory = "class-sub-category/getAllByCategory";
+        public static String getClassSubCategory = "class-category/sub-category?id=";
         public static String schoolProducts = "product/list";
         public static String schoolDetail = "school/detail?id=";
         public static String guestDetial = "course/guest-detail?phone=";

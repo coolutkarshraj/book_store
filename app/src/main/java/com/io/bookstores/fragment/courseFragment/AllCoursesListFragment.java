@@ -107,7 +107,9 @@ public class AllCoursesListFragment extends Fragment implements RecyclerViewClic
                                 Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                             }
                             if (result != null) {
-                                if (result.getStatus()) {
+                                if (result.getStatus() == null) {
+                                    Utils.showAlertDialog(getActivity(), "Something Went Wrong");
+                                } else if (result.getStatus()) {
                                     setRecyclerView(result);
                                 }
                             }else {

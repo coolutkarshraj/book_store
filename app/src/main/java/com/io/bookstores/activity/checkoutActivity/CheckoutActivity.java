@@ -92,6 +92,7 @@ public class CheckoutActivity extends AppCompatActivity {
     private AddressAdapter addressAdapter;
     private JsonArray jsonArray, jsonArraySchool;
     String type = "";
+    String storeSchoolId = "";
     public static TextView delivery_type, deliv_charge, tv_gst, total_cost, totalAll_cost;
     private String deliveryType;
     private DeliveryResponseModel deliveryModel;
@@ -102,7 +103,8 @@ public class CheckoutActivity extends AppCompatActivity {
     String message = "";
     int totalprice;
     int totalpricessss;
-    String spindata, spindistict;
+    int commonStoreId;
+    String spindata = " ", spindistict = " ";
     JSONObject jsonObject1;
     JSONArray jsonArrayy;
     File file;
@@ -264,8 +266,7 @@ public class CheckoutActivity extends AppCompatActivity {
                             }
 
                             if(result!=null) {
-                                if (result.getStatus() == true) {
-
+                                if (result.getStatus()) {
                                     deliveryModel = result;
                                     rb_1st.setChecked(true);
                                     tv_name_1.setText(result.getData().get(0).getType() + " Delivery");
@@ -298,19 +299,19 @@ public class CheckoutActivity extends AppCompatActivity {
         if (user.isOnline(activity)) {
 
             final LocalStorage localStorage = new LocalStorage(this);
-            ApiCaller.orderPrice(activity, Config.Url.orderprice + "sId=" + localStorage.getString(LocalStorage.Dummy_Store_ID) + "&dId=" + localStorage.getString(LocalStorage.addressId), localStorage.getString(LocalStorage.token),
+            ApiCaller.orderPrice(activity, Config.Url.orderprice + "sId=" + storeSchoolId + "&dId=" + localStorage.getString(LocalStorage.addressId), localStorage.getString(LocalStorage.token),
                     new FutureCallback<GetDPriceResponseModel>() {
                         @Override
                         public void onCompleted(Exception e, GetDPriceResponseModel result) {
                             if (e != null) {
-                                dialog.dismiss();
                                 Utils.showAlertDialog(activity, "Something Went Wrong");
                                 return;
                             }
 
                             if (result != null) {
-                                if (result.getStatus() == true) {
-                                    dialog.dismiss();
+                                if (result.getStatus() == null) {
+                                    Utils.showAlertDialog(activity, "Something Went Wrong");
+                                } else if (result.getStatus() == true) {
                                     deliv_charge.setText(deliveryModel.getData().get(1).getPrice() + deliveryModel.getData().get(1).getUnit());
                                     dilvery = result.getData().getPrice();
                                     rb_2nd.setText(result.getData().getPrice() + "KD");
@@ -319,7 +320,6 @@ public class CheckoutActivity extends AppCompatActivity {
                                 } else {
                                     if (result.getMessage().equals("Unauthorized")) {
                                         Utils.showAlertDialogLogout(CheckoutActivity.this, "Your Session was expire. please Logout!", localStorage.getUserProfile().getData().getUser().getUserId());
-                                        dialog.dismiss();
                                     } else if (result.getMessage().equals("District name issue")) {
                                         message = "District name issue";
                                      /*   rb_2nd.setChecked(false);
@@ -330,11 +330,9 @@ public class CheckoutActivity extends AppCompatActivity {
                                         totalpricessss = totalprice + 2;
                                         totalAll_cost.setText(totalpricessss + "KD");
                                         //Utils.showAlertDialog(CheckoutActivity.this, "These books are not deliverd to this address .please change Address.");
-                                        dialog.dismiss();
                                     }
                                 }
                             }else {
-                                dialog.dismiss();
                                 Utils.showAlertDialog(activity, "Something Went Wrong");
                             }
 
@@ -421,8 +419,10 @@ public class CheckoutActivity extends AppCompatActivity {
                                     if (result.getMessage().equals("Unauthorized")) {
                                         Utils.showAlertDialogLogout(activity, "Your Session was expire. please Logout!", localStorage.getUserProfile().getData().getUser().getUserId());
                                         dialog.dismiss();
+                                    } else {
+                                        dialog.dismiss();
+                                        Utils.showAlertDialog(activity, "Something Went Wrong");
                                     }
-                                    dialog.dismiss();
                                 } else {
 
                                     if (result.getStatus() == true) {
@@ -459,7 +459,6 @@ public class CheckoutActivity extends AppCompatActivity {
         JSONObject returnObj = new JSONObject();
         cursor.moveToFirst();
         while (cursor.isAfterLast() == false) {
-
             int totalColumn = cursor.getColumnCount();
             JSONObject rowObject = new JSONObject();
 
@@ -530,7 +529,6 @@ public class CheckoutActivity extends AppCompatActivity {
                             }
 
                             if (result != null) {
-
 
                                 if (result.isStatus() == true) {
                                     qrcreatorSchool(Long.valueOf(result.getData().getOrderId()));
@@ -794,8 +792,9 @@ public class CheckoutActivity extends AppCompatActivity {
                 }
                 if (result != null) {
 
-                    if (result.getStatus() == true) {
-
+                    if (result.getStatus() == null) {
+                        Utils.showAlertDialog(CheckoutActivity.this, "Something Went Wrong");
+                    } else if (result.getStatus() == true) {
                         Toast.makeText(activity, result.getMessage(), Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(CheckoutActivity.this, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
@@ -820,7 +819,9 @@ public class CheckoutActivity extends AppCompatActivity {
                 }
                 if (result != null) {
 
-                    if (result.getStatus() == true) {
+                    if (result.getStatus() == null) {
+                        Utils.showAlertDialog(CheckoutActivity.this, "Something Went Wrong");
+                    } else if (result.getStatus() == true) {
 
                         Toast.makeText(activity, result.getMessage(), Toast.LENGTH_SHORT).show();
                     } else {
@@ -856,8 +857,11 @@ public class CheckoutActivity extends AppCompatActivity {
                                     if (result.getMessage().equals("Unauthorized")) {
                                         Utils.showAlertDialogLogout(CheckoutActivity.this, "Your Session was expire. please Logout!", localStorage.getUserProfile().getData().getUser().getUserId());
                                         dialog.dismiss();
+                                    } else {
+                                        Utils.showAlertDialog(activity, "Something Went Wrong");
+                                        dialog.dismiss();
                                     }
-                                    dialog.dismiss();
+
                                 } else {
                                     setRecyclerViewData(result);
                                     dialog.dismiss();
@@ -985,6 +989,8 @@ public class CheckoutActivity extends AppCompatActivity {
             // etCity.setError("Please Enter City");
             etState.setError("Please Enter State");
             etPinCode.setError("Please Enter PinCode");
+        } else if (spindata.isEmpty() || spindistict.isEmpty()) {
+            Toast.makeText(activity, "please select city and distict", Toast.LENGTH_SHORT).show();
         } else {
 
             addDataIntoApi(strAddress1, spindata, strState, strPinCode, dialog, spindistict);
@@ -1007,13 +1013,12 @@ public class CheckoutActivity extends AppCompatActivity {
                                 Utils.showAlertDialog(activity, "Something Went Wrong");
                                 return;
                             }
-                            if (e != null) {
-                                Utils.showAlertDialog(activity, "Something Went Wrong");
-                                return;
-                            }
 
                             if (result != null) {
-                                if (result.getStatus()) {
+                                if (result.getStatus() == null) {
+                                    CheckoutActivity.this.dialog.dismiss();
+                                    Utils.showAlertDialog(activity, "Something Went Wrong");
+                                } else if (result.getStatus()) {
                                     CheckoutActivity.this.dialog.dismiss();
                                     dialog.dismiss();
                                     Toast.makeText(activity, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
@@ -1050,13 +1055,13 @@ public class CheckoutActivity extends AppCompatActivity {
                                 Utils.showAlertDialog(activity, "Something Went Wrong");
                                 return;
                             }
-                            if (e != null) {
-                                Utils.showAlertDialog(activity, "Something Went Wrong");
-                                return;
-                            }
+
 
                             if (result != null) {
-                                if (result.getStatus()) {
+                                if (result.getStatus() == null) {
+                                    dialog.dismiss();
+                                    Utils.showAlertDialog(activity, "Something Went Wrong");
+                                } else if (result.getStatus()) {
                                     dialog.dismiss();
                                     listData(result.getData());
                                 } else {
@@ -1163,6 +1168,9 @@ public class CheckoutActivity extends AppCompatActivity {
                 shoppingBagModel.setType(json_data.getString("type"));
                 type = json_data.getString("type");
                 shoppingBagModel.setPID(json_data.getString("P_ID"));
+                shoppingBagModel.setSchoolStoreId(json_data.getString("schoolStoreId"));
+                storeSchoolId = json_data.getString("schoolStoreId");
+                shoppingBagModel.setCategory(json_data.getString("category"));
                 shoppingBagModel.setGst(json_data.getString("gstPrice"));
 
 

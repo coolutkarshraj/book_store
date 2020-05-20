@@ -114,7 +114,6 @@ public class AllClassesFragment extends Fragment implements View.OnClickListener
                                 Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                             }
                             if (result != null) {
-
                                 if (result.isStatus()) {
                                     dialog.dismiss();
                                     setUpofClassesRv(result.getData());

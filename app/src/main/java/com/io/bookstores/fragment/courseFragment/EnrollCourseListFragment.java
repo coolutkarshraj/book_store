@@ -197,8 +197,10 @@ public class EnrollCourseListFragment extends Fragment implements View.OnClickLi
                                     if (result.getMessage().equals("Unauthorized")) {
                                         Utils.showAlertDialogLogout(getActivity(), "Your Session was expire. please Logout!", localStorage.getUserProfile().getData().getUser().getUserId());
                                         dialog.dismiss();
+                                    } else {
+                                        Utils.showAlertDialog(getActivity(), "Something Went Wrong");
+                                        dialog.dismiss();
                                     }
-                                    dialog.dismiss();
                                 } else {
                                     datasetToRecyclerView(result);
                                     dialog.dismiss();

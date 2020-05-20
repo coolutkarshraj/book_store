@@ -154,7 +154,10 @@ public class LoginActivity extends AppCompatActivity {
                                 }
 
                                 if (result != null) {
-                                    if (result.getStatus() == true) {
+                                    if (result.getStatus() == null) {
+                                        Utils.showAlertDialog(activity, "Something Went Wrong");
+                                        dialog.dismiss();
+                                    } else if (result.getStatus()) {
                                         dialog.dismiss();
                                         saveLoginData(result);
                                         localStorage.putBooleAan(LocalStorage.isLoggedIn, true);
@@ -163,6 +166,9 @@ public class LoginActivity extends AppCompatActivity {
                                         dialog.dismiss();
                                         Toast.makeText(activity, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
                                     }
+                                }else {
+                                    Utils.showAlertDialog(activity, "Something Went Wrong");
+                                    dialog.dismiss();
                                 }
 
                             }

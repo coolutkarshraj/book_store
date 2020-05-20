@@ -136,8 +136,11 @@ public class FavoriteItemsFragment extends Fragment implements SwipeRefreshLayou
 
                                         Utils.showAlertDialogLogout(getActivity(), "Your Session was expire. please Logout!",localStorage.getUserProfile().getData().getUser().getUserId());
                                         dialog.dismiss();
+                                    }else {
+                                        dialog.dismiss();
+                                        Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                                     }
-                                    dialog.dismiss();
+
                                 }else {
                                     if (result.getStatus() == true) {
 
@@ -202,7 +205,6 @@ public class FavoriteItemsFragment extends Fragment implements SwipeRefreshLayou
                             }
 
                             if (result != null) {
-
                                 if (result.isStatus() == true) {
 
                                     setRecyclerViewDataSchool(result.getData());

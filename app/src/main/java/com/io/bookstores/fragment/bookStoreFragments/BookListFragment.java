@@ -165,8 +165,10 @@ public class BookListFragment extends Fragment implements View.OnClickListener {
                                     if (result.getMessage().equals("Unauthorized")) {
                                         Utils.showAlertDialogLogout(getActivity(), "Your Session was expire. please Logout!", localStorage.getUserProfile().getData().getUser().getUserId());
                                         dialog.dismiss();
+                                    } else {
+                                        dialog.dismiss();
+                                        Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                                     }
-                                    dialog.dismiss();
                                 } else {
                                     if (result.getStatus() == true) {
                                         dialog.dismiss();
@@ -252,8 +254,9 @@ public class BookListFragment extends Fragment implements View.OnClickListener {
                                 Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                                 return;
                             }
-                            if (result.getStatus() == true) {
-
+                            if (result.getStatus() == null) {
+                                Utils.showAlertDialog(getActivity(), "Something Went Wrong");
+                            } else if (result.getStatus() == true) {
                                 items.clear();
                                 categoryId.clear();
                                 for (int i = 0; i < result.getData().size(); i++) {

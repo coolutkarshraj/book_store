@@ -301,8 +301,9 @@ public class CourseEnrollFragment extends Fragment implements View.OnClickListen
                     }
 
                     if (result != null) {
-                        if (result.getStatus()) {
-
+                        if (result.getStatus() == null) {
+                            Utils.showAlertDialog(getActivity(), "Something Went Wrong");
+                        } else if (result.getStatus()) {
                             Toast.makeText(activity, result.getMessage(), Toast.LENGTH_SHORT).show();
                             Intent i = new Intent(activity, MainActivity.class);
                             startActivity(i);

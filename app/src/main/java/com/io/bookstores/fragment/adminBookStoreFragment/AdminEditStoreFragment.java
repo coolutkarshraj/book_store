@@ -193,8 +193,10 @@ public class AdminEditStoreFragment extends Fragment implements View.OnClickList
                                         Utils.showAlertDialogAdminLogout(getActivity(), "Your Session was expire. please Logout!", localStorage.getInt(LocalStorage.userId));
 
                                         dialog.dismiss();
+                                    }else {
+                                        dialog.dismiss();
+                                        Utils.showAlertDialog(activity, "Something Went Wrong");
                                     }
-                                    dialog.dismiss();
                                 } else {
                                     dialog.dismiss();
                                     getdataSetIntoViews(result);
@@ -352,8 +354,10 @@ public class AdminEditStoreFragment extends Fragment implements View.OnClickList
                                     if (result.getMessage().equals("Unauthorized")) {
                                         Utils.showAlertDialogLogout(getActivity(), "Your Session was expire. please Logout!", localStorage.getUserProfile().getData().getUser().getUserId());
                                         dialog.dismiss();
+                                    }else {
+                                        dialog.dismiss();
+                                        Utils.showAlertDialog(activity, "Something Went Wrong");
                                     }
-                                    dialog.dismiss();
                                 } else {
                                     if (result.getStatus() == true) {
                                         getActivity().getSupportFragmentManager().beginTransaction()

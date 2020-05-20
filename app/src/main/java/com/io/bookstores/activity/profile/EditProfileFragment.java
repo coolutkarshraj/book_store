@@ -114,8 +114,10 @@ public class EditProfileFragment extends Fragment {
                                     if (result.getMessage().equals("Unauthorized")) {
                                         Utils.showAlertDialogLogout(getActivity(), "Your Session was expire. please Logout!",localStorage.getUserProfile().getData().getUser().getUserId());
                                         dialog.dismiss();
+                                    }else {
+                                        dialog.dismiss();
+                                        Utils.showAlertDialog(activity, "Something Went Wrong");
                                     }
-                                    dialog.dismiss();
                                 } else {
                                     dialog.dismiss();
                                     phone.setText(result.getData().getPhone());
@@ -326,6 +328,9 @@ public class EditProfileFragment extends Fragment {
                                     if (result.getMessage().equals("Unauthorized")) {
                                         Utils.showAlertDialogLogout(getActivity(), "Your Session was expire. please Logout!",localStorage.getUserProfile().getData().getUser().getUserId());
                                         dialog.dismiss();
+                                    }else {
+                                        dialog.dismiss();
+                                        Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                                     }
 
                                 } else {

@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.io.bookstores.Config;
 import com.io.bookstores.R;
-import com.io.bookstores.StaticData;
 import com.io.bookstores.holder.HomeSchoolHolder;
 import com.io.bookstores.listeners.ItemClickListner;
 import com.io.bookstores.localStorage.LocalStorage;
@@ -54,7 +53,7 @@ public class HomeSchoolsRvAdapter extends RecyclerView.Adapter<HomeSchoolHolder>
                 LocalStorage localStorage = new LocalStorage(activity);
                 localStorage.putString(LocalStorage.schoolId, String.valueOf(data.getSchoolId()));
                 localStorage.putString(LocalStorage.TYPE,"school");
-
+                localStorage.putString(LocalStorage.Dummy_Store_ID, String.valueOf(data.getSchoolId()));
                 itemClickListner.onClick(8);
             }
         });

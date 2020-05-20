@@ -87,6 +87,9 @@ public class OrderListBookFragment extends Fragment {
                                     if (result.getMessage().equals("Unauthorized")) {
                                         Utils.showAlertDialogAdminLogout(getActivity(), "Your Session was expire. please Logout!", localStorage.getInt(LocalStorage.userId));
                                         dialog.dismiss();
+                                    }else{
+                                        dialog.dismiss();
+                                        Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                                     }
 
                                 } else {

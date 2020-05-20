@@ -96,6 +96,7 @@ public class FavoriteItemsLocalAdapter extends RecyclerView.Adapter<FavoriteItem
 
         Log.e("scullydummy", scullydummy);
         Log.e("schollId", schollId);*/
+        localStorage.putString(LocalStorage.Dummy_Store_ID, mData.get(position).getSchoolStoreId());
         holder.textView31.setText(model.getName());
         holder.favouritePriceText.setText("Price : " + model.getPrice() + " KD");
         Glide.with(mContext).load(Config.imageUrl + model.getImage()).into(holder.img_book_thumbnail);
@@ -316,7 +317,7 @@ public class FavoriteItemsLocalAdapter extends RecyclerView.Adapter<FavoriteItem
             public void onClick(DialogInterface dialog, int id) {
                 dialog.cancel();
                 LocalStorage localStorage = new LocalStorage(mContext);
-                localStorage.putString(LocalStorage.Dummy_Store_ID, localStorage.getString(LocalStorage.StoreId));
+                localStorage.putString(LocalStorage.Dummy_Store_ID, mData.get(position).getSchoolStoreId());
                 DbHelper dbHelper = new DbHelper(mContext);
                 dbHelper.deleteAll();
                 boolean isInserted = dbHelper.insertData(mData.get(position).getName(),

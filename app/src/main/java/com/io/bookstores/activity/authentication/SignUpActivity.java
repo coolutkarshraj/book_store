@@ -166,14 +166,19 @@ public class SignUpActivity extends AppCompatActivity {
                                 return;
                             }
                             if(result != null){
-                                if(result.getStatus()== true) {
+                                if(result.getStatus() ==null){
+                                    Utils.showAlertDialog(activity, "Something Went Wrong");
+                                    dialog.dismiss();
+                                }else if(result.getStatus()) {
                                     dialog.dismiss();
                                     loginApi(u_emael,password);
                                 }else {
                                     dialog.dismiss();
                                     Toast.makeText(SignUpActivity.this, "" + result.getMessage(), Toast.LENGTH_LONG).show();
                                 }
-
+                            }else {
+                                Utils.showAlertDialog(activity, "Something Went Wrong");
+                                dialog.dismiss();
                             }
 
                         }

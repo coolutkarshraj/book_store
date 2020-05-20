@@ -88,7 +88,10 @@ public class BookstoresFragmentWithFilter extends Fragment {
                             }
 
                             if(result!=null) {
-                                if (result.getStatus() == true) {
+                                if (result.getStatus() == null) {
+                                    dialog.dismiss();
+                                    Utils.showAlertDialog(getActivity(), "Something Went Wrong");
+                                } else if (result.getStatus() == true) {
                                     dialog.dismiss();
                                     setRecyclerViewData(result);
                                 } else {

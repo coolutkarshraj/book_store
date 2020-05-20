@@ -120,7 +120,10 @@ public class ContactUsFragment extends Fragment implements View.OnClickListener 
                     }
 
                     if (result != null) {
-                        if (result.getStatus() == true) {
+                        if (result.getStatus() == null) {
+                            dialog.dismiss();
+                            Utils.showAlertDialog(getActivity(), "Something Went Wrong");
+                        } else if (result.getStatus() == true) {
                             dialog.dismiss();
                             Toast.makeText(activity, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
                             etEmail.getText().clear();

@@ -327,10 +327,13 @@ public class DeliveryAddressFragment extends Fragment {
       //  String strCity = etCity.getText().toString().trim();
         String strState = etState.getText().toString().trim();
         String strPinCode = etPinCode.getText().toString().trim();
-        if (strAddress1.isEmpty() ||  strState.isEmpty() || strPinCode.isEmpty()) {
+        if (strAddress1.isEmpty() ||  strState.isEmpty() || strPinCode.isEmpty() ) {
             etAddress.setError("Please Enter Address");
             etState.setError("Please Enter Landmark");
             etPinCode.setError("Please Enter PinCode");
+
+        }else if( spindataCity.isEmpty() ||spindistict.isEmpty()){
+            Toast.makeText(activity, "please select city and distict", Toast.LENGTH_SHORT).show();
         } else {
 
             addDataIntoApi(strAddress1, spindataCity, strState, strPinCode,dialog,spindistict);
@@ -354,7 +357,10 @@ public class DeliveryAddressFragment extends Fragment {
                                 Utils.showAlertDialog(activity, "Something Went Wrong");
                                 return;
                             }
-                            if (result.getStatus() == true) {
+                            if(result.getStatus() == null){
+                                DeliveryAddressFragment.this.dialog.dismiss();
+                                Utils.showAlertDialog(activity, "Something Went Wrong");
+                            }else if (result.getStatus() == true) {
                                 DeliveryAddressFragment.this.dialog.dismiss();
                                 Toast.makeText(activity, "" + result.getMessage(), Toast.LENGTH_SHORT).show();
                                 dialog.dismiss();
@@ -389,20 +395,17 @@ public class DeliveryAddressFragment extends Fragment {
                                 Utils.showAlertDialog(activity, "Something Went Wrong");
                                 return;
                             }
-                            if (e != null) {
-                                Utils.showAlertDialog(activity, "Something Went Wrong");
-                                return;
-                            }
-
                             if (result != null) {
-                                if (result.getStatus()) {
-
+                                if(result.getStatus() == null){
+                                    Utils.showAlertDialog(activity, "Something Went Wrong");
+                                } else if (result.getStatus()) {
                                     listData(result.getData());
                                 } else {
 
 
                                 }
-                            }
+                            }else{
+                                Utils.showAlertDialog(activity, "Something Went Wrong");                            }
 
                         }
                     });
@@ -417,7 +420,6 @@ public class DeliveryAddressFragment extends Fragment {
         listdata = data;
         listDistict.clear();
         for (int i = 0; i < data.size(); i++) {
-
             listDistict.add(data.get(i).getName());
 
         }

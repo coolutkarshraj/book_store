@@ -98,7 +98,7 @@ public class FavoriteItemsSchoolAdapter extends RecyclerView.Adapter<FavoriteIte
         holder.textView31.setText(model.getName());
         Glide.with(mContext).load(Config.imageUrl + model.getAvatarPath()).into(holder.img_book_thumbnail);
         holder.favouritePriceText.setText("Price : " + model.getPrice() + " KD");
-
+        localStorage.putString(LocalStorage.Dummy_Store_ID, String.valueOf(model.getSchoolId()));
         holder.clayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

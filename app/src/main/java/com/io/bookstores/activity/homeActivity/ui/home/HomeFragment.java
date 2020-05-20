@@ -174,7 +174,9 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener,
                                 Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                             }
                             if (result != null) {
-                                if (result.getStatus()) {
+                                if (result.getStatus() == null) {
+                                    Utils.showAlertDialog(getActivity(), "Something Went Wrong");
+                                } else if (result.getStatus()) {
                                     setSliderAdsAdapter(result);
                                 }
                             }else {
@@ -214,7 +216,9 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener,
                             }
 
                             if (result != null) {
-                                if (result.getStatus()) {
+                                if (result.getStatus() == null) {
+                                    Utils.showAlertDialog(getActivity(), "Something Went Wrong");
+                                } else if (result.getStatus()) {
                                     makaAddressListScrollView(result.getData());
                                 } else {
                                     Toast.makeText(activity, result.getMessage(), Toast.LENGTH_SHORT).show();
@@ -267,7 +271,10 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener,
                                 Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                             }
                             if (result != null) {
-                                if (result.getStatus()) {
+                                if (result.getStatus() == null) {
+                                    dialog.dismiss();
+                                    Utils.showAlertDialog(getActivity(), "Something Went Wrong");
+                                } else if (result.getStatus()) {
                                     dialog.dismiss();
                                     setRecyclerView(result);
                                 }
@@ -357,12 +364,14 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener,
                                 Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                             }
                             if (result != null) {
-                                if (result.getStatus()) {
+                                if (result.getStatus() == null) {
+                                    Utils.showAlertDialog(getActivity(), "Something Went Wrong");
+                                } else if (result.getStatus()) {
                                     setRecyclerViewData(result);
                                 }
 
                             }else {
-                                dialog.dismiss();
+                                Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                             }
 
 
@@ -447,9 +456,10 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener,
                             }
                             if (result != null) {
                                 if (result.isStatus()) {
-
                                     setofSchoolRecyclerView(result);
                                 }
+                            }else {
+                                Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                             }
                         }
                     });

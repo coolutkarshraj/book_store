@@ -109,13 +109,16 @@ public class OrderFragment extends Fragment implements RecyclerViewClickListener
 
                         @Override
                         public void onCompleted(Exception e, MyOrderResponseModel result) {
-                            dialog.dismiss();
                             if (e != null) {
                                 Utils.showAlertDialog(getActivity(), "Something Went Wrong");
+                                dialog.dismiss();
                                 return;
                             }
                            if(result!=null) {
-                               if (result.getData() == null || result.getData().size() == 0 || result.getData().isEmpty()) {
+                               if (result.getStatus() == null) {
+                                   Utils.showAlertDialog(getActivity(), "Something Went Wrong");
+                                   dialog.dismiss();
+                               } else if (result.getData() == null || result.getData().size() == 0 || result.getData().isEmpty()) {
                                    dialog.dismiss();
                                    ll_book_order.setVisibility(View.GONE);
                                    isEmpty = "empty";
