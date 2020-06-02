@@ -1004,7 +1004,7 @@ public class CheckoutActivity extends AppCompatActivity {
             this.dialog.show();
             final LocalStorage localStorage = new LocalStorage(this);
             ApiCaller.addAddress(activity, Config.Url.addAddress, " ", strAddress1, " ", strCity, strState, Integer.valueOf(strPinCode), " ",
-                    " ", " ", " ", localStorage.getString(LocalStorage.token), spindata,
+                    " ", " ", " ", localStorage.getString(LocalStorage.token), spindistict,
                     new FutureCallback<AddAddressResponseModel>() {
                         @Override
                         public void onCompleted(Exception e, AddAddressResponseModel result) {

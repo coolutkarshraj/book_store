@@ -513,7 +513,6 @@ public class ApiCaller {
                     @Override
                     public void onCompleted(Exception e, JsonObject result) {
                         if (e != null) {
-
                             return;
                         }
                         StoreModel ourBrandsResponseModel = gson.fromJson(result, StoreModel.class);
