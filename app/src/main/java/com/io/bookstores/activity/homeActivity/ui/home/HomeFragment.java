@@ -84,6 +84,7 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener,
     private LocalStorage localStorage;
     private DbHelper dbHelper;
     private int sizee = 0;
+    String token = "";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -154,11 +155,24 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener,
     /*------------------------------------------------------ start Working ----------------------------------------------------*/
 
     private void startWorking() {
+        getLocalStorage();
         getSliderAdList();
         getAllCities();
         getStoreList();
         getInstituiteList();
         getAllSchoolList();
+    }
+
+    /*-------------------------------------------------- get Local Storage ------------------------------------------------*/
+
+    private void getLocalStorage() {
+        if (localStorage.getString(LocalStorage.token) == null ||
+                localStorage.getString(LocalStorage.token).equals("")) {
+            token = "";
+
+        } else {
+            token = localStorage.getString(LocalStorage.token);
+        }
     }
 
     /*-------------------------------------------------- get all banner from Api ---------------------------------------------*/
@@ -209,7 +223,6 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener,
                     new FutureCallback<DilveryAdressResponseModel>() {
                         @Override
                         public void onCompleted(Exception e, DilveryAdressResponseModel result) {
-
                             if (e != null) {
                                 Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                                 return;
@@ -260,30 +273,29 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener,
 
     private void getStoreList() {
         if (user.isOnline(activity)) {
-            dialog.show();
-            ApiCaller.getStoreApi(getActivity(), Config.Url.getStoreApi,
+            //dialog.show();
+            ApiCaller.getStoreApi(getActivity(), Config.Url.getStoreApi,token,
                     new FutureCallback<StoreModel>() {
 
                         @Override
                         public void onCompleted(Exception e, StoreModel result) {
                             if (e != null) {
-                                dialog.dismiss();
+                                //dialog.dismiss();
                                 Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                             }
                             if (result != null) {
+                                //dialog.dismiss();
                                 if (result.getStatus() == null) {
-                                    dialog.dismiss();
+                                  //  dialog.dismiss();
                                     Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                                 } else if (result.getStatus()) {
-                                    dialog.dismiss();
+                                   // dialog.dismiss();
                                     setRecyclerView(result);
                                 }
                             }else {
                                 Utils.showAlertDialog(getActivity(), "Something Went Wrong");
-                                dialog.dismiss();
+                              //  dialog.dismiss();
                             }
-
-
 
                         }
                     });
@@ -355,7 +367,7 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener,
 
     private void getInstituiteList() {
         if (user.isOnline(getActivity())) {
-            ApiCaller.getTrendingInstiuiteList(getActivity(), Config.Url.trendingInstitute,
+            ApiCaller.getTrendingInstiuiteList(getActivity(), Config.Url.trendingInstitute,token,
                     new FutureCallback<TrendingInstituteResponseModel>() {
 
                         @Override
@@ -446,7 +458,7 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener,
     private void getAllSchoolList() {
         if (user.isOnline(activity)) {
 
-            ApiCaller.getSchoolApi(getActivity(), Config.Url.getSchools,
+            ApiCaller.getSchoolApi(getActivity(), Config.Url.getSchools,token,
                     new FutureCallback<GetAllSchoolResponseModel>() {
 
                         @Override
@@ -555,4 +567,11 @@ public class HomeFragment extends Fragment implements RecyclerViewClickListener,
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        intializeViews(root);
+        bindListner();
+        startWorking();
+    }
 }

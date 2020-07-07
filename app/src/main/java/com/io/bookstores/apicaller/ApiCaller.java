@@ -278,7 +278,7 @@ public class ApiCaller {
                 .load(UrlLocator.getFinalUrl(url))
                 .setHeader("Authorization", "Bearer " + token)
                 .noCache().setJsonObjectBody(json)
-                .asJsonObject()
+                    .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
                     public void onCompleted(Exception e, JsonObject result) {
@@ -501,24 +501,44 @@ public class ApiCaller {
 
     /*------------------------------------------------------- Store Model Api------------------------------------------------------------*/
 
-    public static void getStoreApi(Activity activity, String url,
+    public static void getStoreApi(Activity activity, String url, String token,
                                    final FutureCallback<StoreModel> apiCallBack) {
 
-        final Gson gson = new Gson();
-        Ion.with(activity)
-                .load(UrlLocator.getFinalUrl(url))
-                .noCache()
-                .asJsonObject()
-                .setCallback(new FutureCallback<JsonObject>() {
-                    @Override
-                    public void onCompleted(Exception e, JsonObject result) {
-                        if (e != null) {
-                            return;
+        if(token.equals("")){
+            final Gson gson = new Gson();
+            Ion.with(activity)
+                    .load(UrlLocator.getFinalUrl(url))
+                    .setHeader("skipauth", "true")
+                    .noCache()
+                    .asJsonObject()
+                    .setCallback(new FutureCallback<JsonObject>() {
+                        @Override
+                        public void onCompleted(Exception e, JsonObject result) {
+                            if (e != null) {
+                                return;
+                            }
+                            StoreModel ourBrandsResponseModel = gson.fromJson(result, StoreModel.class);
+                            apiCallBack.onCompleted(e, ourBrandsResponseModel);
                         }
-                        StoreModel ourBrandsResponseModel = gson.fromJson(result, StoreModel.class);
-                        apiCallBack.onCompleted(e, ourBrandsResponseModel);
-                    }
-                });
+                    });
+        }else {
+            final Gson gson = new Gson();
+            Ion.with(activity)
+                    .load(UrlLocator.getFinalUrl(url))
+                    .setHeader("Authorization", "Bearer " + token)
+                    .noCache()
+                    .asJsonObject()
+                    .setCallback(new FutureCallback<JsonObject>() {
+                        @Override
+                        public void onCompleted(Exception e, JsonObject result) {
+                            if (e != null) {
+                                return;
+                            }
+                            StoreModel ourBrandsResponseModel = gson.fromJson(result, StoreModel.class);
+                            apiCallBack.onCompleted(e, ourBrandsResponseModel);
+                        }
+                    });
+        }
     }
 
     /*-------------------------------------------------- Checkout(Proced order) --------------------------------------------------------)*/
@@ -981,20 +1001,38 @@ public class ApiCaller {
                 });
     }
 
-    public static void getTrendingInstiuiteList(Activity activity, String url,
+    public static void getTrendingInstiuiteList(Activity activity, String url,String token,
                                                 final FutureCallback<TrendingInstituteResponseModel> apiCallback) {
-        final Gson gson = new Gson();
-        Ion.with(activity)
-                .load(UrlLocator.getFinalUrl(url))
-                .noCache()
-                .asJsonObject()
-                .setCallback(new FutureCallback<JsonObject>() {
-                    @Override
-                    public void onCompleted(Exception e, JsonObject result) {
-                        TrendingInstituteResponseModel trendingInstituteResponseModel = gson.fromJson(result, TrendingInstituteResponseModel.class);
-                        apiCallback.onCompleted(e, trendingInstituteResponseModel);
-                    }
-                });
+
+       if(token.equals("")){
+           final Gson gson = new Gson();
+           Ion.with(activity)
+                   .load(UrlLocator.getFinalUrl(url))
+                   .setHeader("skipauth", "true")
+                   .noCache()
+                   .asJsonObject()
+                   .setCallback(new FutureCallback<JsonObject>() {
+                       @Override
+                       public void onCompleted(Exception e, JsonObject result) {
+                           TrendingInstituteResponseModel trendingInstituteResponseModel = gson.fromJson(result, TrendingInstituteResponseModel.class);
+                           apiCallback.onCompleted(e, trendingInstituteResponseModel);
+                       }
+                   });
+       } else {
+           final Gson gson = new Gson();
+           Ion.with(activity)
+                   .load(UrlLocator.getFinalUrl(url))
+                   .setHeader("Authorization", "Bearer " + token)
+                   .noCache()
+                   .asJsonObject()
+                   .setCallback(new FutureCallback<JsonObject>() {
+                       @Override
+                       public void onCompleted(Exception e, JsonObject result) {
+                           TrendingInstituteResponseModel trendingInstituteResponseModel = gson.fromJson(result, TrendingInstituteResponseModel.class);
+                           apiCallback.onCompleted(e, trendingInstituteResponseModel);
+                       }
+                   });
+       }
     }
 
     public static void getCourseList(Activity activity, String url,
@@ -1296,22 +1334,40 @@ public class ApiCaller {
 
     /*------------------------------------------------------- get schools Api------------------------------------------------------------*/
 
-    public static void getSchoolApi(Activity activity, String url,
+    public static void getSchoolApi(Activity activity, String url,String token,
                                     final FutureCallback<GetAllSchoolResponseModel> apiCallBack) {
 
-        final Gson gson = new Gson();
-        Ion.with(activity)
-                .load(UrlLocator.getFinalUrl(url))
-                .noCache()
+        if(token.equals("")){
+            final Gson gson = new Gson();
+            Ion.with(activity)
+                    .load(UrlLocator.getFinalUrl(url))
+                    .setHeader("skipauth", "true")
+                    .noCache()
 
-                .asJsonObject()
-                .setCallback(new FutureCallback<JsonObject>() {
-                    @Override
-                    public void onCompleted(Exception e, JsonObject result) {
-                        GetAllSchoolResponseModel allSchollResponseModel = gson.fromJson(result, GetAllSchoolResponseModel.class);
-                        apiCallBack.onCompleted(e, allSchollResponseModel);
-                    }
-                });
+                    .asJsonObject()
+                    .setCallback(new FutureCallback<JsonObject>() {
+                        @Override
+                        public void onCompleted(Exception e, JsonObject result) {
+                            GetAllSchoolResponseModel allSchollResponseModel = gson.fromJson(result, GetAllSchoolResponseModel.class);
+                            apiCallBack.onCompleted(e, allSchollResponseModel);
+                        }
+                    });
+        }else {
+            final Gson gson = new Gson();
+            Ion.with(activity)
+                    .load(UrlLocator.getFinalUrl(url))
+                    .setHeader("Authorization", "Bearer " + token)
+                    .noCache()
+
+                    .asJsonObject()
+                    .setCallback(new FutureCallback<JsonObject>() {
+                        @Override
+                        public void onCompleted(Exception e, JsonObject result) {
+                            GetAllSchoolResponseModel allSchollResponseModel = gson.fromJson(result, GetAllSchoolResponseModel.class);
+                            apiCallBack.onCompleted(e, allSchollResponseModel);
+                        }
+                    });
+        }
     }
 
     /*------------------------------------------------------- school detail ------------------------------------------------*/

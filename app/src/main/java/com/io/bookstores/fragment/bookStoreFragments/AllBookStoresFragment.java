@@ -21,6 +21,7 @@ import com.io.bookstores.R;
 import com.io.bookstores.adapter.bookStoreAdapter.AllBookStoreRvAdapter;
 import com.io.bookstores.apicaller.ApiCaller;
 import com.io.bookstores.listeners.ItemClickListner;
+import com.io.bookstores.localStorage.LocalStorage;
 import com.io.bookstores.model.storeModel.Datum;
 import com.io.bookstores.model.storeModel.StoreModel;
 import com.io.bookstores.utility.NewProgressBar;
@@ -48,7 +49,8 @@ public class AllBookStoresFragment extends Fragment implements View.OnClickListe
     private StoreModel data;
     private ArrayList<Datum> datachild = new ArrayList<>();
     private ItemClickListner itemClickListner;
-
+    LocalStorage localStorage;
+    String token;
 
     public AllBookStoresFragment() {
         // Required empty public constructor
@@ -72,6 +74,7 @@ public class AllBookStoresFragment extends Fragment implements View.OnClickListe
         activity = getActivity();
         user = new userOnlineInfo();
         dialog = new NewProgressBar(getActivity());
+        localStorage = new LocalStorage(activity);
         itemClickListner = (ItemClickListner) getActivity();
         iv_back = root.findViewById(R.id.iv_back);
         recyclerView = root.findViewById(R.id.recyclerView_bookstore);
@@ -100,8 +103,21 @@ public class AllBookStoresFragment extends Fragment implements View.OnClickListe
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void startWorking() {
+        getLocalStorage();
         getStoreList();
         setUpofSearchView();
+    }
+
+    /*-------------------------------------------------- get Local Storage ------------------------------------------------*/
+
+    private void getLocalStorage() {
+        if (localStorage.getString(LocalStorage.token) == null ||
+                localStorage.getString(LocalStorage.token).equals("")) {
+            token = "";
+
+        } else {
+            token = localStorage.getString(LocalStorage.token);
+        }
     }
 
 
@@ -112,7 +128,7 @@ public class AllBookStoresFragment extends Fragment implements View.OnClickListe
         if (user.isOnline(Objects.requireNonNull(getActivity()))) {
             dialog = new NewProgressBar(getActivity());
             dialog.show();
-            ApiCaller.getStoreApi(getActivity(), Config.Url.getStoreApi,
+            ApiCaller.getStoreApi(getActivity(), Config.Url.getStoreApi,token,
                     new FutureCallback<StoreModel>() {
 
                         @Override

@@ -20,6 +20,7 @@ import com.io.bookstores.R;
 import com.io.bookstores.adapter.schoolAdapter.AllSchoolsRvAdapter;
 import com.io.bookstores.apicaller.ApiCaller;
 import com.io.bookstores.listeners.ItemClickListner;
+import com.io.bookstores.localStorage.LocalStorage;
 import com.io.bookstores.model.schoolModel.GetAllSchoolDataModel;
 import com.io.bookstores.model.schoolModel.GetAllSchoolResponseModel;
 import com.io.bookstores.utility.NewProgressBar;
@@ -43,6 +44,8 @@ public class AllSchoolsFragment extends Fragment implements View.OnClickListener
     private SearchView search_all_Schools;
     private List<GetAllSchoolDataModel> listData;
     private ItemClickListner itemClickListner;
+    private String token;
+    private LocalStorage localStorage;
 
     public AllSchoolsFragment() {
 
@@ -67,6 +70,7 @@ public class AllSchoolsFragment extends Fragment implements View.OnClickListener
         activity = getActivity();
         user = new userOnlineInfo();
         dialog = new NewProgressBar(activity);
+        localStorage = new LocalStorage(activity);
         listData = new ArrayList<>();
         itemClickListner = (ItemClickListner) getActivity();
         rvAllSchools = view.findViewById(R.id.rv_all_schools);
@@ -95,9 +99,23 @@ public class AllSchoolsFragment extends Fragment implements View.OnClickListener
     /*---------------------------------------------------- start Working ---------------------------------------------------*/
 
     private void startWorking() {
+        getLocalStorage();
         getAllSchoolsApiCall();
         searchViewSetUp();
 
+
+    }
+
+    /*-------------------------------------------------- get Local Storage ------------------------------------------------*/
+
+    private void getLocalStorage() {
+        if (localStorage.getString(LocalStorage.token) == null ||
+                localStorage.getString(LocalStorage.token).equals("")) {
+            token = "";
+
+        } else {
+            token = localStorage.getString(LocalStorage.token);
+        }
     }
 
     /*------------------------------------------------ get all school list from api -------------------------------------------*/
@@ -105,7 +123,7 @@ public class AllSchoolsFragment extends Fragment implements View.OnClickListener
     private void getAllSchoolsApiCall() {
         if (user.isOnline(activity)) {
             dialog.show();
-            ApiCaller.getSchoolApi(getActivity(), Config.Url.getSchools,
+            ApiCaller.getSchoolApi(getActivity(), Config.Url.getSchools,token,
                     new FutureCallback<GetAllSchoolResponseModel>() {
 
                         @Override
@@ -115,7 +133,6 @@ public class AllSchoolsFragment extends Fragment implements View.OnClickListener
                                 Utils.showAlertDialog(getActivity(), "Something Went Wrong");
                             }
                             if (result != null) {
-
                                 if (result.isStatus()) {
                                     dialog.dismiss();
                                     setofSchoolRecyclerView(result.getData());
